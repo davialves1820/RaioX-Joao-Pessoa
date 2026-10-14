@@ -4,6 +4,7 @@ geopandas>=1.0
 pyogrio>=0.9
 shapely>=2.1  # coverage_simplify
 openpyxl>=3.1  # leitura do dicionário de dados do IBGE (.xlsx)
+pyarrow>=15     # leitura e escrita de .parquet
 
 # Dashboard
 streamlit>=1.50
