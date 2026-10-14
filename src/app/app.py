@@ -20,6 +20,10 @@ CINZA_MEIO = "#f0efec"  # ponto neutro da escala divergente
 SUPERFICIE = "#fcfcfb"
 TINTA = "#0b0b0b"
 TINTA_2 = "#52514e"
+ALTURA_MAPA = 740  # px; o mapa é o elemento principal da página
+# Enquadramento inicial: centro e zoom que mostram todos os bairros (bbox da malha IBGE 2022)
+CENTRO_MAPA = dict(lat=-7.147, lon=-34.875)
+ZOOM_MAPA = 11.55
 LIMITE_VAR_PCT = 60  # a escala de cor da variação satura em ±60% (o valor exato vai no tooltip)
 
 INDICADORES = {
@@ -62,7 +66,12 @@ def figura_mapa(ind: pd.DataFrame, geo: dict, indicador: str, selecionado: str |
         marker_line_color=SUPERFICIE,
         marker_line_width=1,
     )
-    barra = dict(thickness=12, len=0.6, outlinewidth=0, tickfont=dict(color=TINTA_2))
+    # Legenda de cores sobre o mapa (canto superior direito), para o mapa ocupar toda a largura
+    barra = dict(
+        thickness=12, len=0.45, outlinewidth=0, tickfont=dict(color=TINTA_2),
+        x=0.985, xanchor="right", y=0.97, yanchor="top",
+        bgcolor="rgba(252,252,251,0.85)", xpad=10, ypad=10,
+    )
     fig = go.Figure()
 
     if indicador == "var_pct":
@@ -127,9 +136,9 @@ def figura_mapa(ind: pd.DataFrame, geo: dict, indicador: str, selecionado: str |
         )
 
     fig.update_layout(
-        map=dict(style="carto-positron", center=dict(lat=-7.165, lon=-34.855), zoom=10.4),
+        map=dict(style="carto-positron", center=CENTRO_MAPA, zoom=ZOOM_MAPA),
         margin=dict(l=0, r=0, t=0, b=0),
-        height=600,
+        height=ALTURA_MAPA,
         separators=",.",
     )
     return fig
@@ -176,10 +185,10 @@ def painel_bairro(ind: pd.DataFrame, cd: str, meta: dict) -> None:
     c1, c2 = st.columns(2)
     c1.metric("População 2022", d.fmt_int(r.pop_2022))
     c2.metric("População 2010", d.fmt_int(r.pop_2010))
-    c1.metric("Densidade 2022", f"{d.fmt_dec(r.densidade_2022, 0)} hab/km²")
-    c2.metric("Área", f"{d.fmt_dec(r.area_km2, 2)} km²")
+    c1.metric("Densidade (hab/km²)", d.fmt_dec(r.densidade_2022, 0))
+    c2.metric("Área (km²)", d.fmt_dec(r.area_km2, 2))
     if r.comparabilidade == NAO_COMPARAVEL:
-        c1.metric("Variação 2010→2022 (não comparável)", "—")
+        c1.metric("Variação 2010→2022", "—", help="Não comparável: o limite do bairro mudou entre os censos.")
     else:
         c1.metric(
             "Variação 2010→2022",
@@ -275,31 +284,25 @@ def main() -> None:
     st.set_page_config(page_title="Raio-X dos Bairros de João Pessoa", layout="wide")
     ind, geo, totais, meta = _carregar()
 
+    # Menos espaço acima do título, para o mapa caber inteiro na primeira tela
+    st.markdown("<style>.block-container{padding-top:2rem}</style>", unsafe_allow_html=True)
     st.title("Raio-X dos Bairros de João Pessoa")
-    st.caption("População dos 64 bairros nos Censos 2010 e 2022 do IBGE. Clique num bairro no mapa para ver o detalhe.")
-
-    # --- números do município
-    p10, p22 = totais.loc[2010, "pop_municipio"], totais.loc[2022, "pop_municipio"]
-    k1, k2, k3, k4 = st.columns(4)
-    k1.metric("População de João Pessoa (2022)", d.fmt_int(p22))
-    k2.metric(
-        "Variação desde 2010",
-        d.fmt_var_int(p22 - p10),
-        delta=d.fmt_var_pct(100 * (p22 - p10) / p10).replace("−", "-"),
+    st.caption(
+        "População dos 64 bairros nos Censos 2010 e 2022 do IBGE. Arraste para mover o mapa, use a roda "
+        "do mouse para aproximar e clique num bairro para ver o detalhe."
     )
-    maior = ind.loc[ind.pop_2022.idxmax()]
-    k3.metric(f"Bairro mais populoso ({d.fmt_int(maior.pop_2022)} hab.)", maior.nm_bairro)
-    k4.metric("Bairros", "64")
 
     # --- estado do bairro selecionado
+    maior = ind.loc[ind.pop_2022.idxmax()]
     nomes = ind.sort_values("nm_bairro").set_index("cd_bairro").nm_bairro
     if "bairro" not in st.session_state:
         st.session_state.bairro = maior.cd_bairro
 
-    col_mapa, col_det = st.columns([3, 2], gap="large")
+    col_mapa, col_det = st.columns([7, 3], gap="medium")
     with col_mapa:
         indicador = st.radio(
-            "Indicador do mapa", list(INDICADORES), format_func=INDICADORES.get, horizontal=True
+            "Indicador do mapa", list(INDICADORES), format_func=INDICADORES.get, horizontal=True,
+            label_visibility="collapsed",
         )
         evento = st.plotly_chart(
             figura_mapa(ind, geo, indicador, st.session_state.bairro),
@@ -328,6 +331,19 @@ def main() -> None:
             key="bairro",
         )
         painel_bairro(ind, st.session_state.bairro, meta)
+
+    # --- números do município
+    st.divider()
+    p10, p22 = totais.loc[2010, "pop_municipio"], totais.loc[2022, "pop_municipio"]
+    k1, k2, k3, k4 = st.columns(4)
+    k1.metric("População de João Pessoa (2022)", d.fmt_int(p22))
+    k2.metric(
+        "Variação desde 2010",
+        d.fmt_var_int(p22 - p10),
+        delta=d.fmt_var_pct(100 * (p22 - p10) / p10).replace("−", "-"),
+    )
+    k3.metric(f"Bairro mais populoso ({d.fmt_int(maior.pop_2022)} hab.)", maior.nm_bairro)
+    k4.metric("Bairros", "64")
 
     # --- ranking
     st.header("Quem mais cresceu e quem mais perdeu população (2010→2022)")
