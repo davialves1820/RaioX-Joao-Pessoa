@@ -1,0 +1,77 @@
+{
+  "gerado_em": "2026-10-14T20:47:53Z",
+  "parametros": {
+    "iou_comparavel": 0.9,
+    "iou_com_ressalva": 0.75,
+    "tolerancia_total_municipio": 0.01,
+    "tolerancia_simplificacao_m": 5.0
+  },
+  "colunas": {
+    "pop_2022": "ibge_censo2022/Agregados_por_bairros_basico_BR_20260520.zip, coluna v0001 (Total de pessoas)",
+    "domicilios_2022": "ibge_censo2022/Agregados_por_bairros_basico_BR_20260520.zip, coluna v0002 (Total de domicílios)",
+    "area_km2": "ibge_censo2022/Agregados_por_bairros_basico_BR_20260520.zip, coluna AREA_KM2",
+    "densidade_2022": "pop_2022 / area_km2",
+    "pop_2010": "ibge_censo2010/PB_20260615.zip, Domicilio02_PB.csv V001 somado por Cod_bairro do Basico_PB.csv",
+    "var_abs": "pop_2022 - pop_2010 (vazio se não comparável)",
+    "var_pct": "100 * (pop_2022 - pop_2010) / pop_2010 (vazio se não comparável)",
+    "iou_limites_2010_2022": "interseção/união entre setores de 2010 dissolvidos por bairro (pb_setores_censitarios.zip) e o bairro na malha 2022 (PB_bairros_CD2022.gpkg), em EPSG:31985",
+    "area_km2_2010_calc": "área calculada do bairro de 2010 (setores dissolvidos), não é número publicado pelo IBGE",
+    "comparabilidade": "IoU >= 0.9: comparável; >= 0.75: com ressalva; abaixo ou sem bairro em 2010: não comparável",
+    "geometria": "ibge_censo2022/PB_bairros_CD2022.gpkg, simplificada (coverage_simplify) para web"
+  },
+  "pop_sem_bairro_2010": {
+    "setores": 14,
+    "pessoas": 4596
+  },
+  "arquivos_brutos": {
+    "geodata_jp/bairros.geojson": {
+      "url": "https://raw.githubusercontent.com/paulovitorweb/geodata-jp/76f128bbe0689de98c2a1d2f0bc1e897201d7941/data/bairros.geojson",
+      "fonte": "paulovitorweb/geodata-jp (origem: Filipeia - Prefeitura de João Pessoa)",
+      "baixado_em": "2026-10-14T20:44:15Z",
+      "bytes": 322758,
+      "sha256": "8760e7d44d5789720a8a8c1253c62204d1b9668bd756464d444a8b50bbc74ab3"
+    },
+    "ibge_censo2010/PB_20260615.zip": {
+      "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2010/Resultados_do_Universo/Agregados_por_Setores_Censitarios/PB_20260615.zip",
+      "fonte": "IBGE - Censo Demográfico 2010 - Resultados do Universo - Agregados por Setores Censitários",
+      "baixado_em": "2026-10-14T20:43:56Z",
+      "bytes": 33700257,
+      "sha256": "ac7894c7821dd62f001d365f86f5a6a2cea7f08f2df7c20f3d897c75ddbd5bed"
+    },
+    "ibge_censo2010/pb_setores_censitarios.zip": {
+      "url": "https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2010/setores_censitarios_shp/pb/pb_setores_censitarios.zip",
+      "fonte": "IBGE - Malha de Setores Censitários - Censo 2010",
+      "baixado_em": "2026-10-14T20:44:15Z",
+      "bytes": 2573275,
+      "sha256": "d2a0d2a25c7db4ce4b89412acceb8636a7593ef48c6ed3b0281733632ce3ef51"
+    },
+    "ibge_censo2022/Agregados_por_bairros_basico_BR_20260520.zip": {
+      "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Bairro_csv/Agregados_por_bairros_basico_BR_20260520.zip",
+      "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
+      "baixado_em": "2026-10-14T20:43:49Z",
+      "bytes": 724481,
+      "sha256": "c84bea0184477b8eb750948e50f87a7a57d2af4cfb71b1b061729e2f0a6b9a52"
+    },
+    "ibge_censo2022/Agregados_por_municipios_basico_BR_20260520.zip": {
+      "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Municipio_csv/Agregados_por_municipios_basico_BR_20260520.zip",
+      "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
+      "baixado_em": "2026-10-14T20:43:50Z",
+      "bytes": 326327,
+      "sha256": "0adc228eba0869dfbc2487e19481b96acabe5c2537a2837f1d5235a8dc0232c5"
+    },
+    "ibge_censo2022/PB_bairros_CD2022.gpkg": {
+      "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/malha_com_atributos/bairros/gpkg/UF/PB/PB_bairros_CD2022.gpkg",
+      "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
+      "baixado_em": "2026-10-14T20:43:51Z",
+      "bytes": 753664,
+      "sha256": "518ff7806e6b1f58f0f616efe883ca348c367655d77f52f8f64ae2798b63d564"
+    },
+    "ibge_censo2022/dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx": {
+      "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx",
+      "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
+      "baixado_em": "2026-10-14T20:43:52Z",
+      "bytes": 118369,
+      "sha256": "0b8aedece57f6125d785b6aa2234cfd587e92dfb6ce5ca6ace8c67f140831344"
+    }
+  }
+}
