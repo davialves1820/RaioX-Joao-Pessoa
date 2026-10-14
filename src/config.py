@@ -22,3 +22,21 @@ IOU_COM_RESSALVA = 0.75
 
 # Tolerância do teste "soma dos bairros ~ total do município"
 TOLERANCIA_TOTAL_MUNICIPIO = 0.01
+
+# --- Módulo "Para onde vai o dinheiro" (despesas da Prefeitura, TCE-PB)
+DATA_INTERIM = ROOT / "data" / "interim"
+
+# Código de João Pessoa no portal de dados abertos do TCE-PB
+COD_MUNICIPIO_TCE = "095"
+# Primeiro ano da série: 2009 é o primeiro com todas as unidades gestoras e com
+# valor liquidado preenchido (2003-2008 ficam fora; ver README).
+ANO_INICIAL_DESPESAS = 2009
+# Anos com dados sabidamente incompletos no TCE-PB: exibidos com aviso e
+# excluídos das comparações entre anos.
+ANOS_INCOMPLETOS_DESPESAS = {2016: "dados incompletos no TCE-PB (só Prefeitura e Câmara; −42% frente ao SICONFI)"}
+# Conferência com o SICONFI (despesa empenhada declarada ao Tesouro, DCA Anexo I-D)
+TOLERANCIA_SICONFI = 0.002
+EXCECOES_SICONFI = {
+    2016: "arquivo do TCE-PB incompleto (−42%)",
+    2020: "TCE-PB soma 3,1% a mais que o SICONFI; diferença não explicada pelas fontes disponíveis",
+}

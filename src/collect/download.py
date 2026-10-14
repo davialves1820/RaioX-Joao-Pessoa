@@ -43,7 +43,9 @@ def _save_manifest(manifest: dict) -> None:
     )
 
 
-def download(url: str, dest: Path, *, fonte: str, force: bool = False) -> Path:
+def download(
+    url: str, dest: Path, *, fonte: str, force: bool = False, tentativas: int = TENTATIVAS
+) -> Path:
     """Baixa `url` para `dest` (relativo a data/raw ou absoluto)."""
     dest = dest if dest.is_absolute() else DATA_RAW / dest
     key = dest.relative_to(DATA_RAW).as_posix()
@@ -67,17 +69,17 @@ def download(url: str, dest: Path, *, fonte: str, force: bool = False) -> Path:
     tmp = dest.with_name(dest.name + ".part")
     print(f"[baixando] {url}")
     req = urllib.request.Request(url, headers={"User-Agent": "raio-x-jp/0.1"})
-    for tentativa in range(1, TENTATIVAS + 1):
+    for tentativa in range(1, tentativas + 1):
         try:
             with urllib.request.urlopen(req, timeout=300) as resp, tmp.open("wb") as out:
                 shutil.copyfileobj(resp, out)
             break
         except OSError as e:  # URLError, reset de conexão, timeout
-            if tentativa == TENTATIVAS:
+            if tentativa == tentativas:
                 tmp.unlink(missing_ok=True)
                 raise
-            espera = 2**tentativa
-            print(f"[erro] {e}; nova tentativa em {espera}s ({tentativa}/{TENTATIVAS})")
+            espera = min(2**tentativa, 30)
+            print(f"[erro] {e}; nova tentativa em {espera}s ({tentativa}/{tentativas})")
             time.sleep(espera)
     tmp.replace(dest)
 
