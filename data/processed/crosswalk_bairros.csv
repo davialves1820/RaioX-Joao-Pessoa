@@ -1,0 +1,65 @@
+cd_bairro,nm_ibge_2022,nm_ibge_2010,nm_filipeia,cod_filipeia,iou_ibge2022_filipeia,iou_limites_2010_2022,observacoes
+2507507001,Água Fria,Água Fria,ÁGUA FRIA,01,0.98,0.983,
+2507507002,Aeroclube,Aeroclube,AEROCLUBE,02,0.976,0.988,
+2507507003,Altiplano Cabo Branco,Altiplano Cabo Branco,ALTIPLANO CABO BRANCO,03,0.991,0.993,
+2507507004,Alto do Céu,Alto do Céu,ALTO DO CÉU,04,0.414,0.415,limite IBGE difere do Filipeia (IoU 0.41); limite mudou entre 2010 e 2022 (IoU 0.41)
+2507507005,Alto do Mateus,Alto do Mateus,ALTO DO MATEUS,05,0.954,0.971,
+2507507006,Anatólia,Anatólia,ANATÓLIA,06,0.972,0.962,
+2507507007,Estados,Estados,BAIRRO DOS ESTADOS,07,0.989,0.99,nome difere entre IBGE e Filipeia
+2507507008,Indústrias,Indústrias,BAIRRO DAS INDUSTRIAS,08,0.69,0.459,nome difere entre IBGE e Filipeia; limite IBGE difere do Filipeia (IoU 0.69); limite mudou entre 2010 e 2022 (IoU 0.46)
+2507507009,Ipês,Ipês,BAIRRO DOS IPÊS,09,0.963,0.973,nome difere entre IBGE e Filipeia
+2507507010,Bancários,Bancários,BANCÁRIOS,10,0.986,0.993,
+2507507011,Bessa,Bessa,BESSA,11,0.932,0.973,
+2507507012,Brisamar,Brisamar,BRISAMAR,12,0.961,0.972,
+2507507013,Cabo Branco,Cabo Branco,CABO BRANCO,13,0.751,0.912,limite IBGE difere do Filipeia (IoU 0.75)
+2507507014,Castelo Branco,Castelo Branco,CASTELO BRANCO,14,0.989,0.994,
+2507507015,Centro,Centro,CENTRO,15,0.992,0.99,
+2507507016,Cidade dos Colibris,Cidade dos Colibris,CIDADE DOS COLIBRIS,16,0.976,0.981,
+2507507017,Padre Zé,Padre Zé,PADRE ZÉ,17,0.965,0.986,
+2507507018,Costa e Silva,Costa e Silva,COSTA E SILVA,18,0.981,0.968,
+2507507019,Cristo Redentor,Cristo Redentor,CRISTO REDENTOR,19,0.983,0.99,
+2507507020,Cruz das Armas,Cruz das Armas,CRUZ DAS ARMAS,20,0.981,0.993,
+2507507021,Cuiá,Cuiá,CUIÁ,21,0.987,0.997,
+2507507022,Distrito Industrial,Distrito Industrial,DISTRITO INDUSTRIAL,22,0.832,0.921,limite IBGE difere do Filipeia (IoU 0.83)
+2507507023,Ernani Sátiro,Ernani Sátiro,ERNANI SATIRO,23,0.983,0.982,
+2507507024,Ernesto Geisel,Ernesto Geisel,ERNESTO GEISEL,24,0.972,0.973,
+2507507025,Expedicionários,Expedicionários,EXPEDICIONÁRIOS,25,0.983,0.989,
+2507507026,Funcionários,Funcionários,FUNCIONÁRIOS,26,0.981,0.981,
+2507507027,Grotão,Grotão,GROTÃO,27,0.98,0.979,
+2507507028,Ilha do Bispo,Ilha do Bispo,ILHA DO BISPO,28,0.983,0.989,
+2507507029,Jaguaribe,Jaguaribe,JAGUARIBE,29,0.99,0.993,
+2507507030,João Paulo II,João Paulo II,JOÃO PAULO II,30,0.96,0.96,
+2507507031,João Agripino,João Agripino,JOÃO AGRIPINO,31,0.919,0.953,
+2507507032,José Américo,José Américo,JOSÉ AMÉRICO,32,0.989,0.997,
+2507507033,Jardim Cidade Universitária,Jardim Cidade Universitária,JARDIM CIDADE UNIVERSITÁRIA,34,0.991,0.991,código Filipeia diferente do código IBGE
+2507507034,Jardim Oceania,Jardim Oceania,JARDIM OCEANIA,35,0.942,0.988,código Filipeia diferente do código IBGE
+2507507035,Jardim São Paulo,Jardim São Paulo,JARDIM SÃO PAULO,36,0.981,0.98,código Filipeia diferente do código IBGE
+2507507036,Jardim Veneza,Jardim Veneza,JARDIM VENEZA,37,0.958,0.93,código Filipeia diferente do código IBGE
+2507507037,Manaíra,Manaíra,MANAÍRA,38,0.955,0.975,código Filipeia diferente do código IBGE
+2507507038,Mandacarú,Mandacarú,MANDACARÚ,39,0.973,0.983,código Filipeia diferente do código IBGE
+2507507039,Mangabeira,Mangabeira,MANGABEIRA,40,0.937,0.937,código Filipeia diferente do código IBGE
+2507507040,Miramar,Miramar,MIRAMAR,41,0.98,0.987,código Filipeia diferente do código IBGE
+2507507041,Muçumagro,Mucumago,MUÇUMAGRO,42,0.482,0.553,nome difere entre IBGE 2010 e 2022; código Filipeia diferente do código IBGE; limite IBGE difere do Filipeia (IoU 0.48); limite mudou entre 2010 e 2022 (IoU 0.55)
+2507507042,Oitizeiro,Oitizeiro,OITIZEIRO,43,0.976,0.984,código Filipeia diferente do código IBGE
+2507507043,Paratibe,Paratibe,PARATIBE,44,0.917,0.918,código Filipeia diferente do código IBGE
+2507507044,Penha,Penha,PENHA,45,0.918,0.949,código Filipeia diferente do código IBGE
+2507507045,Pedro Gondim,Pedro Gondim,PEDRO GONDIM,46,0.982,0.994,código Filipeia diferente do código IBGE
+2507507046,Planalto da Boa Esperança,Planalto da Boa Esperança,PLANALTO DA BOA ESPERANÇA,47,0.989,0.993,código Filipeia diferente do código IBGE
+2507507047,Ponta do Seixas,Ponta do Seixas,PONTA DO SEIXAS,48,0.93,0.956,código Filipeia diferente do código IBGE
+2507507048,Portal do Sol,Portal do Sol,PORTAL DO SOL,49,0.982,0.988,código Filipeia diferente do código IBGE
+2507507049,Roger,Roger,RÓGER,50,0.98,0.797,código Filipeia diferente do código IBGE; limite mudou entre 2010 e 2022 (IoU 0.80)
+2507507050,São José,São José,SÃO JOSÉ,51,0.88,0.9,código Filipeia diferente do código IBGE; limite IBGE difere do Filipeia (IoU 0.88)
+2507507051,Tambaú,Tambaú,TAMBAÚ,52,0.878,0.983,código Filipeia diferente do código IBGE; limite IBGE difere do Filipeia (IoU 0.88)
+2507507052,Tambiá,Tambiá,TAMBIÁ,53,0.983,0.987,código Filipeia diferente do código IBGE
+2507507053,Tambauzinho,Tambauzinho,TAMBAUZINHO,54,0.972,0.976,código Filipeia diferente do código IBGE
+2507507054,Treze de Maio,Treze de Maio,TREZE DE MAIO,55,0.987,0.994,código Filipeia diferente do código IBGE
+2507507055,Torre,Torre,TORRE,56,0.992,0.992,código Filipeia diferente do código IBGE
+2507507056,Trincheiras,Trincheiras,TRINCHEIRAS,57,0.986,0.988,código Filipeia diferente do código IBGE
+2507507057,Varjão,Varjão,VARJÃO,58,0.977,0.979,código Filipeia diferente do código IBGE
+2507507058,Valentina,Valentina,VALENTINA,59,0.987,0.987,código Filipeia diferente do código IBGE
+2507507059,Varadouro,Varadouro,VARADOURO,60,0.963,0.977,código Filipeia diferente do código IBGE
+2507507060,Barra de Gramame,Barra de Gramame,BARRA DE GRAMAME,XX,0.8,0.827,Filipeia sem código oficial (XX); limite IBGE difere do Filipeia (IoU 0.80); limite mudou entre 2010 e 2022 (IoU 0.83)
+2507507061,Costa do Sol,Costa do Sol,COSTA DO SOL,XX,0.935,0.941,Filipeia sem código oficial (XX)
+2507507062,Gramame,Gramame,GRAMAME,XX,0.784,0.505,Filipeia sem código oficial (XX); limite IBGE difere do Filipeia (IoU 0.78); limite mudou entre 2010 e 2022 (IoU 0.51)
+2507507063,Mumbaba,Mumbaba,MUMBABA,XX,0.212,0.751,Filipeia sem código oficial (XX); limite IBGE difere do Filipeia (IoU 0.21); limite mudou entre 2010 e 2022 (IoU 0.75)
+2507507064,Mussuré,,MUSSURÉ,XX,0.172,,bairro não existia no Censo 2010; Filipeia sem código oficial (XX); limite IBGE difere do Filipeia (IoU 0.17)

@@ -1,0 +1,18 @@
+# Dados brutos: grandes e reprodutíveis com `python -m src.collect`.
+# O manifesto (URL, data de download, SHA-256) é versionado.
+data/raw/**
+!data/raw/
+!data/raw/manifest.json
+*.part
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+.DS_Store
+
+# Configuração local do Claude Code
+.claude/settings.local.json
