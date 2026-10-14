@@ -4,7 +4,10 @@ Dashboard aberto com indicadores por bairro de João Pessoa (PB), feito a partir
 Esta primeira fase trata de **população** (Censos 2010 e 2022), **variação populacional** e
 **densidade demográfica** nos 64 bairros do município.
 
-> Status: pipeline de dados pronto (etapa 2). Dashboard em construção (etapa 3).
+O dashboard tem: mapa coroplético dos bairros (população, densidade ou variação 2010→2022),
+painel de detalhe ao clicar num bairro (com a origem de cada número), ranking dos bairros que mais
+cresceram e mais perderam população, tabela completa com download em CSV e uma seção sobre fontes
+e limitações.
 
 ## Como rodar
 
@@ -14,8 +17,17 @@ Requer Python 3.11+.
 pip install -r requirements-dev.txt
 python -m src.collect          # baixa os dados brutos para data/raw/ (reexecutável; --force rebaixa)
 python -m src.process.build    # gera data/processed/
-pytest                         # testes do pipeline
+pytest                         # testes do pipeline e das funções do app
+streamlit run streamlit_app.py # abre o dashboard em http://localhost:8501
 ```
+
+### Deploy no Streamlit Community Cloud
+
+1. Em [share.streamlit.io](https://share.streamlit.io), clique em **Create app** e escolha este repositório e a branch.
+2. Em *Main file path*, use `streamlit_app.py` (é o padrão).
+3. Em *Advanced settings*, escolha Python 3.11 ou superior.
+
+O app lê apenas `data/processed/`, que está versionado; não é preciso rodar a coleta no deploy.
 
 A coleta pode ser rodada quantas vezes quiser: um arquivo já baixado não é baixado de novo,
 downloads interrompidos não deixam arquivos pela metade e cada arquivo fica registrado em
@@ -29,7 +41,7 @@ data/raw/          dados baixados, sem alteração (só o manifest.json é versi
 data/processed/    dados limpos e prontos para o app
 src/collect/       um script de download por fonte
 src/process/       leitura, junções e cálculo dos indicadores (build.py orquestra)
-src/app/           código do Streamlit (etapa 3)
+src/app/           código do Streamlit (app.py: interface; dados.py: carga, ranking, formatação)
 notebooks/         exploração inicial das fontes
 tests/             testes do pipeline
 ```
@@ -139,6 +151,18 @@ A chave do projeto é o código IBGE do bairro (`cd_bairro`, 10 dígitos), igual
 | `crosswalk_bairros.csv` | nomes IBGE 2022, IBGE 2010 e Filipeia, IoUs e observações |
 | `totais_municipio.csv` | total do município × soma dos bairros, por ano |
 | `metadados.json` | origem de cada coluna, parâmetros e manifesto dos arquivos brutos |
+
+## Decisões de visualização
+
+- **Mapa:** Plotly (`Choroplethmap`, base CARTO/OpenStreetMap, sem token). População e densidade usam
+  uma escala sequencial de um só tom (azul, claro → escuro). A variação usa uma escala divergente
+  vermelho (perda) ↔ cinza (zero) ↔ azul (ganho), que satura em ±60% para que as perdas, que vão até
+  −34%, não fiquem apagadas ao lado de ganhos de até +173%; o valor exato aparece no tooltip.
+  Bairros não comparáveis ficam sem cor e com contorno escuro.
+- **Ranking:** exclui bairros não comparáveis e, por padrão, bairros com menos de 1.000 habitantes em
+  2010 (ajustável no app de 0 a 5.000). Sem esse corte, Barra de Gramame (347 → 802 pessoas, +131%)
+  entraria no topo do ranking percentual. Bairros comparáveis com ressalva aparecem marcados com †.
+- As cores foram checadas com um validador de paleta (contraste e separação para daltonismo).
 
 ## Testes
 
