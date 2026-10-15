@@ -281,7 +281,6 @@ abaixo disso, ou se o bairro não existia em 2010, a variação não é exibida.
 
 
 def main() -> None:
-    st.set_page_config(page_title="Raio-X dos Bairros de João Pessoa", layout="wide")
     ind, geo, totais, meta = _carregar()
 
     # Menos espaço acima do título, para o mapa caber inteiro na primeira tela
@@ -322,6 +321,16 @@ def main() -> None:
                 "Azul: ganhou população; vermelho: perdeu. A cor satura em ±60% (valor exato ao passar o mouse). "
                 "Bairros sem cor e com contorno escuro: variação não comparável."
             )
+        elif indicador == "pop_2022":
+            st.caption(
+                "Quanto mais escuro, mais moradores. Bairros grandes em área tendem a ter mais gente; "
+                "para comparar a concentração de moradores, use a densidade."
+            )
+        else:
+            st.caption(
+                "Moradores por km²: quanto mais escuro, mais gente vivendo em cada pedaço do bairro. "
+                "Bairros com muita área verde, industrial ou de praia aparecem mais claros."
+            )
 
     with col_det:
         st.selectbox(
@@ -347,6 +356,10 @@ def main() -> None:
 
     # --- ranking
     st.header("Quem mais cresceu e quem mais perdeu população (2010→2022)")
+    st.caption(
+        "Compara o Censo 2010 com o de 2022. Só entram bairros cujos limites não mudaram muito entre os "
+        "dois censos; caso contrário, a variação misturaria crescimento com mudança de território."
+    )
     r1, r2, r3 = st.columns([2, 2, 3])
     metrica = r1.radio(
         "Medida", ["var_pct", "var_abs"],
@@ -375,6 +388,7 @@ def main() -> None:
 
     # --- tabela
     st.header("Tabela completa")
+    st.caption("Todos os bairros, ordenados por população. Clique no título de uma coluna para reordenar.")
     tabela = ind[
         ["nm_bairro", "pop_2010", "pop_2022", "var_abs", "var_pct", "area_km2", "densidade_2022",
          "domicilios_2022", "comparabilidade", "cd_bairro"]

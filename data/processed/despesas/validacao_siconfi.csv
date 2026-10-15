@@ -1,0 +1,19 @@
+ano,tce_empenhado,siconfi_empenhado,arquivo_siconfi,diferenca_pct,dentro_tolerancia,excecao_documentada
+2009,989945711.77,,,,False,
+2010,1171395646.21,,,,False,
+2011,1379415800.21,,,,False,
+2012,1535075866.19,,,,False,
+2013,1623070078.85,,,,False,
+2014,1811329336.56,1810283348.39,dca-anexo-I-D-2014.json,0.058,True,
+2015,1844714842.81,1844714842.81,dca-anexo-I-D-2015.json,0.0,True,
+2016,1026342919.3,1777344922.66,dca-anexo-I-D-2016.json,-42.254,False,arquivo do TCE-PB incompleto (−42%)
+2017,1921381576.98,1921360541.93,dca-anexo-I-D-2017.json,0.001,True,
+2018,2035027087.13,2035027087.13,dca-anexo-I-D-2018.json,0.0,True,
+2019,2188143880.38,2188140535.42,dca-anexo-I-D-2019.json,0.0,True,
+2020,2309956965.03,2240039490.33,dca-anexo-I-D-2020.json,3.121,False,"TCE-PB soma 3,1% a mais que o SICONFI; diferença não explicada pelas fontes disponíveis"
+2021,2650064526.78,2650042126.78,dca-anexo-I-D-2021.json,0.001,True,
+2022,3234006839.34,3234078309.42,dca-anexo-I-D-2022.json,-0.002,True,
+2023,3770287747.11,3770287747.11,dca-anexo-I-D-2023.json,0.0,True,
+2024,4541626554.45,4541626554.45,dca-anexo-I-D-2024.json,0.0,True,
+2025,4856505655.22,4850356845.3,dca-anexo-I-D-2025.json,0.127,True,
+2026,3912208717.13,,,,False,
