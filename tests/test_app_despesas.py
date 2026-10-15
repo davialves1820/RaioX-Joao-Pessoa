@@ -70,3 +70,14 @@ def test_fmt_reais():
     assert d.fmt_reais(123_456_789) == "R$ 123,5 mi"
     assert d.fmt_reais(950) == "R$ 950"
     assert d.fmt_reais_inteiro(1234567.891) == "R$ 1.234.567,89"
+
+
+def test_frases_resumo(dados):
+    c = dados["cubo"]
+    frase = d.resumo_areas(c, 2025, "empenhado")
+    assert frase.startswith("Saúde (") and "somaram" in frase
+    assert d.lista_pt(["a", "b", "c"]) == "a, b e c"
+    part = d.participacao_licitacao(c, "empenhado")
+    assert d.resumo_licitacao(part, 2025).count("%") == 3
+    rk = d.ranking_fornecedores(dados["credores"], (2025, 2025), "empenhado", n=10)
+    assert 0 < d.fatia_do_ranking(dados["credores"], rk, (2025, 2025), "empenhado") < 100
