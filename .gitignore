@@ -16,3 +16,6 @@ venv/
 
 # Configuração local do Claude Code
 .claude/settings.local.json
+
+# Tabela de empenhos linha a linha (gerada por src.process.despesas)
+data/interim/

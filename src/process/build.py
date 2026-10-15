@@ -210,7 +210,9 @@ def main() -> None:
             "setores": int(len(sem_bairro10)),
             "pessoas": int(sem_bairro10["pop"].sum()),
         },
-        "arquivos_brutos": manifest,
+        "arquivos_brutos": {
+            k: v for k, v in manifest.items() if k.startswith(("ibge_censo2022/", "ibge_censo2010/", "geodata_jp/"))
+        },
     }
     (DATA_PROCESSED / "metadados.json").write_text(
         json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"

@@ -1,0 +1,311 @@
+{
+  "gerado_em": "2026-10-15T13:11:26Z",
+  "anos": [
+    2009,
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "ultima_data_de_empenho": "2026-10-09",
+  "anos_incompletos": {
+    "2016": "dados incompletos no TCE-PB (só Prefeitura e Câmara; −42% frente ao SICONFI)"
+  },
+  "ano_parcial": 2026,
+  "ipca": {
+    "mes_referencia": "2026-09",
+    "indice_referencia": 7695.82
+  },
+  "checagens": {
+    "empenhos": 520067,
+    "empenhos_zerados_anulados": 29390,
+    "empenhos_valor_negativo": 0,
+    "credores_por_tipo": {
+      "PJ": 313752,
+      "PF": 206258,
+      "indefinido": 57
+    }
+  },
+  "aviso": "Valores declarados pela Prefeitura e demais órgãos municipais ao TCE-PB (SAGRES). Podem mudar após análise e auditoria do Tribunal.",
+  "arquivos_brutos": {
+    "ibge_sidra/ipca_tabela1737.json": {
+      "url": "https://apisidra.ibge.gov.br/values/t/1737/n1/all/v/2266/p/all",
+      "fonte": "IBGE - SIDRA tabela 1737 - IPCA número-índice",
+      "baixado_em": "2026-10-14T21:48:46Z",
+      "bytes": 170403,
+      "sha256": "f3b75095981322b5f0b2b261d18b76c32a5430812ef491d98c5134a368c26b97"
+    },
+    "ibge_sidra/populacao_estimada_tabela6579.json": {
+      "url": "https://apisidra.ibge.gov.br/values/t/6579/n6/2507507/v/9324/p/all",
+      "fonte": "IBGE - SIDRA tabela 6579 - Estimativas de população",
+      "baixado_em": "2026-10-14T21:48:46Z",
+      "bytes": 6336,
+      "sha256": "028078f70a82dbdc2a7821c646feefbe6f2b76fad77b224c500e64185dd28ade"
+    },
+    "siconfi/dca-anexo-I-D-2009.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2009&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:37Z",
+      "bytes": 539,
+      "sha256": "d8da2af5869160166d0802eb98e470ab01c54f80a843cc9ed2f4307112214b73"
+    },
+    "siconfi/dca-anexo-I-D-2010.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2010&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:38Z",
+      "bytes": 539,
+      "sha256": "1e59a704efa64b81383f6f844d38fc1b7c0cf339050882debbb303dfc44ea45d"
+    },
+    "siconfi/dca-anexo-I-D-2011.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2011&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:39Z",
+      "bytes": 539,
+      "sha256": "c22fff1f9d0eae2137e10eaf1608d4e4d53b48fbb1e9766a82241f4ffd74ac42"
+    },
+    "siconfi/dca-anexo-I-D-2012.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2012&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:39Z",
+      "bytes": 539,
+      "sha256": "7758ed71fc5385f2b6b28d8d3f790e684ec89f9f397e0a1d2fe3297cd70def0d"
+    },
+    "siconfi/dca-anexo-I-D-2013.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2013&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:40Z",
+      "bytes": 539,
+      "sha256": "38ac6306e7b5e084e21105c66071363ea26f57288f560a0dec6693e19c2d0f18"
+    },
+    "siconfi/dca-anexo-I-D-2014.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2014&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:40Z",
+      "bytes": 61707,
+      "sha256": "1e65ad28b01b4e2cf8e791591f8c5b875810ab9853515a72c16165647c2b6338"
+    },
+    "siconfi/dca-anexo-I-D-2015.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2015&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:41Z",
+      "bytes": 82456,
+      "sha256": "7f8168ae94fcb1024b22e237a890df30034423ed216120a1aa1f8206f7ae44cb"
+    },
+    "siconfi/dca-anexo-I-D-2016.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2016&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:41Z",
+      "bytes": 85077,
+      "sha256": "8950d94daf1f772456746c09adeeeca8d23660aef645681442cfbf22f74ee531"
+    },
+    "siconfi/dca-anexo-I-D-2017.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2017&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:41Z",
+      "bytes": 86513,
+      "sha256": "2fb4578dd6f148523737cc3fc9e4734b696a17b861d37d5bccedef981b8c2b3c"
+    },
+    "siconfi/dca-anexo-I-D-2018.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2018&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:42Z",
+      "bytes": 85985,
+      "sha256": "9be5bdd5a9e20437d7a43997e37818102ad99e80eadef5a8ce1784d44c348b8e"
+    },
+    "siconfi/dca-anexo-I-D-2019.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2019&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:42Z",
+      "bytes": 91677,
+      "sha256": "e7c26777bd72083f8ed947147efbbfd217cfe759cc7a4d4a985a4dc1b396a4d6"
+    },
+    "siconfi/dca-anexo-I-D-2020.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2020&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:42Z",
+      "bytes": 95243,
+      "sha256": "8a0360d6ef3ad046641066705b03b4d05204e3e6d029eefe3ab46e9046033b75"
+    },
+    "siconfi/dca-anexo-I-D-2021.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2021&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:43Z",
+      "bytes": 69515,
+      "sha256": "3f31321aedc5d608dd0c0a8dabbe1103fd558638bdd3b7864a9e5b7b0bd48342"
+    },
+    "siconfi/dca-anexo-I-D-2022.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2022&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:43Z",
+      "bytes": 94643,
+      "sha256": "980751f34bb037643b79cff39b3cd064b6e9d828d5a183f3207c2ed718b2ebd9"
+    },
+    "siconfi/dca-anexo-I-D-2023.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2023&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:43Z",
+      "bytes": 99315,
+      "sha256": "632dd4bfea9183154d75aadcb86d27856ccb8b8e2cbce0aa6ceb5215cca13ef8"
+    },
+    "siconfi/dca-anexo-I-D-2024.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2024&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:44Z",
+      "bytes": 98564,
+      "sha256": "e8e7c335dd3d26b884839175787399f9020d25d74d68184cfc724e920241ae56"
+    },
+    "siconfi/dca-anexo-I-D-2025.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2025&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - DCA Anexo I-D",
+      "baixado_em": "2026-10-14T21:48:44Z",
+      "bytes": 104136,
+      "sha256": "d9479ce1c7eca313bf8c60d65c03d38db5a1de9eabe9a43d5ef67288a010d15f"
+    },
+    "tce_pb/despesas-2009.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2009.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:47:24Z",
+      "bytes": 1991999,
+      "sha256": "0377ed785ee032f093cd3f3e95a4861bd6a14c845451959d5914983ec1a98788"
+    },
+    "tce_pb/despesas-2010.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2010.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:47:29Z",
+      "bytes": 1957448,
+      "sha256": "47334c012878fe40049b04316ed80433064687f4addc7be43e8a8758a7002df8"
+    },
+    "tce_pb/despesas-2011.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2011.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:47:34Z",
+      "bytes": 2294173,
+      "sha256": "9f10a9a8eaaed58d5fc221111aede955f5f23acd045292deab315b96ecd0491a"
+    },
+    "tce_pb/despesas-2012.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2012.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:47:38Z",
+      "bytes": 1859102,
+      "sha256": "01c4be4a04f0788e4c753378f4295af152b3e9bc42bb8503e46c413aac40ba52"
+    },
+    "tce_pb/despesas-2013.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2013.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:47:42Z",
+      "bytes": 1805681,
+      "sha256": "15dfbb49c02e2db0ce9978c52388674575117b0f0c74b25c88925a9cdea0aa4c"
+    },
+    "tce_pb/despesas-2014.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2014.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:47:45Z",
+      "bytes": 1520154,
+      "sha256": "55f00e98f24547b474a09514c071d2540a2954254eec88b5a9f108ac132a043a"
+    },
+    "tce_pb/despesas-2015.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2015.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:47:48Z",
+      "bytes": 1349440,
+      "sha256": "1e96ec29b48e73f0798caa7a4e970f7a03de7bf0a7f8da1cef53b86787da68e6"
+    },
+    "tce_pb/despesas-2016.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2016.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:47:52Z",
+      "bytes": 576665,
+      "sha256": "f3ad29a50fecc099da507e9a4bba42832b86781a469b668e00ba312914b9aa73"
+    },
+    "tce_pb/despesas-2017.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2017.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:47:56Z",
+      "bytes": 1378456,
+      "sha256": "889aa586d79d823c002d6f358cf990ad264a1cc2aea98aced135f5a6277a9eaa"
+    },
+    "tce_pb/despesas-2018.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2018.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:48:00Z",
+      "bytes": 1462633,
+      "sha256": "3304f42dd045b835dd766605b6fab24995891f42e2e056a35ac7cf43ba7f94f7"
+    },
+    "tce_pb/despesas-2019.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2019.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:48:03Z",
+      "bytes": 1475812,
+      "sha256": "0412a270d1342e429796a193daeebd11ee21a14ec8e93b054c2a62d6777712ee"
+    },
+    "tce_pb/despesas-2020.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2020.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:48:07Z",
+      "bytes": 2032822,
+      "sha256": "fd3698787a0853dd4673e3da614b9c9be52519395f306791f4a56454aca34327"
+    },
+    "tce_pb/despesas-2021.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2021.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:48:12Z",
+      "bytes": 2308894,
+      "sha256": "ac004635fcba33c795d6006f415ac91ee962a589c559ad495df56becda501eaf"
+    },
+    "tce_pb/despesas-2022.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2022.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:48:17Z",
+      "bytes": 2588227,
+      "sha256": "6bcfcfe037487c9328f1ce2b6503caa8a523c85f449e799d7713433d714e220a"
+    },
+    "tce_pb/despesas-2023.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2023.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:48:21Z",
+      "bytes": 2883251,
+      "sha256": "c49e1be6e7819adbeed241f3631dc4b1633a3d68096619767637265f7ae2c84d"
+    },
+    "tce_pb/despesas-2024.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2024.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:48:26Z",
+      "bytes": 3120860,
+      "sha256": "257a5d47aa0fab5f40c3c339fc994bdd18d2bee939a4ce245601fb9a071f313a"
+    },
+    "tce_pb/despesas-2025.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2025.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:48:31Z",
+      "bytes": 4047753,
+      "sha256": "5a5e0ca297cc559f0c494bf173645534f22c2df40d5e0a28d6b5d576be6e5c4b"
+    },
+    "tce_pb/despesas-2026.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2026.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:48:36Z",
+      "bytes": 3224852,
+      "sha256": "ce4f35faddf4665ecfaa7b8e02c49aebb26bdc7320bba44e1a9772199463be6b"
+    },
+    "tce_pb/listagem.xml": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/?prefix=dados-por-municipio/095/",
+      "fonte": "TCE-PB - listagem do repositório de dados abertos (datas de geração)",
+      "baixado_em": "2026-10-14T21:47:19Z",
+      "bytes": 27466,
+      "sha256": "8e761e03949e54b0e32ff464e2a4dea86d9e8f2b1ccc68ddac5952bcb1341f38"
+    }
+  }
+}

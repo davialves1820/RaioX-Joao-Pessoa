@@ -9,6 +9,10 @@ painel de detalhe ao clicar num bairro (com a origem de cada número), ranking d
 cresceram e mais perderam população, tabela completa com download em CSV e uma seção sobre fontes
 e limitações.
 
+A segunda página, **"Para onde vai o dinheiro de João Pessoa"**, mostra as despesas dos órgãos
+municipais declaradas ao TCE-PB: visão geral, gasto por área, fornecedores, modalidades de licitação
+e um mapa experimental. Ver a seção [Para onde vai o dinheiro](#para-onde-vai-o-dinheiro-de-joão-pessoa).
+
 ## Como rodar
 
 Requer Python 3.11+.
@@ -16,7 +20,8 @@ Requer Python 3.11+.
 ```bash
 pip install -r requirements-dev.txt
 python -m src.collect          # baixa os dados brutos para data/raw/ (reexecutável; --force rebaixa)
-python -m src.process.build    # gera data/processed/
+python -m src.process.build    # gera data/processed/ (bairros e população)
+python -m src.process.despesas # gera data/processed/despesas/ (depende do passo anterior)
 pytest                         # testes do pipeline e das funções do app
 streamlit run streamlit_app.py # abre o dashboard em http://localhost:8501
 ```
@@ -34,14 +39,19 @@ downloads interrompidos não deixam arquivos pela metade e cada arquivo fica reg
 `data/raw/manifest.json` com URL, data de download e SHA-256. Os dados brutos não ficam no git
 (são ~38 MB); os processados ficam, porque o app usa só eles.
 
+Para atualizar os dados que mudam com o tempo (despesas do ano corrente, IPCA e estimativas de
+população), rode `python -m src.collect --atualizar` e depois os dois passos de processamento.
+
 ## Estrutura
 
 ```
 data/raw/          dados baixados, sem alteração (só o manifest.json é versionado)
+data/interim/      tabela de empenhos limpa, um por linha (não versionada; ~40 MB)
 data/processed/    dados limpos e prontos para o app
 src/collect/       um script de download por fonte
 src/process/       leitura, junções e cálculo dos indicadores (build.py orquestra)
-src/app/           código do Streamlit (app.py: interface; dados.py: carga, ranking, formatação)
+src/app/           código do Streamlit: app.py e dados.py (bairros), despesas.py e dados_despesas.py
+                   (dinheiro); streamlit_app.py na raiz liga as duas páginas
 notebooks/         exploração inicial das fontes
 tests/             testes do pipeline
 ```
@@ -166,10 +176,160 @@ A chave do projeto é o código IBGE do bairro (`cd_bairro`, 10 dígitos), igual
 
 ## Testes
 
-`pytest` verifica, entre outras coisas: soma dos bairros a até 1% do total do município (2010 e 2022),
+`pytest` verifica, no módulo de despesas: total anual igual ao do SICONFI (tolerância de 0,2%, com
+2016 e 2020 como exceções documentadas), campos essenciais sem nulos, datas dentro do ano do
+arquivo, nenhum CPF exposto nos dados processados, ranking só com CNPJs válidos e as regras de
+limpeza, de bairros e de busca do dashboard.
+
+No módulo de bairros, verifica entre outras coisas: soma dos bairros a até 1% do total do município (2010 e 2022),
 nenhum bairro sem geometria (e geometrias válidas, sem sobreposição), nenhuma população negativa,
 consistência da variação e da densidade, e que valores sigilosos do IBGE ("X") interrompem o pipeline
 em vez de serem estimados.
+
+## Para onde vai o dinheiro de João Pessoa
+
+Módulo sobre como os órgãos municipais de João Pessoa gastam seus recursos, a partir dos
+**empenhos** declarados ao Tribunal de Contas do Estado da Paraíba (TCE-PB) pelo sistema SAGRES.
+
+> **Os valores são os declarados pela Prefeitura e pelos demais órgãos municipais ao TCE-PB.
+> Podem mudar depois da análise e auditoria do Tribunal.** O dashboard mostra para onde vai o
+> dinheiro; não faz juízo sobre a regularidade de nenhuma despesa.
+
+### No dashboard
+
+- **Opções no topo:** valor empenhado ou pago; nominal ou corrigido pelo IPCA; todos os órgãos, só
+  Executivo ou só Legislativo; com ou sem transferências entre órgãos do município (sem, por padrão).
+  Todo gráfico diz se o valor é nominal ou corrigido.
+- **Visão geral:** total por ano, gasto por habitante e mês a mês. 2016 e o ano em andamento
+  aparecem em tom claro e ficam fora das variações anuais.
+- **Por área:** treemap por função e subfunção de governo, tabela com participação e variação, e a
+  série histórica de uma área.
+- **Fornecedores:** ranking de empresas (CNPJ) num período e busca por nome ou CNPJ, com o valor
+  por ano, por órgão pagador e os arquivos de origem. Entidades públicas ficam ocultas por padrão.
+- **Licitação:** participação de cada modalidade por ano (sem folha de pagamento, por padrão).
+- **Mapa (experimental):** valor dos empenhos que citam um bairro, com a cobertura em destaque.
+- **Sobre os dados:** aviso, metodologia resumida, conferência com o SICONFI e arquivos de origem.
+
+### Fontes
+
+| Dado | Origem | Arquivos | Gerado pela fonte em | Baixado em |
+|---|---|---|---|---|
+| Empenhos (despesas) | TCE-PB, [Dados Abertos do SAGRES](https://dados-abertos.tce.pb.gov.br/), município 095 | `despesas-2009.zip` … `despesas-2026.zip` | 06/02/2026 (2009–2025); 14/10/2026 (2026) | 14/10/2026 |
+| Conferência dos totais | Tesouro Nacional, SICONFI, DCA Anexo I-D (despesa por natureza) | `dca-anexo-I-D-AAAA.json` | — | 14/10/2026 |
+| IPCA | IBGE, SIDRA tabela 1737 (número-índice, dez/1993 = 100) | `ipca_tabela1737.json` | até set/2026 | 14/10/2026 |
+| População por ano | IBGE, SIDRA tabela 6579 (estimativas) e Censos 2010 e 2022 | `populacao_estimada_tabela6579.json` | — | 14/10/2026 |
+
+As datas e os hashes de cada arquivo ficam em `data/raw/manifest.json` (download) e
+`data/raw/tce_pb/listagem.xml` (data de geração no servidor do TCE-PB).
+
+O portal do TCE-PB publica um `.zip` por município, conjunto de dados e ano, com um CSV em UTF-8.
+Os antigos arquivos estaduais `.txt.gz` não estão mais disponíveis. O Sagres Online e a API do
+Sagres Captura não puderam ser usados para conferência: o primeiro bloqueia acesso automatizado e
+a documentação da API exige login. Por isso os totais são conferidos com o SICONFI.
+
+### Unidades gestoras incluídas
+
+Todas as 19 que aparecem para João Pessoa, o que permite conferir com o total oficial:
+
+- **Executivo:** Prefeitura; fundos municipais de Saúde, Assistência Social, Urbanização,
+  Cultura, Meio Ambiente, Direitos Difusos, Empreender-JP, Criança e Adolescente, Procuradoria
+  (Funderm), Idoso e Trabalho; IPM (previdência), Emlur, Semob/STTrans, Funjope e Instituto
+  Cândida Vargas.
+- **Legislativo:** Câmara Municipal e Fundo da Câmara.
+
+Vários fundos deixam de aparecer a partir de 2024; o Fundo de Assistência Social, em 2026. As
+despesas passam a ser empenhadas pela Prefeitura, o que muda a distribuição entre órgãos, mas
+não o total.
+
+### Metodologia
+
+- **Série:** de 2009 a 2026. 2003–2008 ficam de fora: até 2006 só há Prefeitura e Câmara, e até
+  2008 o valor liquidado não foi preenchido.
+- **Valor principal:** valor **empenhado** (o compromisso de gasto). Liquidado e pago também
+  estão disponíveis.
+- **Anulações:** o TCE-PB publica o empenhado já líquido das anulações. A soma bate centavo a
+  centavo com o total declarado ao Tesouro em 2015, 2018, 2023 e 2024, e empenhos totalmente
+  anulados aparecem com valor zero. Por isso nada é subtraído de novo.
+- **Transferências entre órgãos do município** (modalidade de aplicação 91, intraorçamentária;
+  por exemplo, a contribuição patronal da Prefeitura ao IPM): fazem parte do total oficial, mas
+  contam o mesmo dinheiro duas vezes. Ficam marcadas (`intra`), e o dashboard permite excluí-las.
+- **Folha de pagamento:** nesses empenhos o "credor" é o próprio órgão pagador (ex.: Secretaria
+  de Finanças, Fundo de Saúde) ou o INSS/IPM. Por isso o grupo "Pessoal e Encargos Sociais" não
+  entra no ranking de fornecedores (continua nos totais).
+- **Correção pela inflação:** cada mês é corrigido pelo IPCA até o último mês publicado (set/2026):
+  `valor corrigido = valor × IPCA(set/2026) / IPCA(mês do empenho)`. Empenhos de meses ainda sem
+  IPCA publicado (out/2026) ficam com fator 1. O dashboard sempre indica se o valor é nominal ou
+  corrigido.
+- **Gasto por habitante:** população das estimativas do IBGE e, em 2010 e 2022, dos Censos. O
+  IBGE não publicou estimativa para 2023: o gasto por habitante desse ano fica em branco.
+- **Função de governo:** códigos padronizados (o TCE-PB publica "4" e "04") e nomes oficiais da
+  Portaria 42/1999 (o arquivo traz grafias como "Encargos Especias").
+- **Modalidade de licitação:** os nomes mudam com a Lei 14.133/2021 ("Pregão Eletrônico" →
+  "Pregão (Lei 14.133/21)"). Foram agrupados em categorias estáveis (pregão, concorrência,
+  dispensa, inexigibilidade, adesão a ata etc.), e um nome novo interrompe o pipeline até ser
+  mapeado. "Sem licitação" inclui despesas que não passam por licitação, como folha, tributos e
+  transferências.
+
+### Privacidade
+
+- Credores pessoa física: o CPF é mascarado (`***.123.456-**`, só os 6 dígitos centrais) e o nome
+  não segue para os dados processados. Não há ranking nem busca de pessoas físicas; o valor pago a
+  elas aparece só no total.
+- O TCE-PB publica o CPF com 14 dígitos ("000" + CPF). Como alguns CNPJs também começam com "000"
+  (agências do Banco do Brasil), o tipo é decidido pelos dígitos verificadores; se o documento é
+  válido como CPF e como CNPJ, o nome desempata (S/A, LTDA, BANCO...). Na dúvida, é tratado como
+  pessoa física.
+- Microempreendedores individuais (MEI) costumam ter o CPF do titular no nome da empresa: esse
+  CPF também é mascarado.
+
+### Mapa por bairro (experimental)
+
+O histórico de cada empenho é um texto livre. Procuramos nele os nomes dos 64 bairros oficiais.
+Nomes que também são palavras comuns ou nomes de pessoas (Centro, Torre, Treze de Maio, José
+Américo...) só contam depois da palavra "bairro", e nomes precedidos de rua, avenida, praça ou
+escola não contam. Empenhos que citam mais de um bairro não são divididos entre eles.
+
+**É uma estimativa parcial:** só 0,7% a 5% do valor empenhado de cada ano cita um único bairro
+(`bairros_cobertura.csv`). A maior parte do gasto (folha, saúde, educação em rede) não é
+atribuível a um bairro pelo texto.
+
+### Limitações
+
+- **2016 incompleto no TCE-PB:** só Prefeitura e Câmara (R$ 1,03 bi, contra R$ 1,78 bi declarados
+  ao Tesouro, −42%). Receitas e servidores de 2016 também estão incompletos na fonte. O ano aparece
+  com aviso e fica fora das comparações entre anos.
+- **2020:** os arquivos do TCE-PB somam 3,1% a mais que o declarado ao Tesouro (cerca de R$ 70 mi),
+  e as fontes disponíveis não explicam a diferença.
+- **2026 é parcial:** os dados vão até 09/10/2026 (outubro incompleto), e o TCE-PB regenera o
+  arquivo com frequência.
+- O histórico de 2021 em diante vem repetido duas vezes no arquivo (corrigido no processamento).
+  Em cerca de 3.900 históricos, travessões e aspas aparecem como "¿" na fonte; não foram
+  alterados.
+- Empenho não é pagamento: um valor empenhado pode ser liquidado e pago depois, ou cancelado.
+
+### Conferência com o Tesouro (SICONFI)
+
+| Ano | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Diferença TCE-PB × SICONFI | +0,06% | 0,00% | −42,25% | 0,00% | 0,00% | 0,00% | +3,12% | 0,00% | 0,00% | 0,00% | 0,00% | +0,13% |
+
+O teste aceita até **0,2%** de diferença; 2016 e 2020 são exceções documentadas em `src/config.py`.
+O SICONFI não tem a DCA de João Pessoa antes de 2014. Detalhes em
+`data/processed/despesas/validacao_siconfi.csv`.
+
+### Dados processados (`data/processed/despesas/`)
+
+| Arquivo | Conteúdo |
+|---|---|
+| `despesas_cubo.parquet` | valores empenhado/liquidado/pago (nominais e corrigidos) por ano, mês, unidade gestora, função, subfunção, grupo de natureza da despesa, modalidade de licitação, tipo de credor e transferência interna; com o arquivo de origem e o fator do IPCA |
+| `credores_pj.parquet` | valores por CNPJ, ano e unidade gestora (sem pessoas físicas e sem folha), nominais e corrigidos, com marca de entidade pública |
+| `bairros_citados.csv` / `bairros_cobertura.csv` | valor por bairro citado (nominal e corrigido) e cobertura por ano |
+| `validacao_siconfi.csv` | total anual TCE-PB × SICONFI |
+| `ipca.csv` / `populacao.csv` | séries usadas na correção e no gasto por habitante |
+| `metadados.json` | mês de referência do IPCA, última data de empenho, checagens, aviso e manifesto dos arquivos brutos |
+
+Cada linha do cubo e da tabela de credores traz o `arquivo_origem` (ex.: `despesas-2025.zip`), e o
+manifesto liga esse arquivo à URL, à data de download e ao SHA-256.
 
 ## Próximas fases
 
