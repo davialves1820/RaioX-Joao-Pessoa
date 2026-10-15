@@ -164,3 +164,46 @@ def fmt_reais_inteiro(v: float) -> str:
         return "—"
     s = f"{abs(v):,.2f}".replace(",", "_").replace(".", ",").replace("_", ".")
     return ("−" if v < 0 else "") + "R$ " + s
+
+
+# --- frases-resumo (texto calculado dos dados, para a leitura rápida de cada aba)
+
+
+def fmt_pct(v: float, casas: int = 0) -> str:
+    return f"{v:.{casas}f}%".replace(".", ",")
+
+
+def lista_pt(itens: list[str]) -> str:
+    """['a', 'b', 'c'] -> 'a, b e c'."""
+    if len(itens) <= 1:
+        return "".join(itens)
+    return ", ".join(itens[:-1]) + " e " + itens[-1]
+
+
+def resumo_areas(df: pd.DataFrame, ano: int, col: str, n: int = 3) -> str:
+    """Ex.: 'Saúde (27%), Educação (22%) e Administração (14%) somaram 63% do valor.'"""
+    f = df[df["ano"] == ano].groupby("funcao")[col].sum().sort_values(ascending=False)
+    if f.sum() <= 0:
+        return ""
+    pct = 100 * f / f.sum()
+    top = [f"{a} ({fmt_pct(p)})" for a, p in pct.head(n).items()]
+    return f"{lista_pt(top)} somaram {fmt_pct(pct.head(n).sum())} do valor."
+
+
+def resumo_licitacao(part: pd.DataFrame, ano: int) -> str:
+    """Ex.: 'pregão 33%, concorrência 21% e sem licitação 25%'."""
+    if ano not in part.index:
+        return ""
+    linha = part.loc[ano].sort_values(ascending=False)
+    top = [f"{m.lower()} ({fmt_pct(p)})" for m, p in linha.head(3).items() if p > 0]
+    return lista_pt(top)
+
+
+def fatia_do_ranking(credores: pd.DataFrame, rk: pd.DataFrame, anos: tuple[int, int], col: str,
+                     incluir_publicos: bool = False) -> float:
+    """% do valor de todas as empresas do período que ficou com as empresas do ranking."""
+    df = credores[credores["ano"].between(*anos)]
+    if not incluir_publicos:
+        df = df[~df["entidade_publica"]]
+    total = df[col].sum()
+    return float(100 * rk[col].sum() / total) if total else 0.0

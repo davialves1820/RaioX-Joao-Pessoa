@@ -26,6 +26,54 @@ AVISO = (
 )
 
 
+GLOSSARIO = """
+**Etapas da despesa pública**
+- **Empenho:** o órgão reserva o dinheiro para uma despesa (por exemplo, um contrato). É o compromisso de gasto.
+- **Liquidação:** o órgão confirma que o produto foi entregue ou o serviço foi feito.
+- **Pagamento:** o dinheiro sai do caixa. Um valor empenhado pode ser pago meses depois, ou cancelado.
+
+**Outros termos**
+- **Órgão (unidade gestora):** quem gasta. Prefeitura, fundos municipais (como o de Saúde), autarquias
+  (como Emlur e Semob), fundações e a Câmara Municipal.
+- **Área (função):** para que serve o gasto, numa classificação usada por todo o país: Saúde, Educação,
+  Urbanismo, Previdência etc. A **subfunção** detalha a área (ex.: Educação → Ensino Fundamental).
+- **Fornecedor:** empresa ou entidade com CNPJ que recebe pelo que vende ou presta.
+- **Correção pela inflação (IPCA):** converte valores de anos diferentes para o poder de compra de hoje,
+  para que possam ser comparados.
+- **Transferência entre órgãos do município:** dinheiro que sai de um órgão municipal para outro (ex.:
+  contribuição da Prefeitura à previdência dos servidores). Somar as duas pontas contaria o mesmo dinheiro duas vezes.
+"""
+
+MODALIDADES_EXPLICADAS = """
+- **Pregão:** disputa pelo menor preço, geralmente eletrônica, para bens e serviços comuns.
+- **Concorrência:** modalidade usada para obras, serviços de engenharia e contratos de maior valor.
+- **Dispensa:** contratação direta que a lei permite sem licitação (ex.: valores baixos, emergências).
+- **Inexigibilidade:** contratação direta quando não há como haver competição (ex.: fornecedor exclusivo).
+- **Adesão a ata de registro de preços:** uso de preços já obtidos em licitação de outro órgão.
+- **Outras modalidades:** chamada pública, credenciamento, licitação internacional, tomada de preços,
+  convite, concurso e leilão.
+- **Sem licitação:** despesas que não passam por licitação, como tributos, repasses, tarifas de serviços
+  públicos (água, energia) e parcelas de contratos de anos anteriores.
+"""
+
+ORGAOS = {
+    "Todos": "Todos os órgãos",
+    "Executivo": "Prefeitura, fundos e autarquias (Executivo)",
+    "Legislativo": "Câmara Municipal (Legislativo)",
+}
+
+
+def _md(texto: str) -> str:
+    """Escapa '$' para o Markdown do Streamlit não interpretar 'R$ ... R$' como fórmula."""
+    return texto.replace("$", "\\$")
+
+
+def _pergunta(titulo: str, explicacao: str) -> None:
+    """Abertura de cada aba: a pergunta que ela responde e como ler."""
+    st.markdown(f"#### {titulo}")
+    st.caption(explicacao)
+
+
 @st.cache_data
 def _carregar():
     return d.carregar(), dados_bairros.carregar_geojson()
@@ -77,7 +125,11 @@ def _nota_status(ano: int, meta: dict) -> str:
 # --- abas
 
 
-def aba_visao_geral(df, dados, col, corrigido, meta):
+def aba_visao_geral(df, dados, col, corrigido, meta, metrica):
+    _pergunta(
+        "Quanto os órgãos municipais gastam por ano?",
+        "Escolha um ano para ver o total, o valor por habitante e a distribuição ao longo dos meses.",
+    )
     totais = d.total_por_ano(df, col)
     anos = list(totais.index)
     ano = st.selectbox("Ano", anos[::-1], index=1 if len(anos) > 1 else 0, key="dv_ano")
@@ -86,8 +138,15 @@ def aba_visao_geral(df, dados, col, corrigido, meta):
 
     per_cap = d.por_habitante(totais, dados["populacao"])
     var = d.variacao_pct(totais, ano, meta)
+    verbo = "empenharam" if metrica == "empenhado" else "pagaram"
+    frase = f"Em {ano}, os órgãos municipais {verbo} **{d.fmt_reais(totais[ano])}**"
+    if pd.notna(per_cap[ano]):
+        frase += f", o equivalente a **{d.fmt_reais_inteiro(per_cap[ano]).replace(',00', '')} por habitante**"
+    if var is not None:
+        frase += f" ({d.fmt_pct(abs(var), 1)} {'a mais' if var >= 0 else 'a menos'} que em {ano - 1})"
+    st.info(_md(frase + f". Valores {_rotulo_valor(corrigido, meta)}."), icon="💡")
     k1, k2, k3 = st.columns(3)
-    k1.metric(f"Total em {ano}", d.fmt_reais(totais[ano]))
+    k1.metric(f"Total {metrica} em {ano}", d.fmt_reais(totais[ano]))
     k2.metric(
         "Por habitante",
         d.fmt_reais_inteiro(per_cap[ano]).replace(",00", "") if pd.notna(per_cap[ano]) else "sem população oficial",
@@ -100,11 +159,10 @@ def aba_visao_geral(df, dados, col, corrigido, meta):
         help="Só entre anos completos (2016 e o ano em andamento ficam de fora). "
              "Para comparar anos, prefira valores corrigidos pelo IPCA.",
     )
-    st.caption(f"Valores {_rotulo_valor(corrigido, meta)}.")
-
     c1, c2 = st.columns(2, gap="large")
     with c1:
         st.subheader("Total por ano")
+        st.caption(f"R$ bilhões, valores {_rotulo_valor(corrigido, meta)}.")
         cores = [AZUL if d.status_ano(a, meta) is None else AZUL_CLARO for a in anos]
         hover = [
             f"<b>{a}</b><br>{d.fmt_reais(v)}" + (f"<br>{d.status_ano(a, meta)}" if d.status_ano(a, meta) else "")
@@ -118,6 +176,7 @@ def aba_visao_geral(df, dados, col, corrigido, meta):
         st.caption("Barras claras: 2016 (dados incompletos no TCE-PB) e ano em andamento.")
     with c2:
         st.subheader("Por habitante")
+        st.caption("Total dividido pela população do ano, para comparar anos com populações diferentes.")
         completos = pd.Series([a for a in anos if d.status_ano(a, meta) is None])
         linha = per_cap.reindex(range(min(anos), max(anos) + 1)).where(
             lambda s: s.index.isin(completos)
@@ -152,19 +211,24 @@ def aba_visao_geral(df, dados, col, corrigido, meta):
         hovertemplate="%{hovertext}<extra></extra>",
     ))
     st.plotly_chart(_layout(fig, 300, "R$ milhões"), config={"displayModeBar": False})
-    st.caption("Mês da data do empenho. Dezembro costuma concentrar empenhos de fim de exercício.")
+    st.caption(
+        "Pela data do empenho. Janeiro costuma concentrar contratos anuais (folha, aluguéis, serviços "
+        "contínuos), e dezembro, os empenhos de fim de ano."
+    )
 
 
 def aba_por_area(df, col, corrigido, meta):
+    _pergunta(
+        "Em que áreas o dinheiro é gasto?",
+        "Cada retângulo tem tamanho proporcional ao valor. Clique numa área para ver o detalhe "
+        "(subfunções) e clique no topo do quadro para voltar.",
+    )
     anos = sorted(df["ano"].unique())
     ano = st.selectbox("Ano", anos[::-1], index=1 if len(anos) > 1 else 0, key="pa_ano")
     if nota := _nota_status(ano, meta):
         st.warning(nota)
     sel = df[df["ano"] == ano]
-    st.caption(
-        "Área de governo segundo a **função** do orçamento (classificação nacional). "
-        f"Clique numa área para ver as subfunções. Valores {_rotulo_valor(corrigido, meta)}."
-    )
+    st.info(_md(f"Em {ano}, {d.resumo_areas(df, ano, col)} Valores {_rotulo_valor(corrigido, meta)}."), icon="💡")
     f = sel.groupby(["funcao", "subfuncao"], as_index=False)[col].sum()
     f = f[f[col] > 0]
     tot_f = f.groupby("funcao")[col].sum()
@@ -194,6 +258,7 @@ def aba_por_area(df, col, corrigido, meta):
     st.dataframe(tabela, width="stretch")
 
     st.subheader("Uma área ao longo dos anos")
+    st.caption("Escolha uma área para ver como o valor mudou desde 2009. Barras claras: 2016 (incompleto) e ano em andamento.")
     area = st.selectbox("Área", list(tabela.index), key="pa_area")
     serie = df[df["funcao"] == area].groupby("ano")[col].sum()
     cores = [AZUL if d.status_ano(a, meta) is None else AZUL_CLARO for a in serie.index]
@@ -210,20 +275,27 @@ def aba_fornecedores(dados, metrica, corrigido, meta, poder):
     if poder != "Todos":
         cred = cred[cred["cod_ug"].map(lambda c: UNIDADES_GESTORAS[c][1]) == poder]
     col = d.coluna(metrica, corrigido)
-    st.caption(
-        "Só **empresas e entidades com CNPJ**. Pessoas físicas não aparecem em rankings nem na busca. "
-        "Folha de pagamento, encargos e benefícios ficam de fora: nesses empenhos o credor é o próprio "
-        f"órgão pagador, não um fornecedor. Valores {_rotulo_valor(corrigido, meta)}."
+    _pergunta(
+        "Quais empresas mais recebem?",
+        "Só empresas e entidades com CNPJ. Pessoas físicas não aparecem em rankings nem na busca. "
+        "Folha de pagamento, encargos e aposentadorias ficam de fora, porque não são compras de "
+        "fornecedores. Estar na lista não indica nenhuma irregularidade: mostra apenas quem recebeu.",
     )
     anos = sorted(cred["ano"].unique())
     c1, c2, c3 = st.columns([3, 1, 2])
     periodo = c1.select_slider("Período", options=anos, value=(max(anos[0], anos[-1] - 4), anos[-1]), key="fo_periodo")
-    n = c2.selectbox("Quantos", [10, 15, 25], index=1, key="fo_n")
+    n = c2.selectbox("Mostrar", [10, 15, 25], index=1, key="fo_n", format_func=lambda x: f"{x} empresas")
     publicos = c3.toggle("Incluir entidades públicas", value=False, key="fo_pub",
                          help="Ministérios, tribunais (precatórios), INSS e outros órgãos que recebem repasses ou tributos.")
     if any(d.status_ano(a, meta) for a in range(periodo[0], periodo[1] + 1)):
         st.info("O período inclui 2016 (incompleto no TCE-PB) ou o ano em andamento.")
     rk = d.ranking_fornecedores(cred, periodo, col, n, publicos)
+    fatia = d.fatia_do_ranking(cred, rk, periodo, col, publicos)
+    st.info(
+        f"As {len(rk)} empresas abaixo ficaram com **{d.fmt_pct(fatia)}** do valor {metrica} a fornecedores "
+        f"com CNPJ no período. Valores {_rotulo_valor(corrigido, meta)}.",
+        icon="💡",
+    )
     st.subheader(f"Maiores fornecedores, {periodo[0]}–{periodo[1]}" if periodo[0] != periodo[1] else f"Maiores fornecedores em {periodo[0]}")
     fig = go.Figure(go.Bar(
         x=rk[col] / 1e6, y=rk["nome_credor"].str.slice(0, 45), orientation="h",
@@ -237,6 +309,7 @@ def aba_fornecedores(dados, metrica, corrigido, meta, poder):
     st.plotly_chart(fig, config={"displayModeBar": False})
 
     st.subheader("Buscar empresa por nome ou CNPJ")
+    st.caption("Veja quanto uma empresa recebeu em todos os anos, de quais órgãos, e em quais arquivos do TCE-PB isso está.")
     termo = st.text_input("Nome ou CNPJ (mínimo 3 caracteres)", key="fo_busca", placeholder="ex.: Energisa ou 09.095.183")
     achados = d.buscar_credores(cred, termo)
     if termo and achados.empty:
@@ -270,17 +343,20 @@ def aba_fornecedores(dados, metrica, corrigido, meta, poder):
 
 
 def aba_licitacao(df, col, corrigido, meta):
+    _pergunta(
+        "Como as compras e contratações são feitas?",
+        "Cada barra é um ano, dividida pela modalidade de licitação dos empenhos (soma 100%). "
+        "Passe o mouse para ver os percentuais.",
+    )
+    with st.expander("O que significa cada modalidade?"):
+        st.markdown(MODALIDADES_EXPLICADAS)
     sem_pessoal = st.toggle(
         "Excluir folha de pagamento e encargos", value=True, key="li_pessoal",
         help="Salários, encargos e benefícios não passam por licitação e dominariam a categoria 'Sem licitação'.",
     )
     part = d.participacao_licitacao(df, col, sem_pessoal)
-    st.caption(
-        "Participação de cada modalidade no valor de cada ano. 'Sem licitação' inclui despesas que não "
-        "exigem licitação, como tributos, repasses, tarifas de serviços públicos e contratos de anos "
-        "anteriores. 'Outras modalidades': chamada pública, credenciamento, licitação internacional, "
-        "tomada de preços, convite, concurso e leilão."
-    )
+    ref = max(a for a in part.index if d.status_ano(a, meta) is None)
+    st.info(f"Em {ref}, as maiores fatias foram: {d.resumo_licitacao(part, ref)}.", icon="💡")
     fig = go.Figure()
     for i, m in enumerate(d.ORDEM_LICITACAO):
         fig.add_trace(go.Bar(
@@ -296,6 +372,10 @@ def aba_licitacao(df, col, corrigido, meta):
 
 
 def aba_mapa(dados, geo, corrigido, meta):
+    _pergunta(
+        "Onde o dinheiro aparece nos bairros?",
+        "Bairros mais escuros têm mais valor em empenhos que os citam. Bairros em branco não são citados no período.",
+    )
     st.warning(
         "**Estimativa parcial e experimental.** O mapa mostra só empenhos cujo texto de descrição cita "
         "o nome de um bairro (ex.: \"pavimentação no bairro de Mangabeira\"). A maior parte do gasto, "
@@ -312,9 +392,13 @@ def aba_mapa(dados, geo, corrigido, meta):
 
     k1, k2, k3 = st.columns(3)
     k1.metric("Cobertura do valor empenhado", f"{cobertura:.1f}%".replace(".", ","),
-              help="Parte do valor total empenhado no período cujo texto cita exatamente um bairro.")
-    k2.metric("Associado a um bairro", d.fmt_reais(v[col].sum()))
-    k3.metric("Citando vários bairros (fora do mapa)", d.fmt_reais(cobp["varios_bairros"].sum()))
+              help="Parte do valor total empenhado no período cujo texto cita exatamente um bairro. "
+                   "É o que aparece no mapa.")
+    k2.metric("Associado a um único bairro (no mapa)", d.fmt_reais(v[col].sum()))
+    k3.metric("Empenhos que citam 2 ou mais bairros (não entram no mapa)", d.fmt_reais(cobp["varios_bairros"].sum()),
+              help="Empenhos cujo texto cita mais de um bairro de João Pessoa, como \"ruas em Mangabeira e "
+                   "no Valentina\". O texto não diz quanto foi para cada bairro, e dividir o valor seria "
+                   "inventar uma distribuição; por isso ficam fora do mapa.")
 
     todos = pd.DataFrame(
         [(f["properties"]["cd_bairro"], f["properties"]["nm_bairro"]) for f in geo["features"]],
@@ -403,22 +487,35 @@ def main() -> None:
     st.markdown("<style>.block-container{padding-top:2rem}</style>", unsafe_allow_html=True)
     st.title("Para onde vai o dinheiro de João Pessoa")
     ult = pd.Timestamp(meta["ultima_data_de_empenho"]).strftime("%d/%m/%Y")
-    st.caption(f"Despesas empenhadas pelos órgãos municipais, 2009 a {ult}. {AVISO}")
+    st.caption(f"Despesas dos órgãos municipais, de 2009 a {ult}. {AVISO}")
+    with st.expander("Entenda os termos usados nesta página"):
+        st.markdown(GLOSSARIO)
 
-    c1, c2, c3, c4 = st.columns([1.2, 1.6, 1.4, 2])
-    metrica = c1.radio("Valor", ["empenhado", "pago"], format_func=str.capitalize, horizontal=True, key="g_metrica",
-                       help="Empenhado: compromisso de gasto. Pago: o que saiu do caixa.")
-    corrigido = c2.radio("Inflação", [True, False], format_func=lambda x: "Corrigido (IPCA)" if x else "Nominal",
-                         horizontal=True, key="g_corr")
-    poder = c3.selectbox("Órgãos", ["Todos", "Executivo", "Legislativo"], key="g_poder")
-    sem_intra = c4.toggle("Excluir transferências entre órgãos do município", value=True, key="g_intra",
-                          help="Ex.: contribuição da Prefeitura à previdência municipal (IPM). Incluí-las conta o mesmo dinheiro duas vezes.")
+    c1, c2, c3, c4 = st.columns([1.3, 1.6, 1.8, 2])
+    metrica = c1.radio(
+        "Valor mostrado", ["empenhado", "pago"],
+        format_func={"empenhado": "Empenhado", "pago": "Pago"}.get, horizontal=True, key="g_metrica",
+        help="Empenhado: dinheiro reservado para a despesa (compromisso). Pago: o que já saiu do caixa.",
+    )
+    corrigido = c2.radio(
+        "Inflação", [True, False], format_func=lambda x: "Corrigido pelo IPCA" if x else "Sem correção",
+        horizontal=True, key="g_corr",
+        help="Corrigido: todos os anos no poder de compra de hoje, bom para comparar anos. "
+             "Sem correção: valores da época.",
+    )
+    poder = c3.selectbox("Órgãos", list(ORGAOS), format_func=ORGAOS.get, key="g_poder")
+    sem_intra = c4.toggle(
+        "Sem dupla contagem de repasses internos", value=True, key="g_intra",
+        help="Repasses entre órgãos do próprio município, como a contribuição da Prefeitura à previdência "
+             "dos servidores (IPM), aparecem como gasto da Prefeitura e depois como gasto do IPM. Com a "
+             "opção ligada, o mesmo dinheiro não é contado duas vezes.",
+    )
     col = d.coluna(metrica, corrigido)
     df = d.filtrar(dados["cubo"], poder, sem_intra)
 
     abas = st.tabs(["Visão geral", "Por área", "Fornecedores", "Licitação", "Mapa (experimental)", "Sobre os dados"])
     with abas[0]:
-        aba_visao_geral(df, dados, col, corrigido, meta)
+        aba_visao_geral(df, dados, col, corrigido, meta, metrica)
     with abas[1]:
         aba_por_area(df, col, corrigido, meta)
     with abas[2]:
