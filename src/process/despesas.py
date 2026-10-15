@@ -190,12 +190,25 @@ def ler_siconfi() -> pd.DataFrame:
 # --- agregados
 
 
+def fator_ipca(ipca: pd.DataFrame, ano: pd.Series, mes: pd.Series) -> tuple[np.ndarray, np.ndarray]:
+    """Fator de correção até o último mês publicado do IPCA (mês de referência).
+
+    Meses depois do último IPCA publicado ficam com fator 1: já estão em valores do
+    período de referência. Devolve (fator, mes_sem_indice).
+    """
+    ref = ipca.iloc[-1]["indice"]
+    idx = ipca.set_index(["ano", "mes"])["indice"]
+    indice_mes = idx.reindex(pd.MultiIndex.from_arrays([ano, mes])).to_numpy()
+    sem = np.isnan(indice_mes)
+    return np.where(sem, 1.0, ref / np.where(sem, 1.0, indice_mes)), sem
+
+
 def agregar(e: pd.DataFrame, ipca: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     """Cubo mensal por unidade gestora, função/subfunção, modalidade e tipo de credor."""
     # Subfunção: o nome mais frequente de cada código
     nomes_sub = e.groupby("codigo_subfuncao")["subfuncao"].agg(lambda s: s.value_counts().index[0])
     dims = ["ano", "mes", "cod_ug", "intra", "codigo_funcao", "funcao", "codigo_subfuncao",
-            "grupo_modalidade", "tipo_credor", "arquivo_origem"]
+            "grupo_natureza", "grupo_modalidade", "tipo_credor", "arquivo_origem"]
     cubo = (
         e.groupby(dims, as_index=False)
         .agg(empenhado_c=("empenhado_c", "sum"), liquidado_c=("liquidado_c", "sum"),
@@ -205,13 +218,9 @@ def agregar(e: pd.DataFrame, ipca: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
 
     # Correção pelo IPCA até o último mês publicado (mês de referência)
     ref = ipca.iloc[-1]
-    idx = ipca.set_index(["ano", "mes"])["indice"]
-    chave = pd.MultiIndex.from_frame(cubo[["ano", "mes"]])
-    indice_mes = idx.reindex(chave).to_numpy()
-    # Meses após o último IPCA publicado ficam com fator 1 (já estão em valores do período de referência)
-    fator = np.where(np.isnan(indice_mes), 1.0, ref["indice"] / indice_mes)
+    fator, sem = fator_ipca(ipca, cubo["ano"], cubo["mes"])
     cubo["ipca_fator"] = fator.round(6)
-    cubo["ipca_sem_indice_do_mes"] = np.isnan(indice_mes)
+    cubo["ipca_sem_indice_do_mes"] = sem
     for v in ["empenhado", "liquidado", "pago"]:
         cubo[v] = (cubo[f"{v}_c"] / 100).round(2)
         cubo[f"{v}_corrigido"] = (cubo[f"{v}_c"] / 100 * cubo["ipca_fator"]).round(2)
@@ -233,7 +242,7 @@ _ENTIDADE_PUBLICA = re.compile(
 )
 
 
-def credores_pj(e: pd.DataFrame) -> pd.DataFrame:
+def credores_pj(e: pd.DataFrame, ipca: pd.DataFrame) -> pd.DataFrame:
     """Valores por empresa (CNPJ), ano e unidade gestora.
 
     - Pessoas físicas não entram.
@@ -242,12 +251,18 @@ def credores_pj(e: pd.DataFrame) -> pd.DataFrame:
       Finanças) ou o INSS/IPM, não um fornecedor.
     - Entidades públicas que sobram (repasses, tributos) ficam marcadas em `entidade_publica`.
     """
-    pj = e[(e["tipo_credor"] == "PJ") & (e["grupo_natureza"] != GRUPO_PESSOAL)]
+    pj = e[(e["tipo_credor"] == "PJ") & (e["grupo_natureza"] != GRUPO_PESSOAL)].copy()
+    fator, _ = fator_ipca(ipca, pj["ano"], pj["mes"])
+    pj["empenhado_corr_c"] = pj["empenhado_c"] * fator
+    pj["pago_corr_c"] = pj["pago_c"] * fator
     agg = (
         pj.groupby(["documento", "ano", "cod_ug", "arquivo_origem"], as_index=False)
         .agg(empenhado_c=("empenhado_c", "sum"), liquidado_c=("liquidado_c", "sum"),
-             pago_c=("pago_c", "sum"), n_empenhos=("empenhado_c", "size"))
+             pago_c=("pago_c", "sum"), empenhado_corr_c=("empenhado_corr_c", "sum"),
+             pago_corr_c=("pago_corr_c", "sum"), n_empenhos=("empenhado_c", "size"))
     )
+    agg["empenhado_corrigido"] = (agg.pop("empenhado_corr_c") / 100).round(2)
+    agg["pago_corrigido"] = (agg.pop("pago_corr_c") / 100).round(2)
     # nome mais recente de cada CNPJ (o mesmo CNPJ aparece com grafias diferentes)
     nome = pj.sort_values(["data"]).groupby("documento")["nome_credor"].last()
     agg["nome_credor"] = agg["documento"].map(nome)
@@ -259,7 +274,7 @@ def credores_pj(e: pd.DataFrame) -> pd.DataFrame:
     return agg.rename(columns={"documento": "cnpj"})
 
 
-def bairros(e: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+def bairros(e: pd.DataFrame, ipca: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     ind = pd.read_csv(DATA_PROCESSED / "indicadores_bairros.csv", dtype={"cd_bairro": str})
     nomes = tuple(zip(ind.cd_bairro, ind.nm_bairro))
     # Filtro rápido: só textos que contêm algum dos nomes passam pelas regras completas
@@ -271,12 +286,15 @@ def bairros(e: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     n = achados.map(len)
 
     um = e[n == 1].assign(cd_bairro=achados[n == 1].map(lambda s: next(iter(s))))
+    um["empenhado_corr_c"] = um["empenhado_c"] * fator_ipca(ipca, um["ano"], um["mes"])[0]
     por_bairro = (
         um.groupby(["ano", "cd_bairro"], as_index=False)
-        .agg(empenhado_c=("empenhado_c", "sum"), n_empenhos=("empenhado_c", "size"))
+        .agg(empenhado_c=("empenhado_c", "sum"), empenhado_corr_c=("empenhado_corr_c", "sum"),
+             n_empenhos=("empenhado_c", "size"))
         .merge(ind[["cd_bairro", "nm_bairro"]], on="cd_bairro")
     )
     por_bairro["empenhado"] = (por_bairro.pop("empenhado_c") / 100).round(2)
+    por_bairro["empenhado_corrigido"] = (por_bairro.pop("empenhado_corr_c") / 100).round(2)
 
     cob = (
         e.assign(cat=np.select([n == 1, n > 1], ["um_bairro", "varios_bairros"], "sem_bairro"))
@@ -312,8 +330,8 @@ def main() -> None:
     ipca = ler_ipca()
     cubo, info_ipca = agregar(e, ipca)
     cubo.to_parquet(SAIDA / "despesas_cubo.parquet", index=False)
-    credores_pj(e).to_parquet(SAIDA / "credores_pj.parquet", index=False)
-    por_bairro, cobertura = bairros(e)
+    credores_pj(e, ipca).to_parquet(SAIDA / "credores_pj.parquet", index=False)
+    por_bairro, cobertura = bairros(e, ipca)
     por_bairro.to_csv(SAIDA / "bairros_citados.csv", index=False)
     cobertura.to_csv(SAIDA / "bairros_cobertura.csv", index=False)
     ler_populacao().to_csv(SAIDA / "populacao.csv", index=False)

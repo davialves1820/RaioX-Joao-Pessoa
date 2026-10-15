@@ -281,7 +281,6 @@ abaixo disso, ou se o bairro não existia em 2010, a variação não é exibida.
 
 
 def main() -> None:
-    st.set_page_config(page_title="Raio-X dos Bairros de João Pessoa", layout="wide")
     ind, geo, totais, meta = _carregar()
 
     # Menos espaço acima do título, para o mapa caber inteiro na primeira tela

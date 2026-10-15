@@ -9,9 +9,9 @@ painel de detalhe ao clicar num bairro (com a origem de cada número), ranking d
 cresceram e mais perderam população, tabela completa com download em CSV e uma seção sobre fontes
 e limitações.
 
-Em construção: o módulo **"Para onde vai o dinheiro de João Pessoa"**, com as despesas dos
-órgãos municipais declaradas ao TCE-PB (pipeline de dados pronto; dashboard na próxima etapa).
-Ver a seção [Para onde vai o dinheiro](#para-onde-vai-o-dinheiro-de-joão-pessoa).
+A segunda página, **"Para onde vai o dinheiro de João Pessoa"**, mostra as despesas dos órgãos
+municipais declaradas ao TCE-PB: visão geral, gasto por área, fornecedores, modalidades de licitação
+e um mapa experimental. Ver a seção [Para onde vai o dinheiro](#para-onde-vai-o-dinheiro-de-joão-pessoa).
 
 ## Como rodar
 
@@ -50,7 +50,8 @@ data/interim/      tabela de empenhos limpa, um por linha (não versionada; ~40 
 data/processed/    dados limpos e prontos para o app
 src/collect/       um script de download por fonte
 src/process/       leitura, junções e cálculo dos indicadores (build.py orquestra)
-src/app/           código do Streamlit (app.py: interface; dados.py: carga, ranking, formatação)
+src/app/           código do Streamlit: app.py e dados.py (bairros), despesas.py e dados_despesas.py
+                   (dinheiro); streamlit_app.py na raiz liga as duas páginas
 notebooks/         exploração inicial das fontes
 tests/             testes do pipeline
 ```
@@ -175,7 +176,12 @@ A chave do projeto é o código IBGE do bairro (`cd_bairro`, 10 dígitos), igual
 
 ## Testes
 
-`pytest` verifica, entre outras coisas: soma dos bairros a até 1% do total do município (2010 e 2022),
+`pytest` verifica, no módulo de despesas: total anual igual ao do SICONFI (tolerância de 0,2%, com
+2016 e 2020 como exceções documentadas), campos essenciais sem nulos, datas dentro do ano do
+arquivo, nenhum CPF exposto nos dados processados, ranking só com CNPJs válidos e as regras de
+limpeza, de bairros e de busca do dashboard.
+
+No módulo de bairros, verifica entre outras coisas: soma dos bairros a até 1% do total do município (2010 e 2022),
 nenhum bairro sem geometria (e geometrias válidas, sem sobreposição), nenhuma população negativa,
 consistência da variação e da densidade, e que valores sigilosos do IBGE ("X") interrompem o pipeline
 em vez de serem estimados.
@@ -188,6 +194,21 @@ Módulo sobre como os órgãos municipais de João Pessoa gastam seus recursos, 
 > **Os valores são os declarados pela Prefeitura e pelos demais órgãos municipais ao TCE-PB.
 > Podem mudar depois da análise e auditoria do Tribunal.** O dashboard mostra para onde vai o
 > dinheiro; não faz juízo sobre a regularidade de nenhuma despesa.
+
+### No dashboard
+
+- **Opções no topo:** valor empenhado ou pago; nominal ou corrigido pelo IPCA; todos os órgãos, só
+  Executivo ou só Legislativo; com ou sem transferências entre órgãos do município (sem, por padrão).
+  Todo gráfico diz se o valor é nominal ou corrigido.
+- **Visão geral:** total por ano, gasto por habitante e mês a mês. 2016 e o ano em andamento
+  aparecem em tom claro e ficam fora das variações anuais.
+- **Por área:** treemap por função e subfunção de governo, tabela com participação e variação, e a
+  série histórica de uma área.
+- **Fornecedores:** ranking de empresas (CNPJ) num período e busca por nome ou CNPJ, com o valor
+  por ano, por órgão pagador e os arquivos de origem. Entidades públicas ficam ocultas por padrão.
+- **Licitação:** participação de cada modalidade por ano (sem folha de pagamento, por padrão).
+- **Mapa (experimental):** valor dos empenhos que citam um bairro, com a cobertura em destaque.
+- **Sobre os dados:** aviso, metodologia resumida, conferência com o SICONFI e arquivos de origem.
 
 ### Fontes
 
@@ -300,9 +321,9 @@ O SICONFI não tem a DCA de João Pessoa antes de 2014. Detalhes em
 
 | Arquivo | Conteúdo |
 |---|---|
-| `despesas_cubo.parquet` | valores empenhado/liquidado/pago (nominais e corrigidos) por ano, mês, unidade gestora, função, subfunção, modalidade de licitação, tipo de credor e transferência interna; com o arquivo de origem e o fator do IPCA |
-| `credores_pj.parquet` | valores por CNPJ, ano e unidade gestora (sem pessoas físicas e sem folha), com marca de entidade pública |
-| `bairros_citados.csv` / `bairros_cobertura.csv` | valor por bairro citado e cobertura por ano |
+| `despesas_cubo.parquet` | valores empenhado/liquidado/pago (nominais e corrigidos) por ano, mês, unidade gestora, função, subfunção, grupo de natureza da despesa, modalidade de licitação, tipo de credor e transferência interna; com o arquivo de origem e o fator do IPCA |
+| `credores_pj.parquet` | valores por CNPJ, ano e unidade gestora (sem pessoas físicas e sem folha), nominais e corrigidos, com marca de entidade pública |
+| `bairros_citados.csv` / `bairros_cobertura.csv` | valor por bairro citado (nominal e corrigido) e cobertura por ano |
 | `validacao_siconfi.csv` | total anual TCE-PB × SICONFI |
 | `ipca.csv` / `populacao.csv` | séries usadas na correção e no gasto por habitante |
 | `metadados.json` | mês de referência do IPCA, última data de empenho, checagens, aviso e manifesto dos arquivos brutos |
