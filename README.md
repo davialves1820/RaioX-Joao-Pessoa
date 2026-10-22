@@ -22,6 +22,7 @@ pip install -r requirements-dev.txt
 python -m src.collect          # baixa os dados brutos para data/raw/ (reexecutável; --force rebaixa)
 python -m src.process.build    # gera data/processed/ (bairros e população)
 python -m src.process.despesas # gera data/processed/despesas/ (depende do passo anterior)
+python -m src.process.servicos # gera data/processed/servicos/ (depende do build)
 pytest                         # testes do pipeline e das funções do app
 streamlit run streamlit_app.py # abre o dashboard em http://localhost:8501
 ```
@@ -40,7 +41,10 @@ downloads interrompidos não deixam arquivos pela metade e cada arquivo fica reg
 (são ~38 MB); os processados ficam, porque o app usa só eles.
 
 Para atualizar os dados que mudam com o tempo (despesas do ano corrente, IPCA e estimativas de
-população), rode `python -m src.collect --atualizar` e depois os dois passos de processamento.
+população, estabelecimentos do CNES), rode `python -m src.collect --atualizar` e depois os passos
+de processamento. O Catálogo de Escolas do INEP é exportado por navegador automatizado (ver
+[Serviços públicos e acesso](#serviços-públicos-e-acesso)); para atualizá-lo, use
+`python -m src.collect.inep_catalogo --force`.
 
 ## Estrutura
 
@@ -52,6 +56,7 @@ src/collect/       um script de download por fonte
 src/process/       leitura, junções e cálculo dos indicadores (build.py orquestra)
 src/app/           código do Streamlit: app.py e dados.py (bairros), despesas.py e dados_despesas.py
                    (dinheiro); streamlit_app.py na raiz liga as duas páginas
+certs/             certificado intermediário público usado na coleta do INEP
 notebooks/         exploração inicial das fontes
 tests/             testes do pipeline
 ```
@@ -185,6 +190,12 @@ No módulo de bairros, verifica entre outras coisas: soma dos bairros a até 1% 
 nenhum bairro sem geometria (e geometrias válidas, sem sobreposição), nenhuma população negativa,
 consistência da variação e da densidade, e que valores sigilosos do IBGE ("X") interrompem o pipeline
 em vez de serem estimados.
+
+No módulo de serviços, verifica: todo ponto num bairro tem exatamente um bairro válido (e cai
+dentro dele), ids únicos, pontos fora de bairro ou sem coordenada listados com o motivo, contagens
+iguais ao total da fonte filtrada por João Pessoa (recalculado dos arquivos brutos quando estão
+presentes), contagens por bairro iguais aos pontos, nenhuma distância negativa ou ausente, área verde
+menor que a área do bairro e índice entre 0 e 100.
 
 ## Para onde vai o dinheiro de João Pessoa
 
@@ -331,7 +342,137 @@ O SICONFI não tem a DCA de João Pessoa antes de 2014. Detalhes em
 Cada linha do cubo e da tabela de credores traz o `arquivo_origem` (ex.: `despesas-2025.zip`), e o
 manifesto liga esse arquivo à URL, à data de download e ao SHA-256.
 
+## Serviços públicos e acesso
+
+Escolas públicas, unidades de saúde do SUS, praças e parques por bairro, com distância até a
+escola e a UBS/USF mais próximas, área verde por habitante e um índice simples de acesso.
+Gerado por `python -m src.process.servicos`.
+
+### Fontes
+
+| Dado | Origem | Arquivo bruto | Atualização da fonte | Obtido em |
+|---|---|---|---|---|
+| Escolas | INEP, [Catálogo de Escolas](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas) (UF = PB) | `inep/catalogo_escolas_PB.csv` | situação do Censo Escolar 2024 (confere com os microdados de 2024) | 22/10/2026 |
+| Unidades de saúde | Ministério da Saúde, CNES, [API de dados abertos](https://apidadosabertos.saude.gov.br/) (município 250750) | `cnes/estabelecimentos_250750.json`, `cnes/tipounidades.json` | cadastros atualizados até 16/10/2026 | 16/10/2026 |
+| Praças e parques | Prefeitura (Filipeia), via [paulovitorweb/geodata-jp](https://github.com/paulovitorweb/geodata-jp) (commit `76f128b`) | `geodata_jp/pracas.geojson`, `geodata_jp/parques.geojson` | fev/2022 | 22/10/2026 |
+| Coordenadas de apoio (escolas) | Catálogo do INEP de 2022, via geodata-jp | `geodata_jp/escolas_publicas.geojson` | fev/2022 | 22/10/2026 |
+| População por setor censitário | IBGE, Censo 2022, malha de setores com atributos (`v0001`) | `ibge_censo2022/PB_setores_CD2022.gpkg` | 2022 | 22/10/2026 |
+
+**Por que não só o geodata-jp:** a camada de escolas do geodata-jp é de fevereiro de 2022. Comparada
+com o catálogo atual do INEP, faltam 12 escolas abertas depois e 8 das que ela traz estão hoje
+paralisadas. Por isso a fonte é o INEP, e o geodata-jp só completa coordenadas. O geodata-jp não tem
+unidades de saúde: elas vêm do CNES.
+
+**Coleta do INEP:** o catálogo não tem download direto. É um painel do Oracle Analytics, e
+`src/collect/inep_catalogo.py` o opera com Playwright + Chromium (filtro UF = PB, Aplicar, Exportar).
+A exportação é conferida: o painel precisa dizer que selecionou entre 1.000 e 20.000 escolas, e todas
+as linhas precisam ser da PB, porque, se o filtro falha, o painel exporta 100 mil linhas de várias UFs.
+O servidor do INEP não envia o certificado intermediário da RNP (*RNP ICPEdu GR46 OV TLS CA 2025*).
+O certificado público está em `certs/` e é registrado no banco de certificados do Chromium; a
+verificação TLS não é desligada. Se o painel mudar, o docstring do script explica a exportação manual.
+
+**CNES:** a API devolve 20 registros por página. Em 22/10/2026 ela estava fora do ar; a cópia usada
+foi baixada e conferida em 16/10/2026 (data registrada no manifesto).
+
+### O que entra
+
+- **Escolas:** públicas (municipais, estaduais e federais) de João Pessoa, exceto as paralisadas
+  ou extintas: **301**. Dessas, 5 são de **atividade complementar ou AEE** exclusiva (sem turmas
+  regulares) e aparecem no mapa numa categoria própria, mas ficam fora das distâncias e do índice.
+- **Saúde (rede SUS):** estabelecimentos ativos dos tipos UBS/USF (centro de saúde, posto),
+  policlínica, UPA/pronto atendimento e hospital (geral, especializado e misto) que são públicos
+  (natureza jurídica do grupo 1) ou atendem pelo SUS. Cadastros de regulação (ex.: "... REGULACAO
+  SESPB") são excluídos: **145** unidades (106 UBS/USF, 9 policlínicas, 4 UPAs, 26 hospitais).
+  "Esfera administrativa" do CNES indica a gestão, não quem é dono, por isso a natureza jurídica.
+- **Áreas verdes:** 214 praças (61,8 ha) e 11 parques (270,8 ha) do cadastro da Prefeitura. Onde
+  uma praça e um parque se sobrepõem (1,4 ha), a área conta uma vez.
+
+Funil completo em `data/processed/servicos/metadados.json` (`funil`).
+
+### Pontos sem coordenada ou fora dos bairros
+
+Nenhum ponto é descartado em silêncio. Cada um recebe um status, e os que não caem num bairro
+ficam em `pontos_nao_atribuidos.csv`:
+
+| Status | Escolas | Saúde | O que acontece |
+|---|---|---|---|
+| no bairro | 284 | 144 | contado no bairro |
+| sem coordenada | 16 | 0 | fora do mapa e das distâncias; listado |
+| no município, fora de bairro | 1 | 0 | no mapa e nas distâncias; não contado em bairro |
+| fora do município | 0 | 1 | fora das distâncias e das contagens; listado |
+
+- Das 19 escolas sem coordenada no catálogo, 9 estão no geodata-jp, mas 6 delas têm lá o mesmo
+  ponto (−7,145192; −34,859117), repetido em 12 escolas de endereços diferentes. É um marcador
+  genérico, não uma localização, então só as 3 coordenadas restantes são usadas (marcadas como
+  "geodata-jp (Catálogo de Escolas do INEP, versão de 2022)").
+- A USF Integrada Boa Esperança tem no CNES uma coordenada a 36 km do limite do município (o endereço
+  é em Gramame). Não é corrigida à mão.
+- A malha de bairros do IBGE cobre 167,8 km² dos 210 km² do município. O limite do município é a
+  união dos setores censitários de 2022; 14 setores (3.143 moradores) não pertencem a nenhum bairro.
+- Um ponto exatamente na divisa entre dois bairros fica com o de menor código (o número de casos
+  está em `metadados.json`).
+
+### Metodologia
+
+Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, em metros, nunca em graus.
+
+- **Distância até o serviço mais próximo:** linha reta (não é o caminho pelas ruas) até a escola
+  regular ou a UBS/USF mais próxima no município, inclusive de outro bairro. Duas versões:
+  - **ponderada pela população (a principal):** distância de cada setor censitário com moradores
+    (centroide do setor) até o serviço mais próximo, com média ponderada pelo número de moradores
+    do setor no Censo 2022;
+  - **do centroide do bairro:** um ponto só. É mais simples, mas o centro geométrico pode ser um
+    mangue, um parque ou uma área vazia. A diferença entre as duas mostra onde as pessoas moram de
+    fato em relação ao centro do bairro (no Planalto da Boa Esperança, por exemplo, a escola está a
+    29 m do centroide, mas o morador médio está a 366 m de uma escola).
+- **Serviços por 10 mil habitantes:** contagem no bairro ÷ população 2022 × 10.000.
+- **Área verde por habitante (m²/hab):** área de praças e parques dentro do bairro ÷ população 2022.
+- **Ranking "mais gente e menos serviços":** habitantes por equipamento (escolas regulares +
+  UBS/USF no bairro). Bairros sem nenhum dos dois aparecem à parte, no topo. Só entram bairros com
+  pelo menos 1.000 moradores, porque em bairros quase vazios a razão não diz muito.
+- **Índice de acesso (0 a 100):** média simples de três posições percentuais entre os 64 bairros:
+
+  `índice = (P_escola + P_ubs + P_verde) / 3`
+
+  - `P_escola`: posição pela distância ponderada até a escola, invertida (mais perto = mais alto);
+  - `P_ubs`: o mesmo para a UBS/USF;
+  - `P_verde`: posição pela área verde por habitante (mais área = mais alto).
+
+  Cada posição é o percentil do bairro (de 1/64 × 100 a 100; empates recebem a posição média). O
+  índice é **relativo**: 100 seria o melhor bairro de João Pessoa nos três, não um padrão ideal.
+  Os três componentes têm o mesmo peso, e a escolha é deliberadamente simples para que o número
+  possa ser refeito à mão.
+
+### Limitações
+
+- **Só serviços públicos ou do SUS.** Bairros de renda mais alta (Cabo Branco, Tambaú, Aeroclube,
+  Brisamar) aparecem sem escola pública nem UBS; muitos moradores usam a rede privada, que não está
+  contada.
+- **A UBS atende um território**, não o bairro onde está. A distância mostra proximidade física, não
+  a unidade de referência de cada família.
+- **Linha reta** subestima o caminho real, sobretudo onde há rios, mangues, linha férrea ou a BR-230.
+- **Efeito de borda:** o serviço mais próximo pode estar em outro bairro (isso é contado); serviços
+  em municípios vizinhos (Bayeux, Cabedelo, Santa Rita) não estão nos dados.
+- **Área verde incompleta:** só praças e parques do cadastro da Prefeitura (fev/2022). A **Mata do
+  Buraquinho / Jardim Botânico** (cerca de 500 ha) e outras áreas de mata, orla e canteiros não
+  estão nos dados; bairros vizinhos a elas aparecem com menos área verde do que de fato têm.
+  Um parque que atravessa mais de um bairro é contado em cada um (por isso a soma dos parques por
+  bairro passa de 11), mas a área é dividida entre eles.
+- **16 escolas sem coordenada** (lista em `pontos_nao_atribuidos.csv`) não entram nas distâncias;
+  a distância até a escola pode estar superestimada nos bairros delas.
+- As coordenadas são as declaradas ao INEP e ao CNES e não foram conferidas uma a uma.
+
+### Dados processados (`data/processed/servicos/`)
+
+| Arquivo | Conteúdo |
+|---|---|
+| `indicadores_servicos.csv` | por bairro: contagens por tipo, por 10 mil hab., área verde (m² e m²/hab), distâncias (ponderada e do centroide), habitantes por equipamento, marcação do ranking e índice de acesso |
+| `pontos_servicos.geojson` | escolas e unidades de saúde com coordenada: tipo, rede/natureza, endereço, origem da coordenada, status, bairro e arquivo de origem |
+| `pontos_nao_atribuidos.csv` | pontos sem coordenada ou fora dos bairros, com o motivo |
+| `areas_verdes.geojson` | praças e parques (simplificados em 1 m para o mapa), com área |
+| `metadados.json` | funil de filtros, pontos por status, áreas verdes, médias da cidade, setores e manifesto dos arquivos brutos |
+
 ## Próximas fases
 
-Serviços públicos (escolas/INEP, saúde/CNES, praças, parques, ciclovias, comunidades), outros
-indicadores do Censo 2022 (renda, saneamento, faixa etária) e indicadores de acesso por bairro.
+Ciclovias e comunidades, outros indicadores do Censo 2022 (renda, saneamento, faixa etária) e
+distâncias pela rede de ruas.

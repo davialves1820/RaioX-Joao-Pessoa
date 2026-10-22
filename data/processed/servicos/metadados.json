@@ -1,0 +1,139 @@
+{
+  "gerado_em": "2026-10-22T18:41:05Z",
+  "crs_calculos": "EPSG:31985",
+  "funil": {
+    "escolas": {
+      "catalogo_PB": 5239,
+      "joao_pessoa": 514,
+      "publicas": 321,
+      "paralisadas_ou_extintas": 20,
+      "publicas_em_funcionamento": 301,
+      "geodata_jp_coordenada_repetida_descartada": 6,
+      "coordenada_completada_pelo_geodata_jp": 3
+    },
+    "saude": {
+      "cnes_joao_pessoa": 3171,
+      "tipos_pedidos": 245,
+      "ativos": 200,
+      "rede_sus_publicos_ou_atendem_sus": 148,
+      "sem_cadastros_de_regulacao": 145
+    }
+  },
+  "pontos_por_status": {
+    "escola | Escola": {
+      "bairro": 282,
+      "fora_de_bairro": 1,
+      "fora_do_municipio": 0,
+      "sem_coordenada": 13
+    },
+    "escola | Escola de atividade complementar ou AEE": {
+      "bairro": 2,
+      "fora_de_bairro": 0,
+      "fora_do_municipio": 0,
+      "sem_coordenada": 3
+    },
+    "saude | Hospital": {
+      "bairro": 26,
+      "fora_de_bairro": 0,
+      "fora_do_municipio": 0,
+      "sem_coordenada": 0
+    },
+    "saude | Policlínica": {
+      "bairro": 9,
+      "fora_de_bairro": 0,
+      "fora_do_municipio": 0,
+      "sem_coordenada": 0
+    },
+    "saude | UBS/USF": {
+      "bairro": 105,
+      "fora_de_bairro": 0,
+      "fora_do_municipio": 1,
+      "sem_coordenada": 0
+    },
+    "saude | UPA / pronto atendimento": {
+      "bairro": 4,
+      "fora_de_bairro": 0,
+      "fora_do_municipio": 0,
+      "sem_coordenada": 0
+    }
+  },
+  "total_fonte_filtrada": {
+    "escola": 301,
+    "saude": 145
+  },
+  "pontos_na_divisa_entre_bairros": 0,
+  "areas_verdes": {
+    "pracas": 214,
+    "parques": 11,
+    "area_somada_m2": 3326366.9,
+    "area_sem_sobreposicao_m2": 3312769.9,
+    "fora_do_municipio_m2": 0.0
+  },
+  "media_cidade": {
+    "pop_bairros": 830789,
+    "escolas_por_10mil": 3.39,
+    "ubs_usf_por_10mil": 1.26,
+    "area_verde_m2_hab": 3.99,
+    "dist_escola_m": 381.0,
+    "dist_ubs_m": 574.0,
+    "indice_acesso_mediana": 53.1
+  },
+  "setores": {
+    "total": 1778,
+    "com_moradores": 1747,
+    "pop_total": 833932,
+    "pop_fora_de_bairro": 3143
+  },
+  "pop_min_ranking": 1000,
+  "arquivos_brutos": {
+    "cnes/estabelecimentos_250750.json": {
+      "url": "https://apidadosabertos.saude.gov.br/cnes/estabelecimentos?codigo_municipio=250750",
+      "fonte": "Ministério da Saúde - CNES - API de dados abertos (estabelecimentos)",
+      "baixado_em": "2026-10-16T11:30:18Z",
+      "bytes": 5161228,
+      "sha256": "6d9b41de3355d1da071cc7d8a53c606ebe8471b735ec86bb9b3f4b974414e421"
+    },
+    "cnes/tipounidades.json": {
+      "url": "https://apidadosabertos.saude.gov.br/cnes/tipounidades",
+      "fonte": "Ministério da Saúde - CNES - API de dados abertos (estabelecimentos) - tipos de unidade",
+      "baixado_em": "2026-10-16T11:30:32Z",
+      "bytes": 3491,
+      "sha256": "7bc378ed7d877f7fb6d1e860c1ff79dfa76eb0b6b7aebcb783df5f2af0a4b381"
+    },
+    "geodata_jp/escolas_publicas.geojson": {
+      "url": "https://raw.githubusercontent.com/paulovitorweb/geodata-jp/76f128bbe0689de98c2a1d2f0bc1e897201d7941/data/escolas_publicas.geojson",
+      "fonte": "paulovitorweb/geodata-jp (origem: Filipeia - Prefeitura de João Pessoa)",
+      "baixado_em": "2026-10-22T18:32:41Z",
+      "bytes": 93812,
+      "sha256": "bfffb63c65b7df4625b7cf6c316727ab71b6cee91d8ae7f60312c3236619ecef"
+    },
+    "geodata_jp/parques.geojson": {
+      "url": "https://raw.githubusercontent.com/paulovitorweb/geodata-jp/76f128bbe0689de98c2a1d2f0bc1e897201d7941/data/parques.geojson",
+      "fonte": "paulovitorweb/geodata-jp (origem: Filipeia - Prefeitura de João Pessoa)",
+      "baixado_em": "2026-10-22T18:32:40Z",
+      "bytes": 21649,
+      "sha256": "0693350b61967a57190f7fd82345e68bd96bad0c9b0f9605bcda994eeb769471"
+    },
+    "geodata_jp/pracas.geojson": {
+      "url": "https://raw.githubusercontent.com/paulovitorweb/geodata-jp/76f128bbe0689de98c2a1d2f0bc1e897201d7941/data/pracas.geojson",
+      "fonte": "paulovitorweb/geodata-jp (origem: Filipeia - Prefeitura de João Pessoa)",
+      "baixado_em": "2026-10-22T18:32:40Z",
+      "bytes": 536637,
+      "sha256": "6eec6384d08a501ade7f2751f153acdef2c9625d18b653c5e3f9f0af1ba59359"
+    },
+    "ibge_censo2022/PB_setores_CD2022.gpkg": {
+      "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/malha_com_atributos/setores/gpkg/UF/PB/PB_setores_CD2022.gpkg",
+      "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
+      "baixado_em": "2026-10-22T18:32:40Z",
+      "bytes": 24436736,
+      "sha256": "8daf10f7d846e8e536cb48efbfa22cd46641e1ff6cd28b0ebacd5184f16e04c4"
+    },
+    "inep/catalogo_escolas_PB.csv": {
+      "url": "https://anonymousdata.inep.gov.br/analytics/saw.dll?Portal&PortalPath=%2Fshared%2FCenso%20da%20Educa%C3%A7%C3%A3o%20B%C3%A1sica%2F_portal%2FCat%C3%A1logo%20de%20Escolas",
+      "fonte": "INEP - Catálogo de Escolas (exportação do painel, UF = PB)",
+      "baixado_em": "2026-10-22T18:36:56Z",
+      "bytes": 2146634,
+      "sha256": "e012a2194e6be3e973b68b95476b5ea0dd09b806fdd03c5b4ceada7dd80b0204"
+    }
+  }
+}
