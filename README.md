@@ -13,6 +13,11 @@ A segunda página, **"Para onde vai o dinheiro de João Pessoa"**, mostra as des
 municipais declaradas ao TCE-PB: visão geral, gasto por área, fornecedores, modalidades de licitação
 e um mapa experimental. Ver a seção [Para onde vai o dinheiro](#para-onde-vai-o-dinheiro-de-joão-pessoa).
 
+A página **"Serviços e acesso"** mostra escolas públicas (INEP), unidades de saúde do SUS (CNES),
+praças e parques num mapa com camadas que se ligam e desligam; distâncias até a escola e a UBS/USF
+mais próximas, área verde por morador, o ranking "mais gente e menos serviços" e um índice de acesso
+com a fórmula explicada. Ver [Serviços públicos e acesso](#serviços-públicos-e-acesso).
+
 ## Como rodar
 
 Requer Python 3.11+.
@@ -54,8 +59,8 @@ data/interim/      tabela de empenhos limpa, um por linha (não versionada; ~40 
 data/processed/    dados limpos e prontos para o app
 src/collect/       um script de download por fonte
 src/process/       leitura, junções e cálculo dos indicadores (build.py orquestra)
-src/app/           código do Streamlit: app.py e dados.py (bairros), despesas.py e dados_despesas.py
-                   (dinheiro); streamlit_app.py na raiz liga as duas páginas
+src/app/           código do Streamlit: app.py e dados.py (bairros), servicos.py e dados_servicos.py
+                   (serviços), despesas.py e dados_despesas.py (dinheiro); streamlit_app.py liga as páginas
 certs/             certificado intermediário público usado na coleta do INEP
 notebooks/         exploração inicial das fontes
 tests/             testes do pipeline
@@ -461,6 +466,20 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
 - **16 escolas sem coordenada** (lista em `pontos_nao_atribuidos.csv`) não entram nas distâncias;
   a distância até a escola pode estar superestimada nos bairros delas.
 - As coordenadas são as declaradas ao INEP e ao CNES e não foram conferidas uma a uma.
+
+### No dashboard
+
+- **Mapa:** a cor dos bairros mostra o índice de acesso, a distância até a escola ou a UBS/USF, a área
+  verde por morador ou os moradores por equipamento. As camadas de pontos (escolas, escolas de atividade
+  complementar/AEE, UBS/USF, outras unidades de saúde) e de praças e parques se ligam e desligam.
+- **Detalhe do bairro:** índice e seus três componentes, distâncias e serviços por 10 mil habitantes com a
+  diferença em relação à média da cidade, e a lista dos serviços que ficam no bairro.
+- **Ranking:** bairros com mais moradores por escola ou UBS/USF, e a lista dos que não têm nenhum dos dois.
+- **Índice:** fórmula, explicação e tabela com os componentes de todos os bairros (com download em CSV).
+- **Sobre os dados:** fontes, pontos não atribuídos a bairro e arquivos de origem.
+- Cores das camadas (amarelo, violeta, vermelho; verde-água para praças e parques) validadas com o
+  validador de paleta, todos os pares; a escola de atividade complementar é um ponto vazado, para não
+  depender só da cor.
 
 ### Dados processados (`data/processed/servicos/`)
 
