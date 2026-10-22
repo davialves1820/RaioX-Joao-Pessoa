@@ -162,7 +162,7 @@ def aba_visao_geral(df, dados, col, corrigido, meta, metrica):
     c1, c2 = st.columns(2, gap="large")
     with c1:
         st.subheader("Total por ano")
-        st.caption(f"R$ bilhões, valores {_rotulo_valor(corrigido, meta)}.")
+        st.caption(_md(f"R$ bilhões, valores {_rotulo_valor(corrigido, meta)}."))
         cores = [AZUL if d.status_ano(a, meta) is None else AZUL_CLARO for a in anos]
         hover = [
             f"<b>{a}</b><br>{d.fmt_reais(v)}" + (f"<br>{d.status_ano(a, meta)}" if d.status_ano(a, meta) else "")
