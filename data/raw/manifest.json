@@ -13,6 +13,41 @@
     "bytes": 3491,
     "sha256": "7bc378ed7d877f7fb6d1e860c1ff79dfa76eb0b6b7aebcb783df5f2af0a4b381"
   },
+  "filipeia/Parques_Municipais.csv": {
+    "url": "https://filipeia.joaopessoa.pb.gov.br/",
+    "fonte": "Filipeia - Mapas da Cidade, Prefeitura de João Pessoa [exportação manual pelo navegador]",
+    "baixado_em": "2026-10-23T14:48:54Z",
+    "bytes": 881,
+    "sha256": "280b748b5eaf75640b94d8e2961f33e478d892081e0740a0c9b036f14d28bc9a"
+  },
+  "filipeia/Parques_Municipais.zip": {
+    "url": "https://filipeia.joaopessoa.pb.gov.br/",
+    "fonte": "Filipeia - Mapas da Cidade, Prefeitura de João Pessoa [exportação manual pelo navegador]",
+    "baixado_em": "2026-10-23T14:48:54Z",
+    "bytes": 10611,
+    "sha256": "3d69773ed475b694e60d590f16bd958b3824d6d15fa876c65f645a9a8f6edace"
+  },
+  "filipeia/bairros.zip": {
+    "url": "https://filipeia.joaopessoa.pb.gov.br/",
+    "fonte": "Filipeia - Mapas da Cidade, Prefeitura de João Pessoa [exportação manual pelo navegador]",
+    "baixado_em": "2026-10-23T14:48:54Z",
+    "bytes": 103603,
+    "sha256": "2a816eee4cb7d7638689e39917683d6f382b86fc51c800c61380b368055f177b"
+  },
+  "filipeia/pracas.csv": {
+    "url": "https://filipeia.joaopessoa.pb.gov.br/",
+    "fonte": "Filipeia - Mapas da Cidade, Prefeitura de João Pessoa [exportação manual pelo navegador]",
+    "baixado_em": "2026-10-23T14:48:54Z",
+    "bytes": 34425,
+    "sha256": "c15aabb55c52507d378a109ba3eb8fb59323b947250a4ffeed26db983465f7b8"
+  },
+  "filipeia/quadras_gerais.zip": {
+    "url": "https://filipeia.joaopessoa.pb.gov.br/",
+    "fonte": "Filipeia - Mapas da Cidade, Prefeitura de João Pessoa [exportação manual pelo navegador]",
+    "baixado_em": "2026-10-23T14:48:54Z",
+    "bytes": 4384621,
+    "sha256": "699480868e0834a5e21aa316eec92fe90660bafd91ac8908641a1e0735977312"
+  },
   "geodata_jp/bairros.geojson": {
     "url": "https://raw.githubusercontent.com/paulovitorweb/geodata-jp/76f128bbe0689de98c2a1d2f0bc1e897201d7941/data/bairros.geojson",
     "fonte": "paulovitorweb/geodata-jp (origem: Filipeia - Prefeitura de João Pessoa)",
@@ -110,6 +145,27 @@
     "baixado_em": "2026-10-22T18:36:56Z",
     "bytes": 2146634,
     "sha256": "e012a2194e6be3e973b68b95476b5ea0dd09b806fdd03c5b4ceada7dd80b0204"
+  },
+  "osm/escolas.json": {
+    "url": "https://api.openstreetmap.org/api/0.6/node/6041727637.json ; https://api.openstreetmap.org/api/0.6/way/749962478/full.json",
+    "fonte": "OpenStreetMap (Overpass API), © colaboradores do OpenStreetMap, ODbL",
+    "baixado_em": "2026-10-23T14:56:19Z",
+    "bytes": 2010,
+    "sha256": "07b7ade438882041048f88bf0864c814ea4283ec6cbdf7ea8dcff9e5731bd4cd"
+  },
+  "osm/matas.json": {
+    "url": "https://overpass.kumi.systems/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A250%5D%3B%28nwr%5B%22natural%22%3D%22wood%22%5D%28-7.25%2C-34.98%2C-7.04%2C-34.79%29%3Bnwr%5B%22landuse%22%3D%22forest%22%5D%28-7.25%2C-34.98%2C-7.04%2C-34.79%29%3Bnwr%5B%22boundary%22%3D%22protected_area%22%5D%28-7.25%2C-34.98%2C-7.04%2C-34.79%29%3B%29%3Bout%20geom%3B",
+    "fonte": "OpenStreetMap (Overpass API), © colaboradores do OpenStreetMap, ODbL",
+    "baixado_em": "2026-10-23T14:48:54Z",
+    "bytes": 881250,
+    "sha256": "5236e0f1cf42d7d25debaee9ed1603c6680cf380b7a2cdc45ea8d674e0f44345"
+  },
+  "osm/parques.json": {
+    "url": "https://overpass.kumi.systems/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A250%5D%3B%28nwr%5B%22leisure%22~%22%5E%28park%7Cnature_reserve%29%24%22%5D%28-7.25%2C-34.98%2C-7.04%2C-34.79%29%3B%29%3Bout%20geom%3B",
+    "fonte": "OpenStreetMap (Overpass API), © colaboradores do OpenStreetMap, ODbL",
+    "baixado_em": "2026-10-23T14:48:54Z",
+    "bytes": 258604,
+    "sha256": "4ba4d1cf74707ab4398e27cc6373423d93e0d71e8309d49d918952c736171b6e"
   },
   "siconfi/dca-anexo-I-D-2009.json": {
     "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2009&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",

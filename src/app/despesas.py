@@ -211,9 +211,13 @@ def aba_visao_geral(df, dados, col, corrigido, meta, metrica):
         hovertemplate="%{hovertext}<extra></extra>",
     ))
     st.plotly_chart(_layout(fig, 300, "R$ milhões"), config={"displayModeBar": False})
+    pico, anos_pico = d.meses_de_pico(df, col, meta)
+    nomes_mes = dict(enumerate(["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto",
+                                "setembro", "outubro", "novembro", "dezembro"], 1))
+    mais = ", ".join(f"{nomes_mes[int(m)]} em {n}" for m, n in pico.head(2).items())
     st.caption(
-        "Pela data do empenho. Janeiro costuma concentrar contratos anuais (folha, aluguéis, serviços "
-        "contínuos), e dezembro, os empenhos de fim de ano."
+        f"Pela data do empenho. Nos {len(anos_pico)} anos completos dos dados ({anos_pico[0]}–{anos_pico[-1]}, sem os "
+        f"incompletos), o mês de maior valor foi {mais}."
     )
 
 

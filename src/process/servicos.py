@@ -1,8 +1,8 @@
 """Serviços públicos e acesso por bairro: escolas (INEP), unidades de saúde (CNES) e áreas verdes.
 
-Entradas (data/raw): inep/catalogo_escolas_PB.csv, cnes/*.json, geodata_jp/{pracas,parques,
-escolas_publicas}.geojson, ibge_censo2022/PB_setores_CD2022.gpkg e PB_bairros_CD2022.gpkg;
-população por bairro de data/processed/indicadores_bairros.csv.
+Entradas (data/raw): inep/catalogo_escolas_PB.csv, cnes/*.json, filipeia/ (parques, tabela de
+praças, quadras e bairros), geodata_jp/{pracas,escolas_publicas}.geojson, osm/*.json,
+ibge_censo2022/PB_setores_CD2022.gpkg e PB_bairros_CD2022.gpkg; população por bairro de data/processed/indicadores_bairros.csv.
 
 Saídas em data/processed/servicos/ (ver README). Distâncias e áreas sempre em SIRGAS 2000 /
 UTM 25S (EPSG:31985), nunca em graus.
@@ -19,6 +19,7 @@ import geopandas as gpd
 import numpy as np
 import pandas as pd
 import shapely
+import shapely.ops
 
 from src.collect.download import load_manifest
 from src.config import COD_MUNICIPIO, CRS_METRICO, CRS_WEB, DATA_PROCESSED, DATA_RAW
@@ -93,6 +94,14 @@ def escolas() -> tuple[pd.DataFrame, dict]:
     ativ.loc[falta, "fonte_coordenada"] = "geodata-jp (Catálogo de Escolas do INEP, versão de 2022)"
     funil["coordenada_completada_pelo_geodata_jp"] = int(falta.sum())
 
+    # Ainda sem coordenada: usa o elemento do OpenStreetMap conferido à mão (ver src/collect/osm.py)
+    osm = _escolas_osm()
+    falta = ativ["fonte_coordenada"].isna() & ativ["Código INEP"].isin(osm.index)
+    ativ.loc[falta, "lat"] = ativ.loc[falta, "Código INEP"].map(osm["lat"])
+    ativ.loc[falta, "lon"] = ativ.loc[falta, "Código INEP"].map(osm["lon"])
+    ativ.loc[falta, "fonte_coordenada"] = "OpenStreetMap (" + ativ.loc[falta, "Código INEP"].map(osm["elemento"]) + ")"
+    funil["coordenada_completada_pelo_openstreetmap"] = int(falta.sum())
+
     out = pd.DataFrame({
         "id": "inep:" + ativ["Código INEP"],
         "camada": "escola",
@@ -105,6 +114,25 @@ def escolas() -> tuple[pd.DataFrame, dict]:
         "arquivo_origem": "inep/catalogo_escolas_PB.csv",
     })
     return out.reset_index(drop=True), funil
+
+
+def _escolas_osm() -> pd.DataFrame:
+    """Coordenada das escolas de ESCOLAS_OSM, indexada pelo código INEP (ponto do OSM ou centro do contorno)."""
+    from src.collect.osm import ESCOLAS_OSM
+
+    resp = json.loads((DATA_RAW / "osm" / "escolas.json").read_text(encoding="utf-8"))
+    linhas = []
+    for cod, elemento in ESCOLAS_OSM.items():
+        els = resp[elemento]["elements"]
+        if elemento.startswith("node/"):
+            lon, lat = els[0]["lon"], els[0]["lat"]
+        else:
+            nos = {e["id"]: (e["lon"], e["lat"]) for e in els if e["type"] == "node"}
+            via = next(e for e in els if e["type"] == "way")
+            c = shapely.Polygon([nos[n] for n in via["nodes"]]).centroid
+            lon, lat = c.x, c.y
+        linhas.append({"cod": cod, "elemento": elemento, "lat": lat, "lon": lon})
+    return pd.DataFrame(linhas).set_index("cod")
 
 
 def saude() -> tuple[pd.DataFrame, dict]:
@@ -184,18 +212,53 @@ def atribuir_bairro(pontos: pd.DataFrame, bairros: gpd.GeoDataFrame, municipio) 
     return g
 
 
+def _poligonos(g: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """Geometrias válidas, só as partes de área, uma linha por feição original."""
+    g = g.to_crs(CRS_METRICO)
+    g["geometry"] = shapely.make_valid(g.geometry.values)
+    g = g.explode(index_parts=False)
+    g = g[g.geom_type.isin(["Polygon", "MultiPolygon"])]
+    return g.dissolve(level=0).reset_index(drop=True)  # junta de volta as partes de cada feição
+
+
+def pracas() -> tuple[gpd.GeoDataFrame, dict]:
+    """Praças: contornos do geodata-jp, conferidos com a tabela oficial do Filipeia.
+
+    O Filipeia não oferece o shapefile das praças, só a tabela. Cada praça do geodata-jp precisa ter
+    na tabela uma linha com o mesmo nome e a mesma área (texto idêntico); senão o pipeline para.
+    A posição é conferida com o código cartográfico (setor + quadra) e as quadras do Filipeia.
+    """
+    g = gpd.read_file(DATA_RAW / "geodata_jp" / "pracas.geojson")
+    tab = pd.read_csv(DATA_RAW / "filipeia" / "pracas.csv", dtype=str)
+    chave = lambda nome, area: nome.fillna("").str.strip() + "|" + area.fillna("").str.strip()  # noqa: E731
+    k_geo, k_tab = chave(g["nome"], g["area"]), chave(tab["NOME"], tab["AREA"])
+    if len(g) != len(tab) or sorted(k_geo) != sorted(k_tab):
+        raise ValueError("as praças do geodata-jp não batem com a tabela do Filipeia")
+
+    g = g.assign(cod=k_geo.map(dict(zip(k_tab, tab["CODI_CART"].fillna("").str.strip()))))
+    q = gpd.read_file(f"zip://{DATA_RAW / 'filipeia' / 'quadras_gerais.zip'}").to_crs(CRS_METRICO)
+    quadra = q.assign(k=q["setor"] + q["qd_atual"]).dissolve("k").geometry
+    g = _poligonos(g)
+    com_cod = g["cod"].str.fullmatch(r"\d{9}") & (g["cod"] != "000000000") & g["cod"].str[:5].isin(quadra.index)
+    dist = g[com_cod].geometry.distance(quadra.reindex(g.loc[com_cod, "cod"].str[:5]), align=False)
+    info = {
+        "pracas_conferidas_com_tabela_filipeia": int(len(g)),
+        "pracas_com_quadra_no_cadastro_atual": int(com_cod.sum()),
+        "pracas_dentro_ou_encostadas_na_quadra_5m": int((dist <= 5).sum()),
+    }
+    return g.assign(tipo="Praça", nome=g["nome"].str.strip())[["nome", "tipo", "geometry"]], info
+
+
+def parques() -> gpd.GeoDataFrame:
+    """Parques municipais: shapefile oficial do Filipeia (SAD69 / UTM 25S, reprojetado)."""
+    g = _poligonos(gpd.read_file(f"zip://{DATA_RAW / 'filipeia' / 'Parques_Municipais.zip'}"))
+    return g.assign(tipo="Parque", nome=g["Layer"].str.split().str.join(" "))[["nome", "tipo", "geometry"]]
+
+
 def areas_verdes(bairros: gpd.GeoDataFrame, municipio) -> tuple[gpd.GeoDataFrame, pd.DataFrame, dict]:
-    """Praças e parques (Filipeia via geodata-jp): área por bairro, sem contar sobreposições duas vezes."""
-    camadas = []
-    for nome, tipo in [("pracas", "Praça"), ("parques", "Parque")]:
-        g = gpd.read_file(DATA_RAW / "geodata_jp" / f"{nome}.geojson").to_crs(CRS_METRICO)
-        g["geometry"] = shapely.make_valid(g.geometry.values)
-        g = g.explode(index_parts=False)
-        g = g[g.geom_type.isin(["Polygon", "MultiPolygon"])]
-        g = g.dissolve(level=0).reset_index(drop=True)  # junta de volta as partes de cada feição
-        camadas.append(g.assign(tipo=tipo, nome=g["nome"].str.strip())[["nome", "tipo", "geometry"]])
-    verdes = pd.concat(camadas, ignore_index=True)
-    verdes = gpd.GeoDataFrame(verdes, geometry="geometry", crs=CRS_METRICO)
+    """Praças e parques (Filipeia): área por bairro, sem contar sobreposições duas vezes."""
+    pr, info_pracas = pracas()
+    verdes = gpd.GeoDataFrame(pd.concat([pr, parques()], ignore_index=True), geometry="geometry", crs=CRS_METRICO)
     uniao = verdes.geometry.union_all()
     info = {
         "pracas": int((verdes.tipo == "Praça").sum()),
@@ -203,6 +266,7 @@ def areas_verdes(bairros: gpd.GeoDataFrame, municipio) -> tuple[gpd.GeoDataFrame
         "area_somada_m2": round(float(verdes.area.sum()), 1),
         "area_sem_sobreposicao_m2": round(float(uniao.area), 1),
         "fora_do_municipio_m2": round(float(uniao.difference(municipio).area), 1),
+        **info_pracas,
     }
     area_bairro = bairros.set_index("cd_bairro").geometry.intersection(uniao).area
     # contagem: praça no bairro do seu ponto interno; parque em todo bairro que ele toca
@@ -214,6 +278,60 @@ def areas_verdes(bairros: gpd.GeoDataFrame, municipio) -> tuple[gpd.GeoDataFrame
     por_bairro = pd.DataFrame({"area_verde_m2": area_bairro.round(1), "pracas": n_pracas, "parques": n_parques})
     por_bairro[["pracas", "parques"]] = por_bairro[["pracas", "parques"]].fillna(0).astype(int)
     return verdes, por_bairro.rename_axis("cd_bairro").reset_index(), info
+
+
+def _osm_poligonos(arquivo: str) -> gpd.GeoDataFrame:
+    """Polígonos de uma resposta 'out geom' do Overpass (vias fechadas e multipolígonos)."""
+    linhas = []
+    for e in json.loads((DATA_RAW / "osm" / arquivo).read_text(encoding="utf-8"))["elements"]:
+        t, g = e.get("tags", {}), None
+        if e["type"] == "way" and e.get("geometry"):
+            c = [(p["lon"], p["lat"]) for p in e["geometry"]]
+            if len(c) >= 4 and c[0] == c[-1]:
+                g = shapely.Polygon(c)
+        elif e["type"] == "relation":
+            def aneis(papel):
+                ls = [shapely.LineString([(p["lon"], p["lat"]) for p in m["geometry"]])
+                      for m in e.get("members", []) if m.get("geometry") and m.get("role") in papel]
+                return shapely.union_all(list(shapely.ops.polygonize(ls))) if ls else None
+            externo, interno = aneis(("outer", "")), aneis(("inner",))
+            g = externo.difference(interno) if externo is not None and interno is not None else externo
+        if g is not None and not g.is_empty:
+            tipo = ("Área protegida" if t.get("boundary") == "protected_area" else
+                    "Mata" if t.get("natural") == "wood" or t.get("landuse") == "forest" else "Parque")
+            linhas.append({"osm": f"{e['type']}/{e['id']}", "nome": t.get("name"), "tipo": tipo,
+                           "geometry": shapely.make_valid(g)})
+    return gpd.GeoDataFrame(linhas, geometry="geometry", crs=CRS_WEB).to_crs(CRS_METRICO)
+
+
+def matas_osm(municipio) -> tuple[gpd.GeoDataFrame, dict]:
+    """Matas e áreas protegidas do OpenStreetMap recortadas pelo município (fora do índice)."""
+    g = _osm_poligonos("matas.json")
+    g["geometry"] = g.geometry.intersection(municipio)
+    g = g[~g.is_empty & (g.area > 0)].copy()
+    g = g[g.geom_type.isin(["Polygon", "MultiPolygon"]) | (g.geom_type == "GeometryCollection")]
+    g["geometry"] = g.geometry.apply(lambda x: shapely.union_all([p for p in getattr(x, "geoms", [x])
+                                                                 if p.geom_type in ("Polygon", "MultiPolygon")]))
+    g = g[~g.is_empty]
+    nomeadas = g[g.nome.notna()].assign(ha=lambda x: (x.area / 1e4).round(1)).sort_values("ha", ascending=False)
+    info = {
+        "poligonos": int(len(g)),
+        "area_uniao_ha": round(float(g.geometry.union_all().area) / 1e4, 1),
+        "com_nome": [{"nome": r.nome, "tipo": r.tipo, "ha": float(r.ha), "osm": r.osm} for r in nomeadas.itertuples()],
+    }
+    return g, info
+
+
+def parques_osm_fora_do_cadastro(verdes: gpd.GeoDataFrame, municipio, ha_min: float = 1.0) -> list[dict]:
+    """Parques, hortos e bosques do OSM que ficam quase todos (>= 80%) fora das praças e parques do cadastro."""
+    g = _osm_poligonos("parques.json")
+    g["geometry"] = g.geometry.intersection(municipio)
+    # só os que se apresentam como parque, horto ou bosque (o OSM também marca campos de futebol como "park")
+    g = g[g.nome.fillna("").str.contains(r"Parque|Horto|Bosque", case=False) & ~g.is_empty]
+    uniao = verdes.geometry.union_all()
+    g = g[(g.area >= ha_min * 1e4) & (g.geometry.difference(uniao).area / g.area >= 0.8)]
+    g = g.assign(ha=(g.area / 1e4).round(1)).sort_values("ha", ascending=False)
+    return [{"nome": r.nome, "ha": float(r.ha), "osm": r.osm} for r in g.itertuples()]
 
 
 def distancia_mais_proxima(origens: gpd.GeoSeries, destinos: gpd.GeoSeries) -> np.ndarray:
@@ -248,6 +366,8 @@ def main() -> None:
         raise ValueError("pontos com id repetido")
 
     verdes, verde_bairro, info_verde = areas_verdes(bairros, municipio)
+    matas, info_matas = matas_osm(municipio)
+    info_matas["parques_osm_fora_do_cadastro"] = parques_osm_fora_do_cadastro(verdes, municipio)
 
     # --- distâncias (só destinos dentro do município)
     no_mun = pontos["status"].isin([STATUS_BAIRRO, STATUS_FORA_BAIRRO])
@@ -310,7 +430,12 @@ def main() -> None:
     if (SAIDA / "pontos_servicos.geojson").exists():
         (SAIDA / "pontos_servicos.geojson").unlink()
     com_geo[cols + ["geometry"]].to_file(SAIDA / "pontos_servicos.geojson", driver="GeoJSON")
-    pontos[pontos.status != STATUS_BAIRRO][["id", "camada", "subtipo", "nome", "endereco", "status", "lat", "lon"]].to_csv(
+    # Para os pontos fora dos bairros do IBGE, o bairro da Prefeitura (Filipeia), só como informação
+    fb = gpd.read_file(f"zip://{DATA_RAW / 'filipeia' / 'bairros.zip'}").to_crs(CRS_METRICO)
+    nao = pontos[pontos.status != STATUS_BAIRRO]
+    j = gpd.sjoin(nao[nao.geometry.notna()][["geometry"]], fb[["N_BAIRRO", "geometry"]], predicate="within")
+    nao = nao.assign(bairro_prefeitura=j[~j.index.duplicated()]["N_BAIRRO"].str.title().reindex(nao.index))
+    nao[["id", "camada", "subtipo", "nome", "endereco", "status", "bairro_prefeitura", "lat", "lon"]].to_csv(
         SAIDA / "pontos_nao_atribuidos.csv", index=False
     )
     v = verdes.copy()
@@ -319,6 +444,12 @@ def main() -> None:
     if (SAIDA / "areas_verdes.geojson").exists():
         (SAIDA / "areas_verdes.geojson").unlink()
     v.to_crs(CRS_WEB).to_file(SAIDA / "areas_verdes.geojson", driver="GeoJSON")
+    m = matas.copy()
+    m["area_m2"] = m.area.round(1)
+    m["geometry"] = m.geometry.simplify(2.0)
+    if (SAIDA / "matas_osm.geojson").exists():
+        (SAIDA / "matas_osm.geojson").unlink()
+    m.to_crs(CRS_WEB).to_file(SAIDA / "matas_osm.geojson", driver="GeoJSON")
 
     resumo = pontos.groupby(["camada", "subtipo", "status"]).size().unstack(fill_value=0)
     manifest = load_manifest()
@@ -330,12 +461,13 @@ def main() -> None:
         "total_fonte_filtrada": {"escola": int(len(esc)), "saude": int(len(sau))},
         "pontos_na_divisa_entre_bairros": pontos.attrs.get("pontos_na_divisa", 0),
         "areas_verdes": info_verde,
+        "matas_osm": info_matas,
         "media_cidade": media,
         "setores": {"total": int(len(st)), "com_moradores": int(len(sc)), "pop_total": int(st["pop"].sum()),
                     "pop_fora_de_bairro": int(st.loc[st.cd_bairro.isna(), "pop"].sum())},
         "pop_min_ranking": POP_MIN_RANKING,
         "arquivos_brutos": {k: x for k, x in manifest.items()
-                            if k.startswith(("inep/", "cnes/", "geodata_jp/pracas", "geodata_jp/parques",
+                            if k.startswith(("inep/", "cnes/", "filipeia/", "osm/", "geodata_jp/pracas",
                                              "geodata_jp/escolas", "ibge_censo2022/PB_setores"))},
     }
     (SAIDA / "metadados.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
