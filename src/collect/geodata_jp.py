@@ -1,7 +1,9 @@
 """Coleta: camadas do repositório geodata-jp (origem: Filipeia, Prefeitura de João Pessoa).
 
 - bairros.geojson: só para a tabela de correspondência de nomes (o mapa usa a malha do IBGE).
-- pracas.geojson e parques.geojson: áreas verdes públicas (polígonos).
+- pracas.geojson: contornos das praças. O Filipeia só oferece a tabela das praças, sem os
+  contornos; o processamento confere que as praças daqui são as mesmas da tabela oficial.
+  (Os parques vêm do shapefile oficial do Filipeia, em src/collect/filipeia.py.)
 - escolas_publicas.geojson: usado apenas para completar a coordenada de escolas que o
   Catálogo de Escolas do INEP (fonte principal) publica sem latitude/longitude.
 
@@ -19,7 +21,7 @@ from src.collect.download import download
 
 COMMIT = "76f128bbe0689de98c2a1d2f0bc1e897201d7941"
 BASE = f"https://raw.githubusercontent.com/paulovitorweb/geodata-jp/{COMMIT}/data"
-CAMADAS = ["bairros", "pracas", "parques", "escolas_publicas"]
+CAMADAS = ["bairros", "pracas", "escolas_publicas"]
 FONTE = "paulovitorweb/geodata-jp (origem: Filipeia - Prefeitura de João Pessoa)"
 
 
