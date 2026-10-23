@@ -250,8 +250,8 @@ def secao_ranking(dados: dict) -> None:
                 "dist_ubs_m": st.column_config.NumberColumn("Até a UBS/USF (m)", format="localized"),
             },
         )
-        st.caption("Muitos destes bairros têm renda mais alta e moradores que usam escolas e planos de saúde "
-                   "privados, que não estão contados aqui.")
+        st.caption("Escolas e unidades de saúde privadas não estão contadas: estes bairros podem ter serviços "
+                   "privados.")
 
 
 def secao_indice(dados: dict) -> None:
@@ -295,35 +295,99 @@ def secao_indice(dados: dict) -> None:
                        file_name="servicos_bairros_joao_pessoa.csv", mime="text/csv")
 
 
-def secao_sobre(dados: dict) -> None:
+def _status_total(meta: dict, camada: str) -> dict:
+    tot: dict = {}
+    for chave, cont in meta["pontos_por_status"].items():
+        if chave.startswith(camada + " | "):
+            for k, v in cont.items():
+                tot[k] = tot.get(k, 0) + v
+    return tot
+
+
+FONTES = pd.DataFrame([
+    {"Dado": "Escolas públicas", "Origem": "INEP, Catálogo de Escolas",
+     "Link": "https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas",
+     "Atualização da fonte": "situação do Censo Escolar 2024 (conferida com os microdados de 2024)",
+     "Obtido em": "22/10/2026"},
+    {"Dado": "Unidades de saúde", "Origem": "Ministério da Saúde, CNES (API de dados abertos)",
+     "Link": "https://apidadosabertos.saude.gov.br/cnes/estabelecimentos?codigo_municipio=250750",
+     "Atualização da fonte": "cadastro mais recente atualizado em 16/10/2026", "Obtido em": "16/10/2026"},
+    {"Dado": "Praças e parques", "Origem": "Prefeitura de João Pessoa (Filipeia), via geodata-jp",
+     "Link": "https://github.com/paulovitorweb/geodata-jp",
+     "Atualização da fonte": "adicionados ao geodata-jp em fev/2022; a data da extração do Filipeia não é informada",
+     "Obtido em": "22/10/2026"},
+    {"Dado": "Coordenadas de apoio (escolas)", "Origem": "Catálogo do INEP de 2022, via geodata-jp",
+     "Link": "https://github.com/paulovitorweb/geodata-jp", "Atualização da fonte": "fev/2022",
+     "Obtido em": "22/10/2026"},
+    {"Dado": "Moradores por setor censitário e limites", "Origem": "IBGE, Censo 2022 (malha de setores e de bairros)",
+     "Link": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/",
+     "Atualização da fonte": "Censo 2022", "Obtido em": "22/10/2026"},
+])
+
+
+def secao_fontes(dados: dict) -> None:
     meta = dados["meta"]
-    fe, fs = meta["funil"]["escolas"], meta["funil"]["saude"]
-    with st.expander("Sobre os dados: fontes, o que entra e limitações"):
-        st.markdown(f"""
-**Escolas.** INEP, Catálogo de Escolas (situação do Censo Escolar 2024). Escolas públicas de João Pessoa
-(municipais, estaduais e federais), sem as paralisadas ou extintas: **{fmt_int(fe['publicas_em_funcionamento'])}**.
-As de atividade complementar ou AEE exclusiva aparecem no mapa como ponto vazado e não entram nas distâncias
-nem no índice.
+    fe, fs, av = meta["funil"]["escolas"], meta["funil"]["saude"], meta["areas_verdes"]
+    se, ss = _status_total(meta, "escola"), _status_total(meta, "saude")
+    st.header("Fontes e limitações")
+    st.caption("Tudo o que está nesta página sai das fontes abaixo. Os números de contagem e de distância são "
+               "calculados a partir delas; nada foi estimado ou preenchido à mão.")
 
-**Saúde.** Ministério da Saúde, CNES (cadastros atualizados até 16/10/2026). Unidades ativas dos tipos UBS/USF,
-policlínica, UPA/pronto atendimento e hospital que são públicas ou atendem pelo SUS, sem cadastros de
-regulação: **{fmt_int(fs['sem_cadastros_de_regulacao'])}**. A distância usa só as UBS/USF.
-
-**Praças e parques.** Cadastro da Prefeitura (Filipeia), via geodata-jp, de fevereiro de 2022:
-{fmt_int(meta['areas_verdes']['pracas'])} praças e {fmt_int(meta['areas_verdes']['parques'])} parques. A **Mata
-do Buraquinho / Jardim Botânico** (cerca de 500 ha) e outras áreas de mata não estão no cadastro, então os
-bairros vizinhos a elas aparecem com menos área verde do que de fato têm.
-
-**Limitações.** Distâncias em linha reta, não pelas ruas. A UBS atende um território, que nem sempre é o
-bairro onde ela fica. Serviços privados e de municípios vizinhos não entram. As coordenadas são as declaradas
-ao INEP e ao CNES.
+    st.subheader("De onde vêm os dados")
+    st.dataframe(FONTES, hide_index=True, width="stretch",
+                 column_config={"Link": st.column_config.LinkColumn("Link", display_text="abrir")})
+    st.markdown(f"""
+- **Escolas:** {fmt_int(fe['joao_pessoa'])} escolas de João Pessoa no catálogo; {fmt_int(fe['publicas'])} públicas;
+  sem as {fmt_int(fe['paralisadas_ou_extintas'])} paralisadas ou extintas, ficam **{fmt_int(fe['publicas_em_funcionamento'])}**.
+  O catálogo não tem download direto: é exportado do painel do INEP por um navegador automatizado, e o arquivo é
+  conferido (todas as linhas da Paraíba). Para {fmt_int(fe['coordenada_completada_pelo_geodata_jp'])} escolas sem coordenada no catálogo,
+  usa-se a da versão de 2022 do mesmo catálogo (geodata-jp); {fmt_int(fe['geodata_jp_coordenada_repetida_descartada'])} outras foram
+  descartadas porque o geodata-jp põe várias escolas no mesmo ponto genérico.
+- **Saúde:** dos {fmt_int(fs['cnes_joao_pessoa'])} estabelecimentos do CNES em João Pessoa, {fmt_int(fs['tipos_pedidos'])} são
+  UBS/USF, policlínicas, UPAs/prontos atendimentos ou hospitais; {fmt_int(fs['ativos'])} estão ativos;
+  {fmt_int(fs['rede_sus_publicos_ou_atendem_sus'])} são públicos ou atendem pelo SUS; sem os cadastros de regulação, ficam
+  **{fmt_int(fs['sem_cadastros_de_regulacao'])}**.
+- **Praças e parques:** {fmt_int(av['pracas'])} praças e {fmt_int(av['parques'])} parques. Onde se sobrepõem, a área conta uma vez.
+- **Distâncias:** de cada setor censitário com moradores até o serviço mais próximo, em linha reta, com média
+  ponderada pelo número de moradores do setor (Censo 2022). Calculadas em metros (SIRGAS 2000 / UTM 25S).
 """)
-        st.markdown("**Pontos fora dos bairros ou sem coordenada** (contados, mas não atribuídos a bairro):")
-        na = dados["nao_atribuidos"].assign(status=lambda x: x.status.map(d.STATUS_TEXTO))
-        st.dataframe(na[["nome", "subtipo", "status", "endereco"]], hide_index=True, width="stretch",
-                     column_config={"nome": "Nome", "subtipo": "Tipo", "status": "Situação", "endereco": "Endereço"})
+
+    st.subheader("Limitações")
+    st.markdown(f"""
+- **Só serviços públicos ou do SUS.** Escolas particulares, clínicas e hospitais privados não estão contados.
+  Um bairro "sem escola nem UBS" pode ter serviços privados.
+- **Distância em linha reta**, não pelas ruas. O caminho real é maior, e rios, mangues e vias expressas podem
+  aumentá-lo bastante.
+- **A distância não indica a unidade de referência.** Cada família é atendida pela UBS da sua área de
+  abrangência, e essas áreas não estão nos dados. Aqui se mede só a unidade mais próxima.
+- **Serviços de municípios vizinhos** não estão nos dados, então bairros na divisa podem ter um serviço mais
+  perto do que o mostrado.
+- **Área verde incompleta.** Só praças e parques do cadastro da Prefeitura. Matas e outras áreas verdes que não
+  estão no cadastro, como a Mata do Buraquinho (que não aparece entre os {fmt_int(av['parques'])} parques), ficam de fora; bairros
+  vizinhos a elas aparecem com menos área verde do que de fato têm. O cadastro é de fevereiro de 2022 ou anterior.
+- **Escolas sem coordenada:** {fmt_int(se.get('sem_coordenada', 0))} escolas não têm localização no catálogo do INEP nem
+  uma localização confiável no geodata-jp. Elas estão contadas no total, mas fora do mapa e das distâncias.
+- **Coordenadas declaradas.** As localizações são as informadas ao INEP e ao CNES e não foram conferidas uma a
+  uma. Uma UBS tem coordenada fora do município e não foi corrigida à mão.
+- **Limites dos bairros:** a malha de bairros do IBGE cobre parte do município. {fmt_int(meta['setores']['pop_fora_de_bairro'])}
+  moradores vivem em setores sem bairro e entram só na média da cidade.
+- **Índice relativo.** O índice compara os bairros entre si; não é uma nota de qualidade dos serviços.
+""")
+
+    st.subheader("Pontos contados mas não atribuídos a um bairro")
+    st.caption(
+        f"Escolas: {fmt_int(se.get('bairro', 0))} num bairro, {fmt_int(se.get('fora_de_bairro', 0))} no município fora dos bairros do IBGE, "
+        f"{fmt_int(se.get('fora_do_municipio', 0))} com coordenada fora do município, {fmt_int(se.get('sem_coordenada', 0))} sem coordenada. "
+        f"Saúde: {fmt_int(ss.get('bairro', 0))} num bairro, {fmt_int(ss.get('fora_de_bairro', 0))} no município fora dos bairros, "
+        f"{fmt_int(ss.get('fora_do_municipio', 0))} com coordenada fora do município, {fmt_int(ss.get('sem_coordenada', 0))} sem coordenada."
+    )
+    na = dados["nao_atribuidos"].assign(status=lambda x: x.status.map(d.STATUS_TEXTO))
+    st.dataframe(na[["nome", "subtipo", "status", "endereco"]], hide_index=True, width="stretch",
+                 column_config={"nome": "Nome", "subtipo": "Tipo", "status": "Situação", "endereco": "Endereço"})
+
+    with st.expander("Arquivos de origem (URL, data de download e SHA-256)"):
         arquivos = pd.DataFrame([
-            {"arquivo": k, "fonte": v["fonte"], "obtido em (UTC)": v["baixado_em"], "url": v["url"]}
+            {"arquivo": k, "fonte": v["fonte"], "obtido em (UTC)": v["baixado_em"], "url": v["url"], "sha256": v["sha256"]}
             for k, v in meta["arquivos_brutos"].items()
         ])
         st.dataframe(arquivos, hide_index=True, width="stretch")
@@ -338,6 +402,11 @@ def main() -> None:
     st.caption(
         "Escolas públicas, unidades de saúde do SUS, praças e parques nos 64 bairros. Ligue e desligue as "
         "camadas, passe o mouse sobre um ponto para ver o nome e clique num bairro para ver o detalhe."
+    )
+    st.info(
+        "Só escolas públicas e unidades do SUS; distâncias em linha reta; área verde só de praças e parques do "
+        "cadastro da Prefeitura. Fontes, datas e todas as limitações na seção **Fontes e limitações**, no fim da página.",
+        icon="ℹ️",
     )
 
     nomes = ind.sort_values("nm_bairro").set_index("cd_bairro").nm_bairro
@@ -379,5 +448,5 @@ def main() -> None:
 
     secao_ranking(dados)
     secao_indice(dados)
-    secao_sobre(dados)
+    secao_fontes(dados)
     st.caption("Dados: INEP, Ministério da Saúde (CNES), Prefeitura de João Pessoa (via geodata-jp) e IBGE (Censo 2022).")

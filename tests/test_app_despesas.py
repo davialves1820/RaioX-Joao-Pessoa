@@ -81,3 +81,11 @@ def test_frases_resumo(dados):
     assert d.resumo_licitacao(part, 2025).count("%") == 3
     rk = d.ranking_fornecedores(dados["credores"], (2025, 2025), "empenhado", n=10)
     assert 0 < d.fatia_do_ranking(dados["credores"], rk, (2025, 2025), "empenhado") < 100
+
+
+def test_meses_de_pico_usa_so_anos_completos():
+    dados = d.carregar()
+    df = d.filtrar(dados["cubo"])
+    pico, anos = d.meses_de_pico(df, "empenhado", dados["meta"])
+    assert all(d.anos_comparaveis(a, dados["meta"]) for a in anos)
+    assert pico.sum() == len(anos)
