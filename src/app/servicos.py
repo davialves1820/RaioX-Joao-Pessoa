@@ -153,15 +153,13 @@ def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verd
     return fig
 
 
-def _metrica(col, rotulo: str, valor, media, unidade: str, menor_melhor: bool, casas: int = 0, ajuda: str = ""):
+def _metrica(col, rotulo: str, valor, media, unidade: str, distancia: bool, casas: int = 0, ajuda: str = ""):
     texto = (fmt_int(valor) if casas == 0 else fmt_dec(valor, casas)) + unidade
-    dif = d.comparar(valor, media)
-    delta = None
-    if dif is not None:
-        delta = f"{dif:+.0f}% vs. média"
+    comp = d.texto_comparacao(d.comparar(valor, media), distancia)
     media_txt = (fmt_int(media) if casas == 0 else fmt_dec(media, casas)) + unidade
-    col.metric(rotulo, texto, delta=delta, delta_color="inverse" if menor_melhor else "normal",
-               help=(ajuda + " " if ajuda else "") + f"Média da cidade: {media_txt}.")
+    # Sem seta: a frase já diz se é melhor ou pior, e a seta para baixo em verde confundia
+    col.metric(rotulo, texto, delta=comp[0] if comp else None, delta_color=comp[1] if comp else "off",
+               delta_arrow="off", help=(ajuda + " " if ajuda else "") + f"Média da cidade: {media_txt}.")
 
 
 def _n(v, um: str, varios: str) -> str:
@@ -179,6 +177,8 @@ def painel_bairro(dados: dict, cd: str) -> None:
     c1.metric("Índice de acesso", fmt_dec(r.indice_acesso),
               help="0 a 100, relativo aos 64 bairros. Fórmula na seção 'Como o índice é calculado'.")
     c2.metric("Moradores (2022)", fmt_int(r.pop_2022))
+    st.caption("Etiquetas: comparação com a média da cidade (verde = melhor que a média, vermelho = pior).")
+    c1, c2 = st.columns(2)
     _metrica(c1, "Até a escola", r.dist_escola_m, media["dist_escola_m"], " m", True,
              ajuda="Distância média em linha reta, ponderada pela população.")
     _metrica(c2, "Até a UBS/USF", r.dist_ubs_m, media["dist_ubs_m"], " m", True,

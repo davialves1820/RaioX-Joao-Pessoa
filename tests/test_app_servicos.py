@@ -53,3 +53,12 @@ def test_toda_camada_do_mapa_tem_cor():
 def test_comparar():
     assert d.comparar(150, 100) == 50
     assert d.comparar(pd.NA, 100) is None
+
+
+def test_texto_comparacao_sem_sinal_e_com_cor_certa():
+    assert d.texto_comparacao(-30, distancia=True) == ("30% mais perto", "green")
+    assert d.texto_comparacao(40, distancia=True) == ("40% mais longe", "red")
+    assert d.texto_comparacao(29, distancia=False) == ("29% acima", "green")
+    assert d.texto_comparacao(-13, distancia=False) == ("13% abaixo", "red")
+    assert d.texto_comparacao(0.2, distancia=False) == ("na média", "gray")
+    assert d.texto_comparacao(None, distancia=True) is None
