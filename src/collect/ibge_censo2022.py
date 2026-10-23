@@ -28,6 +28,9 @@ ARQUIVOS = {
         f"{FTP}/Agregados_por_Municipio_csv/Agregados_por_municipios_basico_BR_20260520.zip",
     "ibge_censo2022/PB_bairros_CD2022.gpkg":
         f"{FTP}/malha_com_atributos/bairros/gpkg/UF/PB/PB_bairros_CD2022.gpkg",
+    # Setores censitários com população (v0001), usados na distância ponderada por população
+    "ibge_censo2022/PB_setores_CD2022.gpkg":
+        f"{FTP}/malha_com_atributos/setores/gpkg/UF/PB/PB_setores_CD2022.gpkg",
     "ibge_censo2022/dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx":
         f"{FTP}/dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx",
 }
