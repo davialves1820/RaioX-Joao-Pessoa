@@ -329,7 +329,7 @@ FONTES = pd.DataFrame([
     {"Dado": "Parques", "Origem": "Prefeitura de João Pessoa, Filipeia (shapefile exportado do portal)",
      "Link": "https://filipeia.joaopessoa.pb.gov.br/",
      "Atualização da fonte": "arquivo de 08/02/2021", "Obtido em": "23/10/2026"},
-    {"Dado": "Praças", "Origem": "Tabela do Filipeia; contornos do geodata-jp, conferidos com a tabela e as quadras do Filipeia",
+    {"Dado": "Praças", "Origem": "Prefeitura (Filipeia): tabela oficial; contornos da Prefeitura na cópia do geodata-jp, conferidos com a tabela e as quadras",
      "Link": "https://filipeia.joaopessoa.pb.gov.br/",
      "Atualização da fonte": "intervenções registradas até 2018; quadras de 02/10/2026", "Obtido em": "23/10/2026"},
     {"Dado": "Matas e áreas protegidas (só no mapa)", "Origem": "OpenStreetMap, © colaboradores do OpenStreetMap (ODbL)",
