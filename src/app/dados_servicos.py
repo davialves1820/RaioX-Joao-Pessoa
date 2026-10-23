@@ -89,3 +89,18 @@ def comparar(valor, media) -> float | None:
     if pd.isna(valor) or not media:
         return None
     return 100 * (float(valor) - float(media)) / float(media)
+
+
+def texto_comparacao(dif: float | None, distancia: bool) -> tuple[str, str] | None:
+    """Frase curta e cor da comparação com a média da cidade, sem sinal nem seta.
+
+    Distância: menor é melhor ("mais perto" em verde). Contagens e área: maior é melhor.
+    """
+    if dif is None:
+        return None
+    n = f"{abs(dif):.0f}%"
+    if n == "0%":
+        return "na média", "gray"
+    if distancia:
+        return (f"{n} mais perto", "green") if dif < 0 else (f"{n} mais longe", "red")
+    return (f"{n} acima", "green") if dif > 0 else (f"{n} abaixo", "red")
