@@ -66,6 +66,13 @@ def anos_comparaveis(ano: int, meta: dict) -> bool:
     return status_ano(ano, meta) is None
 
 
+def meses_de_pico(df: pd.DataFrame, col: str, meta: dict) -> tuple[pd.Series, list[int]]:
+    """Quantos anos completos tiveram cada mês como o de maior valor (mês -> nº de anos), e os anos usados."""
+    anos = sorted(a for a in df["ano"].unique() if anos_comparaveis(int(a), meta))
+    mensal = df[df["ano"].isin(anos)].groupby(["ano", "mes"])[col].sum().unstack()
+    return mensal.idxmax(axis=1).value_counts(), [int(a) for a in anos]
+
+
 def total_por_ano(df: pd.DataFrame, col: str) -> pd.Series:
     return df.groupby("ano")[col].sum()
 

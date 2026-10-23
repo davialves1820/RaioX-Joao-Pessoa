@@ -357,9 +357,9 @@ Gerado por `python -m src.process.servicos`.
 
 | Dado | Origem | Arquivo bruto | Atualização da fonte | Obtido em |
 |---|---|---|---|---|
-| Escolas | INEP, [Catálogo de Escolas](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas) (UF = PB) | `inep/catalogo_escolas_PB.csv` | situação do Censo Escolar 2024 (confere com os microdados de 2024) | 22/10/2026 |
+| Escolas | INEP, [Catálogo de Escolas](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas) (UF = PB) | `inep/catalogo_escolas_PB.csv` | situação do Censo Escolar 2024 (o catálogo não traz data; conferido uma vez com os [microdados do Censo Escolar 2024](https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_2024.zip)) | 22/10/2026 |
 | Unidades de saúde | Ministério da Saúde, CNES, [API de dados abertos](https://apidadosabertos.saude.gov.br/) (município 250750) | `cnes/estabelecimentos_250750.json`, `cnes/tipounidades.json` | cadastros atualizados até 16/10/2026 | 16/10/2026 |
-| Praças e parques | Prefeitura (Filipeia), via [paulovitorweb/geodata-jp](https://github.com/paulovitorweb/geodata-jp) (commit `76f128b`) | `geodata_jp/pracas.geojson`, `geodata_jp/parques.geojson` | fev/2022 | 22/10/2026 |
+| Praças e parques | Prefeitura (Filipeia), via [paulovitorweb/geodata-jp](https://github.com/paulovitorweb/geodata-jp) (commit `76f128b`) | `geodata_jp/pracas.geojson`, `geodata_jp/parques.geojson` | adicionados ao geodata-jp em fev/2022 (data dos commits; a data da extração do Filipeia não é informada) | 22/10/2026 |
 | Coordenadas de apoio (escolas) | Catálogo do INEP de 2022, via geodata-jp | `geodata_jp/escolas_publicas.geojson` | fev/2022 | 22/10/2026 |
 | População por setor censitário | IBGE, Censo 2022, malha de setores com atributos (`v0001`) | `ibge_censo2022/PB_setores_CD2022.gpkg` | 2022 | 22/10/2026 |
 
@@ -412,7 +412,8 @@ ficam em `pontos_nao_atribuidos.csv`:
   "geodata-jp (Catálogo de Escolas do INEP, versão de 2022)").
 - A USF Integrada Boa Esperança tem no CNES uma coordenada a 36 km do limite do município (o endereço
   é em Gramame). Não é corrigida à mão.
-- A malha de bairros do IBGE cobre 167,8 km² dos 210 km² do município. O limite do município é a
+- A malha de bairros do IBGE cobre 167,8 km² dos 210,0 km² do município (soma do campo `AREA_KM2`
+  dos setores censitários de 2022). O limite do município é a
   união dos setores censitários de 2022; 14 setores (3.143 moradores) não pertencem a nenhum bairro.
 - Um ponto exatamente na divisa entre dois bairros fica com o de menor código (o número de casos
   está em `metadados.json`).
@@ -450,17 +451,17 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
 
 ### Limitações
 
-- **Só serviços públicos ou do SUS.** Bairros de renda mais alta (Cabo Branco, Tambaú, Aeroclube,
-  Brisamar) aparecem sem escola pública nem UBS; muitos moradores usam a rede privada, que não está
-  contada.
-- **A UBS atende um território**, não o bairro onde está. A distância mostra proximidade física, não
-  a unidade de referência de cada família.
-- **Linha reta** subestima o caminho real, sobretudo onde há rios, mangues, linha férrea ou a BR-230.
+- **Só serviços públicos ou do SUS.** Escolas, clínicas e hospitais privados não estão contados. Um
+  bairro "sem escola pública nem UBS" (Aeroclube, Portal do Sol, Tambaú, Cabo Branco, Brisamar e outros)
+  pode ter serviços privados.
+- **A distância não indica a unidade de referência.** Cada família é atendida pela UBS da sua área de
+  abrangência, e essas áreas não estão nos dados. A distância mostra só a unidade mais próxima.
+- **Linha reta** subestima o caminho real, ainda mais onde há rios, mangues ou vias expressas no meio.
 - **Efeito de borda:** o serviço mais próximo pode estar em outro bairro (isso é contado); serviços
-  em municípios vizinhos (Bayeux, Cabedelo, Santa Rita) não estão nos dados.
-- **Área verde incompleta:** só praças e parques do cadastro da Prefeitura (fev/2022). A **Mata do
-  Buraquinho / Jardim Botânico** (cerca de 500 ha) e outras áreas de mata, orla e canteiros não
-  estão nos dados; bairros vizinhos a elas aparecem com menos área verde do que de fato têm.
+  em municípios vizinhos não estão nos dados.
+- **Área verde incompleta:** só praças e parques do cadastro da Prefeitura. A **Mata do Buraquinho**
+  não está entre os 11 parques do cadastro, e outras áreas de mata, orla e canteiros também não; bairros
+  vizinhos a elas aparecem com menos área verde do que de fato têm.
   Um parque que atravessa mais de um bairro é contado em cada um (por isso a soma dos parques por
   bairro passa de 11), mas a área é dividida entre eles.
 - **16 escolas sem coordenada** (lista em `pontos_nao_atribuidos.csv`) não entram nas distâncias;
