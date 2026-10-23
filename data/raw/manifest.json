@@ -1,10 +1,45 @@
 {
+  "cnes/estabelecimentos_250750.json": {
+    "url": "https://apidadosabertos.saude.gov.br/cnes/estabelecimentos?codigo_municipio=250750",
+    "fonte": "Ministério da Saúde - CNES - API de dados abertos (estabelecimentos)",
+    "baixado_em": "2026-10-16T11:30:18Z",
+    "bytes": 5161228,
+    "sha256": "6d9b41de3355d1da071cc7d8a53c606ebe8471b735ec86bb9b3f4b974414e421"
+  },
+  "cnes/tipounidades.json": {
+    "url": "https://apidadosabertos.saude.gov.br/cnes/tipounidades",
+    "fonte": "Ministério da Saúde - CNES - API de dados abertos (estabelecimentos) - tipos de unidade",
+    "baixado_em": "2026-10-16T11:30:32Z",
+    "bytes": 3491,
+    "sha256": "7bc378ed7d877f7fb6d1e860c1ff79dfa76eb0b6b7aebcb783df5f2af0a4b381"
+  },
   "geodata_jp/bairros.geojson": {
     "url": "https://raw.githubusercontent.com/paulovitorweb/geodata-jp/76f128bbe0689de98c2a1d2f0bc1e897201d7941/data/bairros.geojson",
     "fonte": "paulovitorweb/geodata-jp (origem: Filipeia - Prefeitura de João Pessoa)",
     "baixado_em": "2026-10-14T20:44:15Z",
     "bytes": 322758,
     "sha256": "8760e7d44d5789720a8a8c1253c62204d1b9668bd756464d444a8b50bbc74ab3"
+  },
+  "geodata_jp/escolas_publicas.geojson": {
+    "url": "https://raw.githubusercontent.com/paulovitorweb/geodata-jp/76f128bbe0689de98c2a1d2f0bc1e897201d7941/data/escolas_publicas.geojson",
+    "fonte": "paulovitorweb/geodata-jp (origem: Filipeia - Prefeitura de João Pessoa)",
+    "baixado_em": "2026-10-22T18:32:41Z",
+    "bytes": 93812,
+    "sha256": "bfffb63c65b7df4625b7cf6c316727ab71b6cee91d8ae7f60312c3236619ecef"
+  },
+  "geodata_jp/parques.geojson": {
+    "url": "https://raw.githubusercontent.com/paulovitorweb/geodata-jp/76f128bbe0689de98c2a1d2f0bc1e897201d7941/data/parques.geojson",
+    "fonte": "paulovitorweb/geodata-jp (origem: Filipeia - Prefeitura de João Pessoa)",
+    "baixado_em": "2026-10-22T18:32:40Z",
+    "bytes": 21649,
+    "sha256": "0693350b61967a57190f7fd82345e68bd96bad0c9b0f9605bcda994eeb769471"
+  },
+  "geodata_jp/pracas.geojson": {
+    "url": "https://raw.githubusercontent.com/paulovitorweb/geodata-jp/76f128bbe0689de98c2a1d2f0bc1e897201d7941/data/pracas.geojson",
+    "fonte": "paulovitorweb/geodata-jp (origem: Filipeia - Prefeitura de João Pessoa)",
+    "baixado_em": "2026-10-22T18:32:40Z",
+    "bytes": 536637,
+    "sha256": "6eec6384d08a501ade7f2751f153acdef2c9625d18b653c5e3f9f0af1ba59359"
   },
   "ibge_censo2010/PB_20260615.zip": {
     "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2010/Resultados_do_Universo/Agregados_por_Setores_Censitarios/PB_20260615.zip",
@@ -41,6 +76,13 @@
     "bytes": 753664,
     "sha256": "518ff7806e6b1f58f0f616efe883ca348c367655d77f52f8f64ae2798b63d564"
   },
+  "ibge_censo2022/PB_setores_CD2022.gpkg": {
+    "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/malha_com_atributos/setores/gpkg/UF/PB/PB_setores_CD2022.gpkg",
+    "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
+    "baixado_em": "2026-10-22T18:32:40Z",
+    "bytes": 24436736,
+    "sha256": "8daf10f7d846e8e536cb48efbfa22cd46641e1ff6cd28b0ebacd5184f16e04c4"
+  },
   "ibge_censo2022/dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx": {
     "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx",
     "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
@@ -61,6 +103,13 @@
     "baixado_em": "2026-10-14T21:48:46Z",
     "bytes": 6336,
     "sha256": "028078f70a82dbdc2a7821c646feefbe6f2b76fad77b224c500e64185dd28ade"
+  },
+  "inep/catalogo_escolas_PB.csv": {
+    "url": "https://anonymousdata.inep.gov.br/analytics/saw.dll?Portal&PortalPath=%2Fshared%2FCenso%20da%20Educa%C3%A7%C3%A3o%20B%C3%A1sica%2F_portal%2FCat%C3%A1logo%20de%20Escolas",
+    "fonte": "INEP - Catálogo de Escolas (exportação do painel, UF = PB)",
+    "baixado_em": "2026-10-22T18:36:56Z",
+    "bytes": 2146634,
+    "sha256": "e012a2194e6be3e973b68b95476b5ea0dd09b806fdd03c5b4ceada7dd80b0204"
   },
   "siconfi/dca-anexo-I-D-2009.json": {
     "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/dca?an_exercicio=2009&no_anexo=DCA-Anexo%20I-D&id_ente=2507507",

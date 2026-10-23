@@ -93,3 +93,18 @@ def download(
     _save_manifest(manifest)
     print(f"[salvo] {key} ({dest.stat().st_size:,} bytes)")
     return dest
+
+
+def registrar(dest: Path, url: str, fonte: str) -> None:
+    """Registra no manifesto um arquivo obtido de outra forma (ex.: exportado por navegador)."""
+    dest = dest if dest.is_absolute() else DATA_RAW / dest
+    manifest = load_manifest()
+    manifest[dest.relative_to(DATA_RAW).as_posix()] = {
+        "url": url,
+        "fonte": fonte,
+        "baixado_em": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "bytes": dest.stat().st_size,
+        "sha256": _sha256(dest),
+    }
+    _save_manifest(manifest)
+    print(f"[salvo] {dest.relative_to(DATA_RAW).as_posix()} ({dest.stat().st_size:,} bytes)")

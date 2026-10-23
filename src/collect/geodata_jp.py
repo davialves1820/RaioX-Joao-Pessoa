@@ -1,9 +1,11 @@
-"""Coleta: limites de bairros do Filipeia (Prefeitura de João Pessoa) via geodata-jp.
+"""Coleta: camadas do repositório geodata-jp (origem: Filipeia, Prefeitura de João Pessoa).
 
-Não é a geometria usada no mapa (usamos a malha do IBGE 2022, que é o mesmo
-território em que a população foi contada). Serve para a tabela de
-correspondência de nomes e para as camadas municipais das próximas fases.
-Fixamos o commit para que o arquivo seja sempre o mesmo.
+- bairros.geojson: só para a tabela de correspondência de nomes (o mapa usa a malha do IBGE).
+- pracas.geojson e parques.geojson: áreas verdes públicas (polígonos).
+- escolas_publicas.geojson: usado apenas para completar a coordenada de escolas que o
+  Catálogo de Escolas do INEP (fonte principal) publica sem latitude/longitude.
+
+Fixamos o commit para que os arquivos sejam sempre os mesmos.
 
 Uso: python -m src.collect.geodata_jp [--force]
 """
@@ -16,12 +18,14 @@ from pathlib import Path
 from src.collect.download import download
 
 COMMIT = "76f128bbe0689de98c2a1d2f0bc1e897201d7941"
-URL = f"https://raw.githubusercontent.com/paulovitorweb/geodata-jp/{COMMIT}/data/bairros.geojson"
+BASE = f"https://raw.githubusercontent.com/paulovitorweb/geodata-jp/{COMMIT}/data"
+CAMADAS = ["bairros", "pracas", "parques", "escolas_publicas"]
 FONTE = "paulovitorweb/geodata-jp (origem: Filipeia - Prefeitura de João Pessoa)"
 
 
 def main(force: bool = False) -> None:
-    download(URL, Path("geodata_jp/bairros.geojson"), fonte=FONTE, force=force)
+    for camada in CAMADAS:
+        download(f"{BASE}/{camada}.geojson", Path(f"geodata_jp/{camada}.geojson"), fonte=FONTE, force=force)
 
 
 if __name__ == "__main__":
