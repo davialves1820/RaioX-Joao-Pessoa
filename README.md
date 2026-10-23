@@ -111,10 +111,19 @@ e `https://geoftp.ibge.gov.br/.../censo_2010/setores_censitarios_shp/pb/`.
 **Filipeia via geodata-jp**
 - O repositório **não declara licença**. O dado de origem é do portal público da Prefeitura
   (filipeia.joaopessoa.pb.gov.br), mas o arquivo derivado não tem termos de redistribuição explícitos.
-  Por isso não é usado no mapa, só na tabela de correspondência; o arquivo não é versionado aqui.
+  Por isso os **bairros** do geodata-jp não são usados no mapa, só na tabela de correspondência, e os
+  arquivos brutos do geodata-jp não são versionados aqui.
+- **Exceção: os contornos das praças** (página de serviços). O Filipeia oferece só a tabela das praças, sem
+  o shapefile. Os contornos vêm do geodata-jp, mas são os da Prefeitura: o pipeline exige que as 214 praças
+  tenham nome e área idênticos aos da tabela oficial do Filipeia e confere a posição com as quadras do
+  Filipeia (ver [Serviços públicos e acesso](#serviços-públicos-e-acesso)). A cópia é do geodata-jp; o
+  dado é público, da Prefeitura. Os contornos simplificados ficam em
+  `data/processed/servicos/areas_verdes.geojson`, com a Prefeitura citada como fonte.
 - Os limites de vários bairros diferem dos do IBGE (ver abaixo). O campo `densidade` do arquivo está
   quase todo vazio ou inválido e não é usado.
-- O portal Filipeia respondeu 403 ao acesso automatizado em 14/10/2026 e em 23/10/2026 (firewall anti-robô); em 23/10/2026 as camadas de parques, praças (tabela), quadras e bairros foram exportadas à mão (ver Serviços públicos e acesso).
+- O portal Filipeia respondeu 403 ao acesso automatizado em 14/10/2026 e em 23/10/2026 (firewall
+  anti-robô). Em 23/10/2026 as camadas de parques, praças (tabela), quadras e bairros foram exportadas à
+  mão (ver Serviços públicos e acesso).
 
 ## Metodologia
 
