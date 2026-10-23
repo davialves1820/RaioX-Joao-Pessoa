@@ -190,3 +190,28 @@ def test_indice_premia_quem_esta_melhor_nos_tres():
 def test_ranking_respeita_populacao_minima(ind, meta):
     assert (ind.loc[ind.entra_no_ranking, "pop_2022"] >= meta["pop_min_ranking"]).all()
     assert (ind.loc[~ind.entra_no_ranking, "pop_2022"] < meta["pop_min_ranking"]).all()
+
+
+# --- fontes oficiais (Filipeia) e OpenStreetMap
+
+
+def test_pracas_conferidas_com_a_tabela_oficial(meta):
+    av = meta["areas_verdes"]
+    assert av["pracas_conferidas_com_tabela_filipeia"] == av["pracas"]
+    # quase todas as praças com código de quadra ficam na quadra indicada pelo cadastro da Prefeitura
+    assert av["pracas_dentro_ou_encostadas_na_quadra_5m"] >= 0.95 * av["pracas_com_quadra_no_cadastro_atual"]
+
+
+def test_escolas_com_coordenada_do_osm_caem_num_bairro(pontos, meta):
+    osm = pontos[pontos.fonte_coordenada.fillna("").str.startswith("OpenStreetMap")]
+    assert len(osm) == meta["funil"]["escolas"]["coordenada_completada_pelo_openstreetmap"]
+    assert (osm.status == sv.STATUS_BAIRRO).all()
+
+
+def test_matas_ficam_fora_do_indice_e_dentro_do_municipio(ind, meta):
+    matas = gpd.read_file(SAIDA / "matas_osm.geojson")
+    assert len(matas) == meta["matas_osm"]["poligonos"]
+    # a área verde por bairro vem só de praças e parques (a união deles limita a soma)
+    assert ind["area_verde_m2"].sum() <= meta["areas_verdes"]["area_sem_sobreposicao_m2"] + 1
+    # a soma das matas não passa da área do município (210 km²)
+    assert meta["matas_osm"]["area_uniao_ha"] < 21100

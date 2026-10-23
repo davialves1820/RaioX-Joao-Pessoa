@@ -42,7 +42,11 @@ def carregar(pasta: Path = PASTA) -> dict:
     verdes = json.loads((pasta / "areas_verdes.geojson").read_text(encoding="utf-8"))
     for i, f in enumerate(verdes["features"]):
         f["id"] = str(i)
+    matas = json.loads((pasta / "matas_osm.geojson").read_text(encoding="utf-8"))
+    for i, f in enumerate(matas["features"]):
+        f["id"] = str(i)
     return {
+        "matas": matas,
         "ind": pd.read_csv(pasta / "indicadores_servicos.csv", dtype={"cd_bairro": str}),
         "pontos": pd.DataFrame(pontos.drop(columns="geometry")),
         "nao_atribuidos": pd.read_csv(pasta / "pontos_nao_atribuidos.csv"),

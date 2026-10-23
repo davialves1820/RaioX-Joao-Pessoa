@@ -114,7 +114,7 @@ e `https://geoftp.ibge.gov.br/.../censo_2010/setores_censitarios_shp/pb/`.
   Por isso não é usado no mapa, só na tabela de correspondência; o arquivo não é versionado aqui.
 - Os limites de vários bairros diferem dos do IBGE (ver abaixo). O campo `densidade` do arquivo está
   quase todo vazio ou inválido e não é usado.
-- O portal Filipeia respondeu 403 ao acesso automatizado em 14/10/2026.
+- O portal Filipeia respondeu 403 ao acesso automatizado em 14/10/2026 e em 23/10/2026 (firewall anti-robô); em 23/10/2026 as camadas de parques, praças (tabela), quadras e bairros foram exportadas à mão (ver Serviços públicos e acesso).
 
 ## Metodologia
 
@@ -359,8 +359,11 @@ Gerado por `python -m src.process.servicos`.
 |---|---|---|---|---|
 | Escolas | INEP, [Catálogo de Escolas](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas) (UF = PB) | `inep/catalogo_escolas_PB.csv` | situação do Censo Escolar 2024 (o catálogo não traz data; conferido uma vez com os [microdados do Censo Escolar 2024](https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_2024.zip)) | 22/10/2026 |
 | Unidades de saúde | Ministério da Saúde, CNES, [API de dados abertos](https://apidadosabertos.saude.gov.br/) (município 250750) | `cnes/estabelecimentos_250750.json`, `cnes/tipounidades.json` | cadastros atualizados até 16/10/2026 | 16/10/2026 |
-| Praças e parques | Prefeitura (Filipeia), via [paulovitorweb/geodata-jp](https://github.com/paulovitorweb/geodata-jp) (commit `76f128b`) | `geodata_jp/pracas.geojson`, `geodata_jp/parques.geojson` | adicionados ao geodata-jp em fev/2022 (data dos commits; a data da extração do Filipeia não é informada) | 22/10/2026 |
-| Coordenadas de apoio (escolas) | Catálogo do INEP de 2022, via geodata-jp | `geodata_jp/escolas_publicas.geojson` | fev/2022 | 22/10/2026 |
+| Parques | Prefeitura, [Filipeia](https://filipeia.joaopessoa.pb.gov.br/) (shapefile exportado à mão) | `filipeia/Parques_Municipais.zip` (+ `.csv`) | arquivo de 08/02/2021 | 23/10/2026 |
+| Praças | Tabela do Filipeia; contornos do [geodata-jp](https://github.com/paulovitorweb/geodata-jp) (commit `76f128b`), conferidos com a tabela e as quadras do Filipeia | `filipeia/pracas.csv`, `geodata_jp/pracas.geojson` | intervenções registradas até 2018 | 23/10/2026 |
+| Quadras e bairros da Prefeitura (só conferência) | Filipeia | `filipeia/quadras_gerais.zip`, `filipeia/bairros.zip` | quadras de 02/10/2026; bairros de 13/04/2026 | 23/10/2026 |
+| Matas e áreas protegidas (só no mapa) | [OpenStreetMap](https://www.openstreetmap.org/), Overpass API, © colaboradores do OpenStreetMap (ODbL) | `osm/matas.json`, `osm/parques.json` | consulta de 23/10/2026 | 23/10/2026 |
+| Coordenadas de apoio (escolas) | Catálogo do INEP de 2022 (via geodata-jp) e OpenStreetMap (API, 2 elementos fixos) | `geodata_jp/escolas_publicas.geojson`, `osm/escolas.json` | fev/2022; OSM de 23/10/2026 | 22–23/10/2026 |
 | População por setor censitário | IBGE, Censo 2022, malha de setores com atributos (`v0001`) | `ibge_censo2022/PB_setores_CD2022.gpkg` | 2022 | 22/10/2026 |
 
 **Por que não só o geodata-jp:** a camada de escolas do geodata-jp é de fevereiro de 2022. Comparada
@@ -375,6 +378,19 @@ as linhas precisam ser da PB, porque, se o filtro falha, o painel exporta 100 mi
 O servidor do INEP não envia o certificado intermediário da RNP (*RNP ICPEdu GR46 OV TLS CA 2025*).
 O certificado público está em `certs/` e é registrado no banco de certificados do Chromium; a
 verificação TLS não é desligada. Se o painel mudar, o docstring do script explica a exportação manual.
+
+**Filipeia:** o portal da Prefeitura fica atrás de um firewall anti-robô que bloqueia acesso automatizado
+(inclusive de navegador automatizado), então as camadas foram exportadas à mão pelo navegador e são
+registradas com `python -m src.collect.filipeia --registrar` (ver o docstring do script). O portal oferece o
+shapefile dos parques, mas só a tabela das praças. Por isso os contornos das praças vêm do geodata-jp, e o
+pipeline confere: as 214 praças precisam ter nome e área idênticos aos da tabela oficial (senão ele para), e
+160 das 162 praças com código cartográfico ficam dentro ou encostadas na quadra indicada pelo código nas
+quadras do Filipeia de 2026. A versão atual do Filipeia é igual à copiada pelo geodata-jp em 2022: o cadastro
+de praças e parques da Prefeitura não foi atualizado desde então.
+
+**OpenStreetMap:** matas e áreas protegidas, e parques, vêm de consultas ao Overpass (`src/collect/osm.py`;
+o servidor principal recusa consultas grandes daqui, por isso há servidores alternativos). As duas escolas
+vêm da API principal do OSM, por elemento fixo, conferido à mão (mesmo nome, ponto no bairro do endereço do INEP).
 
 **CNES:** a API devolve 20 registros por página. Em 22/10/2026 ela estava fora do ar; a cópia usada
 foi baixada e conferida em 16/10/2026 (data registrada no manifesto).
@@ -391,6 +407,10 @@ foi baixada e conferida em 16/10/2026 (data registrada no manifesto).
   "Esfera administrativa" do CNES indica a gestão, não quem é dono, por isso a natureza jurídica.
 - **Áreas verdes:** 214 praças (61,8 ha) e 11 parques (270,8 ha) do cadastro da Prefeitura. Onde
   uma praça e um parque se sobrepõem (1,4 ha), a área conta uma vez.
+- **Matas e áreas protegidas (OpenStreetMap):** 4.109 ha no município, entre elas a Mata do Buraquinho
+  (516 ha), o Refúgio de Vida Silvestre Mata do Buraquinho (512 ha) e o Parque Estadual Mata do Aratu
+  (340 ha). Aparecem **só no mapa**: não entram na área verde por morador nem no índice, porque não são do
+  mesmo cadastro nem do mesmo critério (praça e parque).
 
 Funil completo em `data/processed/servicos/metadados.json` (`funil`).
 
@@ -401,8 +421,8 @@ ficam em `pontos_nao_atribuidos.csv`:
 
 | Status | Escolas | Saúde | O que acontece |
 |---|---|---|---|
-| no bairro | 284 | 144 | contado no bairro |
-| sem coordenada | 16 | 0 | fora do mapa e das distâncias; listado |
+| no bairro | 286 | 144 | contado no bairro |
+| sem coordenada | 14 | 0 | fora do mapa e das distâncias; listado |
 | no município, fora de bairro | 1 | 0 | no mapa e nas distâncias; não contado em bairro |
 | fora do município | 0 | 1 | fora das distâncias e das contagens; listado |
 
@@ -410,6 +430,12 @@ ficam em `pontos_nao_atribuidos.csv`:
   ponto (−7,145192; −34,859117), repetido em 12 escolas de endereços diferentes. É um marcador
   genérico, não uma localização, então só as 3 coordenadas restantes são usadas (marcadas como
   "geodata-jp (Catálogo de Escolas do INEP, versão de 2022)").
+- Mais 2 escolas (CEEEA Sesquicentenário e ECI Liliosa de Paiva Leite) usam o ponto do OpenStreetMap,
+  marcado como tal. As outras 14 não estão em nenhuma fonte acessível; a posição não é estimada pelo endereço.
+- A USF Integrada Boa Esperança tem a mesma coordenada errada também na base completa do CNES de junho
+  de 2025 (OpenDataSUS).
+- `pontos_nao_atribuidos.csv` traz, para quem tem coordenada, o bairro pela malha da Prefeitura (a escola
+  do Porto do Capim, fora dos bairros do IBGE, fica no Varadouro pela malha da Prefeitura).
 - A USF Integrada Boa Esperança tem no CNES uma coordenada a 36 km do limite do município (o endereço
   é em Gramame). Não é corrigida à mão.
 - A malha de bairros do IBGE cobre 167,8 km² dos 210,0 km² do município (soma do campo `AREA_KM2`
@@ -459,12 +485,19 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
 - **Linha reta** subestima o caminho real, ainda mais onde há rios, mangues ou vias expressas no meio.
 - **Efeito de borda:** o serviço mais próximo pode estar em outro bairro (isso é contado); serviços
   em municípios vizinhos não estão nos dados.
-- **Área verde incompleta:** só praças e parques do cadastro da Prefeitura. A **Mata do Buraquinho**
-  não está entre os 11 parques do cadastro, e outras áreas de mata, orla e canteiros também não; bairros
-  vizinhos a elas aparecem com menos área verde do que de fato têm.
+- **Área verde só do cadastro da Prefeitura:** a **Mata do Buraquinho** e outras matas não são praça nem
+  parque no cadastro; aparecem na camada de matas do mapa, mas não na área verde por morador nem no índice.
+  Bairros vizinhos a elas aparecem com menos área verde do que de fato têm.
+- **Cadastro desatualizado:** os parques são de um arquivo de 2021 e as praças registram intervenções até
+  2018. O OpenStreetMap tem parques que o cadastro não tem: Parque Socioambiental do Roger (em construção,
+  24,6 ha), Parque Linear das Três Ruas (7,7 ha), Parque Jardim do Norte (4,9 ha), Horto de Santo Antônio
+  (4,2 ha) e Ecobosque (1,1 ha). Não foram somados, para não misturar fontes.
+- **Bairros IBGE × Prefeitura:** o mapa usa os bairros do IBGE, onde a população do Censo é contada. A malha
+  da Prefeitura (abril de 2026) cobre 194 km² do município, contra 168 km² do IBGE; alguns bairros de borda
+  (Mussuré, Mumbaba, Alto do Céu, Muçumagro) são bem maiores nela.
   Um parque que atravessa mais de um bairro é contado em cada um (por isso a soma dos parques por
   bairro passa de 11), mas a área é dividida entre eles.
-- **16 escolas sem coordenada** (lista em `pontos_nao_atribuidos.csv`) não entram nas distâncias;
+- **14 escolas sem coordenada** (lista em `pontos_nao_atribuidos.csv`) não entram nas distâncias;
   a distância até a escola pode estar superestimada nos bairros delas.
 - As coordenadas são as declaradas ao INEP e ao CNES e não foram conferidas uma a uma.
 
@@ -472,13 +505,15 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
 
 - **Mapa:** a cor dos bairros mostra o índice de acesso, a distância até a escola ou a UBS/USF, a área
   verde por morador ou os moradores por equipamento. As camadas de pontos (escolas, escolas de atividade
-  complementar/AEE, UBS/USF, outras unidades de saúde) e de praças e parques se ligam e desligam.
+  complementar/AEE, UBS/USF, outras unidades de saúde), de praças e parques e de matas e áreas protegidas
+  (OpenStreetMap, só informativa) se ligam e desligam.
 - **Detalhe do bairro:** índice e seus três componentes, distâncias e serviços por 10 mil habitantes com a
   diferença em relação à média da cidade, e a lista dos serviços que ficam no bairro.
 - **Ranking:** bairros com mais moradores por escola ou UBS/USF, e a lista dos que não têm nenhum dos dois.
 - **Índice:** fórmula, explicação e tabela com os componentes de todos os bairros (com download em CSV).
-- **Sobre os dados:** fontes, pontos não atribuídos a bairro e arquivos de origem.
-- Cores das camadas (amarelo, violeta, vermelho; verde-água para praças e parques) validadas com o
+- **Fontes e limitações:** seção aberta no fim da página, com a tabela de fontes, os filtros de cada uma,
+  as limitações, os pontos não atribuídos a bairro e os arquivos de origem (com SHA-256).
+- Cores das camadas (amarelo, violeta, vermelho; verde-água para praças e parques; verde-escuro para matas) validadas com o
   validador de paleta, todos os pares; a escola de atividade complementar é um ponto vazado, para não
   depender só da cor.
 
@@ -490,6 +525,7 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
 | `pontos_servicos.geojson` | escolas e unidades de saúde com coordenada: tipo, rede/natureza, endereço, origem da coordenada, status, bairro e arquivo de origem |
 | `pontos_nao_atribuidos.csv` | pontos sem coordenada ou fora dos bairros, com o motivo |
 | `areas_verdes.geojson` | praças e parques (simplificados em 1 m para o mapa), com área |
+| `matas_osm.geojson` | matas e áreas protegidas do OpenStreetMap recortadas pelo município (simplificadas em 2 m), com tipo, nome, área e id do OSM |
 | `metadados.json` | funil de filtros, pontos por status, áreas verdes, médias da cidade, setores e manifesto dos arquivos brutos |
 
 ## Próximas fases

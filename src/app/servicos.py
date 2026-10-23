@@ -22,6 +22,8 @@ COR_CAMADA = {
     "outras_saude": "#e34948",
 }
 COR_VERDE = "#1baf7a"
+COR_MATA = "#008300"  # mais escuro que o das praças e parques, e com menos opacidade (fica por baixo)
+CREDITO_OSM = "Matas e áreas protegidas: © colaboradores do OpenStreetMap (ODbL)."
 TAMANHO = {"escolas": 9, "complementares": 10, "ubs": 10, "outras_saude": 10}
 
 INDICADORES = {
@@ -78,10 +80,10 @@ def _hover_ponto(p: pd.DataFrame) -> pd.Series:
 
 
 def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verde: bool,
-                selecionado: str | None) -> go.Figure:
+                selecionado: str | None, matas: bool = False) -> go.Figure:
     ind = dados["ind"].assign(hover=lambda x: _hover_bairro(x))
     fig = go.Figure()
-    com_camadas = bool(camadas) or verde
+    com_camadas = bool(camadas) or verde or matas
     comum = dict(geojson=geo, featureidkey="properties.cd_bairro", hovertemplate="%{hovertext}<extra></extra>",
                  marker_line_color=SUPERFICIE, marker_line_width=1)
     barra = dict(thickness=12, len=0.4, outlinewidth=0, tickfont=dict(color=TINTA_2), x=0.985, xanchor="right",
@@ -105,6 +107,18 @@ def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verd
             locations=sem.cd_bairro, z=[0] * len(sem), hovertext=sem.hover,
             colorscale=[[0, "rgba(252,252,251,0.6)"], [1, "rgba(252,252,251,0.6)"]], showscale=False,
             showlegend=False, **{**comum, "marker_line_color": TINTA_2, "marker_line_width": 1.5},
+        ))
+
+    if matas:
+        feats = dados["matas"]["features"]
+        fig.add_trace(go.Choroplethmap(
+            geojson=dados["matas"], locations=[f["id"] for f in feats], z=[1] * len(feats),
+            colorscale=[[0, COR_MATA], [1, COR_MATA]], showscale=False, marker_opacity=0.4,
+            marker_line_width=0, name="Matas e áreas protegidas (OpenStreetMap)", showlegend=True,
+            hovertext=[f"<b>{f['properties']['nome'] or 'Sem nome no OpenStreetMap'}</b><br>{f['properties']['tipo']} · "
+                       f"{fmt_dec(f['properties']['area_m2'] / 1e4, 1)} ha<br>Fonte: OpenStreetMap ({f['properties']['osm']})"
+                       for f in feats],
+            hovertemplate="%{hovertext}<extra></extra>",
         ))
 
     if verde:
@@ -312,22 +326,37 @@ FONTES = pd.DataFrame([
     {"Dado": "Unidades de saúde", "Origem": "Ministério da Saúde, CNES (API de dados abertos)",
      "Link": "https://apidadosabertos.saude.gov.br/cnes/estabelecimentos?codigo_municipio=250750",
      "Atualização da fonte": "cadastro mais recente atualizado em 16/10/2026", "Obtido em": "16/10/2026"},
-    {"Dado": "Praças e parques", "Origem": "Prefeitura de João Pessoa (Filipeia), via geodata-jp",
-     "Link": "https://github.com/paulovitorweb/geodata-jp",
-     "Atualização da fonte": "adicionados ao geodata-jp em fev/2022; a data da extração do Filipeia não é informada",
-     "Obtido em": "22/10/2026"},
-    {"Dado": "Coordenadas de apoio (escolas)", "Origem": "Catálogo do INEP de 2022, via geodata-jp",
-     "Link": "https://github.com/paulovitorweb/geodata-jp", "Atualização da fonte": "fev/2022",
-     "Obtido em": "22/10/2026"},
+    {"Dado": "Parques", "Origem": "Prefeitura de João Pessoa, Filipeia (shapefile exportado do portal)",
+     "Link": "https://filipeia.joaopessoa.pb.gov.br/",
+     "Atualização da fonte": "arquivo de 08/02/2021", "Obtido em": "23/10/2026"},
+    {"Dado": "Praças", "Origem": "Tabela do Filipeia; contornos do geodata-jp, conferidos com a tabela e as quadras do Filipeia",
+     "Link": "https://filipeia.joaopessoa.pb.gov.br/",
+     "Atualização da fonte": "intervenções registradas até 2018; quadras de 02/10/2026", "Obtido em": "23/10/2026"},
+    {"Dado": "Matas e áreas protegidas (só no mapa)", "Origem": "OpenStreetMap, © colaboradores do OpenStreetMap (ODbL)",
+     "Link": "https://www.openstreetmap.org/", "Atualização da fonte": "consulta de 23/10/2026",
+     "Obtido em": "23/10/2026"},
+    {"Dado": "Coordenadas de apoio (escolas)", "Origem": "Catálogo do INEP de 2022 (via geodata-jp) e OpenStreetMap",
+     "Link": "https://github.com/paulovitorweb/geodata-jp", "Atualização da fonte": "fev/2022; OSM: consulta de 23/10/2026",
+     "Obtido em": "22–23/10/2026"},
     {"Dado": "Moradores por setor censitário e limites", "Origem": "IBGE, Censo 2022 (malha de setores e de bairros)",
      "Link": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/",
      "Atualização da fonte": "Censo 2022", "Obtido em": "22/10/2026"},
 ])
 
 
+def _matas_nomeadas(mt: dict) -> str:
+    nomes = [f"{m['nome']} ({fmt_dec(m['ha'], 0)} ha)" for m in mt["com_nome"] if m["ha"] >= 100]
+    return ("As maiores com nome: " + "; ".join(nomes) + ".") if nomes else ""
+
+
+def _parques_novos(mt: dict) -> str:
+    p = mt.get("parques_osm_fora_do_cadastro", [])
+    return (", como " + ", ".join(f"{x['nome']} ({fmt_dec(x['ha'], 1)} ha)" for x in p[:5])) if p else ""
+
+
 def secao_fontes(dados: dict) -> None:
     meta = dados["meta"]
-    fe, fs, av = meta["funil"]["escolas"], meta["funil"]["saude"], meta["areas_verdes"]
+    fe, fs, av, mt = meta["funil"]["escolas"], meta["funil"]["saude"], meta["areas_verdes"], meta["matas_osm"]
     se, ss = _status_total(meta, "escola"), _status_total(meta, "saude")
     st.header("Fontes e limitações")
     st.caption("Tudo o que está nesta página sai das fontes abaixo. Os números de contagem e de distância são "
@@ -342,12 +371,18 @@ def secao_fontes(dados: dict) -> None:
   O catálogo não tem download direto: é exportado do painel do INEP por um navegador automatizado, e o arquivo é
   conferido (todas as linhas da Paraíba). Para {fmt_int(fe['coordenada_completada_pelo_geodata_jp'])} escolas sem coordenada no catálogo,
   usa-se a da versão de 2022 do mesmo catálogo (geodata-jp); {fmt_int(fe['geodata_jp_coordenada_repetida_descartada'])} outras foram
-  descartadas porque o geodata-jp põe várias escolas no mesmo ponto genérico.
+  descartadas porque o geodata-jp põe várias escolas no mesmo ponto genérico. Para
+  {fmt_int(fe['coordenada_completada_pelo_openstreetmap'])} escolas, usa-se o ponto do OpenStreetMap, conferido: mesmo nome e no bairro do endereço do INEP.
 - **Saúde:** dos {fmt_int(fs['cnes_joao_pessoa'])} estabelecimentos do CNES em João Pessoa, {fmt_int(fs['tipos_pedidos'])} são
   UBS/USF, policlínicas, UPAs/prontos atendimentos ou hospitais; {fmt_int(fs['ativos'])} estão ativos;
   {fmt_int(fs['rede_sus_publicos_ou_atendem_sus'])} são públicos ou atendem pelo SUS; sem os cadastros de regulação, ficam
   **{fmt_int(fs['sem_cadastros_de_regulacao'])}**.
-- **Praças e parques:** {fmt_int(av['pracas'])} praças e {fmt_int(av['parques'])} parques. Onde se sobrepõem, a área conta uma vez.
+- **Praças e parques:** {fmt_int(av['pracas'])} praças e {fmt_int(av['parques'])} parques do cadastro da Prefeitura. Onde se sobrepõem,
+  a área conta uma vez. O portal oferece o arquivo dos parques, mas não o das praças; os contornos das praças vêm do
+  geodata-jp e foram conferidos: as {fmt_int(av['pracas_conferidas_com_tabela_filipeia'])} têm nome e área idênticos aos da tabela oficial, e
+  {fmt_int(av['pracas_dentro_ou_encostadas_na_quadra_5m'])} das {fmt_int(av['pracas_com_quadra_no_cadastro_atual'])} que têm código de quadra estão dentro ou encostadas na quadra indicada.
+- **Matas e áreas protegidas** (OpenStreetMap): {fmt_dec(mt['area_uniao_ha'], 0)} ha no município, só no mapa, **fora do
+  índice e da área verde por morador**, porque o critério é outro. {_matas_nomeadas(mt)}
 - **Distâncias:** de cada setor censitário com moradores até o serviço mais próximo, em linha reta, com média
   ponderada pelo número de moradores do setor (Censo 2022). Calculadas em metros (SIRGAS 2000 / UTM 25S).
 """)
@@ -362,14 +397,18 @@ def secao_fontes(dados: dict) -> None:
   abrangência, e essas áreas não estão nos dados. Aqui se mede só a unidade mais próxima.
 - **Serviços de municípios vizinhos** não estão nos dados, então bairros na divisa podem ter um serviço mais
   perto do que o mostrado.
-- **Área verde incompleta.** Só praças e parques do cadastro da Prefeitura. Matas e outras áreas verdes que não
-  estão no cadastro, como a Mata do Buraquinho (que não aparece entre os {fmt_int(av['parques'])} parques), ficam de fora; bairros
-  vizinhos a elas aparecem com menos área verde do que de fato têm. O cadastro é de fevereiro de 2022 ou anterior.
-- **Escolas sem coordenada:** {fmt_int(se.get('sem_coordenada', 0))} escolas não têm localização no catálogo do INEP nem
-  uma localização confiável no geodata-jp. Elas estão contadas no total, mas fora do mapa e das distâncias.
+- **Área verde só do cadastro da Prefeitura.** Matas como a Mata do Buraquinho não são praça nem parque no cadastro
+  e não entram na área verde por morador nem no índice; aparecem só na camada de matas do mapa. Bairros vizinhos a
+  elas aparecem com menos área verde do que de fato têm.
+- **Cadastro desatualizado.** Os parques são de um arquivo de 2021 e as praças registram intervenções até 2018. O
+  OpenStreetMap tem parques que o cadastro não tem{_parques_novos(mt)}.
+- **Escolas sem coordenada:** {fmt_int(se.get('sem_coordenada', 0))} escolas não têm localização no catálogo do INEP, nem uma
+  localização confiável no geodata-jp ou no OpenStreetMap. Elas estão contadas no total, mas fora do mapa e das distâncias.
 - **Coordenadas declaradas.** As localizações são as informadas ao INEP e ao CNES e não foram conferidas uma a
   uma. Uma UBS tem coordenada fora do município e não foi corrigida à mão.
-- **Limites dos bairros:** a malha de bairros do IBGE cobre parte do município. {fmt_int(meta['setores']['pop_fora_de_bairro'])}
+- **Limites dos bairros:** o mapa usa os bairros do IBGE, porque a população do Censo é contada neles. A malha do
+  IBGE cobre 168 km² dos 210 km² do município; a da Prefeitura (Filipeia, abril de 2026) cobre 194 km², e alguns
+  bairros de borda são bem maiores nela. {fmt_int(meta['setores']['pop_fora_de_bairro'])}
   moradores vivem em setores sem bairro e entram só na média da cidade.
 - **Índice relativo.** O índice compara os bairros entre si; não é uma nota de qualidade dos serviços.
 """)
@@ -382,8 +421,9 @@ def secao_fontes(dados: dict) -> None:
         f"{fmt_int(ss.get('fora_do_municipio', 0))} com coordenada fora do município, {fmt_int(ss.get('sem_coordenada', 0))} sem coordenada."
     )
     na = dados["nao_atribuidos"].assign(status=lambda x: x.status.map(d.STATUS_TEXTO))
-    st.dataframe(na[["nome", "subtipo", "status", "endereco"]], hide_index=True, width="stretch",
-                 column_config={"nome": "Nome", "subtipo": "Tipo", "status": "Situação", "endereco": "Endereço"})
+    st.dataframe(na[["nome", "subtipo", "status", "bairro_prefeitura", "endereco"]], hide_index=True, width="stretch",
+                 column_config={"nome": "Nome", "subtipo": "Tipo", "status": "Situação",
+                                "bairro_prefeitura": "Bairro pela malha da Prefeitura", "endereco": "Endereço"})
 
     with st.expander("Arquivos de origem (URL, data de download e SHA-256)"):
         arquivos = pd.DataFrame([
@@ -405,7 +445,7 @@ def main() -> None:
     )
     st.info(
         "Só escolas públicas e unidades do SUS; distâncias em linha reta; área verde só de praças e parques do "
-        "cadastro da Prefeitura. Fontes, datas e todas as limitações na seção **Fontes e limitações**, no fim da página.",
+        "cadastro da Prefeitura (matas aparecem no mapa, mas fora do índice). Fontes, datas e todas as limitações na seção **Fontes e limitações**, no fim da página.",
         icon="ℹ️",
     )
 
@@ -416,13 +456,13 @@ def main() -> None:
     col_mapa, col_det = st.columns([7, 3], gap="medium")
     with col_mapa:
         indicador = st.radio("Cor dos bairros", list(INDICADORES), format_func=INDICADORES.get, horizontal=True)
-        opcoes = list(d.CAMADAS) + ["verde"]
-        rotulos = {**d.CAMADAS, "verde": "Praças e parques"}
+        opcoes = list(d.CAMADAS) + ["verde", "matas"]
+        rotulos = {**d.CAMADAS, "verde": "Praças e parques", "matas": "Matas e áreas protegidas"}
         ligadas = st.pills("Camadas", opcoes, format_func=rotulos.get, selection_mode="multi",
                            default=["escolas", "ubs"])
         evento = st.plotly_chart(
-            figura_mapa(dados, geo, indicador, [c for c in ligadas if c != "verde"], "verde" in ligadas,
-                        st.session_state.bairro_servicos),
+            figura_mapa(dados, geo, indicador, [c for c in ligadas if c in d.CAMADAS], "verde" in ligadas,
+                        st.session_state.bairro_servicos, matas="matas" in ligadas),
             on_select="rerun", selection_mode="points", key="mapa_servicos",
             config={"scrollZoom": True, "displaylogo": False},
         )
@@ -432,7 +472,7 @@ def main() -> None:
             st.session_state.ultimo_clique_servicos = clicado
             st.session_state.bairro_servicos = clicado
             st.rerun()
-        st.caption(LEGENDA_INDICADOR[indicador])
+        st.caption(LEGENDA_INDICADOR[indicador] + (" " + CREDITO_OSM if "matas" in ligadas else ""))
 
     with col_det:
         st.selectbox("Bairro", nomes.index, format_func=nomes.get, key="bairro_servicos")
