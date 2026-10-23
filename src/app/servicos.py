@@ -489,4 +489,4 @@ def main() -> None:
     secao_ranking(dados)
     secao_indice(dados)
     secao_fontes(dados)
-    st.caption("Dados: INEP, Ministério da Saúde (CNES), Prefeitura de João Pessoa (via geodata-jp) e IBGE (Censo 2022).")
+    st.caption("Dados: INEP, Ministério da Saúde (CNES), Prefeitura de João Pessoa (Filipeia), OpenStreetMap e IBGE (Censo 2022).")
