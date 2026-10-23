@@ -1,85 +1,138 @@
 # Raio-X dos Bairros de João Pessoa
 
-Dashboard aberto com indicadores por bairro de João Pessoa (PB), feito a partir de dados públicos.
-Esta primeira fase trata de **população** (Censos 2010 e 2022), **variação populacional** e
-**densidade demográfica** nos 64 bairros do município.
+Dashboard aberto, em Streamlit, com indicadores dos 64 bairros de João Pessoa (PB), feito só com
+dados públicos. Cada número do site pode ser rastreado até o arquivo de origem: URL, data de download
+e SHA-256 ficam em [`data/raw/manifest.json`](data/raw/manifest.json).
 
-O dashboard tem: mapa coroplético dos bairros (população, densidade ou variação 2010→2022),
-painel de detalhe ao clicar num bairro (com a origem de cada número), ranking dos bairros que mais
-cresceram e mais perderam população, tabela completa com download em CSV e uma seção sobre fontes
-e limitações.
+O site tem três páginas:
 
-A segunda página, **"Para onde vai o dinheiro de João Pessoa"**, mostra as despesas dos órgãos
-municipais declaradas ao TCE-PB: visão geral, gasto por área, fornecedores, modalidades de licitação
-e um mapa experimental. Ver a seção [Para onde vai o dinheiro](#para-onde-vai-o-dinheiro-de-joão-pessoa).
+| Página | O que mostra | Fontes principais |
+|---|---|---|
+| [**Bairros e população**](#1-bairros-e-população) | população nos Censos 2010 e 2022, variação e densidade, com mapa, detalhe do bairro, ranking e tabela | IBGE |
+| [**Serviços e acesso**](#2-serviços-públicos-e-acesso) | escolas públicas, unidades de saúde do SUS, praças, parques e matas; distância até a escola e a UBS mais próximas, área verde por morador e um índice de acesso | INEP, CNES, Prefeitura (Filipeia), OpenStreetMap, IBGE |
+| [**Para onde vai o dinheiro**](#3-para-onde-vai-o-dinheiro-de-joão-pessoa) | despesas dos órgãos municipais: total por ano, por área, fornecedores, licitação e um mapa experimental | TCE-PB, SICONFI, IBGE |
 
-A página **"Serviços e acesso"** mostra escolas públicas (INEP), unidades de saúde do SUS (CNES),
-praças e parques num mapa com camadas que se ligam e desligam; distâncias até a escola e a UBS/USF
-mais próximas, área verde por morador, o ranking "mais gente e menos serviços" e um índice de acesso
-com a fórmula explicada. Ver [Serviços públicos e acesso](#serviços-públicos-e-acesso).
+## Princípios
+
+- **Nada é inventado ou estimado.** Se uma fonte não está acessível, o dado fica de fora e isso é dito.
+  Coordenadas que faltam não são adivinhadas pelo endereço.
+- **Tudo é rastreável.** Cada arquivo bruto está no manifesto, e os dados processados trazem o arquivo
+  de origem.
+- **Nada é descartado em silêncio.** Pontos sem coordenada, fora dos bairros ou com problema são
+  contados e listados.
+- **A coleta é reexecutável** (`python -m src.collect`), com duas exceções exportadas à mão e documentadas:
+  o Catálogo de Escolas do INEP, quando o navegador automatizado falha, e o Filipeia.
+- **Linguagem neutra.** O site mostra os dados; não acusa nem dá nota a ninguém.
+- **Fontes e limitações ficam visíveis no próprio site**, não só aqui.
 
 ## Como rodar
 
-Requer Python 3.11+.
+Requer Python 3.11 ou superior.
 
 ```bash
 pip install -r requirements-dev.txt
-python -m src.collect          # baixa os dados brutos para data/raw/ (reexecutável; --force rebaixa)
-python -m src.process.build    # gera data/processed/ (bairros e população)
-python -m src.process.despesas # gera data/processed/despesas/ (depende do passo anterior)
-python -m src.process.servicos # gera data/processed/servicos/ (depende do build)
+python -m src.collect          # baixa os dados brutos para data/raw/ (ver as exceções abaixo)
+python -m src.process.build    # bairros e população -> data/processed/
+python -m src.process.despesas # despesas -> data/processed/despesas/ (depende do build)
+python -m src.process.servicos # serviços -> data/processed/servicos/ (depende do build)
 pytest                         # testes do pipeline e das funções do app
 streamlit run streamlit_app.py # abre o dashboard em http://localhost:8501
 ```
 
+- **Arquivo já baixado não é baixado de novo** (`--force` rebaixa tudo). Downloads interrompidos não
+  deixam arquivos pela metade.
+- **Dados que mudam com o tempo** (despesas do ano corrente, IPCA, estimativas de população, CNES):
+  rode `python -m src.collect --atualizar` e depois os passos de processamento.
+- **INEP:** o Catálogo de Escolas é exportado por um navegador automatizado (Playwright + Chromium);
+  para atualizar, use `python -m src.collect.inep_catalogo --force`. Se o painel mudar, o docstring do
+  script explica a exportação manual.
+- **Filipeia (Prefeitura):** o portal bloqueia acesso automatizado. As camadas são exportadas à mão para
+  `data/raw/filipeia/` e registradas com `python -m src.collect.filipeia --registrar`; o docstring do
+  script lista os arquivos.
+
+Os dados brutos não ficam no git (são grandes e reprodutíveis); os processados ficam, porque o app usa só eles.
+
 ### Deploy no Streamlit Community Cloud
 
-1. Em [share.streamlit.io](https://share.streamlit.io), clique em **Create app** e escolha este repositório e a branch.
+1. Em [share.streamlit.io](https://share.streamlit.io), clique em **Create app** e escolha este
+   repositório e a branch `main`.
 2. Em *Main file path*, use `streamlit_app.py` (é o padrão).
-3. Em *Advanced settings*, escolha Python 3.11 ou superior.
+3. Em *Advanced settings*, escolha Python 3.11 ou superior. Não há segredos a configurar.
 
-O app lê apenas `data/processed/`, que está versionado; não é preciso rodar a coleta no deploy.
-
-A coleta pode ser rodada quantas vezes quiser: um arquivo já baixado não é baixado de novo,
-downloads interrompidos não deixam arquivos pela metade e cada arquivo fica registrado em
-`data/raw/manifest.json` com URL, data de download e SHA-256. Os dados brutos não ficam no git
-(são ~38 MB); os processados ficam, porque o app usa só eles.
-
-Para atualizar os dados que mudam com o tempo (despesas do ano corrente, IPCA e estimativas de
-população, estabelecimentos do CNES), rode `python -m src.collect --atualizar` e depois os passos
-de processamento. O Catálogo de Escolas do INEP é exportado por navegador automatizado (ver
-[Serviços públicos e acesso](#serviços-públicos-e-acesso)); para atualizá-lo, use
-`python -m src.collect.inep_catalogo --force`.
+O app lê apenas `data/processed/`; não é preciso rodar a coleta no deploy. Cada push na `main`
+atualiza o site.
 
 ## Estrutura
 
 ```
-data/raw/          dados baixados, sem alteração (só o manifest.json é versionado)
-data/interim/      tabela de empenhos limpa, um por linha (não versionada; ~40 MB)
-data/processed/    dados limpos e prontos para o app
-src/collect/       um script de download por fonte
-src/process/       leitura, junções e cálculo dos indicadores (build.py orquestra)
-src/app/           código do Streamlit: app.py e dados.py (bairros), servicos.py e dados_servicos.py
-                   (serviços), despesas.py e dados_despesas.py (dinheiro); streamlit_app.py liga as páginas
+streamlit_app.py   entrada do Streamlit: liga as três páginas
+src/collect/       um script de coleta por fonte (+ download.py, que mantém o manifesto)
+src/process/       leitura, junções e cálculo dos indicadores
+                   build.py (bairros e população), despesas*.py, servicos.py
+src/app/           páginas: app.py + dados.py (bairros), servicos.py + dados_servicos.py,
+                   despesas.py + dados_despesas.py
+data/raw/          dados brutos, uma pasta por fonte (só o manifest.json é versionado)
+data/interim/      tabela de empenhos linha a linha (não versionada; cerca de 40 MB)
+data/processed/    dados prontos para o app (versionados)
 certs/             certificado intermediário público usado na coleta do INEP
 notebooks/         exploração inicial das fontes
-tests/             testes do pipeline
+tests/             testes do pipeline e das funções do app
 ```
 
-## Fontes
+## Fontes, em resumo
 
-Todos os arquivos foram baixados em **14/10/2026**. A data exata (UTC), a URL e o SHA-256 de cada
-arquivo estão em [`data/raw/manifest.json`](data/raw/manifest.json).
+As datas exatas (UTC), as URLs e os SHA-256 de cada arquivo estão em `data/raw/manifest.json`. Os
+detalhes e as limitações de cada fonte estão na seção da página que a usa.
+
+| Fonte | Usada em | Como é obtida | Data dos dados |
+|---|---|---|---|
+| IBGE, Censo 2022 (bairros, setores e malhas) | as três páginas | download do FTP do IBGE | 2022 |
+| IBGE, Censo 2010 (setores) | Bairros | download do FTP do IBGE | 2010 |
+| IBGE, SIDRA (IPCA e estimativas de população do município) | Dinheiro | API do SIDRA | IPCA até set/2026 |
+| INEP, Catálogo de Escolas | Serviços | exportação do painel por navegador automatizado | situação do Censo Escolar 2024 |
+| Ministério da Saúde, CNES | Serviços | API de dados abertos | cadastros até 16/10/2026 |
+| Prefeitura, Filipeia (parques, praças, quadras, bairros) | Serviços | exportação manual pelo navegador | parques: 2021; praças: intervenções até 2018 |
+| OpenStreetMap (matas, áreas protegidas, 2 escolas) | Serviços (só no mapa e em 2 coordenadas) | Overpass API e API do OSM | consulta de 23/10/2026 |
+| geodata-jp (cópia de camadas da Prefeitura e do INEP) | Bairros e Serviços, como apoio | download do GitHub (commit fixo) | fev/2022 |
+| TCE-PB, SAGRES (empenhos) | Dinheiro | download do portal de dados abertos | 2009 a 09/10/2026 |
+| Tesouro Nacional, SICONFI | Dinheiro (conferência dos totais) | API do SICONFI | 2014–2025 |
+
+### Onde o geodata-jp ainda é usado
+
+O [geodata-jp](https://github.com/paulovitorweb/geodata-jp) é um repositório que copiou, em fevereiro
+de 2022, camadas do Filipeia (Prefeitura) e do Catálogo de Escolas do INEP. O repositório **não declara
+licença**, por isso ele só entra onde não há alternativa oficial acessível, e sempre conferido:
+
+| Uso | Por que não a fonte oficial | Como é conferido |
+|---|---|---|
+| **Correspondência de nomes** entre os bairros do IBGE e os da Prefeitura (`crosswalk_bairros.csv`); não aparece no mapa | na época, o Filipeia não era acessível | — (pode ser trocado pelo `bairros.zip` oficial do Filipeia, de 2026) |
+| **Contornos das 214 praças** (área verde da página de serviços) | o Filipeia oferece só a tabela das praças, sem o shapefile | o pipeline exige nome e área idênticos aos da tabela oficial, senão para; 160 das 162 praças com código de quadra ficam na quadra indicada pelo cadastro de 2026 |
+| **Coordenadas de 3 escolas** que o INEP publica sem localização | o INEP atual não tem a coordenada | só coordenadas que não se repetem em outras escolas (o geodata-jp põe 12 escolas num mesmo ponto genérico, descartado) |
+
+Os parques, que antes também vinham do geodata-jp, agora vêm do shapefile oficial do Filipeia, idêntico ao anterior.
+
+---
+
+## 1. Bairros e população
+
+População dos 64 bairros nos Censos 2010 e 2022, variação 2010→2022 e densidade. O site tem mapa
+coroplético (população, densidade ou variação), painel de detalhe do bairro com a origem de cada
+número, ranking dos bairros que mais cresceram e mais perderam população e tabela completa com
+download em CSV. Gerado por `python -m src.process.build`.
+
+### Fontes
+
+Arquivos baixados em 14/10/2026.
 
 | Dado | Origem | Arquivo | Uso |
 |---|---|---|---|
-| População e área por bairro, 2022 | IBGE, Censo 2022, Agregados por Setores Censitários | `Agregados_por_bairros_basico_BR_20260520.zip` | `v0001` (Total de pessoas), `v0002` (domicílios), `AREA_KM2` |
+| População e área por bairro, 2022 | IBGE, Censo 2022, Agregados por Setores Censitários | `Agregados_por_bairros_basico_BR_20260520.zip` | `v0001` (total de pessoas), `v0002` (domicílios), `AREA_KM2` |
 | População do município, 2022 | IBGE, idem | `Agregados_por_municipios_basico_BR_20260520.zip` | `v0001`, só para validação |
 | Limites dos bairros, 2022 | IBGE, malha de bairros com atributos | `PB_bairros_CD2022.gpkg` | geometria do mapa |
 | Dicionário de dados 2022 | IBGE | `dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx` | referência |
 | População por setor, 2010 | IBGE, Censo 2010, Resultados do Universo por setor | `PB_20260615.zip` | `Domicilio02` V001 somado por `Cod_bairro` do `Basico` |
 | Setores censitários, 2010 | IBGE, malha de setores 2010 | `pb_setores_censitarios.zip` | limites de 2010, para medir mudanças de limite |
-| Limites dos bairros (Prefeitura) | Filipeia/PMJP via [paulovitorweb/geodata-jp](https://github.com/paulovitorweb/geodata-jp) (commit `76f128b`) | `bairros.geojson` | só para a tabela de correspondência de nomes |
+| Limites dos bairros (Prefeitura) | Filipeia, via geodata-jp (commit `76f128b`) | `bairros.geojson` | só para a tabela de correspondência de nomes |
 
 URLs base: `https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/`,
 `https://ftp.ibge.gov.br/Censos/Censo_Demografico_2010/Resultados_do_Universo/Agregados_por_Setores_Censitarios/`
@@ -102,30 +155,18 @@ e `https://geoftp.ibge.gov.br/.../censo_2010/setores_censitarios_shp/pb/`.
 - Os bairros de 2010 são os da época: alguns mudaram de limite até 2022 (ver *Comparabilidade*).
 
 **Malha de bairros do IBGE 2022 (geometria do mapa)**
-- É o território exato em que a população foi contada, por isso foi escolhida no lugar do Filipeia.
-- Cobre 167,8 km²; o município tem 210,0 km². A diferença são áreas fora de bairros.
+- É o território exato em que a população foi contada; por isso é a malha do mapa em todo o site.
+- Cobre 167,8 km² dos 210,0 km² do município (soma de `AREA_KM2` dos setores de 2022). A diferença são
+  áreas fora de bairros.
 - Para o mapa, a geometria foi simplificada com tolerância de 5 m, mantendo os bairros encaixados
   (sem buracos nem sobreposições). A densidade usa a área publicada pelo IBGE (`AREA_KM2`), não a
   área da geometria simplificada.
 
-**Filipeia via geodata-jp**
-- O repositório **não declara licença**. O dado de origem é do portal público da Prefeitura
-  (filipeia.joaopessoa.pb.gov.br), mas o arquivo derivado não tem termos de redistribuição explícitos.
-  Por isso os **bairros** do geodata-jp não são usados no mapa, só na tabela de correspondência, e os
-  arquivos brutos do geodata-jp não são versionados aqui.
-- **Exceção: os contornos das praças** (página de serviços). O Filipeia oferece só a tabela das praças, sem
-  o shapefile. Os contornos vêm do geodata-jp, mas são os da Prefeitura: o pipeline exige que as 214 praças
-  tenham nome e área idênticos aos da tabela oficial do Filipeia e confere a posição com as quadras do
-  Filipeia (ver [Serviços públicos e acesso](#serviços-públicos-e-acesso)). A cópia é do geodata-jp; o
-  dado é público, da Prefeitura. Os contornos simplificados ficam em
-  `data/processed/servicos/areas_verdes.geojson`, com a Prefeitura citada como fonte.
-- Os limites de vários bairros diferem dos do IBGE (ver abaixo). O campo `densidade` do arquivo está
-  quase todo vazio ou inválido e não é usado.
-- O portal Filipeia respondeu 403 ao acesso automatizado em 14/10/2026 e em 23/10/2026 (firewall
-  anti-robô). Em 23/10/2026 as camadas de parques, praças (tabela), quadras e bairros foram exportadas à
-  mão (ver Serviços públicos e acesso).
+**Bairros da Prefeitura (geodata-jp)**
+- Os limites de vários bairros diferem dos do IBGE (ver *Correspondência de nomes*). O campo
+  `densidade` do arquivo está quase todo vazio ou inválido e não é usado.
 
-## Metodologia
+### Metodologia
 
 | Indicador | Cálculo |
 |---|---|
@@ -137,11 +178,11 @@ e `https://geoftp.ibge.gov.br/.../censo_2010/setores_censitarios_shp/pb/`.
 
 A origem de cada coluna também está em `data/processed/metadados.json`.
 
-### Comparabilidade 2010 → 2022
+#### Comparabilidade 2010 → 2022
 
-Os códigos de bairro do IBGE são os mesmos nos dois censos (001 a 063; o 064, Mussuré, só existe em 2022),
-mas alguns limites mudaram. Para cada bairro, comparamos o polígono de 2010 (setores de 2010 dissolvidos
-por bairro) com o de 2022 usando IoU (área da interseção ÷ área da união; 1 = idênticos):
+Os códigos de bairro do IBGE são os mesmos nos dois censos (001 a 063; o 064, Mussuré, só existe em
+2022), mas alguns limites mudaram. Para cada bairro, comparamos o polígono de 2010 (setores de 2010
+dissolvidos por bairro) com o de 2022 usando IoU (área da interseção ÷ área da união; 1 = idênticos):
 
 | IoU | Classe | No dashboard |
 |---|---|---|
@@ -156,32 +197,22 @@ por bairro) com o de 2022 usando IoU (área da interseção ÷ área da união; 
 
 Os cortes 0,90 e 0,75 são uma escolha de projeto, configurável em `src/config.py`.
 
-## Correspondência de nomes e casos ambíguos
+#### Correspondência de nomes e casos ambíguos
 
 A chave do projeto é o código IBGE do bairro (`cd_bairro`, 10 dígitos), igual em 2010 e 2022.
-`data/processed/crosswalk_bairros.csv` liga cada bairro IBGE ao bairro Filipeia de maior sobreposição
-(os 64 se correspondem um a um) e registra as divergências na coluna `observacoes`:
+`data/processed/crosswalk_bairros.csv` liga cada bairro IBGE ao bairro da Prefeitura de maior
+sobreposição (os 64 se correspondem um a um) e registra as divergências na coluna `observacoes`:
 
 - **Nomes diferentes:** Estados × BAIRRO DOS ESTADOS; Indústrias × BAIRRO DAS INDUSTRIAS;
   Ipês × BAIRRO DOS IPÊS; Roger × RÓGER; Ernani Sátiro × ERNANI SATIRO.
 - **Grafia de 2010:** o IBGE 2010 grafa "Mucumago"; em 2022, "Muçumagro" (mesmo código, 041).
-- **Códigos:** os códigos do Filipeia não são os do IBGE a partir do 33 (o Filipeia pula o 33), e os
-  cinco bairros do sul (Barra de Gramame, Costa do Sol, Gramame, Mumbaba, Mussuré) têm código "XX" no Filipeia.
-- **Limites IBGE × Filipeia muito diferentes:** Mussuré (IoU 0,17; 2,6 × 14,9 km²),
+- **Códigos:** os códigos da Prefeitura não são os do IBGE a partir do 33 (a Prefeitura pula o 33), e os
+  cinco bairros do sul (Barra de Gramame, Costa do Sol, Gramame, Mumbaba, Mussuré) têm código "XX" nela.
+- **Limites IBGE × Prefeitura muito diferentes:** Mussuré (IoU 0,17; 2,6 × 14,9 km²),
   Mumbaba (0,21; 3,0 × 14,0 km²), Alto do Céu (0,41), Muçumagro (0,48), Indústrias (0,69).
-  Ao cruzar dados municipais (próximas fases) com a população do IBGE, esses bairros exigem cuidado.
+  Ao cruzar dados da Prefeitura com a população do IBGE, esses bairros exigem cuidado.
 
-## Dados processados
-
-| Arquivo | Conteúdo |
-|---|---|
-| `indicadores_bairros.csv` | uma linha por bairro: `cd_bairro`, `nm_bairro`, `area_km2`, `pop_2022`, `domicilios_2022`, `densidade_2022`, `nm_bairro_2010`, `pop_2010`, `setores_2010`, `var_abs`, `var_pct`, `iou_limites_2010_2022`, `area_km2_2010_calc`, `comparabilidade` |
-| `bairros_jp.geojson` | polígonos dos bairros (EPSG:4326) com `cd_bairro` e `nm_bairro` |
-| `crosswalk_bairros.csv` | nomes IBGE 2022, IBGE 2010 e Filipeia, IoUs e observações |
-| `totais_municipio.csv` | total do município × soma dos bairros, por ano |
-| `metadados.json` | origem de cada coluna, parâmetros e manifesto dos arquivos brutos |
-
-## Decisões de visualização
+### Decisões de visualização
 
 - **Mapa:** Plotly (`Choroplethmap`, base CARTO/OpenStreetMap, sem token). População e densidade usam
   uma escala sequencial de um só tom (azul, claro → escuro). A variação usa uma escala divergente
@@ -193,28 +224,205 @@ A chave do projeto é o código IBGE do bairro (`cd_bairro`, 10 dígitos), igual
   entraria no topo do ranking percentual. Bairros comparáveis com ressalva aparecem marcados com †.
 - As cores foram checadas com um validador de paleta (contraste e separação para daltonismo).
 
-## Testes
+### Dados processados (`data/processed/`)
 
-`pytest` verifica, no módulo de despesas: total anual igual ao do SICONFI (tolerância de 0,2%, com
-2016 e 2020 como exceções documentadas), campos essenciais sem nulos, datas dentro do ano do
-arquivo, nenhum CPF exposto nos dados processados, ranking só com CNPJs válidos e as regras de
-limpeza, de bairros e de busca do dashboard.
+| Arquivo | Conteúdo |
+|---|---|
+| `indicadores_bairros.csv` | uma linha por bairro: `cd_bairro`, `nm_bairro`, `area_km2`, `pop_2022`, `domicilios_2022`, `densidade_2022`, `nm_bairro_2010`, `pop_2010`, `setores_2010`, `var_abs`, `var_pct`, `iou_limites_2010_2022`, `area_km2_2010_calc`, `comparabilidade` |
+| `bairros_jp.geojson` | polígonos dos bairros (EPSG:4326) com `cd_bairro` e `nm_bairro` |
+| `crosswalk_bairros.csv` | nomes IBGE 2022, IBGE 2010 e Prefeitura, IoUs e observações |
+| `totais_municipio.csv` | total do município × soma dos bairros, por ano |
+| `metadados.json` | origem de cada coluna, parâmetros e manifesto dos arquivos brutos |
 
-No módulo de bairros, verifica entre outras coisas: soma dos bairros a até 1% do total do município (2010 e 2022),
-nenhum bairro sem geometria (e geometrias válidas, sem sobreposição), nenhuma população negativa,
-consistência da variação e da densidade, e que valores sigilosos do IBGE ("X") interrompem o pipeline
-em vez de serem estimados.
+---
 
-No módulo de serviços, verifica: todo ponto num bairro tem exatamente um bairro válido (e cai
-dentro dele), ids únicos, pontos fora de bairro ou sem coordenada listados com o motivo, contagens
-iguais ao total da fonte filtrada por João Pessoa (recalculado dos arquivos brutos quando estão
-presentes), contagens por bairro iguais aos pontos, nenhuma distância negativa ou ausente, área verde
-menor que a área do bairro e índice entre 0 e 100.
+## 2. Serviços públicos e acesso
 
-## Para onde vai o dinheiro de João Pessoa
+Escolas públicas, unidades de saúde do SUS, praças e parques por bairro, com distância até a
+escola e a UBS/USF mais próximas, área verde por habitante e um índice simples de acesso. Matas e
+áreas protegidas aparecem no mapa, fora do índice. Gerado por `python -m src.process.servicos`.
 
-Módulo sobre como os órgãos municipais de João Pessoa gastam seus recursos, a partir dos
-**empenhos** declarados ao Tribunal de Contas do Estado da Paraíba (TCE-PB) pelo sistema SAGRES.
+### No dashboard
+
+- **Mapa:** a cor dos bairros mostra o índice de acesso, a distância até a escola ou a UBS/USF, a área
+  verde por morador ou os moradores por equipamento. As camadas se ligam e desligam:
+  - pontos: escolas, escolas de atividade complementar/AEE, UBS/USF e outras unidades de saúde;
+  - áreas: praças e parques; matas e áreas protegidas (OpenStreetMap, só informativa).
+- **Detalhe do bairro:** índice e seus três componentes, distâncias e serviços por 10 mil habitantes,
+  com a comparação com a média da cidade em palavras ("30% mais perto", "13% abaixo"), e a lista dos
+  serviços que ficam no bairro.
+- **Ranking:** bairros com mais moradores por escola ou UBS/USF, e a lista dos que não têm nenhum dos dois.
+- **Índice:** fórmula, explicação e tabela com os componentes de todos os bairros (com download em CSV).
+- **Fontes e limitações:** seção aberta no fim da página, com a tabela de fontes, os filtros de cada uma,
+  as limitações, os pontos não atribuídos a bairro e os arquivos de origem (com SHA-256).
+- **Cores das camadas:** amarelo, violeta e vermelho para os pontos; verde-água para praças e parques;
+  verde-escuro para matas. Foram validadas com o validador de paleta, todos os pares. A escola de
+  atividade complementar é um ponto vazado, para não depender só da cor.
+
+### Fontes
+
+| Dado | Origem | Arquivo bruto | Atualização da fonte | Obtido em |
+|---|---|---|---|---|
+| Escolas | INEP, [Catálogo de Escolas](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas) (UF = PB) | `inep/catalogo_escolas_PB.csv` | situação do Censo Escolar 2024 (o catálogo não traz data; conferido uma vez com os [microdados do Censo Escolar 2024](https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_2024.zip)) | 22/10/2026 |
+| Unidades de saúde | Ministério da Saúde, CNES, [API de dados abertos](https://apidadosabertos.saude.gov.br/) (município 250750) | `cnes/estabelecimentos_250750.json`, `cnes/tipounidades.json` | cadastros atualizados até 16/10/2026 | 16/10/2026 |
+| Parques | Prefeitura, [Filipeia](https://filipeia.joaopessoa.pb.gov.br/) (shapefile exportado à mão) | `filipeia/Parques_Municipais.zip` (+ `.csv`) | arquivo de 08/02/2021 | 23/10/2026 |
+| Praças | Tabela do Filipeia; contornos da Prefeitura na cópia do geodata-jp (commit `76f128b`), conferidos com a tabela e as quadras | `filipeia/pracas.csv`, `geodata_jp/pracas.geojson` | intervenções registradas até 2018 | 23/10/2026 |
+| Quadras e bairros da Prefeitura (só conferência) | Filipeia | `filipeia/quadras_gerais.zip`, `filipeia/bairros.zip` | quadras de 02/10/2026; bairros de 13/04/2026 | 23/10/2026 |
+| Matas e áreas protegidas (só no mapa) | [OpenStreetMap](https://www.openstreetmap.org/), Overpass API, © colaboradores do OpenStreetMap (ODbL) | `osm/matas.json`, `osm/parques.json` | consulta de 23/10/2026 | 23/10/2026 |
+| Coordenadas de apoio (escolas) | Catálogo do INEP de 2022 (via geodata-jp) e OpenStreetMap (API, 2 elementos fixos) | `geodata_jp/escolas_publicas.geojson`, `osm/escolas.json` | fev/2022; OSM de 23/10/2026 | 22–23/10/2026 |
+| População por setor censitário | IBGE, Censo 2022, malha de setores com atributos (`v0001`) | `ibge_censo2022/PB_setores_CD2022.gpkg` | 2022 | 22/10/2026 |
+
+**Escolas: INEP em vez do geodata-jp.** A camada de escolas do geodata-jp é de fevereiro de 2022.
+Comparada com o catálogo atual do INEP, faltam 12 escolas abertas depois, e 8 das que ela traz estão
+hoje paralisadas. Por isso a fonte é o INEP, e o geodata-jp só completa coordenadas.
+
+**Coleta do INEP.** O catálogo não tem download direto: é um painel do Oracle Analytics, e
+`src/collect/inep_catalogo.py` o opera com Playwright + Chromium (filtro UF = PB, Aplicar, Exportar).
+A exportação é conferida: o painel precisa dizer que selecionou entre 1.000 e 20.000 escolas, e todas
+as linhas precisam ser da PB, porque, se o filtro falha, o painel exporta 100 mil linhas de várias UFs.
+O servidor do INEP não envia o certificado intermediário da RNP (*RNP ICPEdu GR46 OV TLS CA 2025*).
+O certificado público está em `certs/` e é registrado no banco de certificados do Chromium; a
+verificação TLS não é desligada.
+
+**Filipeia.** O portal da Prefeitura fica atrás de um firewall anti-robô que bloqueia acesso
+automatizado (inclusive de navegador automatizado). Por isso as camadas foram exportadas à mão pelo
+navegador em 23/10/2026 e registradas no manifesto com `python -m src.collect.filipeia --registrar`.
+O portal oferece o shapefile dos parques, mas só a tabela das praças. A versão atual é igual à copiada
+pelo geodata-jp em 2022: o cadastro de praças e parques da Prefeitura não foi atualizado desde então.
+
+**OpenStreetMap.** Matas, áreas protegidas e parques vêm de consultas ao Overpass
+(`src/collect/osm.py`). O servidor principal recusa consultas grandes daqui, por isso há servidores
+alternativos. As duas escolas vêm da API principal do OSM, por elemento fixo, conferido à mão: mesmo
+nome e ponto no bairro do endereço do INEP.
+
+**CNES.** A API devolve 20 registros por página. Em 22/10/2026 ela estava fora do ar; a cópia usada
+foi baixada e conferida em 16/10/2026 (data registrada no manifesto).
+
+### O que entra
+
+- **Escolas:** públicas (municipais, estaduais e federais) de João Pessoa, exceto as paralisadas
+  ou extintas: **301**. Dessas, 5 são de **atividade complementar ou AEE** exclusiva (sem turmas
+  regulares) e aparecem no mapa numa categoria própria, mas ficam fora das distâncias e do índice.
+- **Saúde (rede SUS):** estabelecimentos ativos dos tipos UBS/USF (centro de saúde, posto),
+  policlínica, UPA/pronto atendimento e hospital (geral, especializado e misto) que são públicos
+  (natureza jurídica do grupo 1) ou atendem pelo SUS. Cadastros de regulação (ex.: "... REGULACAO
+  SESPB") são excluídos. Ficam **145** unidades: 106 UBS/USF, 9 policlínicas, 4 UPAs e 26 hospitais.
+  Usamos a natureza jurídica porque a "esfera administrativa" do CNES indica quem faz a gestão, não
+  quem é dono.
+- **Praças e parques:** 214 praças (61,8 ha) e 11 parques (270,8 ha) do cadastro da Prefeitura. Onde
+  uma praça e um parque se sobrepõem (1,4 ha), a área conta uma vez. As praças são conferidas a cada
+  execução: as 214 precisam ter nome e área idênticos aos da tabela oficial (senão o pipeline para), e
+  160 das 162 com código cartográfico ficam dentro ou encostadas na quadra indicada nas quadras do
+  Filipeia de 2026.
+- **Matas e áreas protegidas (OpenStreetMap):** 4.109 ha no município, entre elas a Mata do Buraquinho
+  (516 ha), o Refúgio de Vida Silvestre Mata do Buraquinho (512 ha) e o Parque Estadual Mata do Aratu
+  (340 ha). Aparecem **só no mapa**: não entram na área verde por morador nem no índice, porque não são
+  do mesmo cadastro nem do mesmo critério (praça e parque).
+
+O funil completo de cada fonte está em `data/processed/servicos/metadados.json` (`funil`).
+
+### Pontos sem coordenada ou fora dos bairros
+
+Cada ponto recebe um status, e os que não caem num bairro ficam em `pontos_nao_atribuidos.csv`:
+
+| Status | Escolas | Saúde | O que acontece |
+|---|---|---|---|
+| no bairro | 286 | 144 | contado no bairro |
+| sem coordenada | 14 | 0 | fora do mapa e das distâncias; listado |
+| no município, fora de bairro | 1 | 0 | no mapa e nas distâncias; não contado em bairro |
+| fora do município | 0 | 1 | fora das distâncias e das contagens; listado |
+
+- **Escolas sem coordenada no INEP (19):**
+  - 9 estão no geodata-jp, mas 6 delas têm lá o mesmo ponto (−7,145192; −34,859117), repetido em 12
+    escolas de endereços diferentes. É um marcador genérico, não uma localização, então só 3
+    coordenadas são usadas, marcadas como "geodata-jp (Catálogo de Escolas do INEP, versão de 2022)";
+  - mais 2 (CEEEA Sesquicentenário e ECI Liliosa de Paiva Leite) usam o ponto do OpenStreetMap,
+    marcado como tal;
+  - as outras 14 não estão em nenhuma fonte acessível. A posição não é estimada pelo endereço.
+- **USF Integrada Boa Esperança:** a coordenada do CNES fica 36 km fora do município (o endereço é em
+  Gramame), e a base completa do CNES de junho de 2025 (OpenDataSUS) tem o mesmo erro. Não é corrigida à mão.
+- **Bairro pela malha da Prefeitura:** `pontos_nao_atribuidos.csv` traz essa informação para quem tem
+  coordenada. A escola do Porto do Capim, fora dos bairros do IBGE, fica no Varadouro pela malha da Prefeitura.
+- **Limite do município:** é a união dos setores censitários de 2022. 14 setores (3.143 moradores) não
+  pertencem a nenhum bairro do IBGE.
+- **Divisa:** um ponto exatamente na divisa entre dois bairros fica com o de menor código (o número de
+  casos está em `metadados.json`).
+
+### Metodologia
+
+Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, em metros, nunca em graus.
+
+- **Distância até o serviço mais próximo:** linha reta (não é o caminho pelas ruas) até a escola
+  regular ou a UBS/USF mais próxima no município, inclusive de outro bairro. Duas versões:
+  - **ponderada pela população (a principal):** distância de cada setor censitário com moradores
+    (centroide do setor) até o serviço mais próximo, com média ponderada pelo número de moradores
+    do setor no Censo 2022;
+  - **do centroide do bairro:** um ponto só. É mais simples, mas o centro geométrico pode ser um
+    mangue, um parque ou uma área vazia. A diferença entre as duas mostra onde as pessoas moram de
+    fato em relação ao centro do bairro. No Planalto da Boa Esperança, por exemplo, a escola está a
+    29 m do centroide, mas o morador médio está a 366 m de uma escola.
+- **Serviços por 10 mil habitantes:** contagem no bairro ÷ população 2022 × 10.000.
+- **Área verde por habitante (m²/hab):** área de praças e parques dentro do bairro ÷ população 2022.
+- **Ranking "mais gente e menos serviços":** habitantes por equipamento (escolas regulares +
+  UBS/USF no bairro). Bairros sem nenhum dos dois aparecem à parte. Só entram bairros com pelo menos
+  1.000 moradores, porque em bairros quase vazios a razão não diz muito.
+- **Índice de acesso (0 a 100):** média simples de três posições percentuais entre os 64 bairros:
+
+  `índice = (P_escola + P_ubs + P_verde) / 3`
+
+  - `P_escola`: posição pela distância ponderada até a escola, invertida (mais perto = mais alto);
+  - `P_ubs`: o mesmo para a UBS/USF;
+  - `P_verde`: posição pela área verde por habitante (mais área = mais alto).
+
+  Cada posição é o percentil do bairro (de 1/64 × 100 a 100; empates recebem a posição média). O
+  índice é **relativo**: 100 seria o melhor bairro de João Pessoa nos três itens, não um padrão ideal.
+  Os três componentes têm o mesmo peso, e a escolha é deliberadamente simples para que o número
+  possa ser refeito à mão.
+
+### Limitações
+
+- **Só serviços públicos ou do SUS.** Escolas, clínicas e hospitais privados não estão contados. Um
+  bairro "sem escola pública nem UBS" (Aeroclube, Portal do Sol, Tambaú, Cabo Branco, Brisamar e outros)
+  pode ter serviços privados.
+- **A distância não indica a unidade de referência.** Cada família é atendida pela UBS da sua área de
+  abrangência, e essas áreas não estão nos dados. A distância mostra só a unidade mais próxima.
+- **Linha reta** subestima o caminho real, ainda mais onde há rios, mangues ou vias expressas no meio.
+- **Efeito de borda:** o serviço mais próximo pode estar em outro bairro (isso é contado); serviços
+  em municípios vizinhos não estão nos dados.
+- **Área verde só do cadastro da Prefeitura:** a Mata do Buraquinho e outras matas não são praça nem
+  parque no cadastro; aparecem na camada de matas do mapa, mas não na área verde por morador nem no
+  índice. Bairros vizinhos a elas aparecem com menos área verde do que de fato têm.
+- **Parque em mais de um bairro:** é contado em cada bairro que toca (por isso a soma dos parques por
+  bairro passa de 11), mas a área é dividida entre eles.
+- **Cadastro desatualizado:** os parques são de um arquivo de 2021 e as praças registram intervenções
+  até 2018. O OpenStreetMap tem parques que o cadastro não tem: Parque Socioambiental do Roger (em
+  construção, 24,6 ha), Parque Linear das Três Ruas (7,7 ha), Parque Jardim do Norte (4,9 ha), Horto de
+  Santo Antônio (4,2 ha) e Ecobosque (1,1 ha). Não foram somados, para não misturar fontes.
+- **Bairros IBGE × Prefeitura:** o mapa usa os bairros do IBGE, onde a população do Censo é contada. A
+  malha da Prefeitura (abril de 2026) cobre 194 km² do município, contra 168 km² do IBGE; alguns bairros
+  de borda (Mussuré, Mumbaba, Alto do Céu, Muçumagro) são bem maiores nela.
+- **14 escolas sem coordenada** (lista em `pontos_nao_atribuidos.csv`) não entram nas distâncias;
+  a distância até a escola pode estar superestimada nos bairros delas.
+- **Coordenadas declaradas:** são as informadas ao INEP e ao CNES e não foram conferidas uma a uma.
+
+### Dados processados (`data/processed/servicos/`)
+
+| Arquivo | Conteúdo |
+|---|---|
+| `indicadores_servicos.csv` | por bairro: contagens por tipo, por 10 mil hab., área verde (m² e m²/hab), distâncias (ponderada e do centroide), habitantes por equipamento, marcação do ranking e índice de acesso |
+| `pontos_servicos.geojson` | escolas e unidades de saúde com coordenada: tipo, rede/natureza, endereço, origem da coordenada, status, bairro e arquivo de origem |
+| `pontos_nao_atribuidos.csv` | pontos sem coordenada ou fora dos bairros, com o motivo e o bairro pela malha da Prefeitura |
+| `areas_verdes.geojson` | praças e parques (simplificados em 1 m para o mapa), com área |
+| `matas_osm.geojson` | matas e áreas protegidas do OpenStreetMap recortadas pelo município (simplificadas em 2 m), com tipo, nome, área e id do OSM |
+| `metadados.json` | funil de filtros, pontos por status, conferência das praças, áreas verdes, matas, médias da cidade, setores e manifesto dos arquivos brutos |
+
+---
+
+## 3. Para onde vai o dinheiro de João Pessoa
+
+Como os órgãos municipais de João Pessoa gastam seus recursos, a partir dos **empenhos** declarados
+ao Tribunal de Contas do Estado da Paraíba (TCE-PB) pelo sistema SAGRES. Gerado por
+`python -m src.process.despesas`.
 
 > **Os valores são os declarados pela Prefeitura e pelos demais órgãos municipais ao TCE-PB.
 > Podem mudar depois da análise e auditoria do Tribunal.** O dashboard mostra para onde vai o
@@ -356,188 +564,45 @@ O SICONFI não tem a DCA de João Pessoa antes de 2014. Detalhes em
 Cada linha do cubo e da tabela de credores traz o `arquivo_origem` (ex.: `despesas-2025.zip`), e o
 manifesto liga esse arquivo à URL, à data de download e ao SHA-256.
 
-## Serviços públicos e acesso
+---
 
-Escolas públicas, unidades de saúde do SUS, praças e parques por bairro, com distância até a
-escola e a UBS/USF mais próximas, área verde por habitante e um índice simples de acesso.
-Gerado por `python -m src.process.servicos`.
+## Testes
 
-### Fontes
+`pytest` roda os testes do pipeline e das funções do app. Os que recalculam a partir dos dados
+brutos só rodam quando `data/raw/` está presente; os demais usam só `data/processed/`.
 
-| Dado | Origem | Arquivo bruto | Atualização da fonte | Obtido em |
-|---|---|---|---|---|
-| Escolas | INEP, [Catálogo de Escolas](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/inep-data/catalogo-de-escolas) (UF = PB) | `inep/catalogo_escolas_PB.csv` | situação do Censo Escolar 2024 (o catálogo não traz data; conferido uma vez com os [microdados do Censo Escolar 2024](https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_2024.zip)) | 22/10/2026 |
-| Unidades de saúde | Ministério da Saúde, CNES, [API de dados abertos](https://apidadosabertos.saude.gov.br/) (município 250750) | `cnes/estabelecimentos_250750.json`, `cnes/tipounidades.json` | cadastros atualizados até 16/10/2026 | 16/10/2026 |
-| Parques | Prefeitura, [Filipeia](https://filipeia.joaopessoa.pb.gov.br/) (shapefile exportado à mão) | `filipeia/Parques_Municipais.zip` (+ `.csv`) | arquivo de 08/02/2021 | 23/10/2026 |
-| Praças | Tabela do Filipeia; contornos do [geodata-jp](https://github.com/paulovitorweb/geodata-jp) (commit `76f128b`), conferidos com a tabela e as quadras do Filipeia | `filipeia/pracas.csv`, `geodata_jp/pracas.geojson` | intervenções registradas até 2018 | 23/10/2026 |
-| Quadras e bairros da Prefeitura (só conferência) | Filipeia | `filipeia/quadras_gerais.zip`, `filipeia/bairros.zip` | quadras de 02/10/2026; bairros de 13/04/2026 | 23/10/2026 |
-| Matas e áreas protegidas (só no mapa) | [OpenStreetMap](https://www.openstreetmap.org/), Overpass API, © colaboradores do OpenStreetMap (ODbL) | `osm/matas.json`, `osm/parques.json` | consulta de 23/10/2026 | 23/10/2026 |
-| Coordenadas de apoio (escolas) | Catálogo do INEP de 2022 (via geodata-jp) e OpenStreetMap (API, 2 elementos fixos) | `geodata_jp/escolas_publicas.geojson`, `osm/escolas.json` | fev/2022; OSM de 23/10/2026 | 22–23/10/2026 |
-| População por setor censitário | IBGE, Censo 2022, malha de setores com atributos (`v0001`) | `ibge_censo2022/PB_setores_CD2022.gpkg` | 2022 | 22/10/2026 |
+- **Bairros e população:**
+  - soma dos bairros a até 1% do total do município (2010 e 2022);
+  - nenhum bairro sem geometria, e geometrias válidas, sem sobreposição;
+  - nenhuma população negativa, e variação e densidade consistentes;
+  - valores sigilosos do IBGE ("X") interrompem o pipeline em vez de serem estimados.
+- **Serviços:**
+  - todo ponto num bairro tem exatamente um bairro válido e cai dentro dele; ids únicos;
+  - pontos fora de bairro ou sem coordenada listados com o motivo;
+  - contagens iguais ao total da fonte filtrada por João Pessoa (recalculado dos arquivos brutos quando
+    presentes), e contagens por bairro iguais aos pontos;
+  - nenhuma distância negativa ou ausente; área verde menor que a área do bairro; índice entre 0 e 100;
+  - praças conferidas com a tabela oficial e as quadras do Filipeia; escolas com coordenada do OSM
+    caem num bairro; matas fora do índice e dentro do município.
+- **Dinheiro:**
+  - total anual igual ao do SICONFI (tolerância de 0,2%, com 2016 e 2020 como exceções documentadas);
+  - campos essenciais sem nulos e datas dentro do ano do arquivo;
+  - nenhum CPF exposto nos dados processados, e ranking só com CNPJs válidos;
+  - regras de limpeza, de bairros e de busca do dashboard.
 
-**Por que não só o geodata-jp:** a camada de escolas do geodata-jp é de fevereiro de 2022. Comparada
-com o catálogo atual do INEP, faltam 12 escolas abertas depois e 8 das que ela traz estão hoje
-paralisadas. Por isso a fonte é o INEP, e o geodata-jp só completa coordenadas. O geodata-jp não tem
-unidades de saúde: elas vêm do CNES.
+## Créditos e licenças das fontes
 
-**Coleta do INEP:** o catálogo não tem download direto. É um painel do Oracle Analytics, e
-`src/collect/inep_catalogo.py` o opera com Playwright + Chromium (filtro UF = PB, Aplicar, Exportar).
-A exportação é conferida: o painel precisa dizer que selecionou entre 1.000 e 20.000 escolas, e todas
-as linhas precisam ser da PB, porque, se o filtro falha, o painel exporta 100 mil linhas de várias UFs.
-O servidor do INEP não envia o certificado intermediário da RNP (*RNP ICPEdu GR46 OV TLS CA 2025*).
-O certificado público está em `certs/` e é registrado no banco de certificados do Chromium; a
-verificação TLS não é desligada. Se o painel mudar, o docstring do script explica a exportação manual.
+- **IBGE, INEP, Ministério da Saúde (CNES), TCE-PB e Tesouro Nacional (SICONFI):** dados públicos
+  oficiais, citados em cada página com link e data.
+- **Prefeitura de João Pessoa, Filipeia:** dados públicos do portal da Prefeitura.
+- **OpenStreetMap:** © colaboradores do OpenStreetMap, sob a licença
+  [ODbL](https://opendatacommons.org/licenses/odbl/). O crédito aparece no mapa sempre que a camada de
+  matas está ligada. O mapa de fundo também usa dados do OpenStreetMap, com base da CARTO.
+- **geodata-jp:** cópia de camadas da Prefeitura e do INEP. O repositório não declara licença; o
+  uso e as conferências estão em [Onde o geodata-jp ainda é usado](#onde-o-geodata-jp-ainda-é-usado).
 
-**Filipeia:** o portal da Prefeitura fica atrás de um firewall anti-robô que bloqueia acesso automatizado
-(inclusive de navegador automatizado), então as camadas foram exportadas à mão pelo navegador e são
-registradas com `python -m src.collect.filipeia --registrar` (ver o docstring do script). O portal oferece o
-shapefile dos parques, mas só a tabela das praças. Por isso os contornos das praças vêm do geodata-jp, e o
-pipeline confere: as 214 praças precisam ter nome e área idênticos aos da tabela oficial (senão ele para), e
-160 das 162 praças com código cartográfico ficam dentro ou encostadas na quadra indicada pelo código nas
-quadras do Filipeia de 2026. A versão atual do Filipeia é igual à copiada pelo geodata-jp em 2022: o cadastro
-de praças e parques da Prefeitura não foi atualizado desde então.
+## Melhorias planejadas
 
-**OpenStreetMap:** matas e áreas protegidas, e parques, vêm de consultas ao Overpass (`src/collect/osm.py`;
-o servidor principal recusa consultas grandes daqui, por isso há servidores alternativos). As duas escolas
-vêm da API principal do OSM, por elemento fixo, conferido à mão (mesmo nome, ponto no bairro do endereço do INEP).
-
-**CNES:** a API devolve 20 registros por página. Em 22/10/2026 ela estava fora do ar; a cópia usada
-foi baixada e conferida em 16/10/2026 (data registrada no manifesto).
-
-### O que entra
-
-- **Escolas:** públicas (municipais, estaduais e federais) de João Pessoa, exceto as paralisadas
-  ou extintas: **301**. Dessas, 5 são de **atividade complementar ou AEE** exclusiva (sem turmas
-  regulares) e aparecem no mapa numa categoria própria, mas ficam fora das distâncias e do índice.
-- **Saúde (rede SUS):** estabelecimentos ativos dos tipos UBS/USF (centro de saúde, posto),
-  policlínica, UPA/pronto atendimento e hospital (geral, especializado e misto) que são públicos
-  (natureza jurídica do grupo 1) ou atendem pelo SUS. Cadastros de regulação (ex.: "... REGULACAO
-  SESPB") são excluídos: **145** unidades (106 UBS/USF, 9 policlínicas, 4 UPAs, 26 hospitais).
-  "Esfera administrativa" do CNES indica a gestão, não quem é dono, por isso a natureza jurídica.
-- **Áreas verdes:** 214 praças (61,8 ha) e 11 parques (270,8 ha) do cadastro da Prefeitura. Onde
-  uma praça e um parque se sobrepõem (1,4 ha), a área conta uma vez.
-- **Matas e áreas protegidas (OpenStreetMap):** 4.109 ha no município, entre elas a Mata do Buraquinho
-  (516 ha), o Refúgio de Vida Silvestre Mata do Buraquinho (512 ha) e o Parque Estadual Mata do Aratu
-  (340 ha). Aparecem **só no mapa**: não entram na área verde por morador nem no índice, porque não são do
-  mesmo cadastro nem do mesmo critério (praça e parque).
-
-Funil completo em `data/processed/servicos/metadados.json` (`funil`).
-
-### Pontos sem coordenada ou fora dos bairros
-
-Nenhum ponto é descartado em silêncio. Cada um recebe um status, e os que não caem num bairro
-ficam em `pontos_nao_atribuidos.csv`:
-
-| Status | Escolas | Saúde | O que acontece |
-|---|---|---|---|
-| no bairro | 286 | 144 | contado no bairro |
-| sem coordenada | 14 | 0 | fora do mapa e das distâncias; listado |
-| no município, fora de bairro | 1 | 0 | no mapa e nas distâncias; não contado em bairro |
-| fora do município | 0 | 1 | fora das distâncias e das contagens; listado |
-
-- Das 19 escolas sem coordenada no catálogo, 9 estão no geodata-jp, mas 6 delas têm lá o mesmo
-  ponto (−7,145192; −34,859117), repetido em 12 escolas de endereços diferentes. É um marcador
-  genérico, não uma localização, então só as 3 coordenadas restantes são usadas (marcadas como
-  "geodata-jp (Catálogo de Escolas do INEP, versão de 2022)").
-- Mais 2 escolas (CEEEA Sesquicentenário e ECI Liliosa de Paiva Leite) usam o ponto do OpenStreetMap,
-  marcado como tal. As outras 14 não estão em nenhuma fonte acessível; a posição não é estimada pelo endereço.
-- A USF Integrada Boa Esperança tem a mesma coordenada errada também na base completa do CNES de junho
-  de 2025 (OpenDataSUS).
-- `pontos_nao_atribuidos.csv` traz, para quem tem coordenada, o bairro pela malha da Prefeitura (a escola
-  do Porto do Capim, fora dos bairros do IBGE, fica no Varadouro pela malha da Prefeitura).
-- A USF Integrada Boa Esperança tem no CNES uma coordenada a 36 km do limite do município (o endereço
-  é em Gramame). Não é corrigida à mão.
-- A malha de bairros do IBGE cobre 167,8 km² dos 210,0 km² do município (soma do campo `AREA_KM2`
-  dos setores censitários de 2022). O limite do município é a
-  união dos setores censitários de 2022; 14 setores (3.143 moradores) não pertencem a nenhum bairro.
-- Um ponto exatamente na divisa entre dois bairros fica com o de menor código (o número de casos
-  está em `metadados.json`).
-
-### Metodologia
-
-Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, em metros, nunca em graus.
-
-- **Distância até o serviço mais próximo:** linha reta (não é o caminho pelas ruas) até a escola
-  regular ou a UBS/USF mais próxima no município, inclusive de outro bairro. Duas versões:
-  - **ponderada pela população (a principal):** distância de cada setor censitário com moradores
-    (centroide do setor) até o serviço mais próximo, com média ponderada pelo número de moradores
-    do setor no Censo 2022;
-  - **do centroide do bairro:** um ponto só. É mais simples, mas o centro geométrico pode ser um
-    mangue, um parque ou uma área vazia. A diferença entre as duas mostra onde as pessoas moram de
-    fato em relação ao centro do bairro (no Planalto da Boa Esperança, por exemplo, a escola está a
-    29 m do centroide, mas o morador médio está a 366 m de uma escola).
-- **Serviços por 10 mil habitantes:** contagem no bairro ÷ população 2022 × 10.000.
-- **Área verde por habitante (m²/hab):** área de praças e parques dentro do bairro ÷ população 2022.
-- **Ranking "mais gente e menos serviços":** habitantes por equipamento (escolas regulares +
-  UBS/USF no bairro). Bairros sem nenhum dos dois aparecem à parte, no topo. Só entram bairros com
-  pelo menos 1.000 moradores, porque em bairros quase vazios a razão não diz muito.
-- **Índice de acesso (0 a 100):** média simples de três posições percentuais entre os 64 bairros:
-
-  `índice = (P_escola + P_ubs + P_verde) / 3`
-
-  - `P_escola`: posição pela distância ponderada até a escola, invertida (mais perto = mais alto);
-  - `P_ubs`: o mesmo para a UBS/USF;
-  - `P_verde`: posição pela área verde por habitante (mais área = mais alto).
-
-  Cada posição é o percentil do bairro (de 1/64 × 100 a 100; empates recebem a posição média). O
-  índice é **relativo**: 100 seria o melhor bairro de João Pessoa nos três, não um padrão ideal.
-  Os três componentes têm o mesmo peso, e a escolha é deliberadamente simples para que o número
-  possa ser refeito à mão.
-
-### Limitações
-
-- **Só serviços públicos ou do SUS.** Escolas, clínicas e hospitais privados não estão contados. Um
-  bairro "sem escola pública nem UBS" (Aeroclube, Portal do Sol, Tambaú, Cabo Branco, Brisamar e outros)
-  pode ter serviços privados.
-- **A distância não indica a unidade de referência.** Cada família é atendida pela UBS da sua área de
-  abrangência, e essas áreas não estão nos dados. A distância mostra só a unidade mais próxima.
-- **Linha reta** subestima o caminho real, ainda mais onde há rios, mangues ou vias expressas no meio.
-- **Efeito de borda:** o serviço mais próximo pode estar em outro bairro (isso é contado); serviços
-  em municípios vizinhos não estão nos dados.
-- **Área verde só do cadastro da Prefeitura:** a **Mata do Buraquinho** e outras matas não são praça nem
-  parque no cadastro; aparecem na camada de matas do mapa, mas não na área verde por morador nem no índice.
-  Bairros vizinhos a elas aparecem com menos área verde do que de fato têm.
-- **Cadastro desatualizado:** os parques são de um arquivo de 2021 e as praças registram intervenções até
-  2018. O OpenStreetMap tem parques que o cadastro não tem: Parque Socioambiental do Roger (em construção,
-  24,6 ha), Parque Linear das Três Ruas (7,7 ha), Parque Jardim do Norte (4,9 ha), Horto de Santo Antônio
-  (4,2 ha) e Ecobosque (1,1 ha). Não foram somados, para não misturar fontes.
-- **Bairros IBGE × Prefeitura:** o mapa usa os bairros do IBGE, onde a população do Censo é contada. A malha
-  da Prefeitura (abril de 2026) cobre 194 km² do município, contra 168 km² do IBGE; alguns bairros de borda
-  (Mussuré, Mumbaba, Alto do Céu, Muçumagro) são bem maiores nela.
-  Um parque que atravessa mais de um bairro é contado em cada um (por isso a soma dos parques por
-  bairro passa de 11), mas a área é dividida entre eles.
-- **14 escolas sem coordenada** (lista em `pontos_nao_atribuidos.csv`) não entram nas distâncias;
-  a distância até a escola pode estar superestimada nos bairros delas.
-- As coordenadas são as declaradas ao INEP e ao CNES e não foram conferidas uma a uma.
-
-### No dashboard
-
-- **Mapa:** a cor dos bairros mostra o índice de acesso, a distância até a escola ou a UBS/USF, a área
-  verde por morador ou os moradores por equipamento. As camadas de pontos (escolas, escolas de atividade
-  complementar/AEE, UBS/USF, outras unidades de saúde), de praças e parques e de matas e áreas protegidas
-  (OpenStreetMap, só informativa) se ligam e desligam.
-- **Detalhe do bairro:** índice e seus três componentes, distâncias e serviços por 10 mil habitantes com a
-  diferença em relação à média da cidade, e a lista dos serviços que ficam no bairro.
-- **Ranking:** bairros com mais moradores por escola ou UBS/USF, e a lista dos que não têm nenhum dos dois.
-- **Índice:** fórmula, explicação e tabela com os componentes de todos os bairros (com download em CSV).
-- **Fontes e limitações:** seção aberta no fim da página, com a tabela de fontes, os filtros de cada uma,
-  as limitações, os pontos não atribuídos a bairro e os arquivos de origem (com SHA-256).
-- Cores das camadas (amarelo, violeta, vermelho; verde-água para praças e parques; verde-escuro para matas) validadas com o
-  validador de paleta, todos os pares; a escola de atividade complementar é um ponto vazado, para não
-  depender só da cor.
-
-### Dados processados (`data/processed/servicos/`)
-
-| Arquivo | Conteúdo |
-|---|---|
-| `indicadores_servicos.csv` | por bairro: contagens por tipo, por 10 mil hab., área verde (m² e m²/hab), distâncias (ponderada e do centroide), habitantes por equipamento, marcação do ranking e índice de acesso |
-| `pontos_servicos.geojson` | escolas e unidades de saúde com coordenada: tipo, rede/natureza, endereço, origem da coordenada, status, bairro e arquivo de origem |
-| `pontos_nao_atribuidos.csv` | pontos sem coordenada ou fora dos bairros, com o motivo |
-| `areas_verdes.geojson` | praças e parques (simplificados em 1 m para o mapa), com área |
-| `matas_osm.geojson` | matas e áreas protegidas do OpenStreetMap recortadas pelo município (simplificadas em 2 m), com tipo, nome, área e id do OSM |
-| `metadados.json` | funil de filtros, pontos por status, áreas verdes, médias da cidade, setores e manifesto dos arquivos brutos |
-
-## Próximas fases
-
-Ciclovias e comunidades, outros indicadores do Censo 2022 (renda, saneamento, faixa etária) e
-distâncias pela rede de ruas.
+As próximas melhorias estão nas [issues do repositório](https://github.com/davialves1820/RaioX-Joao-Pessoa/issues):
+testes automáticos no GitHub, vagas na escola × crianças por bairro, equipes de Saúde da Família,
+renda e saneamento do Censo 2022, distância pelas ruas, população de 2025 da Prefeitura, entre outras.
