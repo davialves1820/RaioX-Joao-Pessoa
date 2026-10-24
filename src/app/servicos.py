@@ -80,7 +80,7 @@ def _hover_ponto(p: pd.DataFrame) -> pd.Series:
 
 
 def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verde: bool,
-                selecionado: str | None, matas: bool = False) -> go.Figure:
+                selecionado: str | None, matas: bool = False, comparado: str | None = None) -> go.Figure:
     ind = dados["ind"].assign(hover=lambda x: _hover_bairro(x))
     fig = go.Figure()
     com_camadas = bool(camadas) or verde or matas
@@ -151,6 +151,12 @@ def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verd
             fig.add_trace(go.Scattermap(lat=p.lat, lon=p.lon, mode="markers", hoverinfo="skip", showlegend=False,
                                         marker=dict(size=tam - 5, color=SUPERFICIE)))
 
+    if comparado and comparado != selecionado:
+        fig.add_trace(go.Choroplethmap(
+            locations=[comparado], z=[0], colorscale=[[0, "rgba(0,0,0,0)"], [1, "rgba(0,0,0,0)"]],
+            showscale=False, showlegend=False, hoverinfo="skip", geojson=geo, featureidkey="properties.cd_bairro",
+            marker_line_color=TINTA_2, marker_line_width=3,
+        ))
     if selecionado:
         fig.add_trace(go.Choroplethmap(
             locations=[selecionado], z=[0], colorscale=[[0, "rgba(0,0,0,0)"], [1, "rgba(0,0,0,0)"]],
@@ -460,6 +466,29 @@ def secao_fontes(dados: dict) -> None:
         st.caption(f"Dados processados em {meta['gerado_em']} (UTC). Metodologia completa no README do repositório.")
 
 
+def _atualizar_link(nomes: pd.Series) -> None:
+    """Mantém o link da página com o bairro escolhido (e o comparado), para poder compartilhar."""
+    st.query_params["bairro"] = dados_bairros.slug(nomes[st.session_state.bairro_servicos])
+    if st.session_state.comparar_servicos:
+        st.query_params["comparar"] = dados_bairros.slug(nomes[st.session_state.comparar_servicos])
+    elif "comparar" in st.query_params:
+        del st.query_params["comparar"]
+
+
+def secao_comparacao(dados: dict, a: str, b: str) -> None:
+    ind, media = dados["ind"].set_index("cd_bairro"), dados["meta"]["media_cidade"]
+    ra, rb = ind.loc[a], ind.loc[b]
+    st.divider()
+    st.header(f"{ra.nm_bairro} e {rb.nm_bairro}")
+    st.caption("Os dois bairros lado a lado, com a média da cidade como referência. No mapa, o primeiro tem "
+               "contorno preto e o segundo, cinza.")
+    tab = d.tabela_comparacao(ra, rb, media)
+    st.dataframe(tab, hide_index=True, width="stretch", height=35 * (len(tab) + 1) + 3)
+    st.caption("Distâncias: média em linha reta, ponderada pela população dos setores censitários. "
+               "Na coluna Cidade, o índice é a mediana dos 64 bairros. "
+               "Os serviços contam só escolas públicas e unidades do SUS.")
+
+
 def main() -> None:
     dados, geo = _carregar()
     ind = dados["ind"]
@@ -476,8 +505,12 @@ def main() -> None:
     )
 
     nomes = ind.sort_values("nm_bairro").set_index("cd_bairro").nm_bairro
+    # Bairro e comparação vêm do link (?bairro=mangabeira&comparar=bessa) na primeira carga da página
     if "bairro_servicos" not in st.session_state:
-        st.session_state.bairro_servicos = ind.loc[ind.pop_2022.idxmax(), "cd_bairro"]
+        st.session_state.bairro_servicos = (dados_bairros.codigo_por_slug(ind, st.query_params.get("bairro"))
+                                            or ind.loc[ind.pop_2022.idxmax(), "cd_bairro"])
+    if "comparar_servicos" not in st.session_state:
+        st.session_state.comparar_servicos = dados_bairros.codigo_por_slug(ind, st.query_params.get("comparar"))
 
     col_mapa, col_det = st.columns([7, 3], gap="medium")
     with col_mapa:
@@ -488,7 +521,8 @@ def main() -> None:
                            default=["escolas", "ubs"])
         evento = st.plotly_chart(
             figura_mapa(dados, geo, indicador, [c for c in ligadas if c in d.CAMADAS], "verde" in ligadas,
-                        st.session_state.bairro_servicos, matas="matas" in ligadas),
+                        st.session_state.bairro_servicos, matas="matas" in ligadas,
+                        comparado=st.session_state.comparar_servicos),
             on_select="rerun", selection_mode="points", key="mapa_servicos",
             config={"scrollZoom": True, "displaylogo": False},
         )
@@ -502,7 +536,14 @@ def main() -> None:
 
     with col_det:
         st.selectbox("Bairro", nomes.index, format_func=nomes.get, key="bairro_servicos")
+        st.selectbox("Comparar com", [None] + list(nomes.index), key="comparar_servicos",
+                     format_func=lambda c: "nenhum bairro" if c is None else nomes[c],
+                     help="Mostra os dois bairros lado a lado, abaixo do mapa, e o contorno do segundo no mapa.")
         painel_bairro(dados, st.session_state.bairro_servicos)
+    _atualizar_link(nomes)
+
+    if st.session_state.comparar_servicos and st.session_state.comparar_servicos != st.session_state.bairro_servicos:
+        secao_comparacao(dados, st.session_state.bairro_servicos, st.session_state.comparar_servicos)
 
     st.divider()
     media = dados["meta"]["media_cidade"]

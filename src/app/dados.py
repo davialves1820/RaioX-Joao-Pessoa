@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import re
+import unicodedata
 from pathlib import Path
 
 import pandas as pd
@@ -61,6 +63,24 @@ def posicao(ind: pd.DataFrame, cd_bairro: str, coluna: str) -> tuple[int, int] |
         return None
     ordem = validos[coluna].rank(ascending=False, method="min")
     return int(ordem[validos.cd_bairro == cd_bairro].iloc[0]), len(validos)
+
+
+# --- bairro na URL (?bairro=mangabeira)
+
+
+def slug(nome: str) -> str:
+    """'Água Fria' -> 'agua-fria' (para o link de um bairro)."""
+    s = unicodedata.normalize("NFKD", str(nome)).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+
+
+def codigo_por_slug(ind: pd.DataFrame, texto: str | None) -> str | None:
+    """Código do bairro a partir do texto da URL (sem acento, maiúsculas ou espaços importarem); None se não achar."""
+    if not texto:
+        return None
+    alvo = slug(texto)
+    achados = ind.loc[ind["nm_bairro"].map(slug) == alvo, "cd_bairro"]
+    return achados.iloc[0] if len(achados) else None
 
 
 # --- formatação pt-BR

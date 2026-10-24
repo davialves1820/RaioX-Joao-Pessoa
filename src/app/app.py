@@ -295,7 +295,8 @@ def main() -> None:
     maior = ind.loc[ind.pop_2022.idxmax()]
     nomes = ind.sort_values("nm_bairro").set_index("cd_bairro").nm_bairro
     if "bairro" not in st.session_state:
-        st.session_state.bairro = maior.cd_bairro
+        # o bairro pode vir do link (?bairro=mangabeira) na primeira carga da página
+        st.session_state.bairro = d.codigo_por_slug(ind, st.query_params.get("bairro")) or maior.cd_bairro
 
     col_mapa, col_det = st.columns([7, 3], gap="medium")
     with col_mapa:
@@ -340,6 +341,7 @@ def main() -> None:
             key="bairro",
         )
         painel_bairro(ind, st.session_state.bairro, meta)
+    st.query_params["bairro"] = d.slug(nomes[st.session_state.bairro])  # link compartilhável do bairro
 
     # --- números do município
     st.divider()

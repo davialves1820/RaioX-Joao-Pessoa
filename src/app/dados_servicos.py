@@ -108,3 +108,42 @@ def texto_comparacao(dif: float | None, distancia: bool) -> tuple[str, str] | No
     if distancia:
         return (f"{n} mais perto", "green") if dif < 0 else (f"{n} mais longe", "red")
     return (f"{n} acima", "green") if dif > 0 else (f"{n} abaixo", "red")
+
+
+# (indicador, coluna, coluna da média da cidade ou None, casas decimais, sufixo)
+INDICADORES_COMPARACAO = [
+    ("Moradores (2022)", "pop_2022", None, 0, ""),
+    ("Índice de acesso (0–100)", "indice_acesso", "indice_acesso_mediana", 1, ""),
+    ("Distância até a escola", "dist_escola_m", "dist_escola_m", 0, " m"),
+    ("Distância até a UBS/USF", "dist_ubs_m", "dist_ubs_m", 0, " m"),
+    ("Escolas públicas", "escolas", None, 0, ""),
+    ("UBS/USF", "ubs_usf", None, 0, ""),
+    ("Escolas por 10 mil hab.", "escolas_por_10mil", "escolas_por_10mil", 2, ""),
+    ("UBS/USF por 10 mil hab.", "ubs_usf_por_10mil", "ubs_usf_por_10mil", 2, ""),
+    ("Área verde por morador", "area_verde_m2_hab", "area_verde_m2_hab", 1, " m²/hab"),
+    ("Praças", "pracas", None, 0, ""),
+    ("Parques", "parques", None, 0, ""),
+]
+
+
+def tabela_comparacao(a: pd.Series, b: pd.Series, media: dict) -> pd.DataFrame:
+    """Indicadores de dois bairros lado a lado, já formatados, com a média da cidade quando existe.
+
+    A coluna de referência do índice é a mediana dos bairros (o índice é uma posição relativa).
+    """
+    from src.app.dados import fmt_dec, fmt_int
+
+    def f(v, casas, suf):
+        if pd.isna(v):
+            return "—"
+        return (fmt_int(round(v)) if casas == 0 else fmt_dec(v, casas)) + suf
+
+    linhas = []
+    for rotulo, col, col_media, casas, suf in INDICADORES_COMPARACAO:
+        linhas.append({
+            "Indicador": rotulo,
+            a["nm_bairro"]: f(a[col], casas, suf),
+            b["nm_bairro"]: f(b[col], casas, suf),
+            "Cidade": f(media[col_media], casas, suf) if col_media else "—",
+        })
+    return pd.DataFrame(linhas)

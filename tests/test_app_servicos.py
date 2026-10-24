@@ -62,3 +62,13 @@ def test_texto_comparacao_sem_sinal_e_com_cor_certa():
     assert d.texto_comparacao(-13, distancia=False) == ("13% abaixo", "red")
     assert d.texto_comparacao(0.2, distancia=False) == ("na média", "gray")
     assert d.texto_comparacao(None, distancia=True) is None
+
+
+def test_tabela_comparacao():
+    dados = _dados()
+    ind = dados["ind"].set_index("cd_bairro")
+    a, b = ind.iloc[0], ind.iloc[1]
+    t = d.tabela_comparacao(a, b, dados["meta"]["media_cidade"])
+    assert list(t.columns) == ["Indicador", a.nm_bairro, b.nm_bairro, "Cidade"]
+    assert len(t) == len(d.INDICADORES_COMPARACAO)
+    assert not t.isna().any().any()
