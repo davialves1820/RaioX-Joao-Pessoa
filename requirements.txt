@@ -1,11 +1,17 @@
+# Versões exatas: o Streamlit Community Cloud instala este arquivo a cada deploy, e uma versão nova
+# de uma biblioteca pode quebrar o site sem mudança no código. Para atualizar, veja o README
+# ("Atualizar as bibliotecas").
+
 # Pipeline de dados (coleta e processamento)
-pandas>=2.2
-geopandas>=1.0
-pyogrio>=0.9
-shapely>=2.1  # coverage_simplify
-openpyxl>=3.1  # leitura do dicionário de dados do IBGE (.xlsx)
-pyarrow>=15     # leitura e escrita de .parquet
+pandas==3.0.6
+numpy==2.5.4
+geopandas==1.2.0
+pyogrio==0.13.0
+pyproj==3.8.0
+shapely==2.2.0     # coverage_simplify
+openpyxl==3.1.5    # leitura do dicionário de dados do IBGE (.xlsx)
+pyarrow==26.0.0    # leitura e escrita de .parquet
 
 # Dashboard
-streamlit>=1.50
-plotly>=5.24  # go.Choroplethmap (MapLibre, sem token)
+streamlit==1.66.0
+plotly==7.1.0      # go.Choroplethmap (MapLibre, sem token)
