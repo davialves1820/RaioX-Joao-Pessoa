@@ -378,6 +378,11 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
   índice é **relativo**: 100 seria o melhor bairro de João Pessoa nos três itens, não um padrão ideal.
   Os três componentes têm o mesmo peso, e a escolha é deliberadamente simples para que o número
   possa ser refeito à mão.
+- **Sensibilidade aos pesos:** o índice é recalculado com outros pesos (cada item com peso dobrado, sem
+  área verde, só escola, só UBS/USF), e o site mostra quanto o ranking muda: correlação de Spearman com o
+  ranking publicado, mudança média e máxima de posição, e quantos dos primeiros colocados continuam. Com
+  um item de peso dobrado, a correlação fica entre 0,93 e 0,98; tirar um item muda bem mais. A posição de
+  cada bairro em cada cenário está em `sensibilidade_indice.csv`.
 
 ### Limitações
 
@@ -414,6 +419,7 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
 | `pontos_nao_atribuidos.csv` | pontos sem coordenada ou fora dos bairros, com o motivo e o bairro pela malha da Prefeitura |
 | `areas_verdes.geojson` | praças e parques (simplificados em 1 m para o mapa), com área |
 | `matas_osm.geojson` | matas e áreas protegidas do OpenStreetMap recortadas pelo município (simplificadas em 2 m), com tipo, nome, área e id do OSM |
+| `sensibilidade_indice.csv` | posição de cada bairro no índice em cada cenário de pesos |
 | `metadados.json` | funil de filtros, pontos por status, conferência das praças, áreas verdes, matas, médias da cidade, setores e manifesto dos arquivos brutos |
 
 ---
