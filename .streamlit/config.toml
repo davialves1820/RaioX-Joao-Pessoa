@@ -1,9 +1,20 @@
-[theme]
+# Tema claro e escuro. O site segue o tema do sistema; no menu ⋮ dá para escolher Claro ou Escuro.
+# Cores: paleta validada (ver README, "Cores"). Os gráficos e o mapa trocam de cor junto (src/app/tema.py).
+[theme.light]
 base = "light"
 primaryColor = "#2a78d6"
 backgroundColor = "#fcfcfb"
 secondaryBackgroundColor = "#f0efec"
 textColor = "#0b0b0b"
+borderColor = "#e1e0d9"
+
+[theme.dark]
+base = "dark"
+primaryColor = "#3987e5"
+backgroundColor = "#1a1a19"
+secondaryBackgroundColor = "#2c2c2a"
+textColor = "#f0efec"
+borderColor = "#383835"
 
 [server]
 headless = true

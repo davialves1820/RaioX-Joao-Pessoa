@@ -10,17 +10,11 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from src.app import dados as d
+from src.app import tema
 from src.process.indicadores import COM_RESSALVA, NAO_COMPARAVEL
 
-# Paleta (validada com o validador da skill de dataviz; ver README).
-AZUL_SEQ = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366b"]
-AZUL = "#2a78d6"   # polo positivo (crescimento)
-VERMELHO = "#e34948"  # polo negativo (perda)
-CINZA_MEIO = "#f0efec"  # ponto neutro da escala divergente
-SUPERFICIE = "#fcfcfb"
-TINTA = "#0b0b0b"
-TINTA_2 = "#52514e"
-ALTURA_MAPA = 740  # px; o mapa é o elemento principal da página
+# Cores: src/app/tema.py (paleta validada, modo claro e escuro; ver README).
+ALTURA_MAPA = 660  # px; o mapa é o elemento principal da página e cabe na primeira tela
 # Enquadramento inicial: centro e zoom que mostram todos os bairros (bbox da malha IBGE 2022)
 CENTRO_MAPA = dict(lat=-7.147, lon=-34.875)
 ZOOM_MAPA = 11.55
@@ -32,6 +26,13 @@ INDICADORES = {
     "var_pct": "Variação da população 2010→2022 (%)",
     "renda_mediana": "Renda mediana do responsável (2022)",
     "pct_esgoto_rede": "Esgoto ligado à rede (%)",
+}
+# título e formato das marcas da escala de cor de cada indicador
+ESCALA = {
+    "pop_2022": ("hab.", d.fmt_int),
+    "densidade_2022": ("hab/km²", d.fmt_int),
+    "renda_mediana": ("R$", d.fmt_int),
+    "pct_esgoto_rede": ("%", d.fmt_int),
 }
 
 
@@ -65,54 +66,49 @@ def _hover(ind: pd.DataFrame) -> pd.Series:
 
 
 def figura_mapa(ind: pd.DataFrame, geo: dict, indicador: str, selecionado: str | None,
-                celular: bool = False) -> go.Figure:
+                celular: bool = False, t: dict | None = None) -> go.Figure:
+    t = t or tema.CLARO
     aj = d.ajuste_mapa(celular, ALTURA_MAPA, ZOOM_MAPA)
     ind = ind.assign(hover=_hover(ind))
     comum = dict(
         geojson=geo,
         featureidkey="properties.cd_bairro",
         hovertemplate="%{hovertext}<extra></extra>",
-        marker_line_color=SUPERFICIE,
+        marker_line_color=t["superficie"],
         marker_line_width=1,
     )
-    # Legenda de cores sobre o mapa (canto superior direito), para o mapa ocupar toda a largura
-    barra = dict(
-        **aj["barra"], outlinewidth=0, tickfont=dict(color=TINTA_2),
-        bgcolor="rgba(252,252,251,0.85)", xpad=10, ypad=10,
-    )
+    vazio = [[0, t["vazio"]], [1, t["vazio"]]]
     fig = go.Figure()
 
     if indicador == "var_pct":
         comp = ind[ind.comparabilidade != NAO_COMPARAVEL]
         nao = ind[ind.comparabilidade == NAO_COMPARAVEL]
-        ticks = [-LIMITE_VAR_PCT, -30, 0, 30, LIMITE_VAR_PCT]
+        barra = tema.barra_de_cor(aj, t, -LIMITE_VAR_PCT, LIMITE_VAR_PCT, titulo="%",
+                                  fmt=lambda v: ("+" if v > 0 else "−" if v < 0 else "") + d.fmt_int(abs(v)),
+                                  valores=[-LIMITE_VAR_PCT, -30, 0, 30, LIMITE_VAR_PCT],
+                                  rotulos={-LIMITE_VAR_PCT: f"≤ −{LIMITE_VAR_PCT}", LIMITE_VAR_PCT: f"≥ +{LIMITE_VAR_PCT}"})
         fig.add_trace(
             go.Choroplethmap(
                 locations=comp.cd_bairro,
                 z=comp.var_pct.clip(-LIMITE_VAR_PCT, LIMITE_VAR_PCT),
                 hovertext=comp.hover,
-                colorscale=[[0, VERMELHO], [0.5, CINZA_MEIO], [1, AZUL]],
+                colorscale=[[0, t["vermelho"]], [0.5, t["neutro"]], [1, t["azul"]]],
                 zmin=-LIMITE_VAR_PCT,
                 zmax=LIMITE_VAR_PCT,
-                colorbar=dict(
-                    **barra,
-                    title=dict(text="%", font=dict(color=TINTA_2)),
-                    tickvals=ticks,
-                    ticktext=[f"≤ −{LIMITE_VAR_PCT}", "−30", "0", "+30", f"≥ +{LIMITE_VAR_PCT}"],
-                ),
+                colorbar=barra,
                 marker_opacity=0.85,
                 **comum,
             )
         )
-        # Não comparáveis: sem preenchimento de cor, só contorno escuro
+        # Não comparáveis: sem preenchimento de cor, só contorno
         fig.add_trace(
             go.Choroplethmap(
                 locations=nao.cd_bairro,
                 z=[0] * len(nao),
                 hovertext=nao.hover,
-                colorscale=[[0, "rgba(252,252,251,0.6)"], [1, "rgba(252,252,251,0.6)"]],
+                colorscale=vazio,
                 showscale=False,
-                **{**comum, "marker_line_color": TINTA_2, "marker_line_width": 1.5},
+                **{**comum, "marker_line_color": t["tinta_2"], "marker_line_width": 1.5},
             )
         )
     else:
@@ -120,17 +116,20 @@ def figura_mapa(ind: pd.DataFrame, geo: dict, indicador: str, selecionado: str |
         if len(sem):
             fig.add_trace(go.Choroplethmap(
                 locations=sem.cd_bairro, z=[0] * len(sem), hovertext=sem.hover,
-                colorscale=[[0, "rgba(252,252,251,0.6)"], [1, "rgba(252,252,251,0.6)"]], showscale=False,
-                **{**comum, "marker_line_color": TINTA_2, "marker_line_width": 1.5},
+                colorscale=vazio, showscale=False,
+                **{**comum, "marker_line_color": t["tinta_2"], "marker_line_width": 1.5},
             ))
         ind = ind[ind[indicador].notna()]
+        titulo, fmt = ESCALA[indicador]
+        zmin, zmax = float(ind[indicador].min()), float(ind[indicador].max())
         fig.add_trace(
             go.Choroplethmap(
                 locations=ind.cd_bairro,
                 z=ind[indicador],
+                zmin=zmin, zmax=zmax,
                 hovertext=ind.hover,
-                colorscale=[[i / (len(AZUL_SEQ) - 1), c] for i, c in enumerate(AZUL_SEQ)],
-                colorbar=dict(**barra, tickformat=",.0f"),
+                colorscale=tema.escala(t),
+                colorbar=tema.barra_de_cor(aj, t, zmin, zmax, fmt, titulo),
                 marker_opacity=0.85,
                 **comum,
             )
@@ -146,22 +145,17 @@ def figura_mapa(ind: pd.DataFrame, geo: dict, indicador: str, selecionado: str |
                 hoverinfo="skip",
                 geojson=geo,
                 featureidkey="properties.cd_bairro",
-                marker_line_color=TINTA,
+                marker_line_color=t["tinta"],
                 marker_line_width=3,
             )
         )
 
-    fig.update_layout(
-        map=dict(style="carto-positron", center=CENTRO_MAPA, zoom=aj["zoom"]),
-        margin=dict(l=0, r=0, t=0, b=0),
-        height=aj["altura"],
-        separators=",.",
-    )
-    return fig
+    return tema.layout_mapa(fig, t, aj, CENTRO_MAPA)
 
 
-def figura_ranking(df: pd.DataFrame, metrica: str, crescimento: bool) -> go.Figure:
-    cor = AZUL if crescimento else VERMELHO
+def figura_ranking(df: pd.DataFrame, metrica: str, crescimento: bool, t: dict | None = None) -> go.Figure:
+    t = t or tema.CLARO
+    cor = t["azul"] if crescimento else t["vermelho"]
     fmt = d.fmt_var_pct if metrica == "var_pct" else d.fmt_var_int
     rotulos = df.apply(d.rotulo, axis=1)
     hover = df.apply(
@@ -177,6 +171,7 @@ def figura_ranking(df: pd.DataFrame, metrica: str, crescimento: bool) -> go.Figu
             marker=dict(color=cor, cornerradius=4),
             text=df[metrica].map(fmt),
             textposition="outside",
+            textfont=dict(color=t["tinta"]),
             cliponaxis=False,
             hovertext=hover,
             hovertemplate="%{hovertext}<extra></extra>",
@@ -191,6 +186,8 @@ def figura_ranking(df: pd.DataFrame, metrica: str, crescimento: bool) -> go.Figu
         separators=",.",
         showlegend=False,
     )
+    tema.layout_grafico(fig, t)
+    fig.update_yaxes(tickfont=dict(color=t["tinta"]))
     return fig
 
 
@@ -198,26 +195,34 @@ def painel_bairro(ind: pd.DataFrame, cd: str, meta: dict) -> None:
     r = ind.set_index("cd_bairro").loc[cd]
     st.subheader(r.nm_bairro)
 
-    c1, c2 = st.columns(2)
-    c1.metric("População 2022", d.fmt_int(r.pop_2022))
-    c2.metric("População 2010", d.fmt_int(r.pop_2010))
-    c1.metric("Densidade (hab/km²)", d.fmt_dec(r.densidade_2022, 0))
-    c2.metric("Área (km²)", d.fmt_dec(r.area_km2, 2))
-    if r.comparabilidade == NAO_COMPARAVEL:
-        c1.metric("Variação 2010→2022", "—", help="Não comparável: o limite do bairro mudou entre os censos.")
-    else:
-        c1.metric(
-            "Variação 2010→2022",
-            d.fmt_var_int(r.var_abs),
-            delta=d.fmt_var_pct(r.var_pct).replace("−", "-"),  # Streamlit só reconhece o '-' ASCII
-        )
-    c2.metric("Domicílios 2022", d.fmt_int(r.domicilios_2022))
-    c1.metric("Renda mediana", d.fmt_reais(r.renda_mediana),
-              help="Rendimento mensal mediano das pessoas responsáveis pelo domicílio que têm rendimento "
-                   "(Censo 2022, R$ de 2022). Responsáveis sem rendimento não entram no cálculo do IBGE.")
-    c2.metric("Esgoto ligado à rede", d.fmt_pct(r.pct_esgoto_rede),
-              help=f"Domicílios com esgoto na rede geral ou pluvial ou em fossa ligada à rede (Censo 2022). Água pela rede geral: "
-                   f"{d.fmt_pct(r.pct_agua_rede)}; lixo coletado: {d.fmt_pct(r.pct_lixo_coletado)}.")
+    with st.container(border=True):
+        st.markdown('<p class="rx-kicker">População</p>', unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        c1.metric("Em 2022", d.fmt_int(r.pop_2022))
+        if r.comparabilidade == NAO_COMPARAVEL:
+            c2.metric("Desde 2010", "—", help="Não comparável: o limite do bairro mudou entre os censos.")
+        else:
+            c2.metric(
+                "Desde 2010",
+                d.fmt_var_int(r.var_abs),
+                delta=d.fmt_var_pct(r.var_pct).replace("−", "-"),  # Streamlit só reconhece o '-' ASCII
+                help=f"Em 2010: {d.fmt_int(r.pop_2010)} moradores.",
+            )
+    with st.container(border=True):
+        st.markdown('<p class="rx-kicker">Território</p>', unsafe_allow_html=True)
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Área", f"{d.fmt_dec(r.area_km2, 1)} km²", help=f"{d.fmt_dec(r.area_km2, 2)} km² (IBGE).")
+        c2.metric("Densidade", d.fmt_int(r.densidade_2022), help="Moradores por km² (2022).")
+        c3.metric("Domicílios", d.fmt_int(r.domicilios_2022))
+    with st.container(border=True):
+        st.markdown('<p class="rx-kicker">Renda e saneamento (2022)</p>', unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        c1.metric("Renda mediana", d.fmt_renda(r.renda_mediana),
+                  help="Rendimento mensal mediano das pessoas responsáveis pelo domicílio que têm rendimento "
+                       "(Censo 2022, R$ de 2022). Responsáveis sem rendimento não entram no cálculo do IBGE.")
+        c2.metric("Esgoto ligado à rede", d.fmt_pct(r.pct_esgoto_rede),
+                  help=f"Domicílios com esgoto na rede geral ou pluvial ou em fossa ligada à rede (Censo 2022). "
+                       f"Água pela rede geral: {d.fmt_pct(r.pct_agua_rede)}; lixo coletado: {d.fmt_pct(r.pct_lixo_coletado)}.")
 
     if pd.isna(r.pop_2010):
         st.warning("Este bairro não existia no Censo 2010, por isso não há variação.", icon="⚠️")
@@ -244,9 +249,9 @@ def painel_bairro(ind: pd.DataFrame, cd: str, meta: dict) -> None:
     ]:
         p = d.posicao(ind[ind.comparabilidade != NAO_COMPARAVEL] if col == "var_pct" else ind, cd, col)
         if p:
-            linhas.append(f"- {p[0]}º {texto} entre {p[1]} bairros")
+            linhas.append(f"{p[0]}º {texto} entre {p[1]}")
     if linhas:
-        st.markdown("**Posição**\n" + "\n".join(linhas))
+        st.caption("Posição: " + " · ".join(linhas) + ".")
 
     with st.expander("De onde vêm estes números"):
         cols = meta["colunas"]
@@ -263,13 +268,12 @@ def painel_bairro(ind: pd.DataFrame, cd: str, meta: dict) -> None:
                 ]
             )
         )
-        st.caption(f"Código IBGE do bairro: {cd}. Arquivos originais e URLs na seção *Sobre os dados*.")
+        st.caption(f"Código IBGE do bairro: {cd}. Arquivos originais e URLs na aba *Sobre os dados*.")
 
 
 def secao_sobre(meta: dict, totais: pd.DataFrame) -> None:
-    with st.expander("Sobre os dados: fontes, método e limitações"):
-        st.markdown(
-            f"""
+    st.markdown(
+        f"""
 **Fontes.** População 2022: tabela do IBGE por bairro (Censo 2022, *Agregados por Setores
 Censitários*, variável `v0001`). População 2010: soma dos setores censitários do Censo 2010
 (`Domicilio02`, V001) pelo código de bairro. Limites: malha de bairros do IBGE do Censo 2022,
@@ -297,108 +301,18 @@ abaixo disso, ou se o bairro não existia em 2010, a variação não é exibida.
 
 **Densidade** usa a área de cada bairro publicada pelo IBGE (`AREA_KM2`).
 """
-        )
-        arquivos = pd.DataFrame(
-            [
-                {"arquivo": k, "fonte": v["fonte"], "baixado em (UTC)": v["baixado_em"], "url": v["url"]}
-                for k, v in meta["arquivos_brutos"].items()
-            ]
-        )
-        st.dataframe(arquivos, hide_index=True, width="stretch")
-        st.caption(f"Dados processados em {meta['gerado_em']} (UTC).")
-
-
-def main() -> None:
-    ind, geo, totais, meta = _carregar()
-
-    # Menos espaço acima do título, para o mapa caber inteiro na primeira tela
-    st.markdown("<style>.block-container{padding-top:2rem}</style>", unsafe_allow_html=True)
-    st.title("Raio-X dos Bairros de João Pessoa")
-    st.caption(
-        "População dos 64 bairros nos Censos 2010 e 2022 do IBGE. Arraste para mover o mapa, use a roda "
-        "do mouse para aproximar e clique num bairro para ver o detalhe."
     )
-
-    # --- estado do bairro selecionado
-    maior = ind.loc[ind.pop_2022.idxmax()]
-    nomes = ind.sort_values("nm_bairro").set_index("cd_bairro").nm_bairro
-    if "bairro" not in st.session_state:
-        # o bairro pode vir do link (?bairro=mangabeira) na primeira carga da página
-        st.session_state.bairro = d.codigo_por_slug(ind, st.query_params.get("bairro")) or maior.cd_bairro
-
-    col_mapa, col_det = st.columns([7, 3], gap="medium")
-    with col_mapa:
-        indicador = st.radio(
-            "Indicador do mapa", list(INDICADORES), format_func=INDICADORES.get, horizontal=True,
-            label_visibility="collapsed",
-        )
-        evento = st.plotly_chart(
-            figura_mapa(ind, geo, indicador, st.session_state.bairro,
-                        celular=d.eh_celular(st.context.headers.get("User-Agent"))),
-            on_select="rerun",
-            selection_mode="points",
-            key="mapa",
-            config={"scrollZoom": True, "displaylogo": False},
-        )
-        pontos = (evento or {}).get("selection", {}).get("points", []) if evento else []
-        clicado = pontos[0].get("location") if pontos else None
-        if clicado and clicado != st.session_state.get("ultimo_clique") and clicado in nomes.index:
-            st.session_state.ultimo_clique = clicado
-            st.session_state.bairro = clicado
-            st.rerun()
-        if indicador == "var_pct":
-            st.caption(
-                "Azul: ganhou população; vermelho: perdeu. A cor satura em ±60% (valor exato ao passar o mouse). "
-                "Bairros sem cor e com contorno escuro: variação não comparável."
-            )
-        elif indicador == "renda_mediana":
-            st.caption(
-                "Rendimento mensal mediano das pessoas responsáveis pelo domicílio que têm rendimento, no Censo "
-                "2022 (R$ de 2022, sem correção). Responsáveis sem rendimento não entram no cálculo do IBGE. "
-                "Mussuré (3 moradores) não tem o dado publicado."
-            )
-        elif indicador == "pct_esgoto_rede":
-            st.caption(
-                "Parte dos domicílios com esgoto ligado à rede, no Censo 2022: direto na rede geral ou pluvial "
-                "ou por fossa séptica ligada à rede. O restante usa fossa não ligada à rede, fossa rudimentar, "
-                "vala, rio ou outra forma."
-            )
-        elif indicador == "pop_2022":
-            st.caption(
-                "Quanto mais escuro, mais moradores. Bairros grandes em área tendem a ter mais gente; "
-                "para comparar a concentração de moradores, use a densidade."
-            )
-        else:
-            st.caption(
-                "Moradores por km²: quanto mais escuro, mais gente vivendo em cada pedaço do bairro. "
-                "Bairros com muita área verde, industrial ou de praia aparecem mais claros."
-            )
-
-    with col_det:
-        st.selectbox(
-            "Bairro",
-            nomes.index,
-            format_func=nomes.get,
-            key="bairro",
-        )
-        painel_bairro(ind, st.session_state.bairro, meta)
-    st.query_params["bairro"] = d.slug(nomes[st.session_state.bairro])  # link compartilhável do bairro
-
-    # --- números do município
-    st.divider()
-    p10, p22 = totais.loc[2010, "pop_municipio"], totais.loc[2022, "pop_municipio"]
-    k1, k2, k3, k4 = st.columns(4)
-    k1.metric("População de João Pessoa (2022)", d.fmt_int(p22))
-    k2.metric(
-        "Variação desde 2010",
-        d.fmt_var_int(p22 - p10),
-        delta=d.fmt_var_pct(100 * (p22 - p10) / p10).replace("−", "-"),
+    arquivos = pd.DataFrame(
+        [
+            {"arquivo": k, "fonte": v["fonte"], "baixado em (UTC)": v["baixado_em"], "url": v["url"]}
+            for k, v in meta["arquivos_brutos"].items()
+        ]
     )
-    k3.metric(f"Bairro mais populoso ({d.fmt_int(maior.pop_2022)} hab.)", maior.nm_bairro)
-    k4.metric("Bairros", "64")
+    st.dataframe(arquivos, hide_index=True, width="stretch")
+    st.caption(f"Dados processados em {meta['gerado_em']} (UTC).")
 
-    # --- ranking
-    st.header("Quem mais cresceu e quem mais perdeu população (2010→2022)")
+
+def secao_ranking(ind: pd.DataFrame, t: dict) -> None:
     st.caption(
         "Compara o Censo 2010 com o de 2022. Só entram bairros cujos limites não mudaram muito entre os "
         "dois censos; caso contrário, a variação misturaria crescimento com mudança de território."
@@ -422,23 +336,24 @@ def main() -> None:
             if df.empty:
                 st.write("Nenhum bairro com esses filtros.")
             else:
-                st.plotly_chart(figura_ranking(df, metrica, cresc), config={"displayModeBar": False})
+                st.plotly_chart(figura_ranking(df, metrica, cresc, t), config={"displayModeBar": False})
     excl = ind[ind.comparabilidade == NAO_COMPARAVEL].nm_bairro.tolist()
     st.caption(
         "† comparável com ressalva (limite mudou parcialmente). Fora do ranking por limite não comparável: "
         + ", ".join(excl) + "."
     )
 
-    # --- tabela
-    st.header("Tabela completa")
+
+def secao_tabela(ind: pd.DataFrame) -> None:
     st.caption("Todos os bairros, ordenados por população. Clique no título de uma coluna para reordenar.")
     tabela = ind[
         ["nm_bairro", "pop_2010", "pop_2022", "var_abs", "var_pct", "area_km2", "densidade_2022",
-         "domicilios_2022", "comparabilidade", "cd_bairro"]
+         "domicilios_2022", "renda_mediana", "pct_esgoto_rede", "comparabilidade", "cd_bairro"]
     ].sort_values("pop_2022", ascending=False)
     st.dataframe(
         d.tabela_br(tabela, inteiros=["pop_2010", "pop_2022", "densidade_2022", "domicilios_2022"],
-                    variacao_int=["var_abs"], pct_sinal={"var_pct": 1}, decimais={"area_km2": 2}),
+                    variacao_int=["var_abs"], pct_sinal={"var_pct": 1}, decimais={"area_km2": 2},
+                    pct={"pct_esgoto_rede": 1}, reais=["renda_mediana"]),
         hide_index=True,
         width="stretch",
         column_config={
@@ -450,6 +365,8 @@ def main() -> None:
             "area_km2": "Área (km²)",
             "densidade_2022": "hab/km²",
             "domicilios_2022": "Domicílios",
+            "renda_mediana": "Renda mediana",
+            "pct_esgoto_rede": "Esgoto ligado à rede",
             "comparabilidade": "Comparabilidade 2010→2022",
             "cd_bairro": "Código IBGE",
         },
@@ -461,7 +378,85 @@ def main() -> None:
         mime="text/csv",
     )
 
-    secao_sobre(meta, totais)
+
+LEGENDA_MAPA = {
+    "var_pct": "Azul: ganhou população; vermelho: perdeu. A cor satura em ±60% (valor exato ao passar o mouse). "
+               "Bairros sem cor e só com contorno: variação não comparável.",
+    "renda_mediana": "Rendimento mensal mediano das pessoas responsáveis pelo domicílio que têm rendimento, no Censo "
+                     "2022 (R$ de 2022, sem correção). Responsáveis sem rendimento não entram no cálculo do IBGE. "
+                     "Mussuré (3 moradores) não tem o dado publicado.",
+    "pct_esgoto_rede": "Parte dos domicílios com esgoto ligado à rede, no Censo 2022: direto na rede geral ou pluvial "
+                       "ou por fossa séptica ligada à rede. O restante usa fossa não ligada à rede, fossa rudimentar, "
+                       "vala, rio ou outra forma.",
+    "pop_2022": "Quanto mais escuro, mais moradores. Bairros grandes em área tendem a ter mais gente; "
+                "para comparar a concentração de moradores, use a densidade.",
+    "densidade_2022": "Moradores por km²: quanto mais escuro, mais gente vivendo em cada pedaço do bairro. "
+                      "Bairros com muita área verde, industrial ou de praia aparecem mais claros.",
+}
+
+
+def main() -> None:
+    ind, geo, totais, meta = _carregar()
+    t = tema.atual()
+    tema.preparar_pagina(t)
+    tema.cabecalho(
+        "Raio-X dos Bairros de João Pessoa",
+        "População, renda e saneamento dos 64 bairros nos Censos 2010 e 2022 do IBGE. Arraste para mover o "
+        "mapa, use a roda do mouse para aproximar e clique num bairro para ver o detalhe.",
+    )
+
+    # --- estado do bairro selecionado
+    maior = ind.loc[ind.pop_2022.idxmax()]
+    nomes = ind.sort_values("nm_bairro").set_index("cd_bairro").nm_bairro
+    if "bairro" not in st.session_state:
+        # o bairro pode vir do link (?bairro=mangabeira) na primeira carga da página
+        st.session_state.bairro = d.codigo_por_slug(ind, st.query_params.get("bairro")) or maior.cd_bairro
+
+    col_mapa, col_det = st.columns([7, 3], gap="medium")
+    with col_mapa:
+        indicador = st.selectbox("Cor do mapa", list(INDICADORES), format_func=INDICADORES.get)
+        evento = st.plotly_chart(
+            figura_mapa(ind, geo, indicador, st.session_state.bairro,
+                        celular=d.eh_celular(st.context.headers.get("User-Agent")), t=t),
+            on_select="rerun",
+            selection_mode="points",
+            key="mapa",
+            config={"scrollZoom": True, "displaylogo": False,
+                    "modeBarButtonsToRemove": ["select2d", "lasso2d"]},
+        )
+        pontos = (evento or {}).get("selection", {}).get("points", []) if evento else []
+        clicado = pontos[0].get("location") if pontos else None
+        if clicado and clicado != st.session_state.get("ultimo_clique") and clicado in nomes.index:
+            st.session_state.ultimo_clique = clicado
+            st.session_state.bairro = clicado
+            st.rerun()
+        st.caption(tema.texto(LEGENDA_MAPA[indicador], t))
+
+    with col_det:
+        st.selectbox("Bairro", nomes.index, format_func=nomes.get, key="bairro")
+        painel_bairro(ind, st.session_state.bairro, meta)
+    st.query_params["bairro"] = d.slug(nomes[st.session_state.bairro])  # link compartilhável do bairro
+
+    # --- números do município
+    p10, p22 = totais.loc[2010, "pop_municipio"], totais.loc[2022, "pop_municipio"]
+    with st.container(border=True):
+        k1, k2, k3, k4 = st.columns(4)
+        k1.metric("População de João Pessoa (2022)", d.fmt_int(p22))
+        k2.metric(
+            "Variação desde 2010",
+            d.fmt_var_int(p22 - p10),
+            delta=d.fmt_var_pct(100 * (p22 - p10) / p10).replace("−", "-"),
+        )
+        k3.metric(f"Bairro mais populoso ({d.fmt_int(maior.pop_2022)} hab.)", maior.nm_bairro)
+        k4.metric("Bairros", "64")
+
+    abas = st.tabs(["Quem cresceu e quem perdeu", "Tabela completa", "Sobre os dados"])
+    with abas[0]:
+        secao_ranking(ind, t)
+    with abas[1]:
+        secao_tabela(ind)
+    with abas[2]:
+        secao_sobre(meta, totais)
     st.caption("Código e metodologia: README do repositório. Dados: IBGE, Censos Demográficos 2010 e 2022.")
 
 
