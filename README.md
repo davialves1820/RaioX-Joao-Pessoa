@@ -251,6 +251,11 @@ escola e a UBS/USF mais próximas, área verde por habitante e um índice simple
 - **Detalhe do bairro:** índice e seus três componentes, distâncias e serviços por 10 mil habitantes,
   com a comparação com a média da cidade em palavras ("30% mais perto", "13% abaixo"), e a lista dos
   serviços que ficam no bairro.
+- **Comparar dois bairros:** em "Comparar com", escolha um segundo bairro; os dois aparecem lado a lado,
+  com a média da cidade como referência, e o segundo ganha contorno cinza no mapa.
+- **Link de um bairro:** a URL acompanha o bairro escolhido e a comparação, para compartilhar
+  (ex.: `.../servicos?bairro=mangabeira&comparar=bessa`; também vale `?bairro=` na página de bairros).
+  Acento e maiúsculas não importam; um nome que não existe abre o bairro padrão.
 - **Ranking:** bairros com mais moradores por escola ou UBS/USF, e a lista dos que não têm nenhum dos dois.
 - **Índice:** fórmula, explicação e tabela com os componentes de todos os bairros (com download em CSV).
 - **Fontes e limitações:** seção aberta no fim da página, com a tabela de fontes, os filtros de cada uma,

@@ -53,3 +53,18 @@ def test_tabela_br_formata_sem_virar_texto():
     # os dados continuam numéricos: a ordenação no app é numérica
     assert "None" not in html and "nan" not in html
     assert s.data["pop"].dtype.kind in "iu" and s.data["verde"].dtype.kind == "f"
+
+
+def test_link_do_bairro_ida_e_volta():
+    ind = _ind()
+    assert d.slug("Água Fria") == "agua-fria"
+    assert d.slug("Jardim Cidade Universitária") == "jardim-cidade-universitaria"
+    # todo bairro tem um texto de link único e volta para o próprio código
+    slugs = ind.nm_bairro.map(d.slug)
+    assert slugs.is_unique
+    for cd, s in zip(ind.cd_bairro, slugs):
+        assert d.codigo_por_slug(ind, s) == cd
+    assert d.codigo_por_slug(ind, "MANGABEIRA") == d.codigo_por_slug(ind, "mangabeira")
+    assert d.codigo_por_slug(ind, "Água fria") == d.codigo_por_slug(ind, "agua-fria")
+    assert d.codigo_por_slug(ind, "bairro-que-nao-existe") is None
+    assert d.codigo_por_slug(ind, None) is None
