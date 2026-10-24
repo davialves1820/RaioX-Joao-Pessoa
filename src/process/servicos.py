@@ -206,6 +206,39 @@ def equipes_esf() -> tuple[pd.Series, dict]:
     return por_unidade, info
 
 
+# Etapas: coluna de saída -> coluna de matrículas dos microdados do Censo Escolar
+ETAPAS = {"mat_creche": "QT_MAT_INF_CRE", "mat_pre": "QT_MAT_INF_PRE", "mat_fund": "QT_MAT_FUND",
+          "mat_medio": "QT_MAT_MED"}
+# Indicador -> (matrículas somadas, faixas de idade do Censo 2022 somadas). As faixas do IBGE são de 5 em
+# 5 anos e não coincidem com as idades de cada etapa; o site diz isso junto do número.
+VAGAS = {
+    "infantil_por_100": (["mat_creche", "mat_pre"], ["pop_0a4"]),
+    "fund_por_100": (["mat_fund"], ["pop_5a9", "pop_10a14"]),
+    "medio_por_100": (["mat_medio"], ["pop_15a19"]),
+}
+
+
+def matriculas() -> tuple[pd.DataFrame, dict]:
+    """Matrículas por escola e etapa (microdados do Censo Escolar), indexadas pelo código INEP."""
+    import zipfile
+
+    from src.collect.inep_microdados import ANO, destino
+
+    with zipfile.ZipFile(destino(ANO)) as z:
+        nome = next(n for n in z.namelist() if n.endswith(f"microdados_ed_basica_{ANO}.csv"))
+        m = pd.read_csv(z.open(nome), sep=";", encoding="latin-1", dtype={"CO_ENTIDADE": str},
+                        usecols=["CO_MUNICIPIO", "CO_ENTIDADE", "TP_DEPENDENCIA", "TP_SITUACAO_FUNCIONAMENTO",
+                                 *ETAPAS.values()])
+    m = m[(m["CO_MUNICIPIO"] == int(COD_MUNICIPIO)) & (m["TP_SITUACAO_FUNCIONAMENTO"] == 1)]
+    publica = m["TP_DEPENDENCIA"].isin([1, 2, 3])  # federal, estadual, municipal
+    tot = {c: int(m[col].fillna(0).sum()) for c, col in ETAPAS.items()}
+    pub = {c: int(m.loc[publica, col].fillna(0).sum()) for c, col in ETAPAS.items()}
+    info = {"ano": ANO, "arquivo": f"inep/{destino(ANO).name}", "matriculas_publicas_cidade": pub,
+            "matriculas_todas_cidade": tot,
+            "pct_publica": {c: round(100 * pub[c] / tot[c], 1) for c in ETAPAS if tot[c]}}
+    return m.set_index("CO_ENTIDADE")[list(ETAPAS.values())].rename(columns={v: k for k, v in ETAPAS.items()}), info
+
+
 def setores() -> gpd.GeoDataFrame:
     g = gpd.read_file(DATA_RAW / "ibge_censo2022" / "PB_setores_CD2022.gpkg")
     g = g[g["CD_MUN"] == COD_MUNICIPIO]
@@ -431,6 +464,15 @@ def main() -> None:
     pontos = atribuir_bairro(pd.concat([esc, sau], ignore_index=True), bairros, municipio)
     if pontos["id"].duplicated().any():
         raise ValueError("pontos com id repetido")
+    # matrículas de cada escola (ligação pelo código INEP); escolas de atividade complementar/AEE não têm
+    mat_escola, info_mat = matriculas()
+    cod_inep = pontos["id"].str.removeprefix("inep:")
+    eh_escola = pontos["camada"] == "escola"
+    for c in ETAPAS:
+        pontos[c] = np.where(eh_escola, cod_inep.map(mat_escola[c]), np.nan)
+    info_mat["escolas_sem_linha_nos_microdados"] = sorted(pontos.loc[eh_escola & ~cod_inep.isin(mat_escola.index), "id"])
+    info_mat["matriculas_nas_escolas_do_site"] = {c: int(pontos[c].sum()) for c in ETAPAS}
+
     # equipes de Saúde da Família em cada UBS/USF (ligação pelo código CNES)
     esf_unidade, info_esf = equipes_esf()
     cod = pontos["id"].str.removeprefix("cnes:").str.zfill(7)
@@ -483,6 +525,15 @@ def main() -> None:
     info_esf["equipes_em_ubs_fora_dos_bairros"] = int(pontos.loc[pontos.status != STATUS_BAIRRO, "equipes_esf"].sum())
     for c in ["escolas", "ubs_usf", "equipes_esf"]:
         ind[f"{c}_por_10mil"] = (10000 * ind[c] / ind["pop_2022"]).round(2)
+    # matrículas públicas no bairro por 100 crianças/jovens que moram nele (faixas do Censo 2022)
+    mat_bairro = pontos[pontos.status == STATUS_BAIRRO].groupby("cd_bairro")[list(ETAPAS)].sum()
+    ind = ind.join(mat_bairro.reindex(ind.index).fillna(0).astype(int))
+    idades = pd.read_csv(DATA_PROCESSED / "censo_bairros.csv", dtype={"cd_bairro": str}).set_index("cd_bairro")
+    idades = idades[["pop_0a4", "pop_5a9", "pop_10a14", "pop_15a19"]].reindex(ind.index)
+    ind = ind.join(idades)
+    for nome, (mats, faixas) in VAGAS.items():
+        den = ind[faixas].sum(axis=1)
+        ind[f"vagas_{nome}"] = (100 * ind[mats].sum(axis=1) / den.where(den > 0)).round(1)
     ind["area_verde_m2_hab"] = (ind["area_verde_m2"] / ind["pop_2022"]).round(2)
     ind["equipamentos"] = ind["escolas"] + ind["ubs_usf"]
     ind["hab_por_equipamento"] = (ind["pop_2022"] / ind["equipamentos"].replace(0, np.nan)).round(0)
@@ -502,6 +553,9 @@ def main() -> None:
         "escolas_por_10mil": round(10000 * int(ind["escolas"].sum()) / pop_total, 2),
         "ubs_usf_por_10mil": round(10000 * int(ind["ubs_usf"].sum()) / pop_total, 2),
         "equipes_esf_por_10mil": round(10000 * int(ind["equipes_esf"].sum()) / pop_total, 2),
+        # todas as escolas públicas do site (inclui as sem coordenada e fora dos bairros) ÷ crianças dos bairros
+        **{f"vagas_{nome}": round(100 * sum(info_mat["matriculas_nas_escolas_do_site"][m] for m in mats)
+                                  / int(ind[faixas].sum().sum()), 1) for nome, (mats, faixas) in VAGAS.items()},
         "area_verde_m2_hab": round(float(ind["area_verde_m2"].sum()) / pop_total, 2),
         **cidade,
         "indice_acesso_mediana": float(ind["indice_acesso"].median()),
@@ -510,7 +564,7 @@ def main() -> None:
     # --- camadas para o mapa e pontos não atribuídos
     com_geo = pontos[pontos.geometry.notna()].to_crs(CRS_WEB)
     cols = ["id", "camada", "subtipo", "nome", "detalhe", "endereco", "fonte_coordenada", "status", "cd_bairro",
-            "arquivo_origem", "equipes_esf"]
+            "arquivo_origem", "equipes_esf", *ETAPAS]
     if (SAIDA / "pontos_servicos.geojson").exists():
         (SAIDA / "pontos_servicos.geojson").unlink()
     com_geo[cols + ["geometry"]].to_file(SAIDA / "pontos_servicos.geojson", driver="GeoJSON")
@@ -547,6 +601,7 @@ def main() -> None:
         "areas_verdes": info_verde,
         "matas_osm": info_matas,
         "equipes_saude_familia": info_esf,
+        "matriculas": info_mat,
         "sensibilidade_indice": sensibilidade,
         "media_cidade": media,
         "setores": {"total": int(len(st)), "com_moradores": int(len(sc)), "pop_total": int(st["pop"].sum()),

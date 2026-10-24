@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-24T11:55:40Z",
+  "gerado_em": "2026-10-24T12:04:48Z",
   "crs_calculos": "EPSG:31985",
   "funil": {
     "escolas": {
@@ -169,6 +169,35 @@
     "ubs_sem_equipe": 8,
     "equipes_em_ubs_fora_dos_bairros": 4
   },
+  "matriculas": {
+    "ano": 2024,
+    "arquivo": "inep/microdados_censo_escolar_2024.zip",
+    "matriculas_publicas_cidade": {
+      "mat_creche": 9568,
+      "mat_pre": 9205,
+      "mat_fund": 62206,
+      "mat_medio": 19694
+    },
+    "matriculas_todas_cidade": {
+      "mat_creche": 13480,
+      "mat_pre": 16918,
+      "mat_fund": 100355,
+      "mat_medio": 28771
+    },
+    "pct_publica": {
+      "mat_creche": 71.0,
+      "mat_pre": 54.4,
+      "mat_fund": 62.0,
+      "mat_medio": 68.5
+    },
+    "escolas_sem_linha_nos_microdados": [],
+    "matriculas_nas_escolas_do_site": {
+      "mat_creche": 9568,
+      "mat_pre": 9205,
+      "mat_fund": 62206,
+      "mat_medio": 19694
+    }
+  },
   "sensibilidade_indice": [
     {
       "cenario": "pesos iguais (publicado)",
@@ -274,6 +303,9 @@
     "escolas_por_10mil": 3.42,
     "ubs_usf_por_10mil": 1.26,
     "equipes_esf_por_10mil": 2.68,
+    "vagas_infantil_por_100": 36.4,
+    "vagas_fund_por_100": 56.9,
+    "vagas_medio_por_100": 35.2,
     "area_verde_m2_hab": 3.99,
     "dist_escola_m": 380.0,
     "dist_ubs_m": 574.0,
@@ -370,6 +402,13 @@
       "baixado_em": "2026-10-22T18:36:56Z",
       "bytes": 2146634,
       "sha256": "e012a2194e6be3e973b68b95476b5ea0dd09b806fdd03c5b4ceada7dd80b0204"
+    },
+    "inep/microdados_censo_escolar_2024.zip": {
+      "url": "https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_2024.zip",
+      "fonte": "INEP - Microdados do Censo Escolar da Educação Básica",
+      "baixado_em": "2026-10-24T12:03:59Z",
+      "bytes": 33829396,
+      "sha256": "ae29d81d45ddecef59e11eda39788cbfd30dfa1cc71be9d29f23051fc2d640db"
     },
     "osm/escolas.json": {
       "url": "https://api.openstreetmap.org/api/0.6/node/6041727637.json ; https://api.openstreetmap.org/api/0.6/way/749962478/full.json",

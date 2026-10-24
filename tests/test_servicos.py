@@ -243,3 +243,17 @@ def test_equipes_saude_familia(ind, pontos, meta):
     # soma por bairro = equipes das UBS nos bairros
     assert ind["equipes_esf"].sum() == eq["equipes_em_ubs_do_mapa"] - eq["equipes_em_ubs_fora_dos_bairros"]
     assert (ind["equipes_esf_por_10mil"] >= 0).all()
+
+
+def test_matriculas(ind, pontos, meta):
+    mat = meta["matriculas"]
+    esc = pontos[pontos.camada == "escola"]
+    assert pontos.loc[pontos.camada != "escola", "mat_fund"].isna().all()
+    assert mat["escolas_sem_linha_nos_microdados"] == []
+    # as escolas do site são as públicas em funcionamento: as matrículas batem com as públicas da cidade
+    assert mat["matriculas_nas_escolas_do_site"] == mat["matriculas_publicas_cidade"]
+    # por bairro: soma das escolas no bairro
+    em_bairro = esc[esc.status == "bairro"].groupby("cd_bairro")["mat_fund"].sum()
+    assert (ind.set_index("cd_bairro")["mat_fund"].reindex(em_bairro.index) == em_bairro).all()
+    for c in ["vagas_infantil_por_100", "vagas_fund_por_100", "vagas_medio_por_100"]:
+        assert (ind[c].dropna() >= 0).all()
