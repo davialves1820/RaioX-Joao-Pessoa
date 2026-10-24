@@ -11,42 +11,62 @@ import json
 from src.app import dados as dados_bairros
 from src.app import dados_despesas
 from src.app import dados_servicos as d
-from src.app.app import AZUL_SEQ, CENTRO_MAPA, SUPERFICIE, TINTA, TINTA_2, ZOOM_MAPA
+from src.app import tema
+from src.app.app import CENTRO_MAPA, ZOOM_MAPA
 
 fmt_int, fmt_dec = dados_bairros.fmt_int, dados_bairros.fmt_dec
 
-ALTURA_MAPA = 740
-# Cores das camadas (validadas com o validador da skill de dataviz, todos os pares; ver README).
-# O mapa de fundo usa a rampa azul; as camadas usam matizes fora dela.
-COR_CAMADA = {
-    "escolas": "#eda100",
-    "complementares": "#eda100",  # mesma cor, ponto menor e vazado: é escola, mas sem turmas regulares
-    "ubs": "#6250d6",
-    "outras_saude": "#e34948",
-}
-COR_VERDE = "#1baf7a"
-COR_MATA = "#008300"  # mais escuro que o das praças e parques, e com menos opacidade (fica por baixo)
+ALTURA_MAPA = 760
+
+
+def cor_camada(t: dict) -> dict:
+    """Cores das camadas de pontos no tema (validadas com o validador da skill de dataviz; ver README).
+
+    O mapa de fundo usa a rampa azul; as camadas usam matizes fora dela. A camada das escolas
+    complementares tem a mesma cor das escolas, com ponto vazado: é escola, mas sem turmas regulares.
+    """
+    return {"escolas": t["escola"], "complementares": t["escola"], "ubs": t["ubs"], "outras_saude": t["outras_saude"]}
+
+
+COR_CAMADA = cor_camada(tema.CLARO)
+# Matas: verde mais escuro que o das praças e parques, e com menos opacidade (fica por baixo)
 CREDITO_OSM = "Matas e áreas protegidas: © colaboradores do OpenStreetMap (ODbL)."
 TAMANHO = {"escolas": 9, "complementares": 10, "ubs": 10, "outras_saude": 10}
 
 INDICADORES = {
-    "indice_acesso": "Índice de acesso",
-    "dist_escola_m": "Até a escola",
-    "dist_ubs_m": "Até a UBS/USF",
-    "dist_escola_rede_m": "Até a escola, pelas ruas",
-    "dist_ubs_rede_m": "Até a UBS/USF, pelas ruas",
+    "indice_acesso": "Índice de acesso (0 a 100)",
+    "dist_escola_m": "Distância · até a escola, em linha reta",
+    "dist_escola_rede_m": "Distância · até a escola, pelas ruas",
+    "dist_ubs_m": "Distância · até a UBS/USF, em linha reta",
+    "dist_ubs_rede_m": "Distância · até a UBS/USF, pelas ruas",
+    "equipes_esf_por_10mil": "Saúde · equipes de Saúde da Família por 10 mil hab.",
+    "vagas_infantil_por_100": "Educação · matrículas na educação infantil por criança",
+    "vagas_fund_por_100": "Educação · matrículas no fundamental por criança",
+    "vagas_medio_por_100": "Educação · matrículas no médio por jovem",
+    "hab_por_equipamento": "Moradores por escola ou UBS/USF",
     "area_verde_m2_hab": "Área verde por morador",
-    "hab_por_equipamento": "Moradores por escola ou UBS",
-    "equipes_esf_por_10mil": "Equipes de Saúde da Família",
-    "vagas_infantil_por_100": "Educação infantil por criança",
-    "vagas_fund_por_100": "Fundamental por criança",
-    "vagas_medio_por_100": "Médio por jovem",
+}
+# título e formato das marcas da escala de cor
+ESCALA = {
+    "indice_acesso": ("índice", fmt_int),
+    "dist_escola_m": ("m", fmt_int), "dist_ubs_m": ("m", fmt_int),
+    "dist_escola_rede_m": ("m", fmt_int), "dist_ubs_rede_m": ("m", fmt_int),
+    "area_verde_m2_hab": ("m²/hab", lambda v: fmt_dec(v, 1)),
+    "hab_por_equipamento": ("hab.", fmt_int),
+    "equipes_esf_por_10mil": ("por 10 mil", lambda v: fmt_dec(v, 1)),
+    "vagas_infantil_por_100": ("por 100", fmt_int),
+    "vagas_fund_por_100": ("por 100", fmt_int),
+    "vagas_medio_por_100": ("por 100", fmt_int),
+}
+ROTULO_CAMADA = {
+    "escolas": "Escolas", "complementares": "Escolas complementares/AEE", "ubs": "UBS/USF",
+    "outras_saude": "Policlínicas, UPAs e hospitais", "verde": "Praças e parques", "matas": "Matas",
 }
 # indicadores cuja escala de cor satura no percentil 90 (há valores extremos)
 SATURA_P90 = {"area_verde_m2_hab", "vagas_infantil_por_100", "vagas_fund_por_100", "vagas_medio_por_100"}
 LEGENDA_INDICADOR = {
     "indice_acesso": "Quanto mais escuro, melhor a posição do bairro nos três componentes do índice "
-                     "(fórmula mais abaixo).",
+                     "(fórmula na aba «Índice de acesso», abaixo do mapa).",
     "dist_escola_m": "Distância média, em linha reta, de quem mora no bairro até a escola pública mais "
                      "próxima (ponderada pela população dos setores censitários). Mais escuro = mais longe.",
     "dist_ubs_m": "Distância média, em linha reta, de quem mora no bairro até a UBS/USF mais próxima "
@@ -119,41 +139,48 @@ def _hover_ponto(p: pd.DataFrame) -> pd.Series:
 
 def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verde: bool,
                 selecionado: str | None, matas: bool = False, comparado: str | None = None,
-                celular: bool = False) -> go.Figure:
+                celular: bool = False, t: dict | None = None) -> go.Figure:
+    t = t or tema.CLARO
+    cores = cor_camada(t)
     aj = dados_bairros.ajuste_mapa(celular, ALTURA_MAPA, ZOOM_MAPA)
     ind = dados["ind"].assign(hover=lambda x: _hover_bairro(x))
     fig = go.Figure()
     com_camadas = bool(camadas) or verde or matas
     comum = dict(geojson=geo, featureidkey="properties.cd_bairro", hovertemplate="%{hovertext}<extra></extra>",
-                 marker_line_color=SUPERFICIE, marker_line_width=1)
-    barra = dict(**aj["barra"], outlinewidth=0, tickfont=dict(color=TINTA_2), bgcolor="rgba(252,252,251,0.85)",
-                 xpad=10, ypad=10, tickformat=",.0f")
-    escala = [[i / (len(AZUL_SEQ) - 1), c] for i, c in enumerate(AZUL_SEQ)]
+                 marker_line_color=t["superficie"], marker_line_width=1)
 
     base = ind[ind[indicador].notna()]
     z = base[indicador]
-    zmax = None
+    zmax = float(z.max())
+    titulo, fmt = ESCALA[indicador]
+    valores = rotulos = None
     if indicador in SATURA_P90:
         zmax = float(z.quantile(0.9))
         z = z.clip(upper=zmax)
-        barra["tickformat"] = ",.1f" if indicador == "area_verde_m2_hab" else ",.0f"
+        # a última marca é o próprio limite, com "≥": acima dele a cor não muda
+        valores = tema.marcas(0, zmax)
+        if len(valores) > 1 and zmax - valores[-1] < 0.35 * (valores[1] - valores[0]):
+            valores = valores[:-1]
+        valores = valores + [zmax]
+        rotulos = {zmax: "≥ " + fmt(zmax)}
+    barra = tema.barra_de_cor(aj, t, 0, zmax, fmt, titulo, rotulos, valores)
     fig.add_trace(go.Choroplethmap(
-        locations=base.cd_bairro, z=z, hovertext=base.hover, colorscale=escala, zmin=0, zmax=zmax,
+        locations=base.cd_bairro, z=z, hovertext=base.hover, colorscale=tema.escala(t), zmin=0, zmax=zmax,
         colorbar=barra, marker_opacity=0.45 if com_camadas else 0.85, showlegend=False, **comum,
     ))
     sem = ind[ind[indicador].isna()]
     if len(sem):
         fig.add_trace(go.Choroplethmap(
             locations=sem.cd_bairro, z=[0] * len(sem), hovertext=sem.hover,
-            colorscale=[[0, "rgba(252,252,251,0.6)"], [1, "rgba(252,252,251,0.6)"]], showscale=False,
-            showlegend=False, **{**comum, "marker_line_color": TINTA_2, "marker_line_width": 1.5},
+            colorscale=[[0, t["vazio"]], [1, t["vazio"]]], showscale=False,
+            showlegend=False, **{**comum, "marker_line_color": t["tinta_2"], "marker_line_width": 1.5},
         ))
 
     if matas:
         feats = dados["matas"]["features"]
         fig.add_trace(go.Choroplethmap(
             geojson=dados["matas"], locations=[f["id"] for f in feats], z=[1] * len(feats),
-            colorscale=[[0, COR_MATA], [1, COR_MATA]], showscale=False, marker_opacity=0.4,
+            colorscale=[[0, t["mata"]], [1, t["mata"]]], showscale=False, marker_opacity=0.4,
             marker_line_width=0, name="Matas e áreas protegidas (OpenStreetMap)", showlegend=True,
             hovertext=[f"<b>{f['properties']['nome'] or 'Sem nome no OpenStreetMap'}</b><br>{f['properties']['tipo']} · "
                        f"{fmt_dec(f['properties']['area_m2'] / 1e4, 1)} ha<br>Fonte: OpenStreetMap ({f['properties']['osm']})"
@@ -165,7 +192,7 @@ def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verd
         feats = dados["verdes"]["features"]
         fig.add_trace(go.Choroplethmap(
             geojson=dados["verdes"], locations=[f["id"] for f in feats], z=[1] * len(feats),
-            colorscale=[[0, COR_VERDE], [1, COR_VERDE]], showscale=False, marker_opacity=0.75,
+            colorscale=[[0, t["verde"]], [1, t["verde"]]], showscale=False, marker_opacity=0.75,
             marker_line_width=0, name="Praças e parques", showlegend=True,
             hovertext=[f"<b>{f['properties']['nome'] or 'Sem nome'}</b><br>{f['properties']['tipo']} · "
                        f"{fmt_dec(f['properties']['area_m2'] / 1e4, 2)} ha" for f in feats],
@@ -180,38 +207,31 @@ def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verd
         tam = TAMANHO[camada]
         # anel claro de 2 px em volta do ponto, para separá-lo do fundo e dos vizinhos
         fig.add_trace(go.Scattermap(lat=p.lat, lon=p.lon, mode="markers", hoverinfo="skip", showlegend=False,
-                                    marker=dict(size=tam + 4, color=SUPERFICIE)))
+                                    marker=dict(size=tam + 4, color=t["superficie"])))
         fig.add_trace(go.Scattermap(
             lat=p.lat, lon=p.lon, mode="markers", name=f"{d.CAMADAS[camada]} ({len(p)})",
-            marker=dict(size=tam, color=COR_CAMADA[camada]),
+            marker=dict(size=tam, color=cores[camada]),
             hovertext=_hover_ponto(p), hovertemplate="%{hovertext}<extra></extra>",
         ))
         if camada == "complementares":
             # miolo claro: ponto "vazado", diferente da escola regular além da cor
             fig.add_trace(go.Scattermap(lat=p.lat, lon=p.lon, mode="markers", hoverinfo="skip", showlegend=False,
-                                        marker=dict(size=tam - 5, color=SUPERFICIE)))
+                                        marker=dict(size=tam - 5, color=t["superficie"])))
 
     if comparado and comparado != selecionado:
         fig.add_trace(go.Choroplethmap(
             locations=[comparado], z=[0], colorscale=[[0, "rgba(0,0,0,0)"], [1, "rgba(0,0,0,0)"]],
             showscale=False, showlegend=False, hoverinfo="skip", geojson=geo, featureidkey="properties.cd_bairro",
-            marker_line_color=TINTA_2, marker_line_width=3,
+            marker_line_color=t["tinta_2"], marker_line_width=3,
         ))
     if selecionado:
         fig.add_trace(go.Choroplethmap(
             locations=[selecionado], z=[0], colorscale=[[0, "rgba(0,0,0,0)"], [1, "rgba(0,0,0,0)"]],
             showscale=False, showlegend=False, hoverinfo="skip", geojson=geo, featureidkey="properties.cd_bairro",
-            marker_line_color=TINTA, marker_line_width=3,
+            marker_line_color=t["tinta"], marker_line_width=3,
         ))
 
-    fig.update_layout(
-        map=dict(style="carto-positron", center=CENTRO_MAPA, zoom=aj["zoom"]),
-        margin=dict(l=0, r=0, t=0, b=0), height=aj["altura"], separators=",.",
-        legend=dict(x=0.015, y=0.97, xanchor="left", yanchor="top", bgcolor="rgba(252,252,251,0.9)",
-                    font_size=10 if celular else None,
-                    font=dict(color=TINTA), borderwidth=0),
-    )
-    return fig
+    return tema.layout_mapa(fig, t, aj, CENTRO_MAPA, legenda=True, celular=celular)
 
 
 def _metrica(col, rotulo: str, valor, media, unidade: str, distancia: bool, casas: int = 0, ajuda: str = ""):
@@ -233,32 +253,36 @@ def painel_bairro(dados: dict, cd: str) -> None:
     r = ind.set_index("cd_bairro").loc[cd]
     comp = d.componentes_indice(ind).set_index("cd_bairro").loc[cd]
     st.subheader(r.nm_bairro)
+    st.caption(f"{fmt_int(r.pop_2022)} moradores (2022). Etiquetas: comparação com a média da cidade "
+               "(verde = melhor que a média, vermelho = pior).")
 
-    c1, c2 = st.columns(2)
-    c1.metric("Índice de acesso", fmt_dec(r.indice_acesso),
-              help="0 a 100, relativo aos 64 bairros. Fórmula na seção 'Como o índice é calculado'.")
-    c2.metric("Moradores (2022)", fmt_int(r.pop_2022))
-    st.caption("Etiquetas: comparação com a média da cidade (verde = melhor que a média, vermelho = pior).")
-    c1, c2 = st.columns(2)
-    _metrica(c1, "Até a escola", r.dist_escola_m, media["dist_escola_m"], " m", True,
-             ajuda=f"Distância média em linha reta, ponderada pela população. Pelas ruas: {fmt_int(r.dist_escola_rede_m)} m "
-                   f"(média da cidade: {fmt_int(media['dist_escola_rede_m'])} m).")
-    _metrica(c2, "Até a UBS/USF", r.dist_ubs_m, media["dist_ubs_m"], " m", True,
-             ajuda=f"Distância média em linha reta, ponderada pela população. Pelas ruas: {fmt_int(r.dist_ubs_rede_m)} m "
-                   f"(média da cidade: {fmt_int(media['dist_ubs_rede_m'])} m).")
-    _metrica(c1, "Até a escola, pelas ruas", r.dist_escola_rede_m, media["dist_escola_rede_m"], " m", True,
-             ajuda="Caminho a pé pelas ruas e caminhos do OpenStreetMap, ponderado pela população.")
-    _metrica(c2, "Até a UBS/USF, pelas ruas", r.dist_ubs_rede_m, media["dist_ubs_rede_m"], " m", True,
-             ajuda="Caminho a pé pelas ruas e caminhos do OpenStreetMap, ponderado pela população.")
-    _metrica(c1, "Escolas por 10 mil hab.", r.escolas_por_10mil, media["escolas_por_10mil"], "", False, 2)
-    _metrica(c2, "UBS/USF por 10 mil hab.", r.ubs_usf_por_10mil, media["ubs_usf_por_10mil"], "", False, 2)
-    _metrica(c2, "eSF por 10 mil hab.", r.equipes_esf_por_10mil,
-             media["equipes_esf_por_10mil"], "", False, 2,
-             ajuda=f"eSF = equipes de Saúde da Família. No bairro: {fmt_int(r.equipes_esf)} equipes ativas no CNES "
-                   "nas UBS/USF do bairro. Uma equipe atende uma área de abrangência, que pode incluir outros bairros.")
-    _metrica(c1, "Área verde", r.area_verde_m2_hab, media["area_verde_m2_hab"], " m²/hab", False, 1)
-
-    st.markdown(
+    with st.container(border=True):
+        c1, c2 = st.columns(2)
+        c1.metric("Índice de acesso", fmt_dec(r.indice_acesso),
+                  help=f"0 a 100, relativo aos 64 bairros (fórmula na aba «Índice de acesso»). Componentes: escola "
+                       f"{fmt_dec(comp.p_escola)}, UBS/USF {fmt_dec(comp.p_ubs)}, área verde {fmt_dec(comp.p_verde)}.")
+        _metrica(c2, "Área verde", r.area_verde_m2_hab, media["area_verde_m2_hab"], " m²/hab", False, 1,
+                 ajuda="Praças e parques do cadastro da Prefeitura dentro do bairro, por morador.")
+    with st.container(border=True):
+        st.markdown('<p class="rx-kicker">Até o serviço mais próximo</p>', unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        _metrica(c1, "Escola, em linha reta", r.dist_escola_m, media["dist_escola_m"], " m", True,
+                 ajuda="Distância média em linha reta de quem mora no bairro, ponderada pela população.")
+        _metrica(c2, "Escola, pelas ruas", r.dist_escola_rede_m, media["dist_escola_rede_m"], " m", True,
+                 ajuda="Caminho a pé pelas ruas e caminhos do OpenStreetMap, ponderado pela população.")
+        _metrica(c1, "UBS/USF, em linha reta", r.dist_ubs_m, media["dist_ubs_m"], " m", True,
+                 ajuda="Distância média em linha reta de quem mora no bairro, ponderada pela população.")
+        _metrica(c2, "UBS/USF, pelas ruas", r.dist_ubs_rede_m, media["dist_ubs_rede_m"], " m", True,
+                 ajuda="Caminho a pé pelas ruas e caminhos do OpenStreetMap, ponderado pela população.")
+    with st.container(border=True):
+        st.markdown('<p class="rx-kicker">Por 10 mil moradores</p>', unsafe_allow_html=True)
+        c1, c2, c3 = st.columns(3)
+        _metrica(c1, "Escolas", r.escolas_por_10mil, media["escolas_por_10mil"], "", False, 2)
+        _metrica(c2, "UBS/USF", r.ubs_usf_por_10mil, media["ubs_usf_por_10mil"], "", False, 2)
+        _metrica(c3, "eSF", r.equipes_esf_por_10mil, media["equipes_esf_por_10mil"], "", False, 2,
+                 ajuda=f"eSF = equipes de Saúde da Família. No bairro: {fmt_int(r.equipes_esf)} equipes ativas no CNES "
+                       "nas UBS/USF do bairro. Uma equipe atende uma área de abrangência, que pode incluir outros bairros.")
+    st.caption(
         f"**No bairro:** {_n(r.escolas, 'escola pública', 'escolas públicas')}, {_n(r.ubs_usf, 'UBS/USF', 'UBS/USF')}, "
         f"{_n(r.policlinicas, 'policlínica', 'policlínicas')}, {_n(r.upas, 'UPA', 'UPAs')}, "
         f"{_n(r.hospitais, 'hospital', 'hospitais')}, {_n(r.pracas, 'praça', 'praças')} e "
@@ -267,11 +291,6 @@ def painel_bairro(dados: dict, cd: str) -> None:
     if r.sem_escola_nem_ubs:
         st.info("Não há escola pública regular nem UBS/USF dentro do bairro. A distância mostra o quanto "
                 "os moradores andam até a mais próxima, em outro bairro.", icon="ℹ️")
-    st.caption(
-        f"Componentes do índice: escola {fmt_dec(comp.p_escola)}, UBS/USF {fmt_dec(comp.p_ubs)}, "
-        f"área verde {fmt_dec(comp.p_verde)}. Do centro geométrico do bairro, a escola mais próxima fica a "
-        f"{fmt_int(r.dist_escola_centroide_m)} m e a UBS/USF a {fmt_int(r.dist_ubs_centroide_m)} m."
-    )
 
     lista = d.servicos_do_bairro(dados["pontos"], cd)
     with st.expander(f"Serviços no bairro ({len(lista)})"):
@@ -280,26 +299,30 @@ def painel_bairro(dados: dict, cd: str) -> None:
         else:
             st.dataframe(lista[["nome", "subtipo", "detalhe", "endereco"]], hide_index=True, width="stretch",
                          column_config={"nome": "Nome", "subtipo": "Tipo", "detalhe": "Rede", "endereco": "Endereço"})
-        st.caption("Escolas: INEP, Catálogo de Escolas. Saúde: CNES. Código IBGE do bairro: " + cd + ".")
+        st.caption(f"Do centro geométrico do bairro, a escola mais próxima fica a {fmt_int(r.dist_escola_centroide_m)} m "
+                   f"e a UBS/USF a {fmt_int(r.dist_ubs_centroide_m)} m. Escolas: INEP, Catálogo de Escolas. "
+                   f"Saúde: CNES. Código IBGE do bairro: {cd}.")
 
 
-def figura_ranking(df: pd.DataFrame) -> go.Figure:
+def figura_ranking(df: pd.DataFrame, t: dict | None = None) -> go.Figure:
+    t = t or tema.CLARO
     hover = df.apply(lambda r: f"<b>{r.nm_bairro}</b><br>{fmt_int(r.pop_2022)} moradores<br>"
                                f"{fmt_int(r.escolas)} escolas · {fmt_int(r.ubs_usf)} UBS/USF", axis=1)
     fig = go.Figure(go.Bar(
         x=df.hab_por_equipamento, y=df.nm_bairro, orientation="h",
-        marker=dict(color=AZUL_SEQ[4], cornerradius=4), text=df.hab_por_equipamento.map(fmt_int),
-        textposition="outside", cliponaxis=False, hovertext=hover, hovertemplate="%{hovertext}<extra></extra>",
+        marker=dict(color=t["azul"], cornerradius=4), text=df.hab_por_equipamento.map(fmt_int),
+        textposition="outside", textfont=dict(color=t["tinta"]), cliponaxis=False, hovertext=hover, hovertemplate="%{hovertext}<extra></extra>",
     ))
     fig.update_layout(height=36 * max(len(df), 1) + 40, margin=dict(l=0, r=60, t=10, b=10), bargap=0.35,
                       yaxis=dict(autorange="reversed", showgrid=False), xaxis=dict(visible=False),
                       separators=",.", showlegend=False)
+    tema.layout_grafico(fig, t)
+    fig.update_yaxes(tickfont=dict(color=t["tinta"]))
     return fig
 
 
 def secao_ranking(dados: dict) -> None:
     ind, meta = dados["ind"], dados["meta"]
-    st.header("Bairros com mais gente e menos serviços")
     st.caption(
         f"Moradores para cada escola pública regular ou UBS/USF dentro do bairro. Só bairros com pelo menos "
         f"{fmt_int(meta['pop_min_ranking'])} moradores. A média da cidade é de "
@@ -308,7 +331,7 @@ def secao_ranking(dados: dict) -> None:
     g1, g2 = st.columns([3, 2], gap="large")
     with g1:
         n = st.select_slider("Quantos bairros", options=[5, 10, 15], value=10)
-        st.plotly_chart(figura_ranking(d.ranking_menos_servicos(ind, n)), config={"displayModeBar": False})
+        st.plotly_chart(figura_ranking(d.ranking_menos_servicos(ind, n), tema.atual()), config={"displayModeBar": False})
     with g2:
         sem = d.sem_escola_nem_ubs(ind)
         st.subheader(f"Sem escola pública nem UBS/USF ({len(sem)})")
@@ -325,7 +348,6 @@ def secao_ranking(dados: dict) -> None:
 
 def secao_indice(dados: dict) -> None:
     ind = dados["ind"]
-    st.header("Como o índice de acesso é calculado")
     st.markdown(
         "O índice é a **média simples de três posições**, cada uma de 0 a 100, entre os 64 bairros:"
     )
@@ -464,7 +486,6 @@ EIXOS_RENDA = {
 def secao_vagas(dados: dict) -> None:
     ind, meta = dados["ind"], dados["meta"]
     mat, media = meta["matriculas"], meta["media_cidade"]
-    st.header("Matrículas nas escolas públicas e crianças do bairro")
     st.caption(
         f"Matrículas do Censo Escolar {mat['ano']} (INEP) nas escolas públicas de cada bairro, comparadas com as "
         "crianças e jovens que moram nele (Censo 2022). As faixas de idade do IBGE são de 5 em 5 anos e não "
@@ -482,12 +503,11 @@ def secao_vagas(dados: dict) -> None:
     c3.metric("Médio, por 100 jovens de 15 a 19 anos", fmt_dec(media["vagas_medio_por_100"], 1),
               help=f"{fmt_dec(pp['mat_medio'], 0)}% das matrículas no médio da cidade são em escola pública.")
     st.caption("Números da cidade: todas as escolas públicas (também as sem coordenada e as fora dos bairros) ÷ crianças "
-               "dos 64 bairros. Para ver cada bairro, escolha a etapa em «Cor dos bairros», no mapa.")
+               "dos 64 bairros. Para ver cada bairro, escolha a etapa em «Cor do mapa», acima do mapa.")
 
 
 def secao_renda(dados: dict) -> None:
     ind = dados["ind"]
-    st.header("Renda e acesso, bairro a bairro")
     st.caption(
         "Cada ponto é um bairro. Renda: rendimento mensal mediano das pessoas responsáveis pelo domicílio que têm "
         "rendimento (Censo 2022, R$ de 2022). Os serviços contados são só os públicos e do SUS; bairros de renda "
@@ -495,20 +515,22 @@ def secao_renda(dados: dict) -> None:
     )
     eixo = st.selectbox("Comparar a renda com", list(EIXOS_RENDA), format_func=lambda k: EIXOS_RENDA[k][0])
     rotulo, casas = EIXOS_RENDA[eixo]
+    t = tema.atual()
     base = ind[ind.renda_mediana.notna() & ind[eixo].notna()]
     corr = d.correlacao_spearman(base.renda_mediana, base[eixo])
     fmtv = (lambda v: fmt_int(round(v))) if casas == 0 else (lambda v: fmt_dec(v, casas))
     fig = go.Figure(go.Scatter(
         x=base.renda_mediana, y=base[eixo], mode="markers",
-        marker=dict(size=10, color=AZUL_SEQ[4], line=dict(color=SUPERFICIE, width=2)),
+        marker=dict(size=10, color=t["azul"], line=dict(color=t["superficie"], width=2)),
         hovertext=[f"<b>{n}</b><br>Renda mediana: {dados_bairros.fmt_reais(x)}<br>{rotulo}: {fmtv(y)}"
                    for n, x, y in zip(base.nm_bairro, base.renda_mediana, base[eixo])],
         hovertemplate="%{hovertext}<extra></extra>",
     ))
     fig.update_layout(height=420, margin=dict(l=0, r=10, t=10, b=0), separators=",.", showlegend=False,
                       plot_bgcolor="rgba(0,0,0,0)",
-                      xaxis=dict(title="Renda mediana do responsável (R$, 2022)", gridcolor="#e7e6e2", tickformat=",.0f"),
-                      yaxis=dict(title=rotulo, gridcolor="#e7e6e2", tickformat=",~r"))
+                      xaxis=dict(title="Renda mediana do responsável (R$, 2022)", tickformat=",.0f"),
+                      yaxis=dict(title=rotulo, tickformat=",~r"))
+    tema.layout_grafico(fig, t)
     st.plotly_chart(fig, config={"displayModeBar": False})
     corr_txt = ("−" if corr < 0 else "") + fmt_dec(abs(corr), 2)
     st.markdown(
@@ -527,7 +549,6 @@ def secao_gasto() -> None:
     g, meta = _gasto_saude_educacao()
     ano = int(g.index.max())
     ultimo = g.loc[ano]
-    st.header("Quanto a Prefeitura gasta em saúde e educação")
     ano_ref, mes_ref = meta["ipca"]["mes_referencia"].split("-")
     st.caption(
         f"Valor empenhado pelos órgãos municipais nas funções Saúde e Educação, declarado ao TCE-PB, corrigido pelo "
@@ -539,23 +560,26 @@ def secao_gasto() -> None:
     c2.metric("Por habitante", dados_bairros.fmt_reais(ultimo["Saúde por habitante"]))
     c3.metric(f"Educação em {ano}", dados_despesas.fmt_reais(ultimo["Educação"]))
     c4.metric("Por habitante", dados_bairros.fmt_reais(ultimo["Educação por habitante"]))
+    t = tema.atual()
+    cores = cor_camada(t)
     fig = go.Figure()
-    for funcao, cor in [("Saúde", COR_CAMADA["ubs"]), ("Educação", COR_CAMADA["escolas"])]:
+    for funcao, cor in [("Saúde", cores["ubs"]), ("Educação", cores["escolas"])]:
         # anos sem valor (2016 incompleto, 2023 sem população) ficam como lacuna na linha
         serie = g[f"{funcao} por habitante"].reindex(range(int(g.index.min()), ano + 1))
         fig.add_trace(go.Scatter(
             x=serie.index, y=serie.values, mode="lines+markers", name=funcao, line=dict(color=cor, width=2),
             connectgaps=False,
-            marker=dict(size=8, color=cor, line=dict(color=SUPERFICIE, width=2)),
+            marker=dict(size=8, color=cor, line=dict(color=t["superficie"], width=2)),
             hovertext=[f"<b>{funcao} {a}</b><br>{dados_bairros.fmt_reais(v)} por habitante" for a, v in serie.items()],
             hovertemplate="%{hovertext}<extra></extra>",
         ))
         fig.add_annotation(x=ano, y=serie.loc[ano], text=funcao, showarrow=False, xanchor="left",
-                           xshift=10, font=dict(color=TINTA))
+                           xshift=10, font=dict(color=t["tinta"]))
     fig.update_layout(height=320, margin=dict(l=0, r=70, t=10, b=0), separators=",.", showlegend=True,
                       legend=dict(orientation="h", y=1.08, x=0), plot_bgcolor="rgba(0,0,0,0)",
-                      yaxis=dict(title="R$ por habitante", gridcolor="#e7e6e2", tickformat=",.0f"),
+                      yaxis=dict(title="R$ por habitante", tickformat=",.0f"),
                       xaxis=dict(showgrid=False, dtick=2))
+    tema.layout_grafico(fig, t)
     st.plotly_chart(fig, config={"displayModeBar": False})
     st.caption("Só anos completos: sem ponto em 2016 (incompleto no TCE-PB) e no ano em andamento (parcial). Sem "
                "ponto em 2023: o IBGE não publicou estimativa de população para esse ano.")
@@ -568,7 +592,6 @@ def secao_fontes(dados: dict) -> None:
     eq = meta["equipes_saude_familia"]
     dr = meta["distancia_rede"]
     se, ss = _status_total(meta, "escola"), _status_total(meta, "saude")
-    st.header("Fontes e limitações")
     st.caption("Tudo o que está nesta página sai das fontes abaixo. Os números de contagem e de distância são "
                "calculados a partir delas; nada foi estimado ou preenchido à mão.")
 
@@ -683,17 +706,21 @@ def secao_comparacao(dados: dict, a: str, b: str) -> None:
 def main() -> None:
     dados, geo = _carregar()
     ind = dados["ind"]
-    st.markdown("<style>.block-container{padding-top:2rem}</style>", unsafe_allow_html=True)
-    st.title("Serviços públicos e acesso")
-    st.caption(
+    t = tema.atual()
+    tema.preparar_pagina(t)
+    tema.cabecalho(
+        "Serviços públicos e acesso",
         "Escolas públicas, unidades de saúde do SUS, praças e parques nos 64 bairros. Ligue e desligue as "
-        "camadas, passe o mouse sobre um ponto para ver o nome e clique num bairro para ver o detalhe."
+        "camadas, passe o mouse sobre um ponto para ver o nome e clique num bairro para ver o detalhe.",
     )
-    st.info(
-        "Só escolas públicas e unidades do SUS; distâncias em linha reta e pelas ruas (OpenStreetMap); área verde só de praças e parques do "
-        "cadastro da Prefeitura (matas aparecem no mapa, mas fora do índice). Fontes, datas e todas as limitações na seção **Fontes e limitações**, no fim da página.",
-        icon="ℹ️",
-    )
+    celular = dados_bairros.eh_celular(st.context.headers.get("User-Agent"))
+    aviso = ("Só escolas públicas e unidades do SUS; distâncias em linha reta e pelas ruas (OpenStreetMap); área verde "
+             "só de praças e parques do cadastro da Prefeitura (matas aparecem no mapa, mas fora do índice). Fontes, "
+             "datas e todas as limitações na aba **Fontes e limitações**, abaixo do mapa.")
+    if celular:  # no celular, o aviso em caixa ocupava a primeira tela inteira
+        st.caption("ℹ️ " + aviso)
+    else:
+        st.info(aviso, icon="ℹ️")
 
     nomes = ind.sort_values("nm_bairro").set_index("cd_bairro").nm_bairro
     # Bairro e comparação vêm do link (?bairro=mangabeira&comparar=bessa) na primeira carga da página
@@ -705,18 +732,18 @@ def main() -> None:
 
     col_mapa, col_det = st.columns([7, 3], gap="medium")
     with col_mapa:
-        indicador = st.radio("Cor dos bairros", list(INDICADORES), format_func=INDICADORES.get, horizontal=True)
+        indicador = st.selectbox("Cor do mapa", list(INDICADORES), format_func=INDICADORES.get)
         opcoes = list(d.CAMADAS) + ["verde", "matas"]
-        rotulos = {**d.CAMADAS, "verde": "Praças e parques", "matas": "Matas e áreas protegidas"}
-        ligadas = st.pills("Camadas", opcoes, format_func=rotulos.get, selection_mode="multi",
+        ligadas = st.pills("Camadas", opcoes, format_func=ROTULO_CAMADA.get, selection_mode="multi",
                            default=["escolas", "ubs"])
         evento = st.plotly_chart(
             figura_mapa(dados, geo, indicador, [c for c in ligadas if c in d.CAMADAS], "verde" in ligadas,
                         st.session_state.bairro_servicos, matas="matas" in ligadas,
                         comparado=st.session_state.comparar_servicos,
-                        celular=dados_bairros.eh_celular(st.context.headers.get("User-Agent"))),
+                        celular=celular, t=t),
             on_select="rerun", selection_mode="points", key="mapa_servicos",
-            config={"scrollZoom": True, "displaylogo": False},
+            config={"scrollZoom": True, "displaylogo": False,
+                    "modeBarButtonsToRemove": ["select2d", "lasso2d"]},
         )
         pontos = (evento or {}).get("selection", {}).get("points", []) if evento else []
         clicado = next((p.get("location") for p in pontos if p.get("location") in nomes.index), None)
@@ -724,7 +751,8 @@ def main() -> None:
             st.session_state.ultimo_clique_servicos = clicado
             st.session_state.bairro_servicos = clicado
             st.rerun()
-        st.caption(LEGENDA_INDICADOR[indicador] + (" " + CREDITO_OSM if "matas" in ligadas else ""))
+        st.caption(tema.texto(LEGENDA_INDICADOR[indicador], t) + (" " + CREDITO_OSM if "matas" in ligadas else "")
+                   + " Clique num item da legenda para esconder ou mostrar a camada.")
 
     with col_det:
         st.selectbox("Bairro", nomes.index, format_func=nomes.get, key="bairro_servicos")
@@ -737,18 +765,26 @@ def main() -> None:
     if st.session_state.comparar_servicos and st.session_state.comparar_servicos != st.session_state.bairro_servicos:
         secao_comparacao(dados, st.session_state.bairro_servicos, st.session_state.comparar_servicos)
 
-    st.divider()
     media = dados["meta"]["media_cidade"]
-    k1, k2, k3, k4 = st.columns(4)
-    k1.metric("Escolas públicas", fmt_int(dados["meta"]["total_fonte_filtrada"]["escola"]))
-    k2.metric("Unidades de saúde do SUS", fmt_int(dados["meta"]["total_fonte_filtrada"]["saude"]))
-    k3.metric("Distância média até a escola", f"{fmt_int(media['dist_escola_m'])} m")
-    k4.metric("Distância média até a UBS/USF", f"{fmt_int(media['dist_ubs_m'])} m")
+    with st.container(border=True):
+        k1, k2, k3, k4 = st.columns(4)
+        k1.metric("Escolas públicas", fmt_int(dados["meta"]["total_fonte_filtrada"]["escola"]))
+        k2.metric("Unidades de saúde do SUS", fmt_int(dados["meta"]["total_fonte_filtrada"]["saude"]))
+        k3.metric("Distância média até a escola", f"{fmt_int(media['dist_escola_m'])} m")
+        k4.metric("Distância média até a UBS/USF", f"{fmt_int(media['dist_ubs_m'])} m")
 
-    secao_ranking(dados)
-    secao_indice(dados)
-    secao_vagas(dados)
-    secao_renda(dados)
-    secao_gasto()
-    secao_fontes(dados)
+    abas = st.tabs(["Mais gente, menos serviços", "Índice de acesso", "Matrículas", "Renda e acesso",
+                    "Gasto em saúde e educação", "Fontes e limitações"])
+    with abas[0]:
+        secao_ranking(dados)
+    with abas[1]:
+        secao_indice(dados)
+    with abas[2]:
+        secao_vagas(dados)
+    with abas[3]:
+        secao_renda(dados)
+    with abas[4]:
+        secao_gasto()
+    with abas[5]:
+        secao_fontes(dados)
     st.caption("Dados: INEP, Ministério da Saúde (CNES), Prefeitura de João Pessoa (Filipeia), OpenStreetMap e IBGE (Censo 2022).")

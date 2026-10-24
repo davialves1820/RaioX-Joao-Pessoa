@@ -155,6 +155,13 @@ def fmt_reais(v) -> str:
     return ("−" if v < 0 else "") + "R$ " + fmt_dec(abs(float(v)), 2)
 
 
+def fmt_renda(v) -> str:
+    """Renda em R$, com centavos só quando o valor tem centavos: 'R$ 1.300', 'R$ 6.598,50'."""
+    if pd.isna(v):
+        return "—"
+    return "R$ " + (fmt_int(v) if float(v).is_integer() else fmt_dec(v, 2))
+
+
 def tabela_br(df: pd.DataFrame, inteiros=(), decimais: dict | None = None, pct: dict | None = None,
               pct_sinal: dict | None = None, reais=(), variacao_int=()):
     """Mostra os números no padrão brasileiro (14.226; 12,8) sem transformá-los em texto.

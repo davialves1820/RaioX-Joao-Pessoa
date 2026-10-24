@@ -87,6 +87,41 @@ celulares. Neles, os mapas ficam mais baixos (460 px), com zoom menor para a cid
 largura, e a escala de cor fica deitada no rodapé do mapa. As colunas empilham sozinhas, e a página não
 rola na horizontal (conferido a 390 px de largura); só as tabelas largas rolam dentro delas.
 
+### Modo claro e escuro
+
+O site segue o tema do sistema (claro ou escuro); no menu ⋮, no canto superior direito, dá para
+escolher **Claro** ou **Escuro**. Mapas e gráficos trocam de cor junto: no escuro, o mapa de fundo é o
+CARTO *Dark Matter* e as cores vêm da mesma paleta, em tons escolhidos para o fundo escuro
+(`src/app/tema.py`), e não de uma inversão automática.
+
+- **Escala sequencial (azul):** no claro vai do azul-claro (pouco) ao azul-escuro (muito); no escuro, ao
+  contrário, para o tom de "pouco" se confundir com o fundo. As legendas que falam de tom ("mais escuro =
+  mais longe") trocam junto.
+- **Camadas de pontos no escuro:** amarelo `#e09a00`, violeta `#9085e9` e vermelho `#e66767`, com anel da
+  cor do fundo. O amarelo da paleta escura (`#c98500`) ficava parecido demais com o vermelho (validador:
+  ΔE 13,0, abaixo do mínimo de 15); `#e09a00` dá 15,7. Ele sai um pouco da faixa de luminosidade da
+  paleta escura, o que foi aceito porque são pontos sobre o mapa, com legenda e contagem.
+- **Treemap de despesas:** mesma rampa nos dois temas, só nos tons em que o texto branco é legível.
+- **Troca pelo menu:** o Streamlit só informa o novo tema ao Python na próxima atualização da página
+  (issue [#11920](https://github.com/streamlit/streamlit/issues/11920)). Um observador na página percebe a
+  troca e pede essa atualização, no máximo duas vezes a cada 10 segundos.
+
+### Organização das páginas
+
+Nas três páginas, o mapa (ou as opções, na de despesas) fica na primeira tela, e o resto fica em abas
+logo abaixo, em vez de uma página longa:
+
+- **Bairros e população:** cor do mapa numa lista; painel do bairro em três cartões (população,
+  território, renda e saneamento); abas *Quem cresceu e quem perdeu*, *Tabela completa* e *Sobre os dados*.
+- **Serviços e acesso:** indicadores agrupados na lista "Cor do mapa" (distância, saúde, educação);
+  painel do bairro em cartões (índice e área verde, distâncias, serviços por 10 mil moradores); abas
+  *Mais gente, menos serviços*, *Índice de acesso*, *Matrículas*, *Renda e acesso*, *Gasto em saúde e
+  educação* e *Fontes e limitações*.
+- **Para onde vai o dinheiro:** as opções que valem para todas as abas ficam num quadro próprio.
+- **Mapas:** a escala de cor mostra os números no padrão brasileiro (60.000, e não 60,000), com a unidade
+  no topo e "≥" na última marca quando a cor satura; o zoom e a posição se mantêm ao trocar de indicador;
+  um clique na legenda esconde ou mostra uma camada.
+
 ## Estrutura
 
 ```
@@ -95,7 +130,7 @@ src/collect/       um script de coleta por fonte (+ download.py, que mantém o m
 src/process/       leitura, junções e cálculo dos indicadores
                    build.py (bairros e população), despesas*.py, servicos.py
 src/app/           páginas: app.py + dados.py (bairros), servicos.py + dados_servicos.py,
-                   despesas.py + dados_despesas.py
+                   despesas.py + dados_despesas.py; tema.py (cores claro/escuro, mapa, estilo)
 data/raw/          dados brutos, uma pasta por fonte (só o manifest.json é versionado)
 data/interim/      tabela de empenhos linha a linha (não versionada; cerca de 40 MB)
 data/processed/    dados prontos para o app (versionados)
@@ -243,7 +278,8 @@ sobreposição (os 64 se correspondem um a um) e registra as divergências na co
   uma escala sequencial de um só tom (azul, claro → escuro). A variação usa uma escala divergente
   vermelho (perda) ↔ cinza (zero) ↔ azul (ganho), que satura em ±60% para que as perdas, que vão até
   −34%, não fiquem apagadas ao lado de ganhos de até +173%; o valor exato aparece no tooltip.
-  Bairros não comparáveis ficam sem cor e com contorno escuro.
+  Bairros não comparáveis ficam sem cor e só com contorno. (No tema escuro a rampa sequencial inverte;
+  ver [Modo claro e escuro](#modo-claro-e-escuro).)
 - **Ranking:** exclui bairros não comparáveis e, por padrão, bairros com menos de 1.000 habitantes em
   2010 (ajustável no app de 0 a 5.000). Sem esse corte, Barra de Gramame (347 → 802 pessoas, +131%)
   entraria no topo do ranking percentual. Bairros comparáveis com ressalva aparecem marcados com †.
@@ -287,7 +323,7 @@ escola e a UBS/USF mais próximas, área verde por habitante e um índice simple
 - **Gasto em saúde e educação:** valor empenhado nas funções Saúde e Educação (TCE-PB, corrigido pelo
   IPCA, sem transferências entre órgãos) no último ano completo e por habitante desde 2009, com link para a
   página de despesas. É o gasto da cidade toda: os empenhos não dizem o bairro, e nada é dividido por bairro.
-- **Fontes e limitações:** seção aberta no fim da página, com a tabela de fontes, os filtros de cada uma,
+- **Fontes e limitações:** aba logo abaixo do mapa, com a tabela de fontes, os filtros de cada uma,
   as limitações, os pontos não atribuídos a bairro e os arquivos de origem (com SHA-256).
 - **Cores das camadas:** amarelo, violeta e vermelho para os pontos; verde-água para praças e parques;
   verde-escuro para matas. Foram validadas com o validador de paleta, todos os pares. A escola de
