@@ -375,6 +375,7 @@ def aba_mapa(dados, geo, corrigido, meta):
         "Onde o dinheiro aparece nos bairros?",
         "Bairros mais escuros têm mais valor em empenhos que os citam. Bairros em branco não são citados no período.",
     )
+    aj = dados_bairros.ajuste_mapa(dados_bairros.eh_celular(st.context.headers.get("User-Agent")), 620, 11.3)
     st.warning(
         "**Estimativa parcial e experimental.** O mapa mostra só empenhos cujo texto de descrição cita "
         "o nome de um bairro (ex.: \"pavimentação no bairro de Mangabeira\"). A maior parte do gasto, "
@@ -417,14 +418,13 @@ def aba_mapa(dados, geo, corrigido, meta):
         geojson=geo, featureidkey="properties.cd_bairro", locations=com.cd_bairro, z=com[col] / 1e6,
         colorscale=[[i / 6, c] for i, c in enumerate(AZUL_SEQ)], marker_opacity=0.85,
         marker_line_color=SUPERFICIE, marker_line_width=1,
-        colorbar=dict(title=dict(text="R$ mi"), thickness=12, len=0.45, x=0.985, xanchor="right", y=0.97,
-                      yanchor="top", bgcolor="rgba(252,252,251,0.85)", outlinewidth=0),
+        colorbar=dict(title=dict(text="R$ mi"), **aj["barra"], bgcolor="rgba(252,252,251,0.85)", outlinewidth=0),
         hovertext=[f"<b>{n}</b><br>{d.fmt_reais(x)}" for n, x in zip(com.nm_bairro, com[col])],
         hovertemplate="%{hovertext}<extra></extra>",
     ))
     fig.update_layout(
-        map=dict(style="carto-positron", center=dict(lat=-7.147, lon=-34.875), zoom=11.3),
-        height=620, margin=dict(l=0, r=0, t=0, b=0), separators=",.",
+        map=dict(style="carto-positron", center=dict(lat=-7.147, lon=-34.875), zoom=aj["zoom"]),
+        height=aj["altura"], margin=dict(l=0, r=0, t=0, b=0), separators=",.",
     )
     st.plotly_chart(fig, config={"scrollZoom": True, "displaylogo": False})
     st.caption(

@@ -65,6 +65,28 @@ def posicao(ind: pd.DataFrame, cd_bairro: str, coluna: str) -> tuple[int, int] |
     return int(ordem[validos.cd_bairro == cd_bairro].iloc[0]), len(validos)
 
 
+# --- celular
+
+
+def eh_celular(user_agent: str | None) -> bool:
+    """O Streamlit não informa a largura da tela; o navegador (User-Agent) diz se é celular."""
+    ua = user_agent or ""
+    return any(m in ua for m in ("Mobi", "Android", "iPhone"))
+
+
+def ajuste_mapa(celular: bool, altura: int, zoom: float) -> dict:
+    """Altura, zoom e posição da escala de cor do mapa conforme a tela.
+
+    No celular o mapa é mais baixo (sobra tela para rolar a página com o dedo), o zoom é menor (a
+    cidade inteira cabe na largura) e a escala de cor fica deitada no rodapé, sem cobrir os bairros.
+    """
+    if not celular:
+        return {"altura": altura, "zoom": zoom,
+                "barra": dict(thickness=12, len=0.45, x=0.985, xanchor="right", y=0.97, yanchor="top")}
+    return {"altura": 460, "zoom": zoom - 1.15,
+            "barra": dict(orientation="h", thickness=8, len=0.7, x=0.5, xanchor="center", y=0.09, yanchor="bottom")}
+
+
 # --- bairro na URL (?bairro=mangabeira)
 
 
