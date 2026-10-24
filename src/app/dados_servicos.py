@@ -120,6 +120,7 @@ INDICADORES_COMPARACAO = [
     ("UBS/USF", "ubs_usf", None, 0, ""),
     ("Escolas por 10 mil hab.", "escolas_por_10mil", "escolas_por_10mil", 2, ""),
     ("UBS/USF por 10 mil hab.", "ubs_usf_por_10mil", "ubs_usf_por_10mil", 2, ""),
+    ("Equipes de Saúde da Família por 10 mil hab.", "equipes_esf_por_10mil", "equipes_esf_por_10mil", 2, ""),
     ("Área verde por morador", "area_verde_m2_hab", "area_verde_m2_hab", 1, " m²/hab"),
     ("Praças", "pracas", None, 0, ""),
     ("Parques", "parques", None, 0, ""),

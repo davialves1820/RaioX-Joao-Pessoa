@@ -304,6 +304,7 @@ escola e a UBS/USF mais próximas, área verde por habitante e um índice simple
 | Matas e áreas protegidas (só no mapa) | [OpenStreetMap](https://www.openstreetmap.org/), Overpass API, © colaboradores do OpenStreetMap (ODbL) | `osm/matas.json`, `osm/parques.json` | consulta de 23/10/2026 | 23/10/2026 |
 | Coordenadas de apoio (escolas) | Catálogo do INEP de 2022 (via geodata-jp) e OpenStreetMap (API, 2 elementos fixos) | `geodata_jp/escolas_publicas.geojson`, `osm/escolas.json` | fev/2022; OSM de 23/10/2026 | 22–23/10/2026 |
 | População por setor censitário | IBGE, Censo 2022, malha de setores com atributos (`v0001`) | `ibge_censo2022/PB_setores_CD2022.gpkg` | 2022 | 22/10/2026 |
+| Equipes de Saúde da Família | Ministério da Saúde, DATASUS, [base completa do CNES](https://cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp) (`tbEquipe`, `tbTipoEquipe`) | `cnes/BASE_DE_DADOS_CNES_202609.ZIP` | competência 09/2026 | 24/10/2026 |
 
 **Escolas: INEP em vez do geodata-jp.** A camada de escolas do geodata-jp é de fevereiro de 2022.
 Comparada com o catálogo atual do INEP, faltam 12 escolas abertas depois, e 8 das que ela traz estão
@@ -342,6 +343,10 @@ foi baixada e conferida em 16/10/2026 (data registrada no manifesto).
   SESPB") são excluídos. Ficam **145** unidades: 106 UBS/USF, 9 policlínicas, 4 UPAs e 26 hospitais.
   Usamos a natureza jurídica porque a "esfera administrativa" do CNES indica quem faz a gestão, não
   quem é dono.
+- **Equipes de Saúde da Família (eSF):** equipes ativas na base completa do CNES de setembro de 2026,
+  de todo tipo cuja descrição começa por "ESF": **227**, todas em UBS/USF do mapa (98 UBS/USF têm pelo menos
+  uma; 8 não têm nenhuma). A API do CNES não traz equipes; a base completa (cerca de 750 MB) é baixada por
+  `python -m src.collect.cnes_base` e lida direto do ZIP. 4 equipes ficam em UBS/USF fora dos bairros do IBGE.
 - **Praças e parques:** 214 praças (61,8 ha) e 11 parques (270,8 ha) do cadastro da Prefeitura. Onde
   uma praça e um parque se sobrepõem (1,4 ha), a área conta uma vez. As praças são conferidas a cada
   execução: as 214 precisam ter nome e área idênticos aos da tabela oficial (senão o pipeline para), e
@@ -394,7 +399,9 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
     mangue, um parque ou uma área vazia. A diferença entre as duas mostra onde as pessoas moram de
     fato em relação ao centro do bairro. No Planalto da Boa Esperança, por exemplo, a escola está a
     29 m do centroide, mas o morador médio está a 366 m de uma escola.
-- **Serviços por 10 mil habitantes:** contagem no bairro ÷ população 2022 × 10.000.
+- **Serviços por 10 mil habitantes:** contagem no bairro ÷ população 2022 × 10.000. Vale também para as
+  equipes de Saúde da Família (soma das equipes das UBS/USF do bairro). Não é cobertura: cada equipe atende uma
+  área de abrangência, que não está nos dados e pode incluir outros bairros, por isso não há percentual de cobertura.
 - **Área verde por habitante (m²/hab):** área de praças e parques dentro do bairro ÷ população 2022.
 - **Ranking "mais gente e menos serviços":** habitantes por equipamento (escolas regulares +
   UBS/USF no bairro). Bairros sem nenhum dos dois aparecem à parte. Só entram bairros com pelo menos
