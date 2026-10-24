@@ -72,3 +72,8 @@ def test_tabela_comparacao():
     assert list(t.columns) == ["Indicador", a.nm_bairro, b.nm_bairro, "Cidade"]
     assert len(t) == len(d.INDICADORES_COMPARACAO)
     assert not t.isna().any().any()
+
+
+def test_correlacao_spearman():
+    x = pd.Series([1, 2, 3, 4]); assert d.correlacao_spearman(x, x * 10) == 1
+    assert d.correlacao_spearman(x, -x) == -1

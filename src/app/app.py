@@ -30,12 +30,17 @@ INDICADORES = {
     "pop_2022": "População (2022)",
     "densidade_2022": "Densidade (hab/km², 2022)",
     "var_pct": "Variação da população 2010→2022 (%)",
+    "renda_mediana": "Renda mediana do responsável (2022)",
+    "pct_esgoto_rede": "Esgoto na rede (%)",
 }
 
 
 @st.cache_data
 def _carregar():
-    return d.carregar_indicadores(), d.carregar_geojson(), d.carregar_totais(), d.carregar_metadados()
+    censo, meta_censo = d.carregar_censo_bairros()
+    ind = d.carregar_indicadores().merge(censo.drop(columns="nm_bairro"), on="cd_bairro", how="left")
+    meta = d.carregar_metadados() | {"censo_bairros": meta_censo}
+    return ind, d.carregar_geojson(), d.carregar_totais(), meta
 
 
 def _hover(ind: pd.DataFrame) -> pd.Series:
@@ -44,6 +49,8 @@ def _hover(ind: pd.DataFrame) -> pd.Series:
             f"<b>{r.nm_bairro}</b>",
             f"População 2022: {d.fmt_int(r.pop_2022)}",
             f"Densidade: {d.fmt_dec(r.densidade_2022, 0)} hab/km²",
+            f"Renda mediana do responsável: {d.fmt_reais(r.renda_mediana)}",
+            f"Esgoto na rede: {d.fmt_pct(r.pct_esgoto_rede)} dos domicílios",
         ]
         if r.comparabilidade == NAO_COMPARAVEL:
             partes.append("Variação 2010→2022: não comparável")
@@ -109,6 +116,14 @@ def figura_mapa(ind: pd.DataFrame, geo: dict, indicador: str, selecionado: str |
             )
         )
     else:
+        sem = ind[ind[indicador].isna()]  # ex.: Mussuré não tem rendimento publicado (3 moradores)
+        if len(sem):
+            fig.add_trace(go.Choroplethmap(
+                locations=sem.cd_bairro, z=[0] * len(sem), hovertext=sem.hover,
+                colorscale=[[0, "rgba(252,252,251,0.6)"], [1, "rgba(252,252,251,0.6)"]], showscale=False,
+                **{**comum, "marker_line_color": TINTA_2, "marker_line_width": 1.5},
+            ))
+        ind = ind[ind[indicador].notna()]
         fig.add_trace(
             go.Choroplethmap(
                 locations=ind.cd_bairro,
@@ -197,6 +212,12 @@ def painel_bairro(ind: pd.DataFrame, cd: str, meta: dict) -> None:
             delta=d.fmt_var_pct(r.var_pct).replace("−", "-"),  # Streamlit só reconhece o '-' ASCII
         )
     c2.metric("Domicílios 2022", d.fmt_int(r.domicilios_2022))
+    c1.metric("Renda mediana", d.fmt_reais(r.renda_mediana),
+              help="Rendimento mensal mediano das pessoas responsáveis pelo domicílio que têm rendimento "
+                   "(Censo 2022, R$ de 2022). Responsáveis sem rendimento não entram no cálculo do IBGE.")
+    c2.metric("Esgoto na rede", d.fmt_pct(r.pct_esgoto_rede),
+              help=f"Domicílios com esgoto na rede geral ou pluvial (Censo 2022). Água pela rede geral: "
+                   f"{d.fmt_pct(r.pct_agua_rede)}; lixo coletado: {d.fmt_pct(r.pct_lixo_coletado)}.")
 
     if pd.isna(r.pop_2010):
         st.warning("Este bairro não existia no Censo 2010, por isso não há variação.", icon="⚠️")
@@ -253,6 +274,12 @@ def secao_sobre(meta: dict, totais: pd.DataFrame) -> None:
 Censitários*, variável `v0001`). População 2010: soma dos setores censitários do Censo 2010
 (`Domicilio02`, V001) pelo código de bairro. Limites: malha de bairros do IBGE do Censo 2022,
 o mesmo território em que a população foi contada.
+
+**Renda e saneamento (2022).** Tabelas do IBGE por bairro: rendimento da pessoa responsável pelo
+domicílio (divulgação de maio de 2026; médio e mediano, só de responsáveis **com** rendimento, em R$ de
+2022) e características dos domicílios (água pela rede geral, esgoto na rede geral ou pluvial, lixo
+coletado no domicílio ou em caçamba). Nessas tabelas não há valores sigilosos em João Pessoa; Mussuré
+(3 moradores) não tem o rendimento publicado.
 
 **Fora de bairros.** Parte da população mora em áreas que o IBGE não atribui a bairro:
 {d.fmt_int(totais.loc[2022, 'fora_de_bairros'])} pessoas em 2022
@@ -323,6 +350,17 @@ def main() -> None:
             st.caption(
                 "Azul: ganhou população; vermelho: perdeu. A cor satura em ±60% (valor exato ao passar o mouse). "
                 "Bairros sem cor e com contorno escuro: variação não comparável."
+            )
+        elif indicador == "renda_mediana":
+            st.caption(
+                "Rendimento mensal mediano das pessoas responsáveis pelo domicílio que têm rendimento, no Censo "
+                "2022 (R$ de 2022, sem correção). Responsáveis sem rendimento não entram no cálculo do IBGE. "
+                "Mussuré (3 moradores) não tem o dado publicado."
+            )
+        elif indicador == "pct_esgoto_rede":
+            st.caption(
+                "Parte dos domicílios com esgoto ligado à rede geral ou pluvial, no Censo 2022. O restante usa "
+                "fossa, vala, rio ou outra forma."
             )
         elif indicador == "pop_2022":
             st.caption(

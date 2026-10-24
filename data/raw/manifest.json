@@ -104,6 +104,34 @@
     "bytes": 724481,
     "sha256": "c84bea0184477b8eb750948e50f87a7a57d2af4cfb71b1b061729e2f0a6b9a52"
   },
+  "ibge_censo2022/Agregados_por_bairros_caracteristicas_domicilio1_BR_20261021.zip": {
+    "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Bairro_csv/Agregados_por_bairros_caracteristicas_domicilio1_BR_20261021.zip",
+    "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
+    "baixado_em": "2026-10-24T11:57:43Z",
+    "bytes": 1340331,
+    "sha256": "ca2dfdf950a7550beaaf63b61332a7aed650e4dc1ab77ca460506da10543c500"
+  },
+  "ibge_censo2022/Agregados_por_bairros_caracteristicas_domicilio2_BR_20250417.zip": {
+    "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Bairro_csv/Agregados_por_bairros_caracteristicas_domicilio2_BR_20250417.zip",
+    "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
+    "baixado_em": "2026-10-24T11:57:45Z",
+    "bytes": 4756303,
+    "sha256": "4a4f570003df6e9b549ca3c122713372b420cae251b5f7f0dfe8dacb5a7c186d"
+  },
+  "ibge_censo2022/Agregados_por_bairros_demografia_BR.zip": {
+    "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Bairro_csv/Agregados_por_bairros_demografia_BR.zip",
+    "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
+    "baixado_em": "2026-10-24T11:57:42Z",
+    "bytes": 1315108,
+    "sha256": "b2b405df497ee73edff15db569dc077861e4a46e9cee1e49acb70e23d03d81e1"
+  },
+  "ibge_censo2022/Agregados_por_bairros_renda_responsavel_BR_20260508_csv.zip": {
+    "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/Agregados_por_bairros_renda_responsavel_BR_20260508_csv.zip",
+    "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
+    "baixado_em": "2026-10-24T11:57:46Z",
+    "bytes": 503079,
+    "sha256": "db2fda144b62d9badf21ac54fdf43dbba09e029fd21f27393df7c5f4ea7ac333"
+  },
   "ibge_censo2022/Agregados_por_municipios_basico_BR_20260520.zip": {
     "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Municipio_csv/Agregados_por_municipios_basico_BR_20260520.zip",
     "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
@@ -131,6 +159,13 @@
     "baixado_em": "2026-10-14T20:43:52Z",
     "bytes": 118369,
     "sha256": "0b8aedece57f6125d785b6aa2234cfd587e92dfb6ce5ca6ace8c67f140831344"
+  },
+  "ibge_censo2022/dicionario_de_dados_renda_responsavel_20260508.xlsx": {
+    "url": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/dicionario_de_dados_renda_responsavel_20260508.xlsx",
+    "fonte": "IBGE - Censo Demográfico 2022 - Agregados por Setores Censitários",
+    "baixado_em": "2026-10-24T11:57:46Z",
+    "bytes": 10197,
+    "sha256": "fea6e2b2439eeb167c6fa9c136ed7cb13ebcb06f4c875d634e3e2578c668a48d"
   },
   "ibge_sidra/ipca_tabela1737.json": {
     "url": "https://apisidra.ibge.gov.br/values/t/1737/n1/all/v/2266/p/all",
