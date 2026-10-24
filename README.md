@@ -62,6 +62,13 @@ Os dados brutos não ficam no git (são grandes e reprodutíveis); os processado
 O app lê apenas `data/processed/`; não é preciso rodar a coleta no deploy. Cada push na `main`
 atualiza o site.
 
+### No celular
+
+O Streamlit não informa a largura da tela, então o app usa o navegador (User-Agent) para reconhecer
+celulares. Neles, os mapas ficam mais baixos (460 px), com zoom menor para a cidade inteira caber na
+largura, e a escala de cor fica deitada no rodapé do mapa. As colunas empilham sozinhas, e a página não
+rola na horizontal (conferido a 390 px de largura); só as tabelas largas rolam dentro delas.
+
 ## Estrutura
 
 ```
@@ -254,7 +261,8 @@ escola e a UBS/USF mais próximas, área verde por habitante e um índice simple
 - **Comparar dois bairros:** em "Comparar com", escolha um segundo bairro; os dois aparecem lado a lado,
   com a média da cidade como referência, e o segundo ganha contorno cinza no mapa.
 - **Link de um bairro:** a URL acompanha o bairro escolhido e a comparação, para compartilhar
-  (ex.: `.../servicos?bairro=mangabeira&comparar=bessa`; também vale `?bairro=` na página de bairros).
+  (ex.: `.../servicos?bairro=mangabeira&comparar=bessa`; na página de bairros, que é a página inicial,
+  `.../?bairro=mangabeira`).
   Acento e maiúsculas não importam; um nome que não existe abre o bairro padrão.
 - **Ranking:** bairros com mais moradores por escola ou UBS/USF, e a lista dos que não têm nenhum dos dois.
 - **Índice:** fórmula, explicação e tabela com os componentes de todos os bairros (com download em CSV).

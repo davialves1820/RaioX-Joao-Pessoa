@@ -57,7 +57,9 @@ def _hover(ind: pd.DataFrame) -> pd.Series:
     return ind.apply(linha, axis=1)
 
 
-def figura_mapa(ind: pd.DataFrame, geo: dict, indicador: str, selecionado: str | None) -> go.Figure:
+def figura_mapa(ind: pd.DataFrame, geo: dict, indicador: str, selecionado: str | None,
+                celular: bool = False) -> go.Figure:
+    aj = d.ajuste_mapa(celular, ALTURA_MAPA, ZOOM_MAPA)
     ind = ind.assign(hover=_hover(ind))
     comum = dict(
         geojson=geo,
@@ -68,8 +70,7 @@ def figura_mapa(ind: pd.DataFrame, geo: dict, indicador: str, selecionado: str |
     )
     # Legenda de cores sobre o mapa (canto superior direito), para o mapa ocupar toda a largura
     barra = dict(
-        thickness=12, len=0.45, outlinewidth=0, tickfont=dict(color=TINTA_2),
-        x=0.985, xanchor="right", y=0.97, yanchor="top",
+        **aj["barra"], outlinewidth=0, tickfont=dict(color=TINTA_2),
         bgcolor="rgba(252,252,251,0.85)", xpad=10, ypad=10,
     )
     fig = go.Figure()
@@ -136,9 +137,9 @@ def figura_mapa(ind: pd.DataFrame, geo: dict, indicador: str, selecionado: str |
         )
 
     fig.update_layout(
-        map=dict(style="carto-positron", center=CENTRO_MAPA, zoom=ZOOM_MAPA),
+        map=dict(style="carto-positron", center=CENTRO_MAPA, zoom=aj["zoom"]),
         margin=dict(l=0, r=0, t=0, b=0),
-        height=ALTURA_MAPA,
+        height=aj["altura"],
         separators=",.",
     )
     return fig
@@ -305,7 +306,8 @@ def main() -> None:
             label_visibility="collapsed",
         )
         evento = st.plotly_chart(
-            figura_mapa(ind, geo, indicador, st.session_state.bairro),
+            figura_mapa(ind, geo, indicador, st.session_state.bairro,
+                        celular=d.eh_celular(st.context.headers.get("User-Agent"))),
             on_select="rerun",
             selection_mode="points",
             key="mapa",

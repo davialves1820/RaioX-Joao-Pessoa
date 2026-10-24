@@ -92,14 +92,16 @@ def _hover_ponto(p: pd.DataFrame) -> pd.Series:
 
 
 def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verde: bool,
-                selecionado: str | None, matas: bool = False, comparado: str | None = None) -> go.Figure:
+                selecionado: str | None, matas: bool = False, comparado: str | None = None,
+                celular: bool = False) -> go.Figure:
+    aj = dados_bairros.ajuste_mapa(celular, ALTURA_MAPA, ZOOM_MAPA)
     ind = dados["ind"].assign(hover=lambda x: _hover_bairro(x))
     fig = go.Figure()
     com_camadas = bool(camadas) or verde or matas
     comum = dict(geojson=geo, featureidkey="properties.cd_bairro", hovertemplate="%{hovertext}<extra></extra>",
                  marker_line_color=SUPERFICIE, marker_line_width=1)
-    barra = dict(thickness=12, len=0.4, outlinewidth=0, tickfont=dict(color=TINTA_2), x=0.985, xanchor="right",
-                 y=0.97, yanchor="top", bgcolor="rgba(252,252,251,0.85)", xpad=10, ypad=10, tickformat=",.0f")
+    barra = dict(**aj["barra"], outlinewidth=0, tickfont=dict(color=TINTA_2), bgcolor="rgba(252,252,251,0.85)",
+                 xpad=10, ypad=10, tickformat=",.0f")
     escala = [[i / (len(AZUL_SEQ) - 1), c] for i, c in enumerate(AZUL_SEQ)]
 
     base = ind[ind[indicador].notna()]
@@ -177,9 +179,10 @@ def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verd
         ))
 
     fig.update_layout(
-        map=dict(style="carto-positron", center=CENTRO_MAPA, zoom=ZOOM_MAPA),
-        margin=dict(l=0, r=0, t=0, b=0), height=ALTURA_MAPA, separators=",.",
+        map=dict(style="carto-positron", center=CENTRO_MAPA, zoom=aj["zoom"]),
+        margin=dict(l=0, r=0, t=0, b=0), height=aj["altura"], separators=",.",
         legend=dict(x=0.015, y=0.97, xanchor="left", yanchor="top", bgcolor="rgba(252,252,251,0.9)",
+                    font_size=10 if celular else None,
                     font=dict(color=TINTA), borderwidth=0),
     )
     return fig
@@ -561,7 +564,7 @@ def main() -> None:
         st.session_state.bairro_servicos = (dados_bairros.codigo_por_slug(ind, st.query_params.get("bairro"))
                                             or ind.loc[ind.pop_2022.idxmax(), "cd_bairro"])
     if "comparar_servicos" not in st.session_state:
-        st.session_state.comparar_servicos = dados_bairros.codigo_por_slug(ind, st.query_params.get("comparar"))
+        st.session_state.comparar_servicos = dados_bairros.codigo_por_slug(ind, st.query_params.get("comparar")) or ""
 
     col_mapa, col_det = st.columns([7, 3], gap="medium")
     with col_mapa:
@@ -573,7 +576,8 @@ def main() -> None:
         evento = st.plotly_chart(
             figura_mapa(dados, geo, indicador, [c for c in ligadas if c in d.CAMADAS], "verde" in ligadas,
                         st.session_state.bairro_servicos, matas="matas" in ligadas,
-                        comparado=st.session_state.comparar_servicos),
+                        comparado=st.session_state.comparar_servicos,
+                        celular=dados_bairros.eh_celular(st.context.headers.get("User-Agent"))),
             on_select="rerun", selection_mode="points", key="mapa_servicos",
             config={"scrollZoom": True, "displaylogo": False},
         )
@@ -587,8 +591,8 @@ def main() -> None:
 
     with col_det:
         st.selectbox("Bairro", nomes.index, format_func=nomes.get, key="bairro_servicos")
-        st.selectbox("Comparar com", [None] + list(nomes.index), key="comparar_servicos",
-                     format_func=lambda c: "nenhum bairro" if c is None else nomes[c],
+        st.selectbox("Comparar com", [""] + list(nomes.index), key="comparar_servicos",
+                     format_func=lambda c: nomes[c] if c else "nenhum bairro",
                      help="Mostra os dois bairros lado a lado, abaixo do mapa, e o contorno do segundo no mapa.")
         painel_bairro(dados, st.session_state.bairro_servicos)
     _atualizar_link(nomes)

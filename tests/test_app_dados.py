@@ -68,3 +68,14 @@ def test_link_do_bairro_ida_e_volta():
     assert d.codigo_por_slug(ind, "Água fria") == d.codigo_por_slug(ind, "agua-fria")
     assert d.codigo_por_slug(ind, "bairro-que-nao-existe") is None
     assert d.codigo_por_slug(ind, None) is None
+
+
+def test_celular_e_ajuste_do_mapa():
+    iphone = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148"
+    android = "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/120 Mobile Safari/537.36"
+    pc = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36"
+    assert d.eh_celular(iphone) and d.eh_celular(android)
+    assert not d.eh_celular(pc) and not d.eh_celular(None)
+    assert d.ajuste_mapa(False, 740, 11.55)["altura"] == 740
+    cel = d.ajuste_mapa(True, 740, 11.55)
+    assert cel["altura"] < 740 and cel["zoom"] < 11.55 and cel["barra"]["orientation"] == "h"
