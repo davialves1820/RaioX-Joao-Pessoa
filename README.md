@@ -493,7 +493,8 @@ bairros (cor do mapa e painel) e de serviços (gráfico "Renda e acesso").
   vírgula decimal, mas uma mediana vem com ponto ("6598.5"); o leitor aceita os dois e rejeita um texto com
   os dois separadores.
 - **Saneamento:** parte dos domicílios particulares permanentes ocupados (`V00001`) com água pela rede geral
-  (`V00111`), esgoto na rede geral ou pluvial (`V00309`) e lixo coletado no domicílio ou em caçamba (`V00397` +
+  (`V00111`), esgoto ligado à rede (`V00309`, rede geral ou pluvial, + `V00310`, fossa séptica ou
+  fossa filtro ligada à rede) e lixo coletado no domicílio ou em caçamba (`V00397` +
   `V00398`).
 - **Renda e acesso:** o gráfico mostra cada bairro e a correlação de Spearman entre a renda mediana e o
   indicador escolhido. É uma descrição; correlação não indica causa, e serviços privados não estão contados.
