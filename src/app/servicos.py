@@ -383,6 +383,9 @@ FONTES = pd.DataFrame([
     {"Dado": "Unidades de saúde", "Origem": "Ministério da Saúde, CNES (API de dados abertos)",
      "Link": "https://apidadosabertos.saude.gov.br/cnes/estabelecimentos?codigo_municipio=250750",
      "Atualização da fonte": "cadastro mais recente atualizado em 16/10/2026", "Obtido em": "16/10/2026"},
+    {"Dado": "Renda e saneamento por bairro", "Origem": "IBGE, Censo 2022 (rendimento do responsável; características dos domicílios)",
+     "Link": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/",
+     "Atualização da fonte": "Censo 2022 (rendimento divulgado em 05/2026)", "Obtido em": "24/10/2026"},
     {"Dado": "Equipes de Saúde da Família", "Origem": "Ministério da Saúde, DATASUS, base completa do CNES (tbEquipe)",
      "Link": "https://cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp",
      "Atualização da fonte": "competência 09/2026", "Obtido em": "24/10/2026"},
@@ -412,6 +415,56 @@ def _matas_nomeadas(mt: dict) -> str:
 def _parques_novos(mt: dict) -> str:
     p = mt.get("parques_osm_fora_do_cadastro", [])
     return (", como " + ", ".join(f"{x['nome']} ({fmt_dec(x['ha'], 1)} ha)" for x in p[:5])) if p else ""
+
+
+SALARIO_MINIMO_2022 = 1212  # R$, valor do salário mínimo no ano do Censo
+
+EIXOS_RENDA = {
+    "indice_acesso": ("Índice de acesso (0–100)", 1),
+    "dist_escola_m": ("Distância até a escola (m)", 0),
+    "dist_ubs_m": ("Distância até a UBS/USF (m)", 0),
+    "equipes_esf_por_10mil": ("Equipes de Saúde da Família por 10 mil hab.", 2),
+    "area_verde_m2_hab": ("Área verde por morador (m²/hab)", 1),
+    "pct_esgoto_rede": ("Domicílios com esgoto na rede (%)", 1),
+}
+
+
+def secao_renda(dados: dict) -> None:
+    ind = dados["ind"]
+    st.header("Renda e acesso, bairro a bairro")
+    st.caption(
+        "Cada ponto é um bairro. Renda: rendimento mensal mediano das pessoas responsáveis pelo domicílio que têm "
+        "rendimento (Censo 2022, R$ de 2022). Os serviços contados são só os públicos e do SUS; bairros de renda "
+        "mais alta podem ter serviços privados que não aparecem aqui."
+    )
+    eixo = st.selectbox("Comparar a renda com", list(EIXOS_RENDA), format_func=lambda k: EIXOS_RENDA[k][0])
+    rotulo, casas = EIXOS_RENDA[eixo]
+    base = ind[ind.renda_mediana.notna() & ind[eixo].notna()]
+    corr = d.correlacao_spearman(base.renda_mediana, base[eixo])
+    fmtv = (lambda v: fmt_int(round(v))) if casas == 0 else (lambda v: fmt_dec(v, casas))
+    fig = go.Figure(go.Scatter(
+        x=base.renda_mediana, y=base[eixo], mode="markers",
+        marker=dict(size=10, color=AZUL_SEQ[4], line=dict(color=SUPERFICIE, width=2)),
+        hovertext=[f"<b>{n}</b><br>Renda mediana: {dados_bairros.fmt_reais(x)}<br>{rotulo}: {fmtv(y)}"
+                   for n, x, y in zip(base.nm_bairro, base.renda_mediana, base[eixo])],
+        hovertemplate="%{hovertext}<extra></extra>",
+    ))
+    fig.update_layout(height=420, margin=dict(l=0, r=10, t=10, b=0), separators=",.", showlegend=False,
+                      plot_bgcolor="rgba(0,0,0,0)",
+                      xaxis=dict(title="Renda mediana do responsável (R$, 2022)", gridcolor="#e7e6e2", tickformat=",.0f"),
+                      yaxis=dict(title=rotulo, gridcolor="#e7e6e2", tickformat=",~r"))
+    st.plotly_chart(fig, config={"displayModeBar": False})
+    corr_txt = ("−" if corr < 0 else "") + fmt_dec(abs(corr), 2)
+    st.markdown(
+        f"Nos {len(base)} bairros com renda publicada, a correlação de Spearman entre a renda mediana e "
+        f"«{rotulo}» é **{corr_txt}** (vai de −1 a 1; perto de 0 = sem relação clara). "
+        "Correlação não indica causa."
+    )
+    n_min = int((base.renda_mediana == SALARIO_MINIMO_2022).sum())
+    st.caption(
+        f"Em {n_min} bairros a renda mediana é exatamente R\\$ 1.212, o salário mínimo de 2022, por isso os pontos "
+        "se empilham nesse valor. Mussuré (3 moradores) não tem o rendimento publicado pelo IBGE e fica fora do gráfico."
+    )
 
 
 def secao_gasto() -> None:
@@ -631,6 +684,7 @@ def main() -> None:
 
     secao_ranking(dados)
     secao_indice(dados)
+    secao_renda(dados)
     secao_gasto()
     secao_fontes(dados)
     st.caption("Dados: INEP, Ministério da Saúde (CNES), Prefeitura de João Pessoa (Filipeia), OpenStreetMap e IBGE (Censo 2022).")

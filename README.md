@@ -34,7 +34,8 @@ pip install -r requirements-dev.txt
 python -m src.collect          # baixa os dados brutos para data/raw/ (ver as exceções abaixo)
 python -m src.process.build    # bairros e população -> data/processed/
 python -m src.process.despesas # despesas -> data/processed/despesas/ (depende do build)
-python -m src.process.servicos # serviços -> data/processed/servicos/ (depende do build)
+python -m src.process.censo_bairros # renda, saneamento e idade por bairro -> data/processed/ (depende do build)
+python -m src.process.servicos # serviços -> data/processed/servicos/ (depende do build e do censo_bairros)
 pytest                         # testes do pipeline e das funções do app
 streamlit run streamlit_app.py # abre o dashboard em http://localhost:8501
 ```
@@ -304,6 +305,7 @@ escola e a UBS/USF mais próximas, área verde por habitante e um índice simple
 | Matas e áreas protegidas (só no mapa) | [OpenStreetMap](https://www.openstreetmap.org/), Overpass API, © colaboradores do OpenStreetMap (ODbL) | `osm/matas.json`, `osm/parques.json` | consulta de 23/10/2026 | 23/10/2026 |
 | Coordenadas de apoio (escolas) | Catálogo do INEP de 2022 (via geodata-jp) e OpenStreetMap (API, 2 elementos fixos) | `geodata_jp/escolas_publicas.geojson`, `osm/escolas.json` | fev/2022; OSM de 23/10/2026 | 22–23/10/2026 |
 | População por setor censitário | IBGE, Censo 2022, malha de setores com atributos (`v0001`) | `ibge_censo2022/PB_setores_CD2022.gpkg` | 2022 | 22/10/2026 |
+| Renda e saneamento por bairro | IBGE, Censo 2022: [rendimento do responsável](https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/) (divulgação de 05/2026) e características dos domicílios, partes 1 e 2, por bairro | `ibge_censo2022/Agregados_por_bairros_renda_responsavel_BR_20260508_csv.zip`, `..._caracteristicas_domicilio1_...zip`, `..._caracteristicas_domicilio2_...zip` | 2022 | 24/10/2026 |
 | Equipes de Saúde da Família | Ministério da Saúde, DATASUS, [base completa do CNES](https://cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp) (`tbEquipe`, `tbTipoEquipe`) | `cnes/BASE_DE_DADOS_CNES_202609.ZIP` | competência 09/2026 | 24/10/2026 |
 
 **Escolas: INEP em vez do geodata-jp.** A camada de escolas do geodata-jp é de fevereiro de 2022.
@@ -449,6 +451,25 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
 - **14 escolas sem coordenada** (lista em `pontos_nao_atribuidos.csv`) não entram nas distâncias;
   a distância até a escola pode estar superestimada nos bairros delas.
 - **Coordenadas declaradas:** são as informadas ao INEP e ao CNES e não foram conferidas uma a uma.
+
+### Renda e saneamento (Censo 2022)
+
+Gerado por `python -m src.process.censo_bairros` em `data/processed/censo_bairros.csv`, usado nas páginas de
+bairros (cor do mapa e painel) e de serviços (gráfico "Renda e acesso").
+
+- **Tabelas por bairro do IBGE**, não soma de setores: nas tabelas por setor há valores sigilosos ("X") em
+  setores pequenos de João Pessoa, e somá-los deixaria pessoas de fora. Nas tabelas por bairro não há nenhum.
+  Um "X" vira vazio e é contado em `censo_bairros_meta.json`, nunca estimado.
+- **Renda:** rendimento nominal mensal médio e mediano das pessoas responsáveis pelo domicílio **com**
+  rendimento (o IBGE não inclui responsáveis sem rendimento), em R$ de 2022. Mussuré (3 moradores) não tem o
+  dado. Em 27 bairros a mediana é exatamente R$ 1.212, o salário mínimo de 2022. Os números do arquivo usam
+  vírgula decimal, mas uma mediana vem com ponto ("6598.5"); o leitor aceita os dois e rejeita um texto com
+  os dois separadores.
+- **Saneamento:** parte dos domicílios particulares permanentes ocupados (`V00001`) com água pela rede geral
+  (`V00111`), esgoto na rede geral ou pluvial (`V00309`) e lixo coletado no domicílio ou em caçamba (`V00397` +
+  `V00398`).
+- **Renda e acesso:** o gráfico mostra cada bairro e a correlação de Spearman entre a renda mediana e o
+  indicador escolhido. É uma descrição; correlação não indica causa, e serviços privados não estão contados.
 
 ### Dados processados (`data/processed/servicos/`)
 

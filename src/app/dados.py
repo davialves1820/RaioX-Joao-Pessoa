@@ -20,6 +20,13 @@ def carregar_indicadores(pasta: Path = DATA_PROCESSED) -> pd.DataFrame:
     return df
 
 
+def carregar_censo_bairros(pasta: Path = DATA_PROCESSED) -> tuple[pd.DataFrame, dict]:
+    """Rendimento, saneamento e crianças por bairro (Censo 2022), de src.process.censo_bairros."""
+    df = pd.read_csv(pasta / "censo_bairros.csv", dtype={"cd_bairro": str})
+    meta = json.loads((pasta / "censo_bairros_meta.json").read_text(encoding="utf-8"))
+    return df, meta
+
+
 def carregar_geojson(pasta: Path = DATA_PROCESSED) -> dict:
     return json.loads((pasta / "bairros_jp.geojson").read_text(encoding="utf-8"))
 
