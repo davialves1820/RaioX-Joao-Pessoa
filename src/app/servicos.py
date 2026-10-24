@@ -256,13 +256,11 @@ def secao_ranking(dados: dict) -> None:
         sem = d.sem_escola_nem_ubs(ind)
         st.subheader(f"Sem escola pública nem UBS/USF ({len(sem)})")
         st.dataframe(
-            sem[["nm_bairro", "pop_2022", "dist_escola_m", "dist_ubs_m"]], hide_index=True, width="stretch",
-            column_config={
-                "nm_bairro": "Bairro",
-                "pop_2022": st.column_config.NumberColumn("Moradores", format="localized"),
-                "dist_escola_m": st.column_config.NumberColumn("Até a escola (m)", format="localized"),
-                "dist_ubs_m": st.column_config.NumberColumn("Até a UBS/USF (m)", format="localized"),
-            },
+            dados_bairros.tabela_br(sem[["nm_bairro", "pop_2022", "dist_escola_m", "dist_ubs_m"]],
+                                    inteiros=["pop_2022", "dist_escola_m", "dist_ubs_m"]),
+            hide_index=True, width="stretch",
+            column_config={"nm_bairro": "Bairro", "pop_2022": "Moradores", "dist_escola_m": "Até a escola (m)",
+                           "dist_ubs_m": "Até a UBS/USF (m)"},
         )
         st.caption("Escolas e unidades de saúde privadas não estão contadas: estes bairros podem ter serviços "
                    "privados.")
@@ -288,20 +286,17 @@ def secao_indice(dados: dict) -> None:
                "escolas", "ubs_usf", "pracas", "parques"]].merge(
         d.componentes_indice(ind).assign(nm_bairro=ind.nm_bairro).drop(columns="cd_bairro"), on="nm_bairro"
     ).sort_values("indice_acesso", ascending=False)
+    tab = tab[["nm_bairro", "indice_acesso", "p_escola", "p_ubs", "p_verde", "dist_escola_m", "dist_ubs_m",
+               "area_verde_m2_hab", "pop_2022", "escolas", "ubs_usf", "pracas", "parques"]]
     st.dataframe(
-        tab[["nm_bairro", "indice_acesso", "p_escola", "p_ubs", "p_verde", "dist_escola_m", "dist_ubs_m",
-             "area_verde_m2_hab", "pop_2022", "escolas", "ubs_usf", "pracas", "parques"]],
+        dados_bairros.tabela_br(tab, inteiros=["dist_escola_m", "dist_ubs_m", "pop_2022"],
+                                decimais={"indice_acesso": 1, "p_escola": 1, "p_ubs": 1, "p_verde": 1,
+                                          "area_verde_m2_hab": 1}),
         hide_index=True, width="stretch",
         column_config={
-            "nm_bairro": "Bairro",
-            "indice_acesso": st.column_config.ProgressColumn("Índice", min_value=0, max_value=100, format="%.1f"),
-            "p_escola": st.column_config.NumberColumn("P escola", format="%.1f"),
-            "p_ubs": st.column_config.NumberColumn("P UBS", format="%.1f"),
-            "p_verde": st.column_config.NumberColumn("P verde", format="%.1f"),
-            "dist_escola_m": st.column_config.NumberColumn("Até a escola (m)", format="localized"),
-            "dist_ubs_m": st.column_config.NumberColumn("Até a UBS/USF (m)", format="localized"),
-            "area_verde_m2_hab": st.column_config.NumberColumn("Verde (m²/hab)", format="%.1f"),
-            "pop_2022": st.column_config.NumberColumn("Moradores", format="localized"),
+            "nm_bairro": "Bairro", "indice_acesso": "Índice", "p_escola": "P escola", "p_ubs": "P UBS",
+            "p_verde": "P verde", "dist_escola_m": "Até a escola (m)", "dist_ubs_m": "Até a UBS/USF (m)",
+            "area_verde_m2_hab": "Verde (m²/hab)", "pop_2022": "Moradores",
             "escolas": "Escolas", "ubs_usf": "UBS/USF", "pracas": "Praças", "parques": "Parques",
         },
     )
