@@ -36,7 +36,12 @@ INDICADORES = {
     "area_verde_m2_hab": "Área verde por morador",
     "hab_por_equipamento": "Moradores por escola ou UBS",
     "equipes_esf_por_10mil": "Equipes de Saúde da Família",
+    "vagas_infantil_por_100": "Educação infantil por criança",
+    "vagas_fund_por_100": "Fundamental por criança",
+    "vagas_medio_por_100": "Médio por jovem",
 }
+# indicadores cuja escala de cor satura no percentil 90 (há valores extremos)
+SATURA_P90 = {"area_verde_m2_hab", "vagas_infantil_por_100", "vagas_fund_por_100", "vagas_medio_por_100"}
 LEGENDA_INDICADOR = {
     "indice_acesso": "Quanto mais escuro, melhor a posição do bairro nos três componentes do índice "
                      "(fórmula mais abaixo).",
@@ -48,6 +53,15 @@ LEGENDA_INDICADOR = {
                          "A cor satura no percentil 90 (valor exato ao passar o mouse).",
     "equipes_esf_por_10mil": "Equipes de Saúde da Família (CNES) nas UBS/USF do bairro, por 10 mil moradores. "
                              "Mais escuro = mais equipes por morador.",
+    "vagas_infantil_por_100": "Matrículas em creche e pré-escola nas escolas públicas do bairro por 100 crianças de "
+                              "0 a 4 anos que moram nele. A faixa do IBGE (0–4) não coincide com a da etapa (0–5). "
+                              "Alunos estudam também fora do bairro onde moram. A cor satura no percentil 90.",
+    "vagas_fund_por_100": "Matrículas no ensino fundamental nas escolas públicas do bairro por 100 crianças de 5 a 14 "
+                          "anos que moram nele (a etapa é de 6 a 14). Alunos estudam também fora do bairro onde "
+                          "moram. A cor satura no percentil 90.",
+    "vagas_medio_por_100": "Matrículas no ensino médio nas escolas públicas do bairro por 100 jovens de 15 a 19 anos "
+                           "que moram nele (a etapa é de 15 a 17). Alunos estudam também fora do bairro onde moram. "
+                           "A cor satura no percentil 90.",
     "hab_por_equipamento": "Moradores por escola pública regular ou UBS/USF no bairro. Mais escuro = mais "
                            "gente para cada equipamento. Sem cor e com contorno escuro: bairro sem nenhum dos dois.",
 }
@@ -113,10 +127,10 @@ def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verd
     base = ind[ind[indicador].notna()]
     z = base[indicador]
     zmax = None
-    if indicador == "area_verde_m2_hab":
+    if indicador in SATURA_P90:
         zmax = float(z.quantile(0.9))
         z = z.clip(upper=zmax)
-        barra["tickformat"] = ",.1f"
+        barra["tickformat"] = ",.1f" if indicador == "area_verde_m2_hab" else ",.0f"
     fig.add_trace(go.Choroplethmap(
         locations=base.cd_bairro, z=z, hovertext=base.hover, colorscale=escala, zmin=0, zmax=zmax,
         colorbar=barra, marker_opacity=0.45 if com_camadas else 0.85, showlegend=False, **comum,
@@ -383,6 +397,9 @@ FONTES = pd.DataFrame([
     {"Dado": "Unidades de saúde", "Origem": "Ministério da Saúde, CNES (API de dados abertos)",
      "Link": "https://apidadosabertos.saude.gov.br/cnes/estabelecimentos?codigo_municipio=250750",
      "Atualização da fonte": "cadastro mais recente atualizado em 16/10/2026", "Obtido em": "16/10/2026"},
+    {"Dado": "Matrículas por escola e etapa", "Origem": "INEP, microdados do Censo Escolar 2024",
+     "Link": "https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_2024.zip",
+     "Atualização da fonte": "Censo Escolar 2024 (arquivo de 07/2026)", "Obtido em": "24/10/2026"},
     {"Dado": "Renda e saneamento por bairro", "Origem": "IBGE, Censo 2022 (rendimento do responsável; características dos domicílios)",
      "Link": "https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/",
      "Atualização da fonte": "Censo 2022 (rendimento divulgado em 05/2026)", "Obtido em": "24/10/2026"},
@@ -427,6 +444,30 @@ EIXOS_RENDA = {
     "area_verde_m2_hab": ("Área verde por morador (m²/hab)", 1),
     "pct_esgoto_rede": ("Domicílios com esgoto na rede (%)", 1),
 }
+
+
+def secao_vagas(dados: dict) -> None:
+    ind, meta = dados["ind"], dados["meta"]
+    mat, media = meta["matriculas"], meta["media_cidade"]
+    st.header("Matrículas nas escolas públicas e crianças do bairro")
+    st.caption(
+        f"Matrículas do Censo Escolar {mat['ano']} (INEP) nas escolas públicas de cada bairro, comparadas com as "
+        "crianças e jovens que moram nele (Censo 2022). As faixas de idade do IBGE são de 5 em 5 anos e não "
+        "coincidem com as idades de cada etapa, e muitos alunos estudam fora do bairro onde moram: bairros com "
+        "escolas grandes e poucos moradores passam de 100 matrículas por criança. Leia como uma comparação, não "
+        "como falta ou sobra de vagas."
+    )
+    pp = mat["pct_publica"]
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Educação infantil, por 100 crianças de 0 a 4 anos", fmt_dec(media["vagas_infantil_por_100"], 1),
+              help=f"Creche e pré-escola públicas da cidade. {fmt_dec(pp['mat_creche'], 0)}% das matrículas em creche e "
+                   f"{fmt_dec(pp['mat_pre'], 0)}% das de pré-escola da cidade são em escola pública.")
+    c2.metric("Fundamental, por 100 crianças de 5 a 14 anos", fmt_dec(media["vagas_fund_por_100"], 1),
+              help=f"{fmt_dec(pp['mat_fund'], 0)}% das matrículas no fundamental da cidade são em escola pública.")
+    c3.metric("Médio, por 100 jovens de 15 a 19 anos", fmt_dec(media["vagas_medio_por_100"], 1),
+              help=f"{fmt_dec(pp['mat_medio'], 0)}% das matrículas no médio da cidade são em escola pública.")
+    st.caption("Números da cidade: todas as escolas públicas (também as sem coordenada e as fora dos bairros) ÷ crianças "
+               "dos 64 bairros. Para ver cada bairro, escolha a etapa em «Cor dos bairros», no mapa.")
 
 
 def secao_renda(dados: dict) -> None:
@@ -684,6 +725,7 @@ def main() -> None:
 
     secao_ranking(dados)
     secao_indice(dados)
+    secao_vagas(dados)
     secao_renda(dados)
     secao_gasto()
     secao_fontes(dados)

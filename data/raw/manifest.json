@@ -188,6 +188,13 @@
     "bytes": 2146634,
     "sha256": "e012a2194e6be3e973b68b95476b5ea0dd09b806fdd03c5b4ceada7dd80b0204"
   },
+  "inep/microdados_censo_escolar_2024.zip": {
+    "url": "https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_2024.zip",
+    "fonte": "INEP - Microdados do Censo Escolar da Educação Básica",
+    "baixado_em": "2026-10-24T12:03:59Z",
+    "bytes": 33829396,
+    "sha256": "ae29d81d45ddecef59e11eda39788cbfd30dfa1cc71be9d29f23051fc2d640db"
+  },
   "osm/escolas.json": {
     "url": "https://api.openstreetmap.org/api/0.6/node/6041727637.json ; https://api.openstreetmap.org/api/0.6/way/749962478/full.json",
     "fonte": "OpenStreetMap (Overpass API), © colaboradores do OpenStreetMap, ODbL",
