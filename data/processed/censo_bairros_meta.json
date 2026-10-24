@@ -16,10 +16,15 @@
       "variavel": "V00111",
       "descricao": "... que utilizam a rede geral de distribuição de água"
     },
-    "dom_esgoto_rede": {
+    "dom_esgoto_rede_direto": {
       "tabela": "domicilio2",
       "variavel": "V00309",
       "descricao": "... com esgoto na rede geral ou pluvial"
+    },
+    "dom_esgoto_fossa_rede": {
+      "tabela": "domicilio2",
+      "variavel": "V00310",
+      "descricao": "... com esgoto em fossa séptica ou fossa filtro ligada à rede"
     },
     "dom_lixo_coletado_porta": {
       "tabela": "domicilio2",
@@ -70,7 +75,8 @@
   "valores_sigilosos_X": {
     "domicilios": 0,
     "dom_agua_rede": 0,
-    "dom_esgoto_rede": 0,
+    "dom_esgoto_rede_direto": 0,
+    "dom_esgoto_fossa_rede": 0,
     "dom_lixo_coletado_porta": 0,
     "dom_lixo_cacamba": 0,
     "responsaveis": 0,
@@ -92,6 +98,7 @@
       "2507507064"
     ]
   },
+  "esgoto_rede": "ligado à rede: direto na rede geral ou pluvial (V00309) + fossa séptica ou fossa filtro ligada à rede (V00310)",
   "lixo_coletado": "coletado no domicílio (V00397) + depositado em caçamba de serviço de limpeza (V00398)",
   "renda": "rendimento nominal mensal das pessoas responsáveis COM rendimento (o IBGE não inclui responsáveis sem rendimento nessas médias e medianas); valores de 2022, sem correção"
 }

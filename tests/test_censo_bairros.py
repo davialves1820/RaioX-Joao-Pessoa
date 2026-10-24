@@ -40,6 +40,12 @@ def test_percentuais_entre_0_e_100(cen):
         assert cen.loc[cen.domicilios > 0, c].notna().all()
 
 
+def test_esgoto_ligado_a_rede_soma_as_duas_formas(cen):
+    # rede geral ou pluvial (V00309) + fossa séptica ligada à rede (V00310)
+    assert (cen.dom_esgoto_rede == cen.dom_esgoto_rede_direto + cen.dom_esgoto_fossa_rede).all()
+    assert (cen.dom_esgoto_rede.dropna() <= cen.domicilios.dropna()).all()
+
+
 def test_renda_coerente(cen, meta):
     r = cen.dropna(subset=["renda_mediana"])
     assert (r.renda_mediana > 0).all() and (r.renda_media > 0).all()
