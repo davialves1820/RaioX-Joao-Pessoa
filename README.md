@@ -79,6 +79,13 @@ deploy e uma versão nova pode quebrar o site sem mudança no código. Para atua
 O app lê apenas `data/processed/`; não é preciso rodar a coleta no deploy. Cada push na `main`
 atualiza o site.
 
+### No celular
+
+O Streamlit não informa a largura da tela, então o app usa o navegador (User-Agent) para reconhecer
+celulares. Neles, os mapas ficam mais baixos (460 px), com zoom menor para a cidade inteira caber na
+largura, e a escala de cor fica deitada no rodapé do mapa. As colunas empilham sozinhas, e a página não
+rola na horizontal (conferido a 390 px de largura); só as tabelas largas rolam dentro delas.
+
 ## Estrutura
 
 ```
@@ -268,8 +275,17 @@ escola e a UBS/USF mais próximas, área verde por habitante e um índice simple
 - **Detalhe do bairro:** índice e seus três componentes, distâncias e serviços por 10 mil habitantes,
   com a comparação com a média da cidade em palavras ("30% mais perto", "13% abaixo"), e a lista dos
   serviços que ficam no bairro.
+- **Comparar dois bairros:** em "Comparar com", escolha um segundo bairro; os dois aparecem lado a lado,
+  com a média da cidade como referência, e o segundo ganha contorno cinza no mapa.
+- **Link de um bairro:** a URL acompanha o bairro escolhido e a comparação, para compartilhar
+  (ex.: `.../servicos?bairro=mangabeira&comparar=bessa`; na página de bairros, que é a página inicial,
+  `.../?bairro=mangabeira`).
+  Acento e maiúsculas não importam; um nome que não existe abre o bairro padrão.
 - **Ranking:** bairros com mais moradores por escola ou UBS/USF, e a lista dos que não têm nenhum dos dois.
 - **Índice:** fórmula, explicação e tabela com os componentes de todos os bairros (com download em CSV).
+- **Gasto em saúde e educação:** valor empenhado nas funções Saúde e Educação (TCE-PB, corrigido pelo
+  IPCA, sem transferências entre órgãos) no último ano completo e por habitante desde 2009, com link para a
+  página de despesas. É o gasto da cidade toda: os empenhos não dizem o bairro, e nada é dividido por bairro.
 - **Fontes e limitações:** seção aberta no fim da página, com a tabela de fontes, os filtros de cada uma,
   as limitações, os pontos não atribuídos a bairro e os arquivos de origem (com SHA-256).
 - **Cores das camadas:** amarelo, violeta e vermelho para os pontos; verde-água para praças e parques;
@@ -395,6 +411,11 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
   índice é **relativo**: 100 seria o melhor bairro de João Pessoa nos três itens, não um padrão ideal.
   Os três componentes têm o mesmo peso, e a escolha é deliberadamente simples para que o número
   possa ser refeito à mão.
+- **Sensibilidade aos pesos:** o índice é recalculado com outros pesos (cada item com peso dobrado, sem
+  área verde, só escola, só UBS/USF), e o site mostra quanto o ranking muda: correlação de Spearman com o
+  ranking publicado, mudança média e máxima de posição, e quantos dos primeiros colocados continuam. Com
+  um item de peso dobrado, a correlação fica entre 0,93 e 0,98; tirar um item muda bem mais. A posição de
+  cada bairro em cada cenário está em `sensibilidade_indice.csv`.
 
 ### Limitações
 
@@ -431,6 +452,7 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
 | `pontos_nao_atribuidos.csv` | pontos sem coordenada ou fora dos bairros, com o motivo e o bairro pela malha da Prefeitura |
 | `areas_verdes.geojson` | praças e parques (simplificados em 1 m para o mapa), com área |
 | `matas_osm.geojson` | matas e áreas protegidas do OpenStreetMap recortadas pelo município (simplificadas em 2 m), com tipo, nome, área e id do OSM |
+| `sensibilidade_indice.csv` | posição de cada bairro no índice em cada cenário de pesos |
 | `metadados.json` | funil de filtros, pontos por status, conferência das praças, áreas verdes, matas, médias da cidade, setores e manifesto dos arquivos brutos |
 
 ---

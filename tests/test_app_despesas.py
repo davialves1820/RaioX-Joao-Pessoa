@@ -89,3 +89,16 @@ def test_meses_de_pico_usa_so_anos_completos():
     pico, anos = d.meses_de_pico(df, "empenhado", dados["meta"])
     assert all(d.anos_comparaveis(a, dados["meta"]) for a in anos)
     assert pico.sum() == len(anos)
+
+
+def test_gasto_por_funcao_bate_com_o_cubo():
+    dados = d.carregar()
+    g = d.gasto_por_funcao(dados["cubo"], dados["populacao"], dados["meta"])
+    assert all(d.anos_comparaveis(int(a), dados["meta"]) for a in g.index)
+    base = d.filtrar(dados["cubo"], "Todos", sem_intra=True)
+    for funcao in ["Saúde", "Educação"]:
+        esperado = base[base.funcao == funcao].groupby("ano")["empenhado_corrigido"].sum()
+        assert (g[funcao] - esperado.reindex(g.index)).abs().max() < 0.01
+    # sem população oficial em 2023: valor por habitante vazio
+    if 2023 in g.index:
+        assert pd.isna(g.loc[2023, "Saúde por habitante"])
