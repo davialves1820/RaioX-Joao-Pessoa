@@ -1,0 +1,97 @@
+{
+  "arquivos": {
+    "demografia": "ibge_censo2022/Agregados_por_bairros_demografia_BR.zip",
+    "domicilio1": "ibge_censo2022/Agregados_por_bairros_caracteristicas_domicilio1_BR_20261021.zip",
+    "domicilio2": "ibge_censo2022/Agregados_por_bairros_caracteristicas_domicilio2_BR_20250417.zip",
+    "renda": "ibge_censo2022/Agregados_por_bairros_renda_responsavel_BR_20260508_csv.zip"
+  },
+  "variaveis": {
+    "domicilios": {
+      "tabela": "domicilio1",
+      "variavel": "V00001",
+      "descricao": "Domicílios particulares permanentes ocupados"
+    },
+    "dom_agua_rede": {
+      "tabela": "domicilio2",
+      "variavel": "V00111",
+      "descricao": "... que utilizam a rede geral de distribuição de água"
+    },
+    "dom_esgoto_rede": {
+      "tabela": "domicilio2",
+      "variavel": "V00309",
+      "descricao": "... com esgoto na rede geral ou pluvial"
+    },
+    "dom_lixo_coletado_porta": {
+      "tabela": "domicilio2",
+      "variavel": "V00397",
+      "descricao": "... com lixo coletado no domicílio por serviço de limpeza"
+    },
+    "dom_lixo_cacamba": {
+      "tabela": "domicilio2",
+      "variavel": "V00398",
+      "descricao": "... com lixo depositado em caçamba de serviço de limpeza"
+    },
+    "responsaveis": {
+      "tabela": "renda",
+      "variavel": "V06001",
+      "descricao": "Pessoas responsáveis por domicílios particulares permanentes ocupados"
+    },
+    "renda_media": {
+      "tabela": "renda",
+      "variavel": "V06004",
+      "descricao": "Rendimento nominal médio mensal das pessoas responsáveis com rendimento"
+    },
+    "renda_mediana": {
+      "tabela": "renda",
+      "variavel": "V06006",
+      "descricao": "Rendimento nominal mediano mensal das pessoas responsáveis com rendimento"
+    },
+    "pop_0a4": {
+      "tabela": "demografia",
+      "variavel": "V01031",
+      "descricao": "Pessoas de 0 a 4 anos"
+    },
+    "pop_5a9": {
+      "tabela": "demografia",
+      "variavel": "V01032",
+      "descricao": "Pessoas de 5 a 9 anos"
+    },
+    "pop_10a14": {
+      "tabela": "demografia",
+      "variavel": "V01033",
+      "descricao": "Pessoas de 10 a 14 anos"
+    },
+    "pop_15a19": {
+      "tabela": "demografia",
+      "variavel": "V01034",
+      "descricao": "Pessoas de 15 a 19 anos"
+    }
+  },
+  "valores_sigilosos_X": {
+    "domicilios": 0,
+    "dom_agua_rede": 0,
+    "dom_esgoto_rede": 0,
+    "dom_lixo_coletado_porta": 0,
+    "dom_lixo_cacamba": 0,
+    "responsaveis": 0,
+    "renda_media": 0,
+    "renda_mediana": 0,
+    "pop_0a4": 0,
+    "pop_5a9": 0,
+    "pop_10a14": 0,
+    "pop_15a19": 0
+  },
+  "bairros_sem_linha": {
+    "responsaveis": [
+      "2507507064"
+    ],
+    "renda_media": [
+      "2507507064"
+    ],
+    "renda_mediana": [
+      "2507507064"
+    ]
+  },
+  "lixo_coletado": "coletado no domicílio (V00397) + depositado em caçamba de serviço de limpeza (V00398)",
+  "renda": "rendimento nominal mensal das pessoas responsáveis COM rendimento (o IBGE não inclui responsáveis sem rendimento nessas médias e medianas); valores de 2022, sem correção"
+}

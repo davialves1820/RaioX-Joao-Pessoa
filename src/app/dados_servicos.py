@@ -45,9 +45,14 @@ def carregar(pasta: Path = PASTA) -> dict:
     matas = json.loads((pasta / "matas_osm.geojson").read_text(encoding="utf-8"))
     for i, f in enumerate(matas["features"]):
         f["id"] = str(i)
+    ind = pd.read_csv(pasta / "indicadores_servicos.csv", dtype={"cd_bairro": str})
+    # renda e saneamento do Censo 2022 por bairro (src.process.censo_bairros)
+    censo = pd.read_csv(pasta.parent / "censo_bairros.csv", dtype={"cd_bairro": str})
+    ind = ind.merge(censo[["cd_bairro", "renda_mediana", "pct_agua_rede", "pct_esgoto_rede", "pct_lixo_coletado"]],
+                    on="cd_bairro", how="left")
     return {
         "matas": matas,
-        "ind": pd.read_csv(pasta / "indicadores_servicos.csv", dtype={"cd_bairro": str}),
+        "ind": ind,
         "pontos": pd.DataFrame(pontos.drop(columns="geometry")),
         "nao_atribuidos": pd.read_csv(pasta / "pontos_nao_atribuidos.csv"),
         "verdes": verdes,
@@ -122,6 +127,8 @@ INDICADORES_COMPARACAO = [
     ("UBS/USF por 10 mil hab.", "ubs_usf_por_10mil", "ubs_usf_por_10mil", 2, ""),
     ("Equipes de Saúde da Família por 10 mil hab.", "equipes_esf_por_10mil", "equipes_esf_por_10mil", 2, ""),
     ("Área verde por morador", "area_verde_m2_hab", "area_verde_m2_hab", 1, " m²/hab"),
+    ("Renda mediana do responsável (R$, 2022)", "renda_mediana", None, 0, ""),
+    ("Domicílios com esgoto na rede (%)", "pct_esgoto_rede", None, 1, ""),
     ("Praças", "pracas", None, 0, ""),
     ("Parques", "parques", None, 0, ""),
 ]
@@ -148,3 +155,8 @@ def tabela_comparacao(a: pd.Series, b: pd.Series, media: dict) -> pd.DataFrame:
             "Cidade": f(media[col_media], casas, suf) if col_media else "—",
         })
     return pd.DataFrame(linhas)
+
+
+def correlacao_spearman(x: pd.Series, y: pd.Series) -> float:
+    """Spearman = Pearson entre as posições (empates com posição média); sem depender do scipy."""
+    return float(pd.Series(x).rank().corr(pd.Series(y).rank()))
