@@ -95,16 +95,6 @@ def _layout(fig: go.Figure, altura: int = 360, eixo_y: str = "") -> go.Figure:
     return fig
 
 
-def _reais(serie: pd.Series) -> pd.Series:
-    """Coluna de valores formatada em R$ no padrão brasileiro (para tabelas)."""
-    return serie.map(d.fmt_reais_inteiro)
-
-
-def _pct(serie: pd.Series, casas: int = 1, sinal: bool = False) -> pd.Series:
-    fmt = f"{{:+.{casas}f}}%" if sinal else f"{{:.{casas}f}}%"
-    return serie.map(lambda v: "—" if pd.isna(v) else fmt.format(v).replace(".", ",").replace("-", "−"))
-
-
 def _rotulo_valor(corrigido: bool, meta: dict) -> str:
     if corrigido:
         ano, mes = meta["ipca"]["mes_referencia"].split("-")
@@ -255,11 +245,13 @@ def aba_por_area(df, col, corrigido, meta):
 
     totais_ant = df[df["ano"] == ano - 1].groupby("funcao")[col].sum()
     tot_f = tot_f.sort_values(ascending=False)
-    tabela = pd.DataFrame({"Valor": _reais(tot_f), "% do total": _pct(100 * tot_f / total)})
+    tabela = pd.DataFrame({"Valor": tot_f, "% do total": 100 * tot_f / total})
+    variacao = f"Variação frente a {ano - 1}"
     if d.anos_comparaveis(ano, meta) and d.anos_comparaveis(ano - 1, meta) and len(totais_ant):
-        tabela[f"Variação frente a {ano - 1}"] = _pct(100 * (tot_f / totais_ant.reindex(tot_f.index) - 1), sinal=True)
+        tabela[variacao] = 100 * (tot_f / totais_ant.reindex(tot_f.index) - 1)
     tabela = tabela.rename_axis("Área (função)")
-    st.dataframe(tabela, width="stretch")
+    st.dataframe(dados_bairros.tabela_br(tabela, reais=["Valor"], pct={"% do total": 1}, pct_sinal={variacao: 1}),
+                 width="stretch")
 
     st.subheader("Uma área ao longo dos anos")
     st.caption("Escolha uma área para ver como o valor mudou desde 2009. Barras claras: 2016 (incompleto) e ano em andamento.")
@@ -340,7 +332,9 @@ def aba_fornecedores(dados, metrica, corrigido, meta, poder):
             po = r["por_orgao"]
             po = po[po > 0]
             st.dataframe(
-                pd.DataFrame({"Órgão": [UNIDADES_GESTORAS[c][0] for c in po.index], "Valor": _reais(po).values}),
+                dados_bairros.tabela_br(
+                    pd.DataFrame({"Órgão": [UNIDADES_GESTORAS[c][0] for c in po.index], "Valor": po.values}),
+                    reais=["Valor"]),
                 hide_index=True, width="stretch",
             )
         st.caption("Arquivos de origem (TCE-PB): " + ", ".join(r["arquivos"]))
@@ -372,7 +366,8 @@ def aba_licitacao(df, col, corrigido, meta):
     st.plotly_chart(fig, config={"displayModeBar": False})
     st.caption("2016 está incompleto no TCE-PB; o ano em andamento é parcial. As participações são proporções do próprio ano.")
     with st.expander("Ver em tabela"):
-        st.dataframe(part.apply(_pct).rename_axis("Ano"), width="stretch")
+        st.dataframe(dados_bairros.tabela_br(part.rename_axis("Ano"), pct={c: 1 for c in part.columns}),
+                     width="stretch")
 
 
 def aba_mapa(dados, geo, corrigido, meta):
@@ -439,7 +434,8 @@ def aba_mapa(dados, geo, corrigido, meta):
     )
     t = v.sort_values(col, ascending=False)
     st.dataframe(
-        pd.DataFrame({"Bairro": t["nm_bairro"].values, "Valor citado": _reais(t[col]).values}),
+        dados_bairros.tabela_br(pd.DataFrame({"Bairro": t["nm_bairro"].values, "Valor citado": t[col].values}),
+                                reais=["Valor citado"]),
         hide_index=True, width="stretch",
     )
 
@@ -469,11 +465,11 @@ valor é nominal ou corrigido.
     st.dataframe(
         pd.DataFrame({
             "Ano": v["ano"].astype(str).values,
-            "TCE-PB": _reais(v["tce_empenhado"]).values,
-            "SICONFI": _reais(v["siconfi_empenhado"]).values,
-            "Diferença": _pct(v["diferenca_pct"], 2, sinal=True).values,
+            "TCE-PB": v["tce_empenhado"].values,
+            "SICONFI": v["siconfi_empenhado"].values,
+            "Diferença": v["diferenca_pct"].values,
             "Situação": v["Situação"].values,
-        }),
+        }).pipe(dados_bairros.tabela_br, reais=["TCE-PB", "SICONFI"], pct_sinal={"Diferença": 2}),
         hide_index=True, width="stretch",
     )
     arquivos = pd.DataFrame(

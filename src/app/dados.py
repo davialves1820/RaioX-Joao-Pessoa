@@ -91,6 +91,38 @@ def fmt_var_pct(v) -> str:
     return ("+" if v > 0 else "−" if v < 0 else "") + fmt_dec(abs(float(v))) + "%"
 
 
+def fmt_pct(v, casas: int = 1, sinal: bool = False) -> str:
+    if pd.isna(v):
+        return "—"
+    if sinal:
+        return ("+" if v > 0 else "−" if v < 0 else "") + fmt_dec(abs(float(v)), casas) + "%"
+    return fmt_dec(v, casas) + "%"
+
+
+def fmt_reais(v) -> str:
+    """R$ com centavos: 'R$ 1.234.567,89'."""
+    if pd.isna(v):
+        return "—"
+    return ("−" if v < 0 else "") + "R$ " + fmt_dec(abs(float(v)), 2)
+
+
+def tabela_br(df: pd.DataFrame, inteiros=(), decimais: dict | None = None, pct: dict | None = None,
+              pct_sinal: dict | None = None, reais=(), variacao_int=()):
+    """Mostra os números no padrão brasileiro (14.226; 12,8) sem transformá-los em texto.
+
+    O formato "localized" do Streamlit segue o idioma do navegador; aqui o formato é fixo. Como só a
+    exibição muda (pandas Styler), a ordenação das colunas continua numérica. Não use `format` no
+    `column_config` dessas colunas: ele tem precedência sobre o Styler.
+    """
+    fmt = {c: (lambda v: fmt_int(v if pd.isna(v) else round(v))) for c in inteiros}
+    fmt |= {c: (lambda v, k=k: fmt_dec(v, k)) for c, k in (decimais or {}).items()}
+    fmt |= {c: (lambda v, k=k: fmt_pct(v, k)) for c, k in (pct or {}).items()}
+    fmt |= {c: (lambda v, k=k: fmt_pct(v, k, sinal=True)) for c, k in (pct_sinal or {}).items()}
+    fmt |= {c: fmt_reais for c in reais}
+    fmt |= {c: fmt_var_int for c in variacao_int}
+    return df.style.format(fmt, na_rep="—")
+
+
 def rotulo(ind_row) -> str:
     """Nome do bairro com marca † quando a variação é comparável só com ressalva."""
     return ind_row.nm_bairro + (" †" if ind_row.comparabilidade == COM_RESSALVA else "")
