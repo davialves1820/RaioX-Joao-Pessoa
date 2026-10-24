@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import re
+import unicodedata
 from pathlib import Path
 
 import pandas as pd
@@ -61,6 +63,46 @@ def posicao(ind: pd.DataFrame, cd_bairro: str, coluna: str) -> tuple[int, int] |
         return None
     ordem = validos[coluna].rank(ascending=False, method="min")
     return int(ordem[validos.cd_bairro == cd_bairro].iloc[0]), len(validos)
+
+
+# --- celular
+
+
+def eh_celular(user_agent: str | None) -> bool:
+    """O Streamlit não informa a largura da tela; o navegador (User-Agent) diz se é celular."""
+    ua = user_agent or ""
+    return any(m in ua for m in ("Mobi", "Android", "iPhone"))
+
+
+def ajuste_mapa(celular: bool, altura: int, zoom: float) -> dict:
+    """Altura, zoom e posição da escala de cor do mapa conforme a tela.
+
+    No celular o mapa é mais baixo (sobra tela para rolar a página com o dedo), o zoom é menor (a
+    cidade inteira cabe na largura) e a escala de cor fica deitada no rodapé, sem cobrir os bairros.
+    """
+    if not celular:
+        return {"altura": altura, "zoom": zoom,
+                "barra": dict(thickness=12, len=0.45, x=0.985, xanchor="right", y=0.97, yanchor="top")}
+    return {"altura": 460, "zoom": zoom - 1.15,
+            "barra": dict(orientation="h", thickness=8, len=0.7, x=0.5, xanchor="center", y=0.09, yanchor="bottom")}
+
+
+# --- bairro na URL (?bairro=mangabeira)
+
+
+def slug(nome: str) -> str:
+    """'Água Fria' -> 'agua-fria' (para o link de um bairro)."""
+    s = unicodedata.normalize("NFKD", str(nome)).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+
+
+def codigo_por_slug(ind: pd.DataFrame, texto: str | None) -> str | None:
+    """Código do bairro a partir do texto da URL (sem acento, maiúsculas ou espaços importarem); None se não achar."""
+    if not texto:
+        return None
+    alvo = slug(texto)
+    achados = ind.loc[ind["nm_bairro"].map(slug) == alvo, "cd_bairro"]
+    return achados.iloc[0] if len(achados) else None
 
 
 # --- formatação pt-BR

@@ -215,3 +215,18 @@ def test_matas_ficam_fora_do_indice_e_dentro_do_municipio(ind, meta):
     assert ind["area_verde_m2"].sum() <= meta["areas_verdes"]["area_sem_sobreposicao_m2"] + 1
     # a soma das matas não passa da área do município (210 km²)
     assert meta["matas_osm"]["area_uniao_ha"] < 21100
+
+
+def test_pesos_iguais_reproduzem_o_indice_publicado(ind):
+    assert (sv.indice_acesso(ind, (1, 1, 1)) == ind["indice_acesso"]).all()
+    assert (sv.indice_acesso(ind, (2, 2, 2)) == ind["indice_acesso"]).all()
+
+
+def test_sensibilidade_do_indice(ind, meta):
+    sens = {c["cenario"]: c for c in meta["sensibilidade_indice"]}
+    base = sens["pesos iguais (publicado)"]
+    assert base["correlacao_spearman"] == 1 and base["mudanca_maxima_posicoes"] == 0
+    assert all(-1 <= c["correlacao_spearman"] <= 1 for c in sens.values())
+    pos = pd.read_csv(SAIDA / "sensibilidade_indice.csv", dtype={"cd_bairro": str})
+    assert set(pos.cd_bairro) == set(ind.cd_bairro)
+    assert pos.drop(columns=["cd_bairro", "nm_bairro"]).isin(range(1, 65)).all().all()

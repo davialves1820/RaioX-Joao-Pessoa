@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-23T14:57:00Z",
+  "gerado_em": "2026-10-24T11:13:46Z",
   "crs_calculos": "EPSG:31985",
   "funil": {
     "escolas": {
@@ -154,6 +154,106 @@
       }
     ]
   },
+  "sensibilidade_indice": [
+    {
+      "cenario": "pesos iguais (publicado)",
+      "pesos": [
+        1,
+        1,
+        1
+      ],
+      "correlacao_spearman": 1.0,
+      "mudanca_media_posicoes": 0.0,
+      "mudanca_maxima_posicoes": 0,
+      "bairros_que_mudam_mais_de_10_posicoes": 0,
+      "top10_publicado": 11,
+      "top10_mantidos": 11
+    },
+    {
+      "cenario": "escola com peso dobrado",
+      "pesos": [
+        2,
+        1,
+        1
+      ],
+      "correlacao_spearman": 0.968,
+      "mudanca_media_posicoes": 3.5,
+      "mudanca_maxima_posicoes": 13,
+      "bairros_que_mudam_mais_de_10_posicoes": 3,
+      "top10_publicado": 11,
+      "top10_mantidos": 9
+    },
+    {
+      "cenario": "UBS/USF com peso dobrado",
+      "pesos": [
+        1,
+        2,
+        1
+      ],
+      "correlacao_spearman": 0.976,
+      "mudanca_media_posicoes": 3.2,
+      "mudanca_maxima_posicoes": 11,
+      "bairros_que_mudam_mais_de_10_posicoes": 1,
+      "top10_publicado": 11,
+      "top10_mantidos": 9
+    },
+    {
+      "cenario": "área verde com peso dobrado",
+      "pesos": [
+        1,
+        1,
+        2
+      ],
+      "correlacao_spearman": 0.928,
+      "mudanca_media_posicoes": 5.3,
+      "mudanca_maxima_posicoes": 17,
+      "bairros_que_mudam_mais_de_10_posicoes": 9,
+      "top10_publicado": 11,
+      "top10_mantidos": 8
+    },
+    {
+      "cenario": "sem área verde",
+      "pesos": [
+        1,
+        1,
+        0
+      ],
+      "correlacao_spearman": 0.871,
+      "mudanca_media_posicoes": 7.8,
+      "mudanca_maxima_posicoes": 17,
+      "bairros_que_mudam_mais_de_10_posicoes": 23,
+      "top10_publicado": 11,
+      "top10_mantidos": 7
+    },
+    {
+      "cenario": "só escola",
+      "pesos": [
+        1,
+        0,
+        0
+      ],
+      "correlacao_spearman": 0.753,
+      "mudanca_media_posicoes": 10.3,
+      "mudanca_maxima_posicoes": 35,
+      "bairros_que_mudam_mais_de_10_posicoes": 27,
+      "top10_publicado": 11,
+      "top10_mantidos": 5
+    },
+    {
+      "cenario": "só UBS/USF",
+      "pesos": [
+        0,
+        1,
+        0
+      ],
+      "correlacao_spearman": 0.806,
+      "mudanca_media_posicoes": 9.3,
+      "mudanca_maxima_posicoes": 29,
+      "bairros_que_mudam_mais_de_10_posicoes": 25,
+      "top10_publicado": 11,
+      "top10_mantidos": 7
+    }
+  ],
   "media_cidade": {
     "pop_bairros": 830789,
     "escolas_por_10mil": 3.42,

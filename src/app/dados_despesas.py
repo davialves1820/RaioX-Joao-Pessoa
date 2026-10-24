@@ -73,6 +73,21 @@ def meses_de_pico(df: pd.DataFrame, col: str, meta: dict) -> tuple[pd.Series, li
     return mensal.idxmax(axis=1).value_counts(), [int(a) for a in anos]
 
 
+def gasto_por_funcao(cubo: pd.DataFrame, populacao: pd.DataFrame, meta: dict,
+                     funcoes=("Saúde", "Educação"), col: str = "empenhado_corrigido") -> pd.DataFrame:
+    """Valor empenhado (corrigido pelo IPCA) e por habitante de cada função, por ano completo.
+
+    Sem as transferências entre órgãos do município (dupla contagem). Anos incompletos ou em
+    andamento ficam de fora; anos sem população oficial (2023) ficam sem valor por habitante.
+    """
+    df = filtrar(cubo, "Todos", sem_intra=True)
+    df = df[df["funcao"].isin(funcoes) & df["ano"].map(lambda a: anos_comparaveis(int(a), meta))]
+    tot = df.groupby(["ano", "funcao"])[col].sum().unstack("funcao").reindex(columns=list(funcoes))
+    pop = populacao.set_index("ano")["populacao"].reindex(tot.index)
+    out = tot.join(tot.div(pop, axis=0).round(2).add_suffix(" por habitante"))
+    return out.rename_axis("ano")
+
+
 def total_por_ano(df: pd.DataFrame, col: str) -> pd.Series:
     return df.groupby("ano")[col].sum()
 

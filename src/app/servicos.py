@@ -6,7 +6,10 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+import json
+
 from src.app import dados as dados_bairros
+from src.app import dados_despesas
 from src.app import dados_servicos as d
 from src.app.app import AZUL_SEQ, CENTRO_MAPA, SUPERFICIE, TINTA, TINTA_2, ZOOM_MAPA
 
@@ -52,6 +55,15 @@ def _carregar():
     return d.carregar(), dados_bairros.carregar_geojson()
 
 
+@st.cache_data
+def _gasto_saude_educacao():
+    pasta = dados_despesas.PASTA
+    meta = json.loads((pasta / "metadados.json").read_text(encoding="utf-8"))
+    cubo = pd.read_parquet(pasta / "despesas_cubo.parquet",
+                           columns=["ano", "funcao", "intra", "poder", "empenhado_corrigido"])
+    return dados_despesas.gasto_por_funcao(cubo, pd.read_csv(pasta / "populacao.csv"), meta), meta
+
+
 def _hover_bairro(ind: pd.DataFrame) -> pd.Series:
     def linha(r):
         hab = "sem escola nem UBS/USF" if r.sem_escola_nem_ubs else f"{fmt_int(r.hab_por_equipamento)} hab. por escola ou UBS/USF"
@@ -80,14 +92,16 @@ def _hover_ponto(p: pd.DataFrame) -> pd.Series:
 
 
 def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verde: bool,
-                selecionado: str | None, matas: bool = False) -> go.Figure:
+                selecionado: str | None, matas: bool = False, comparado: str | None = None,
+                celular: bool = False) -> go.Figure:
+    aj = dados_bairros.ajuste_mapa(celular, ALTURA_MAPA, ZOOM_MAPA)
     ind = dados["ind"].assign(hover=lambda x: _hover_bairro(x))
     fig = go.Figure()
     com_camadas = bool(camadas) or verde or matas
     comum = dict(geojson=geo, featureidkey="properties.cd_bairro", hovertemplate="%{hovertext}<extra></extra>",
                  marker_line_color=SUPERFICIE, marker_line_width=1)
-    barra = dict(thickness=12, len=0.4, outlinewidth=0, tickfont=dict(color=TINTA_2), x=0.985, xanchor="right",
-                 y=0.97, yanchor="top", bgcolor="rgba(252,252,251,0.85)", xpad=10, ypad=10, tickformat=",.0f")
+    barra = dict(**aj["barra"], outlinewidth=0, tickfont=dict(color=TINTA_2), bgcolor="rgba(252,252,251,0.85)",
+                 xpad=10, ypad=10, tickformat=",.0f")
     escala = [[i / (len(AZUL_SEQ) - 1), c] for i, c in enumerate(AZUL_SEQ)]
 
     base = ind[ind[indicador].notna()]
@@ -151,6 +165,12 @@ def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verd
             fig.add_trace(go.Scattermap(lat=p.lat, lon=p.lon, mode="markers", hoverinfo="skip", showlegend=False,
                                         marker=dict(size=tam - 5, color=SUPERFICIE)))
 
+    if comparado and comparado != selecionado:
+        fig.add_trace(go.Choroplethmap(
+            locations=[comparado], z=[0], colorscale=[[0, "rgba(0,0,0,0)"], [1, "rgba(0,0,0,0)"]],
+            showscale=False, showlegend=False, hoverinfo="skip", geojson=geo, featureidkey="properties.cd_bairro",
+            marker_line_color=TINTA_2, marker_line_width=3,
+        ))
     if selecionado:
         fig.add_trace(go.Choroplethmap(
             locations=[selecionado], z=[0], colorscale=[[0, "rgba(0,0,0,0)"], [1, "rgba(0,0,0,0)"]],
@@ -159,9 +179,10 @@ def figura_mapa(dados: dict, geo: dict, indicador: str, camadas: list[str], verd
         ))
 
     fig.update_layout(
-        map=dict(style="carto-positron", center=CENTRO_MAPA, zoom=ZOOM_MAPA),
-        margin=dict(l=0, r=0, t=0, b=0), height=ALTURA_MAPA, separators=",.",
+        map=dict(style="carto-positron", center=CENTRO_MAPA, zoom=aj["zoom"]),
+        margin=dict(l=0, r=0, t=0, b=0), height=aj["altura"], separators=",.",
         legend=dict(x=0.015, y=0.97, xanchor="left", yanchor="top", bgcolor="rgba(252,252,251,0.9)",
+                    font_size=10 if celular else None,
                     font=dict(color=TINTA), borderwidth=0),
     )
     return fig
@@ -303,6 +324,37 @@ def secao_indice(dados: dict) -> None:
     st.download_button("Baixar CSV", (d.PASTA / "indicadores_servicos.csv").read_bytes(),
                        file_name="servicos_bairros_joao_pessoa.csv", mime="text/csv")
 
+    st.subheader("O resultado depende dos pesos?")
+    sens = pd.DataFrame(dados["meta"]["sensibilidade_indice"])
+    dobrados = sens[sens.cenario.str.contains("dobrado")]
+    st.markdown(
+        "Pesos iguais são uma escolha. Para ver o quanto ela pesa, o índice foi recalculado com outros pesos. "
+        f"Dobrando o peso de um dos três itens, a ordem dos bairros quase não muda: a correlação com o ranking "
+        f"publicado fica entre {fmt_dec(dobrados.correlacao_spearman.min(), 2)} e "
+        f"{fmt_dec(dobrados.correlacao_spearman.max(), 2)} (1 = mesma ordem), e os bairros mudam em média "
+        f"{fmt_dec(dobrados.mudanca_media_posicoes.min(), 1)} a {fmt_dec(dobrados.mudanca_media_posicoes.max(), 1)} "
+        "posições. Tirar um item muda bem mais, o que mostra que cada um acrescenta informação."
+    )
+    tab = sens.assign(pesos=sens.pesos.map(lambda p: " · ".join(str(x) for x in p)))
+    n_top = int(sens.top10_publicado.iloc[0])
+    st.dataframe(
+        dados_bairros.tabela_br(
+            tab[["cenario", "pesos", "correlacao_spearman", "mudanca_media_posicoes", "mudanca_maxima_posicoes",
+                 "bairros_que_mudam_mais_de_10_posicoes", "top10_mantidos"]],
+            decimais={"correlacao_spearman": 2, "mudanca_media_posicoes": 1}),
+        hide_index=True, width="stretch",
+        column_config={
+            "cenario": "Cenário", "pesos": "Pesos (escola · UBS · verde)",
+            "correlacao_spearman": "Correlação", "mudanca_media_posicoes": "Mudança média",
+            "mudanca_maxima_posicoes": "Maior mudança", "bairros_que_mudam_mais_de_10_posicoes": "Mudam > 10 posições",
+            "top10_mantidos": f"Dos {n_top} primeiros, continuam",
+        },
+    )
+    st.caption("Correlação de Spearman com o ranking publicado (1 = mesma ordem); mudanças em número de posições, "
+               "entre os 64 bairros. "
+               + (f"Os primeiros colocados são {n_top}, e não 10, por empate na 10ª posição. " if n_top != 10 else "")
+               + "A posição de cada bairro em cada cenário está em data/processed/servicos/sensibilidade_indice.csv.")
+
 
 def _status_total(meta: dict, camada: str) -> dict:
     tot: dict = {}
@@ -347,6 +399,45 @@ def _matas_nomeadas(mt: dict) -> str:
 def _parques_novos(mt: dict) -> str:
     p = mt.get("parques_osm_fora_do_cadastro", [])
     return (", como " + ", ".join(f"{x['nome']} ({fmt_dec(x['ha'], 1)} ha)" for x in p[:5])) if p else ""
+
+
+def secao_gasto() -> None:
+    g, meta = _gasto_saude_educacao()
+    ano = int(g.index.max())
+    ultimo = g.loc[ano]
+    st.header("Quanto a Prefeitura gasta em saúde e educação")
+    ano_ref, mes_ref = meta["ipca"]["mes_referencia"].split("-")
+    st.caption(
+        f"Valor empenhado pelos órgãos municipais nas funções Saúde e Educação, declarado ao TCE-PB, corrigido pelo "
+        f"IPCA (R\\$ de {mes_ref}/{ano_ref}), sem transferências entre órgãos do município. É o gasto da cidade toda: "
+        "os empenhos não dizem em que bairro o dinheiro foi usado, por isso não há valor por bairro."
+    )
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric(f"Saúde em {ano}", dados_despesas.fmt_reais(ultimo["Saúde"]))
+    c2.metric("Por habitante", dados_bairros.fmt_reais(ultimo["Saúde por habitante"]))
+    c3.metric(f"Educação em {ano}", dados_despesas.fmt_reais(ultimo["Educação"]))
+    c4.metric("Por habitante", dados_bairros.fmt_reais(ultimo["Educação por habitante"]))
+    fig = go.Figure()
+    for funcao, cor in [("Saúde", COR_CAMADA["ubs"]), ("Educação", COR_CAMADA["escolas"])]:
+        # anos sem valor (2016 incompleto, 2023 sem população) ficam como lacuna na linha
+        serie = g[f"{funcao} por habitante"].reindex(range(int(g.index.min()), ano + 1))
+        fig.add_trace(go.Scatter(
+            x=serie.index, y=serie.values, mode="lines+markers", name=funcao, line=dict(color=cor, width=2),
+            connectgaps=False,
+            marker=dict(size=8, color=cor, line=dict(color=SUPERFICIE, width=2)),
+            hovertext=[f"<b>{funcao} {a}</b><br>{dados_bairros.fmt_reais(v)} por habitante" for a, v in serie.items()],
+            hovertemplate="%{hovertext}<extra></extra>",
+        ))
+        fig.add_annotation(x=ano, y=serie.loc[ano], text=funcao, showarrow=False, xanchor="left",
+                           xshift=10, font=dict(color=TINTA))
+    fig.update_layout(height=320, margin=dict(l=0, r=70, t=10, b=0), separators=",.", showlegend=True,
+                      legend=dict(orientation="h", y=1.08, x=0), plot_bgcolor="rgba(0,0,0,0)",
+                      yaxis=dict(title="R$ por habitante", gridcolor="#e7e6e2", tickformat=",.0f"),
+                      xaxis=dict(showgrid=False, dtick=2))
+    st.plotly_chart(fig, config={"displayModeBar": False})
+    st.caption("Só anos completos: sem ponto em 2016 (incompleto no TCE-PB) e no ano em andamento (parcial). Sem "
+               "ponto em 2023: o IBGE não publicou estimativa de população para esse ano.")
+    st.markdown("Gasto por área, fornecedores e licitações na página **Para onde vai o dinheiro**.")
 
 
 def secao_fontes(dados: dict) -> None:
@@ -429,6 +520,29 @@ def secao_fontes(dados: dict) -> None:
         st.caption(f"Dados processados em {meta['gerado_em']} (UTC). Metodologia completa no README do repositório.")
 
 
+def _atualizar_link(nomes: pd.Series) -> None:
+    """Mantém o link da página com o bairro escolhido (e o comparado), para poder compartilhar."""
+    st.query_params["bairro"] = dados_bairros.slug(nomes[st.session_state.bairro_servicos])
+    if st.session_state.comparar_servicos:
+        st.query_params["comparar"] = dados_bairros.slug(nomes[st.session_state.comparar_servicos])
+    elif "comparar" in st.query_params:
+        del st.query_params["comparar"]
+
+
+def secao_comparacao(dados: dict, a: str, b: str) -> None:
+    ind, media = dados["ind"].set_index("cd_bairro"), dados["meta"]["media_cidade"]
+    ra, rb = ind.loc[a], ind.loc[b]
+    st.divider()
+    st.header(f"{ra.nm_bairro} e {rb.nm_bairro}")
+    st.caption("Os dois bairros lado a lado, com a média da cidade como referência. No mapa, o primeiro tem "
+               "contorno preto e o segundo, cinza.")
+    tab = d.tabela_comparacao(ra, rb, media)
+    st.dataframe(tab, hide_index=True, width="stretch", height=35 * (len(tab) + 1) + 3)
+    st.caption("Distâncias: média em linha reta, ponderada pela população dos setores censitários. "
+               "Na coluna Cidade, o índice é a mediana dos 64 bairros. "
+               "Os serviços contam só escolas públicas e unidades do SUS.")
+
+
 def main() -> None:
     dados, geo = _carregar()
     ind = dados["ind"]
@@ -445,8 +559,12 @@ def main() -> None:
     )
 
     nomes = ind.sort_values("nm_bairro").set_index("cd_bairro").nm_bairro
+    # Bairro e comparação vêm do link (?bairro=mangabeira&comparar=bessa) na primeira carga da página
     if "bairro_servicos" not in st.session_state:
-        st.session_state.bairro_servicos = ind.loc[ind.pop_2022.idxmax(), "cd_bairro"]
+        st.session_state.bairro_servicos = (dados_bairros.codigo_por_slug(ind, st.query_params.get("bairro"))
+                                            or ind.loc[ind.pop_2022.idxmax(), "cd_bairro"])
+    if "comparar_servicos" not in st.session_state:
+        st.session_state.comparar_servicos = dados_bairros.codigo_por_slug(ind, st.query_params.get("comparar")) or ""
 
     col_mapa, col_det = st.columns([7, 3], gap="medium")
     with col_mapa:
@@ -457,7 +575,9 @@ def main() -> None:
                            default=["escolas", "ubs"])
         evento = st.plotly_chart(
             figura_mapa(dados, geo, indicador, [c for c in ligadas if c in d.CAMADAS], "verde" in ligadas,
-                        st.session_state.bairro_servicos, matas="matas" in ligadas),
+                        st.session_state.bairro_servicos, matas="matas" in ligadas,
+                        comparado=st.session_state.comparar_servicos,
+                        celular=dados_bairros.eh_celular(st.context.headers.get("User-Agent"))),
             on_select="rerun", selection_mode="points", key="mapa_servicos",
             config={"scrollZoom": True, "displaylogo": False},
         )
@@ -471,7 +591,14 @@ def main() -> None:
 
     with col_det:
         st.selectbox("Bairro", nomes.index, format_func=nomes.get, key="bairro_servicos")
+        st.selectbox("Comparar com", [""] + list(nomes.index), key="comparar_servicos",
+                     format_func=lambda c: nomes[c] if c else "nenhum bairro",
+                     help="Mostra os dois bairros lado a lado, abaixo do mapa, e o contorno do segundo no mapa.")
         painel_bairro(dados, st.session_state.bairro_servicos)
+    _atualizar_link(nomes)
+
+    if st.session_state.comparar_servicos and st.session_state.comparar_servicos != st.session_state.bairro_servicos:
+        secao_comparacao(dados, st.session_state.bairro_servicos, st.session_state.comparar_servicos)
 
     st.divider()
     media = dados["meta"]["media_cidade"]
@@ -483,5 +610,6 @@ def main() -> None:
 
     secao_ranking(dados)
     secao_indice(dados)
+    secao_gasto()
     secao_fontes(dados)
     st.caption("Dados: INEP, Ministério da Saúde (CNES), Prefeitura de João Pessoa (Filipeia), OpenStreetMap e IBGE (Censo 2022).")
