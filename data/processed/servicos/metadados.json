@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-24T11:13:46Z",
+  "gerado_em": "2026-10-24T11:55:40Z",
   "crs_calculos": "EPSG:31985",
   "funil": {
     "escolas": {
@@ -154,6 +154,21 @@
       }
     ]
   },
+  "equipes_saude_familia": {
+    "competencia": "09/2026",
+    "arquivo": "cnes/BASE_DE_DADOS_CNES_202609.ZIP",
+    "equipes_joao_pessoa": 494,
+    "equipes_ativas": 494,
+    "equipes_saude_familia_ativas": 227,
+    "tipos_contados": [
+      "ESF - EQUIPE DE SAUDE DA FAMILIA"
+    ],
+    "equipes_em_ubs_do_mapa": 227,
+    "equipes_fora_das_ubs_do_mapa": 0,
+    "ubs_com_equipe": 98,
+    "ubs_sem_equipe": 8,
+    "equipes_em_ubs_fora_dos_bairros": 4
+  },
   "sensibilidade_indice": [
     {
       "cenario": "pesos iguais (publicado)",
@@ -258,6 +273,7 @@
     "pop_bairros": 830789,
     "escolas_por_10mil": 3.42,
     "ubs_usf_por_10mil": 1.26,
+    "equipes_esf_por_10mil": 2.68,
     "area_verde_m2_hab": 3.99,
     "dist_escola_m": 380.0,
     "dist_ubs_m": 574.0,
@@ -271,6 +287,13 @@
   },
   "pop_min_ranking": 1000,
   "arquivos_brutos": {
+    "cnes/BASE_DE_DADOS_CNES_202609.ZIP": {
+      "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202609.ZIP",
+      "fonte": "Ministério da Saúde, DATASUS - CNES, base de dados completa (competência mensal)",
+      "baixado_em": "2026-10-24T11:43:37Z",
+      "bytes": 744678370,
+      "sha256": "cd74a6be52427028ffa13f586266b38510e1a63ff51190b4b371bbb14ef99208"
+    },
     "cnes/estabelecimentos_250750.json": {
       "url": "https://apidadosabertos.saude.gov.br/cnes/estabelecimentos?codigo_municipio=250750",
       "fonte": "Ministério da Saúde - CNES - API de dados abertos (estabelecimentos)",

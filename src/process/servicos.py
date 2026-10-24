@@ -175,6 +175,37 @@ def saude() -> tuple[pd.DataFrame, dict]:
     return out.reset_index(drop=True), funil
 
 
+def equipes_esf() -> tuple[pd.Series, dict]:
+    """Equipes de Saúde da Família ativas por estabelecimento (código CNES de 7 dígitos), de João Pessoa.
+
+    Base completa do CNES (tbEquipe e tbTipoEquipe). Conta todo tipo de equipe cuja descrição começa
+    por "ESF" (inclui ESF com saúde bucal e as modalidades antigas), ativa (sem data de desativação).
+    """
+    import zipfile
+
+    from src.collect.cnes_base import arquivo_local
+
+    zpath = arquivo_local()
+    if zpath is None:
+        raise FileNotFoundError("base completa do CNES ausente: rode python -m src.collect.cnes_base")
+    comp = zpath.stem.removeprefix("BASE_DE_DADOS_CNES_")
+    with zipfile.ZipFile(zpath) as z:
+        ler = lambda nome, **kw: pd.read_csv(z.open(f"{nome}{comp}.csv"), sep=";", dtype=str,  # noqa: E731
+                                             encoding="latin-1", **kw)
+        tipos = ler("tbTipoEquipe").set_index("TP_EQUIPE")["DS_EQUIPE"]
+        eq = ler("tbEquipe", usecols=["CO_MUNICIPIO", "CO_UNIDADE", "TP_EQUIPE", "DT_DESATIVACAO"])
+    eq = eq[eq["CO_MUNICIPIO"] == COD_MUNICIPIO[:6]]
+    ativa = eq["DT_DESATIVACAO"].fillna("").str.strip() == ""
+    esf = eq["TP_EQUIPE"].map(tipos).fillna("").str.strip().str.upper().str.startswith("ESF")
+    sel = eq[ativa & esf]
+    por_unidade = sel["CO_UNIDADE"].str[-7:].value_counts()
+    info = {"competencia": f"{comp[4:]}/{comp[:4]}", "arquivo": f"cnes/{zpath.name}",
+            "equipes_joao_pessoa": int(len(eq)), "equipes_ativas": int(ativa.sum()),
+            "equipes_saude_familia_ativas": int(len(sel)),
+            "tipos_contados": sorted(sel["TP_EQUIPE"].map(tipos).unique().tolist())}
+    return por_unidade, info
+
+
 def setores() -> gpd.GeoDataFrame:
     g = gpd.read_file(DATA_RAW / "ibge_censo2022" / "PB_setores_CD2022.gpkg")
     g = g[g["CD_MUN"] == COD_MUNICIPIO]
@@ -400,6 +431,15 @@ def main() -> None:
     pontos = atribuir_bairro(pd.concat([esc, sau], ignore_index=True), bairros, municipio)
     if pontos["id"].duplicated().any():
         raise ValueError("pontos com id repetido")
+    # equipes de Saúde da Família em cada UBS/USF (ligação pelo código CNES)
+    esf_unidade, info_esf = equipes_esf()
+    cod = pontos["id"].str.removeprefix("cnes:").str.zfill(7)
+    eh_ubs = pontos["subtipo"] == "UBS/USF"
+    pontos["equipes_esf"] = np.where(eh_ubs, cod.map(esf_unidade).fillna(0), np.nan)
+    info_esf["equipes_em_ubs_do_mapa"] = int(pontos["equipes_esf"].sum())
+    info_esf["equipes_fora_das_ubs_do_mapa"] = info_esf["equipes_saude_familia_ativas"] - info_esf["equipes_em_ubs_do_mapa"]
+    info_esf["ubs_com_equipe"] = int((pontos["equipes_esf"] > 0).sum())
+    info_esf["ubs_sem_equipe"] = int((pontos["equipes_esf"] == 0).sum())
 
     verdes, verde_bairro, info_verde = areas_verdes(bairros, municipio)
     matas, info_matas = matas_osm(municipio)
@@ -438,7 +478,10 @@ def main() -> None:
     ind = ind.join(cont).fillna({c: 0 for c in colunas.values()})
     ind[list(colunas.values())] = ind[list(colunas.values())].astype(int)
     ind = ind.join(verde_bairro.set_index("cd_bairro")).join(dist)
-    for c in ["escolas", "ubs_usf"]:
+    esf_bairro = pontos[pontos.status == STATUS_BAIRRO].groupby("cd_bairro")["equipes_esf"].sum()
+    ind["equipes_esf"] = esf_bairro.reindex(ind.index).fillna(0).astype(int)
+    info_esf["equipes_em_ubs_fora_dos_bairros"] = int(pontos.loc[pontos.status != STATUS_BAIRRO, "equipes_esf"].sum())
+    for c in ["escolas", "ubs_usf", "equipes_esf"]:
         ind[f"{c}_por_10mil"] = (10000 * ind[c] / ind["pop_2022"]).round(2)
     ind["area_verde_m2_hab"] = (ind["area_verde_m2"] / ind["pop_2022"]).round(2)
     ind["equipamentos"] = ind["escolas"] + ind["ubs_usf"]
@@ -458,6 +501,7 @@ def main() -> None:
         "pop_bairros": pop_total,
         "escolas_por_10mil": round(10000 * int(ind["escolas"].sum()) / pop_total, 2),
         "ubs_usf_por_10mil": round(10000 * int(ind["ubs_usf"].sum()) / pop_total, 2),
+        "equipes_esf_por_10mil": round(10000 * int(ind["equipes_esf"].sum()) / pop_total, 2),
         "area_verde_m2_hab": round(float(ind["area_verde_m2"].sum()) / pop_total, 2),
         **cidade,
         "indice_acesso_mediana": float(ind["indice_acesso"].median()),
@@ -465,7 +509,8 @@ def main() -> None:
 
     # --- camadas para o mapa e pontos não atribuídos
     com_geo = pontos[pontos.geometry.notna()].to_crs(CRS_WEB)
-    cols = ["id", "camada", "subtipo", "nome", "detalhe", "endereco", "fonte_coordenada", "status", "cd_bairro", "arquivo_origem"]
+    cols = ["id", "camada", "subtipo", "nome", "detalhe", "endereco", "fonte_coordenada", "status", "cd_bairro",
+            "arquivo_origem", "equipes_esf"]
     if (SAIDA / "pontos_servicos.geojson").exists():
         (SAIDA / "pontos_servicos.geojson").unlink()
     com_geo[cols + ["geometry"]].to_file(SAIDA / "pontos_servicos.geojson", driver="GeoJSON")
@@ -501,6 +546,7 @@ def main() -> None:
         "pontos_na_divisa_entre_bairros": pontos.attrs.get("pontos_na_divisa", 0),
         "areas_verdes": info_verde,
         "matas_osm": info_matas,
+        "equipes_saude_familia": info_esf,
         "sensibilidade_indice": sensibilidade,
         "media_cidade": media,
         "setores": {"total": int(len(st)), "com_moradores": int(len(sc)), "pop_total": int(st["pop"].sum()),

@@ -35,6 +35,7 @@ INDICADORES = {
     "dist_ubs_m": "Até a UBS/USF",
     "area_verde_m2_hab": "Área verde por morador",
     "hab_por_equipamento": "Moradores por escola ou UBS",
+    "equipes_esf_por_10mil": "Equipes de Saúde da Família",
 }
 LEGENDA_INDICADOR = {
     "indice_acesso": "Quanto mais escuro, melhor a posição do bairro nos três componentes do índice "
@@ -45,6 +46,8 @@ LEGENDA_INDICADOR = {
                   "(ponderada pela população dos setores censitários). Mais escuro = mais longe.",
     "area_verde_m2_hab": "Praças e parques do cadastro da Prefeitura dentro do bairro, por morador. "
                          "A cor satura no percentil 90 (valor exato ao passar o mouse).",
+    "equipes_esf_por_10mil": "Equipes de Saúde da Família (CNES) nas UBS/USF do bairro, por 10 mil moradores. "
+                             "Mais escuro = mais equipes por morador.",
     "hab_por_equipamento": "Moradores por escola pública regular ou UBS/USF no bairro. Mais escuro = mais "
                            "gente para cada equipamento. Sem cor e com contorno escuro: bairro sem nenhum dos dois.",
 }
@@ -82,6 +85,9 @@ def _hover_bairro(ind: pd.DataFrame) -> pd.Series:
 def _hover_ponto(p: pd.DataFrame) -> pd.Series:
     def linha(r):
         partes = [f"<b>{r.nome}</b>", f"{r.subtipo} · {r.detalhe}", r.endereco or ""]
+        if r.subtipo == "UBS/USF" and pd.notna(getattr(r, "equipes_esf", None)):
+            n = int(r.equipes_esf)
+            partes.append(f"{n} equipe{'s' if n != 1 else ''} de Saúde da Família (CNES)")
         if r.status != "bairro":
             partes.append(f"Fora dos bairros do IBGE ({d.STATUS_TEXTO[r.status]})")
         if r.fonte_coordenada and not r.fonte_coordenada.startswith(("INEP", "CNES")):
@@ -220,6 +226,10 @@ def painel_bairro(dados: dict, cd: str) -> None:
              ajuda="Distância média em linha reta, ponderada pela população.")
     _metrica(c1, "Escolas por 10 mil hab.", r.escolas_por_10mil, media["escolas_por_10mil"], "", False, 2)
     _metrica(c2, "UBS/USF por 10 mil hab.", r.ubs_usf_por_10mil, media["ubs_usf_por_10mil"], "", False, 2)
+    _metrica(c2, "eSF por 10 mil hab.", r.equipes_esf_por_10mil,
+             media["equipes_esf_por_10mil"], "", False, 2,
+             ajuda=f"eSF = equipes de Saúde da Família. No bairro: {fmt_int(r.equipes_esf)} equipes ativas no CNES "
+                   "nas UBS/USF do bairro. Uma equipe atende uma área de abrangência, que pode incluir outros bairros.")
     _metrica(c1, "Área verde", r.area_verde_m2_hab, media["area_verde_m2_hab"], " m²/hab", False, 1)
 
     st.markdown(
@@ -373,6 +383,9 @@ FONTES = pd.DataFrame([
     {"Dado": "Unidades de saúde", "Origem": "Ministério da Saúde, CNES (API de dados abertos)",
      "Link": "https://apidadosabertos.saude.gov.br/cnes/estabelecimentos?codigo_municipio=250750",
      "Atualização da fonte": "cadastro mais recente atualizado em 16/10/2026", "Obtido em": "16/10/2026"},
+    {"Dado": "Equipes de Saúde da Família", "Origem": "Ministério da Saúde, DATASUS, base completa do CNES (tbEquipe)",
+     "Link": "https://cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp",
+     "Atualização da fonte": "competência 09/2026", "Obtido em": "24/10/2026"},
     {"Dado": "Parques", "Origem": "Prefeitura de João Pessoa, Filipeia (shapefile exportado do portal)",
      "Link": "https://filipeia.joaopessoa.pb.gov.br/",
      "Atualização da fonte": "arquivo de 08/02/2021", "Obtido em": "23/10/2026"},
@@ -443,6 +456,7 @@ def secao_gasto() -> None:
 def secao_fontes(dados: dict) -> None:
     meta = dados["meta"]
     fe, fs, av, mt = meta["funil"]["escolas"], meta["funil"]["saude"], meta["areas_verdes"], meta["matas_osm"]
+    eq = meta["equipes_saude_familia"]
     se, ss = _status_total(meta, "escola"), _status_total(meta, "saude")
     st.header("Fontes e limitações")
     st.caption("Tudo o que está nesta página sai das fontes abaixo. Os números de contagem e de distância são "
@@ -463,6 +477,10 @@ def secao_fontes(dados: dict) -> None:
   UBS/USF, policlínicas, UPAs/prontos atendimentos ou hospitais; {fmt_int(fs['ativos'])} estão ativos;
   {fmt_int(fs['rede_sus_publicos_ou_atendem_sus'])} são públicos ou atendem pelo SUS; sem os cadastros de regulação, ficam
   **{fmt_int(fs['sem_cadastros_de_regulacao'])}**.
+- **Equipes de Saúde da Família:** {fmt_int(eq['equipes_saude_familia_ativas'])} equipes ativas no CNES (competência
+  {eq['competencia']}), todas em UBS/USF do mapa; {fmt_int(eq['ubs_com_equipe'])} UBS/USF têm pelo menos uma equipe e
+  {fmt_int(eq['ubs_sem_equipe'])} não têm nenhuma. {fmt_int(eq['equipes_em_ubs_fora_dos_bairros'])} equipes ficam em UBS/USF fora dos
+  bairros do IBGE e entram só na média da cidade.
 - **Praças e parques:** {fmt_int(av['pracas'])} praças e {fmt_int(av['parques'])} parques do cadastro da Prefeitura. Onde se sobrepõem,
   a área conta uma vez. O portal oferece o arquivo dos parques, mas não o das praças; os contornos das praças vêm do
   geodata-jp e foram conferidos: as {fmt_int(av['pracas_conferidas_com_tabela_filipeia'])} têm nome e área idênticos aos da tabela oficial, e
@@ -479,6 +497,9 @@ def secao_fontes(dados: dict) -> None:
   Um bairro "sem escola nem UBS" pode ter serviços privados.
 - **Distância em linha reta**, não pelas ruas. O caminho real é maior, e rios, mangues e vias expressas podem
   aumentá-lo bastante.
+- **Equipes por morador não é cobertura.** O número de equipes por 10 mil moradores compara os bairros, mas
+  cada equipe atende uma área de abrangência que pode incluir outros bairros, e essas áreas não estão nos dados.
+  Por isso o site não calcula um percentual de cobertura.
 - **A distância não indica a unidade de referência.** Cada família é atendida pela UBS da sua área de
   abrangência, e essas áreas não estão nos dados. Aqui se mede só a unidade mais próxima.
 - **Serviços de municípios vizinhos** não estão nos dados, então bairros na divisa podem ter um serviço mais
