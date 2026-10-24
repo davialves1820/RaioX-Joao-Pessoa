@@ -1,0 +1,25 @@
+name: Testes
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      # Só o necessário para os testes: data/raw/ não é versionado, e os testes que dependem
+      # dele são pulados; os demais usam data/processed/.
+      - run: pip install -r requirements.txt pytest==9.1.1
+      - run: pytest -q
