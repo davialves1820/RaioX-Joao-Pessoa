@@ -230,3 +230,16 @@ def test_sensibilidade_do_indice(ind, meta):
     pos = pd.read_csv(SAIDA / "sensibilidade_indice.csv", dtype={"cd_bairro": str})
     assert set(pos.cd_bairro) == set(ind.cd_bairro)
     assert pos.drop(columns=["cd_bairro", "nm_bairro"]).isin(range(1, 65)).all().all()
+
+
+def test_equipes_saude_familia(ind, pontos, meta):
+    eq = meta["equipes_saude_familia"]
+    ubs = pontos[pontos.subtipo == "UBS/USF"]
+    # todas as UBS/USF têm a contagem; só elas
+    assert ubs["equipes_esf"].notna().all() and (ubs["equipes_esf"] >= 0).all()
+    assert pontos.loc[pontos.subtipo != "UBS/USF", "equipes_esf"].isna().all()
+    assert int(ubs["equipes_esf"].sum()) == eq["equipes_em_ubs_do_mapa"]
+    assert eq["equipes_em_ubs_do_mapa"] + eq["equipes_fora_das_ubs_do_mapa"] == eq["equipes_saude_familia_ativas"]
+    # soma por bairro = equipes das UBS nos bairros
+    assert ind["equipes_esf"].sum() == eq["equipes_em_ubs_do_mapa"] - eq["equipes_em_ubs_fora_dos_bairros"]
+    assert (ind["equipes_esf_por_10mil"] >= 0).all()

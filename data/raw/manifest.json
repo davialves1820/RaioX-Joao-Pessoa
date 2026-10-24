@@ -1,4 +1,11 @@
 {
+  "cnes/BASE_DE_DADOS_CNES_202609.ZIP": {
+    "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202609.ZIP",
+    "fonte": "Ministério da Saúde, DATASUS - CNES, base de dados completa (competência mensal)",
+    "baixado_em": "2026-10-24T11:43:37Z",
+    "bytes": 744678370,
+    "sha256": "cd74a6be52427028ffa13f586266b38510e1a63ff51190b4b371bbb14ef99208"
+  },
   "cnes/estabelecimentos_250750.json": {
     "url": "https://apidadosabertos.saude.gov.br/cnes/estabelecimentos?codigo_municipio=250750",
     "fonte": "Ministério da Saúde - CNES - API de dados abertos (estabelecimentos)",
