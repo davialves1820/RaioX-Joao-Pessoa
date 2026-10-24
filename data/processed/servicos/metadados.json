@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-24T12:04:48Z",
+  "gerado_em": "2026-10-24T12:08:02Z",
   "crs_calculos": "EPSG:31985",
   "funil": {
     "escolas": {
@@ -153,6 +153,41 @@
         "osm": "way/771938830"
       }
     ]
+  },
+  "distancia_rede": {
+    "nos": 100679,
+    "trechos": 116552,
+    "base_osm": "2026-07-15T15:22:01Z",
+    "setores_sem_caminho": {
+      "escola": {
+        "setores": [
+          "250750705000071",
+          "250750705000354",
+          "250750705000917",
+          "250750705000955",
+          "250750705001110"
+        ],
+        "moradores": 2047
+      },
+      "ubs": {
+        "setores": [
+          "250750705000071",
+          "250750705000354",
+          "250750705000917",
+          "250750705000955",
+          "250750705001110"
+        ],
+        "moradores": 2047
+      }
+    },
+    "razao_rede_reta_escola": {
+      "mediana": 1.56,
+      "p90": 2.42
+    },
+    "razao_rede_reta_ubs": {
+      "mediana": 1.46,
+      "p90": 2.19
+    }
   },
   "equipes_saude_familia": {
     "competencia": "09/2026",
@@ -309,6 +344,8 @@
     "area_verde_m2_hab": 3.99,
     "dist_escola_m": 380.0,
     "dist_ubs_m": 574.0,
+    "dist_escola_rede_m": 607.0,
+    "dist_ubs_rede_m": 869.0,
     "indice_acesso_mediana": 52.85
   },
   "setores": {
@@ -430,6 +467,13 @@
       "baixado_em": "2026-10-23T14:48:54Z",
       "bytes": 258604,
       "sha256": "4ba4d1cf74707ab4398e27cc6373423d93e0d71e8309d49d918952c736171b6e"
+    },
+    "osm/ruas.json": {
+      "url": "https://overpass.private.coffee/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A600%5D%3Bway%5B%22highway%22~%22%5E%28motorway%7Ctrunk%7Cprimary%7Csecondary%7Ctertiary%7Cunclassified%7Cresidential%7Cliving_street%7Cservice%7Cpedestrian%7Cfootway%7Cpath%7Csteps%7Ctrack%7Ccycleway%7Cmotorway_link%7Ctrunk_link%7Cprimary_link%7Csecondary_link%7Ctertiary_link%29%24%22%5D%28-7.27%2C-35.00%2C-7.02%2C-34.77%29%3B%28._%3B%3E%3B%29%3Bout%20skel%20qt%3B",
+      "fonte": "OpenStreetMap (Overpass API), © colaboradores do OpenStreetMap, ODbL",
+      "baixado_em": "2026-10-24T11:44:27Z",
+      "bytes": 12085134,
+      "sha256": "27c5c772e0a160e5bca23614ffda51f85485f01781b3fb2e540b629529c54646"
     }
   }
 }

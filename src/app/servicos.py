@@ -33,6 +33,8 @@ INDICADORES = {
     "indice_acesso": "Índice de acesso",
     "dist_escola_m": "Até a escola",
     "dist_ubs_m": "Até a UBS/USF",
+    "dist_escola_rede_m": "Até a escola, pelas ruas",
+    "dist_ubs_rede_m": "Até a UBS/USF, pelas ruas",
     "area_verde_m2_hab": "Área verde por morador",
     "hab_por_equipamento": "Moradores por escola ou UBS",
     "equipes_esf_por_10mil": "Equipes de Saúde da Família",
@@ -49,6 +51,10 @@ LEGENDA_INDICADOR = {
                      "próxima (ponderada pela população dos setores censitários). Mais escuro = mais longe.",
     "dist_ubs_m": "Distância média, em linha reta, de quem mora no bairro até a UBS/USF mais próxima "
                   "(ponderada pela população dos setores censitários). Mais escuro = mais longe.",
+    "dist_escola_rede_m": "Distância média pelas ruas e caminhos (OpenStreetMap), a pé, de quem mora no bairro até a "
+                          "escola pública mais próxima (ponderada pela população dos setores). Mais escuro = mais longe.",
+    "dist_ubs_rede_m": "Distância média pelas ruas e caminhos (OpenStreetMap), a pé, de quem mora no bairro até a "
+                       "UBS/USF mais próxima (ponderada pela população dos setores). Mais escuro = mais longe.",
     "area_verde_m2_hab": "Praças e parques do cadastro da Prefeitura dentro do bairro, por morador. "
                          "A cor satura no percentil 90 (valor exato ao passar o mouse).",
     "equipes_esf_por_10mil": "Equipes de Saúde da Família (CNES) nas UBS/USF do bairro, por 10 mil moradores. "
@@ -235,9 +241,15 @@ def painel_bairro(dados: dict, cd: str) -> None:
     st.caption("Etiquetas: comparação com a média da cidade (verde = melhor que a média, vermelho = pior).")
     c1, c2 = st.columns(2)
     _metrica(c1, "Até a escola", r.dist_escola_m, media["dist_escola_m"], " m", True,
-             ajuda="Distância média em linha reta, ponderada pela população.")
+             ajuda=f"Distância média em linha reta, ponderada pela população. Pelas ruas: {fmt_int(r.dist_escola_rede_m)} m "
+                   f"(média da cidade: {fmt_int(media['dist_escola_rede_m'])} m).")
     _metrica(c2, "Até a UBS/USF", r.dist_ubs_m, media["dist_ubs_m"], " m", True,
-             ajuda="Distância média em linha reta, ponderada pela população.")
+             ajuda=f"Distância média em linha reta, ponderada pela população. Pelas ruas: {fmt_int(r.dist_ubs_rede_m)} m "
+                   f"(média da cidade: {fmt_int(media['dist_ubs_rede_m'])} m).")
+    _metrica(c1, "Até a escola, pelas ruas", r.dist_escola_rede_m, media["dist_escola_rede_m"], " m", True,
+             ajuda="Caminho a pé pelas ruas e caminhos do OpenStreetMap, ponderado pela população.")
+    _metrica(c2, "Até a UBS/USF, pelas ruas", r.dist_ubs_rede_m, media["dist_ubs_rede_m"], " m", True,
+             ajuda="Caminho a pé pelas ruas e caminhos do OpenStreetMap, ponderado pela população.")
     _metrica(c1, "Escolas por 10 mil hab.", r.escolas_por_10mil, media["escolas_por_10mil"], "", False, 2)
     _metrica(c2, "UBS/USF por 10 mil hab.", r.ubs_usf_por_10mil, media["ubs_usf_por_10mil"], "", False, 2)
     _metrica(c2, "eSF por 10 mil hab.", r.equipes_esf_por_10mil,
@@ -412,6 +424,9 @@ FONTES = pd.DataFrame([
     {"Dado": "Praças", "Origem": "Prefeitura (Filipeia): tabela oficial; contornos da Prefeitura na cópia do geodata-jp, conferidos com a tabela e as quadras",
      "Link": "https://filipeia.joaopessoa.pb.gov.br/",
      "Atualização da fonte": "intervenções registradas até 2018; quadras de 02/10/2026", "Obtido em": "23/10/2026"},
+    {"Dado": "Ruas e caminhos (distância pelas ruas)", "Origem": "OpenStreetMap (Overpass), © colaboradores do OpenStreetMap (ODbL)",
+     "Link": "https://www.openstreetmap.org/", "Atualização da fonte": "base do servidor de 15/07/2026",
+     "Obtido em": "24/10/2026"},
     {"Dado": "Matas e áreas protegidas (só no mapa)", "Origem": "OpenStreetMap, © colaboradores do OpenStreetMap (ODbL)",
      "Link": "https://www.openstreetmap.org/", "Atualização da fonte": "consulta de 23/10/2026",
      "Obtido em": "23/10/2026"},
@@ -551,6 +566,7 @@ def secao_fontes(dados: dict) -> None:
     meta = dados["meta"]
     fe, fs, av, mt = meta["funil"]["escolas"], meta["funil"]["saude"], meta["areas_verdes"], meta["matas_osm"]
     eq = meta["equipes_saude_familia"]
+    dr = meta["distancia_rede"]
     se, ss = _status_total(meta, "escola"), _status_total(meta, "saude")
     st.header("Fontes e limitações")
     st.caption("Tudo o que está nesta página sai das fontes abaixo. Os números de contagem e de distância são "
@@ -581,16 +597,22 @@ def secao_fontes(dados: dict) -> None:
   {fmt_int(av['pracas_dentro_ou_encostadas_na_quadra_5m'])} das {fmt_int(av['pracas_com_quadra_no_cadastro_atual'])} que têm código de quadra estão dentro ou encostadas na quadra indicada.
 - **Matas e áreas protegidas** (OpenStreetMap): {fmt_dec(mt['area_uniao_ha'], 0)} ha no município, só no mapa, **fora do
   índice e da área verde por morador**, porque o critério é outro. {_matas_nomeadas(mt)}
-- **Distâncias:** de cada setor censitário com moradores até o serviço mais próximo, em linha reta, com média
-  ponderada pelo número de moradores do setor (Censo 2022). Calculadas em metros (SIRGAS 2000 / UTM 25S).
+- **Distâncias:** de cada setor censitário com moradores até o serviço mais próximo, com média ponderada pelo
+  número de moradores do setor (Censo 2022), em metros (SIRGAS 2000 / UTM 25S). Duas versões: em linha reta e
+  **pelas ruas**, a pé, pela malha de ruas e caminhos do OpenStreetMap ({fmt_int(dr['nos'])} pontos; base de
+  {dr['base_osm'][:10]}). Pelas ruas, o caminho é em mediana {fmt_dec(dr['razao_rede_reta_escola']['mediana'], 2)} vez a linha
+  reta até a escola e {fmt_dec(dr['razao_rede_reta_ubs']['mediana'], 2)} vez até a UBS/USF. O índice de acesso continua usando a
+  linha reta.
 """)
 
     st.subheader("Limitações")
     st.markdown(f"""
 - **Só serviços públicos ou do SUS.** Escolas particulares, clínicas e hospitais privados não estão contados.
   Um bairro "sem escola nem UBS" pode ter serviços privados.
-- **Distância em linha reta**, não pelas ruas. O caminho real é maior, e rios, mangues e vias expressas podem
-  aumentá-lo bastante.
+- **Distância pelas ruas é aproximada.** Usa o mapa colaborativo do OpenStreetMap, que pode ter ruas a menos ou a
+  mais, não considera calçada, travessia nem relevo, e o servidor usado estava alguns meses atrás do OSM.
+  {fmt_int(len(dr['setores_sem_caminho']['escola']['setores']))} setores ({fmt_int(dr['setores_sem_caminho']['escola']['moradores'])}
+  moradores) não têm caminho até a malha principal e ficam fora dessa média. A linha reta subestima o caminho real.
 - **Equipes por morador não é cobertura.** O número de equipes por 10 mil moradores compara os bairros, mas
   cada equipe atende uma área de abrangência que pode incluir outros bairros, e essas áreas não estão nos dados.
   Por isso o site não calcula um percentual de cobertura.
@@ -668,7 +690,7 @@ def main() -> None:
         "camadas, passe o mouse sobre um ponto para ver o nome e clique num bairro para ver o detalhe."
     )
     st.info(
-        "Só escolas públicas e unidades do SUS; distâncias em linha reta; área verde só de praças e parques do "
+        "Só escolas públicas e unidades do SUS; distâncias em linha reta e pelas ruas (OpenStreetMap); área verde só de praças e parques do "
         "cadastro da Prefeitura (matas aparecem no mapa, mas fora do índice). Fontes, datas e todas as limitações na seção **Fontes e limitações**, no fim da página.",
         icon="ℹ️",
     )
