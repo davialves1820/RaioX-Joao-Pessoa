@@ -394,18 +394,19 @@ def main() -> None:
          "domicilios_2022", "comparabilidade", "cd_bairro"]
     ].sort_values("pop_2022", ascending=False)
     st.dataframe(
-        tabela,
+        d.tabela_br(tabela, inteiros=["pop_2010", "pop_2022", "densidade_2022", "domicilios_2022"],
+                    variacao_int=["var_abs"], pct_sinal={"var_pct": 1}, decimais={"area_km2": 2}),
         hide_index=True,
         width="stretch",
         column_config={
             "nm_bairro": "Bairro",
-            "pop_2010": st.column_config.NumberColumn("Pop. 2010", format="localized"),
-            "pop_2022": st.column_config.NumberColumn("Pop. 2022", format="localized"),
-            "var_abs": st.column_config.NumberColumn("Variação", format="localized"),
-            "var_pct": st.column_config.NumberColumn("Variação %", format="%.1f%%"),
-            "area_km2": st.column_config.NumberColumn("Área (km²)", format="%.2f"),
-            "densidade_2022": st.column_config.NumberColumn("hab/km²", format="localized"),
-            "domicilios_2022": st.column_config.NumberColumn("Domicílios", format="localized"),
+            "pop_2010": "Pop. 2010",
+            "pop_2022": "Pop. 2022",
+            "var_abs": "Variação",
+            "var_pct": "Variação %",
+            "area_km2": "Área (km²)",
+            "densidade_2022": "hab/km²",
+            "domicilios_2022": "Domicílios",
             "comparabilidade": "Comparabilidade 2010→2022",
             "cd_bairro": "Código IBGE",
         },
