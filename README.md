@@ -27,7 +27,7 @@ O site tem três páginas:
 
 ## Como rodar
 
-Requer Python 3.11 ou superior.
+Requer Python 3.12 ou superior (as versões fixadas em `requirements.txt` não existem para o 3.11).
 
 ```bash
 pip install -r requirements-dev.txt
@@ -52,12 +52,29 @@ streamlit run streamlit_app.py # abre o dashboard em http://localhost:8501
 
 Os dados brutos não ficam no git (são grandes e reprodutíveis); os processados ficam, porque o app usa só eles.
 
+### Testes automáticos (CI)
+
+O workflow [`.github/workflows/testes.yml`](.github/workflows/testes.yml) roda o `pytest` em todo PR e em
+todo push na `main`, com Python 3.12 e 3.13. Ele instala só `requirements.txt` e o pytest; os testes que
+dependem de `data/raw/` (não versionado) são pulados, e os demais usam `data/processed/`. Um PR com teste
+quebrado aparece com o check **Testes** em vermelho.
+
+### Atualizar as bibliotecas
+
+`requirements.txt` fixa as versões exatas, porque o Streamlit Community Cloud instala esse arquivo a cada
+deploy e uma versão nova pode quebrar o site sem mudança no código. Para atualizar:
+
+1. Num ambiente limpo, instale as versões novas (`pip install -U` das bibliotecas listadas).
+2. Rode o pipeline e `pytest`, e abra o app para conferir as três páginas.
+3. Copie as versões de `pip freeze` para `requirements.txt` e abra um PR: o CI testa nas duas versões
+   do Python.
+
 ### Deploy no Streamlit Community Cloud
 
 1. Em [share.streamlit.io](https://share.streamlit.io), clique em **Create app** e escolha este
    repositório e a branch `main`.
 2. Em *Main file path*, use `streamlit_app.py` (é o padrão).
-3. Em *Advanced settings*, escolha Python 3.11 ou superior. Não há segredos a configurar.
+3. Em *Advanced settings*, escolha Python 3.12 ou 3.13 (as versões testadas no CI). Não há segredos a configurar.
 
 O app lê apenas `data/processed/`; não é preciso rodar a coleta no deploy. Cada push na `main`
 atualiza o site.
