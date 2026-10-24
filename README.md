@@ -258,6 +258,9 @@ escola e a UBS/USF mais próximas, área verde por habitante e um índice simple
   Acento e maiúsculas não importam; um nome que não existe abre o bairro padrão.
 - **Ranking:** bairros com mais moradores por escola ou UBS/USF, e a lista dos que não têm nenhum dos dois.
 - **Índice:** fórmula, explicação e tabela com os componentes de todos os bairros (com download em CSV).
+- **Gasto em saúde e educação:** valor empenhado nas funções Saúde e Educação (TCE-PB, corrigido pelo
+  IPCA, sem transferências entre órgãos) no último ano completo e por habitante desde 2009, com link para a
+  página de despesas. É o gasto da cidade toda: os empenhos não dizem o bairro, e nada é dividido por bairro.
 - **Fontes e limitações:** seção aberta no fim da página, com a tabela de fontes, os filtros de cada uma,
   as limitações, os pontos não atribuídos a bairro e os arquivos de origem (com SHA-256).
 - **Cores das camadas:** amarelo, violeta e vermelho para os pontos; verde-água para praças e parques;

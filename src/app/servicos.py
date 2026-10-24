@@ -6,7 +6,10 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+import json
+
 from src.app import dados as dados_bairros
+from src.app import dados_despesas
 from src.app import dados_servicos as d
 from src.app.app import AZUL_SEQ, CENTRO_MAPA, SUPERFICIE, TINTA, TINTA_2, ZOOM_MAPA
 
@@ -50,6 +53,15 @@ LEGENDA_INDICADOR = {
 @st.cache_data
 def _carregar():
     return d.carregar(), dados_bairros.carregar_geojson()
+
+
+@st.cache_data
+def _gasto_saude_educacao():
+    pasta = dados_despesas.PASTA
+    meta = json.loads((pasta / "metadados.json").read_text(encoding="utf-8"))
+    cubo = pd.read_parquet(pasta / "despesas_cubo.parquet",
+                           columns=["ano", "funcao", "intra", "poder", "empenhado_corrigido"])
+    return dados_despesas.gasto_por_funcao(cubo, pd.read_csv(pasta / "populacao.csv"), meta), meta
 
 
 def _hover_bairro(ind: pd.DataFrame) -> pd.Series:
@@ -386,6 +398,45 @@ def _parques_novos(mt: dict) -> str:
     return (", como " + ", ".join(f"{x['nome']} ({fmt_dec(x['ha'], 1)} ha)" for x in p[:5])) if p else ""
 
 
+def secao_gasto() -> None:
+    g, meta = _gasto_saude_educacao()
+    ano = int(g.index.max())
+    ultimo = g.loc[ano]
+    st.header("Quanto a Prefeitura gasta em saúde e educação")
+    ano_ref, mes_ref = meta["ipca"]["mes_referencia"].split("-")
+    st.caption(
+        f"Valor empenhado pelos órgãos municipais nas funções Saúde e Educação, declarado ao TCE-PB, corrigido pelo "
+        f"IPCA (R\\$ de {mes_ref}/{ano_ref}), sem transferências entre órgãos do município. É o gasto da cidade toda: "
+        "os empenhos não dizem em que bairro o dinheiro foi usado, por isso não há valor por bairro."
+    )
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric(f"Saúde em {ano}", dados_despesas.fmt_reais(ultimo["Saúde"]))
+    c2.metric("Por habitante", dados_bairros.fmt_reais(ultimo["Saúde por habitante"]))
+    c3.metric(f"Educação em {ano}", dados_despesas.fmt_reais(ultimo["Educação"]))
+    c4.metric("Por habitante", dados_bairros.fmt_reais(ultimo["Educação por habitante"]))
+    fig = go.Figure()
+    for funcao, cor in [("Saúde", COR_CAMADA["ubs"]), ("Educação", COR_CAMADA["escolas"])]:
+        # anos sem valor (2016 incompleto, 2023 sem população) ficam como lacuna na linha
+        serie = g[f"{funcao} por habitante"].reindex(range(int(g.index.min()), ano + 1))
+        fig.add_trace(go.Scatter(
+            x=serie.index, y=serie.values, mode="lines+markers", name=funcao, line=dict(color=cor, width=2),
+            connectgaps=False,
+            marker=dict(size=8, color=cor, line=dict(color=SUPERFICIE, width=2)),
+            hovertext=[f"<b>{funcao} {a}</b><br>{dados_bairros.fmt_reais(v)} por habitante" for a, v in serie.items()],
+            hovertemplate="%{hovertext}<extra></extra>",
+        ))
+        fig.add_annotation(x=ano, y=serie.loc[ano], text=funcao, showarrow=False, xanchor="left",
+                           xshift=10, font=dict(color=TINTA))
+    fig.update_layout(height=320, margin=dict(l=0, r=70, t=10, b=0), separators=",.", showlegend=True,
+                      legend=dict(orientation="h", y=1.08, x=0), plot_bgcolor="rgba(0,0,0,0)",
+                      yaxis=dict(title="R$ por habitante", gridcolor="#e7e6e2", tickformat=",.0f"),
+                      xaxis=dict(showgrid=False, dtick=2))
+    st.plotly_chart(fig, config={"displayModeBar": False})
+    st.caption("Só anos completos: sem ponto em 2016 (incompleto no TCE-PB) e no ano em andamento (parcial). Sem "
+               "ponto em 2023: o IBGE não publicou estimativa de população para esse ano.")
+    st.markdown("Gasto por área, fornecedores e licitações na página **Para onde vai o dinheiro**.")
+
+
 def secao_fontes(dados: dict) -> None:
     meta = dados["meta"]
     fe, fs, av, mt = meta["funil"]["escolas"], meta["funil"]["saude"], meta["areas_verdes"], meta["matas_osm"]
@@ -555,5 +606,6 @@ def main() -> None:
 
     secao_ranking(dados)
     secao_indice(dados)
+    secao_gasto()
     secao_fontes(dados)
     st.caption("Dados: INEP, Ministério da Saúde (CNES), Prefeitura de João Pessoa (Filipeia), OpenStreetMap e IBGE (Censo 2022).")
