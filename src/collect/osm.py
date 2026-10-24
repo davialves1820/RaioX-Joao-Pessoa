@@ -1,11 +1,14 @@
 """Coleta: OpenStreetMap (Overpass API), © colaboradores do OpenStreetMap, licença ODbL.
 
-Três arquivos JSON em data/raw/osm/ (os dois primeiros são respostas do Overpass):
+Quatro arquivos JSON em data/raw/osm/ (todos, menos escolas.json, são respostas do Overpass):
 
 - matas.json     matas e áreas protegidas (natural=wood, landuse=forest, boundary=protected_area):
                  camada separada no mapa, fora do índice de acesso;
 - parques.json   parques (leisure=park/nature_reserve): só para listar, nas limitações, parques que
                  o cadastro da Prefeitura não tem;
+- ruas.json      malha de ruas e caminhos (highway=*) para a distância pelas ruas; só a geometria
+                 (out skel). Atenção: o servidor alternativo pode estar alguns meses atrasado em relação
+                 ao OSM; a data da base usada fica no próprio arquivo (osm3s.timestamp_osm_base);
 - escolas.json   os elementos do OSM das escolas que o INEP publica sem coordenada (ids fixos em
                  ESCOLAS_OSM, conferidos à mão: nome igual e ponto no bairro do endereço do INEP),
                  baixados um a um pela API principal do OSM, que é mais estável que o Overpass.
@@ -32,19 +35,29 @@ SERVIDORES = ["https://overpass.kumi.systems/api/interpreter", "https://overpass
 FONTE = "OpenStreetMap (Overpass API), © colaboradores do OpenStreetMap, ODbL"
 BBOX = "(-7.25,-34.98,-7.04,-34.79)"  # retângulo que contém o município; o recorte exato é feito no processamento
 
+# Vias por onde se anda (inclui ruas residenciais, de serviço, calçadas e caminhos; exclui as que não
+# existem para pedestre, como construção e propostas). Retângulo um pouco maior que o do município, para
+# caminhos que saem e voltam.
+VIAS = ["motorway", "trunk", "primary", "secondary", "tertiary", "unclassified", "residential", "living_street",
+        "service", "pedestrian", "footway", "path", "steps", "track", "cycleway", "motorway_link", "trunk_link",
+        "primary_link", "secondary_link", "tertiary_link"]
+BBOX_RUAS = "(-7.27,-35.00,-7.02,-34.77)"
+
 # Código INEP -> elemento do OSM
 ESCOLAS_OSM = {"25092839": "node/6041727637", "25093851": "way/749962478"}
 
 CONSULTAS = {
     "matas": f'nwr["natural"="wood"]{BBOX};nwr["landuse"="forest"]{BBOX};nwr["boundary"="protected_area"]{BBOX};',
     "parques": f'nwr["leisure"~"^(park|nature_reserve)$"]{BBOX};',
+    "ruas": f'way["highway"~"^({"|".join(VIAS)})$"]{BBOX_RUAS};',
 }
-SAIDA = {"matas": "out geom;", "parques": "out geom;"}
+SAIDA = {"matas": "out geom;", "parques": "out geom;", "ruas": "(._;>;);out skel qt;"}
+TIMEOUT = {"matas": 250, "parques": 250, "ruas": 600}
 API = "https://api.openstreetmap.org/api/0.6"
 
 
 def _consulta(nome: str) -> str:
-    return f"[out:json][timeout:250];({CONSULTAS[nome]});{SAIDA[nome]}"
+    return f"[out:json][timeout:{TIMEOUT[nome]}];({CONSULTAS[nome]});{SAIDA[nome]}"
 
 
 def _baixar(nome: str) -> bytes:
@@ -53,7 +66,7 @@ def _baixar(nome: str) -> bytes:
         for url in SERVIDORES:
             try:
                 req = urllib.request.Request(url, data=dados, headers={"User-Agent": "raio-x-jp/0.1"})
-                with urllib.request.urlopen(req, timeout=300) as r:
+                with urllib.request.urlopen(req, timeout=TIMEOUT[nome] + 300) as r:
                     corpo = r.read()
                 json.loads(corpo)["elements"]  # resposta válida
                 return corpo

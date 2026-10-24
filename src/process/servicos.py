@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 from datetime import datetime, timezone
+from pathlib import Path
 
 import geopandas as gpd
 import numpy as np
@@ -407,6 +408,71 @@ def distancia_mais_proxima(origens: gpd.GeoSeries, destinos: gpd.GeoSeries) -> n
     return shapely.distance(origens.values, destinos.values[idx])
 
 
+class GrafoRuas:
+    """Malha de ruas do OpenStreetMap (data/raw/osm/ruas.json) como grafo não dirigido, em metros (EPSG:31985).
+
+    Cada trecho entre dois nós de uma via vira uma aresta com o comprimento em linha reta entre eles. Não há
+    sentido de tráfego: a distância é a de quem anda a pé.
+    """
+
+    def __init__(self, arquivo: Path | None = None):
+        from pyproj import Transformer
+
+        arquivo = arquivo or DATA_RAW / "osm" / "ruas.json"
+        bruto = json.loads(arquivo.read_text(encoding="utf-8"))
+        el = bruto["elements"]
+        nos = {e["id"]: (e["lon"], e["lat"]) for e in el if e["type"] == "node"}
+        ids = list(nos)
+        idx = {n: i for i, n in enumerate(ids)}
+        tr = Transformer.from_crs(CRS_WEB, CRS_METRICO, always_xy=True)
+        self.x, self.y = tr.transform(np.array([nos[n][0] for n in ids]), np.array([nos[n][1] for n in ids]))
+        self.adj: list[list[tuple[int, float]]] = [[] for _ in ids]
+        for e in el:
+            if e["type"] != "way":
+                continue
+            for a, b in zip(e["nodes"][:-1], e["nodes"][1:]):
+                i, j = idx[a], idx[b]
+                d = float(np.hypot(self.x[i] - self.x[j], self.y[i] - self.y[j]))
+                self.adj[i].append((j, d))
+                self.adj[j].append((i, d))
+        self.pontos = shapely.points(self.x, self.y)
+        self.arvore = shapely.STRtree(self.pontos)
+        self.info = {"nos": len(ids), "trechos": sum(map(len, self.adj)) // 2,
+                     "base_osm": bruto.get("osm3s", {}).get("timestamp_osm_base")}
+
+    def no_mais_proximo(self, geoms: gpd.GeoSeries) -> tuple[np.ndarray, np.ndarray]:
+        k = self.arvore.nearest(geoms.values)
+        return k, shapely.distance(geoms.values, self.pontos[k])
+
+    def distancia(self, origens: gpd.GeoSeries, destinos: gpd.GeoSeries) -> np.ndarray:
+        """Distância pela rede de cada origem ao destino mais próximo (inf se não houver caminho).
+
+        Origem e destino entram e saem da rede pelo nó mais próximo, somando esse trecho em linha reta.
+        Um Dijkstra com várias fontes (todos os destinos) dá a distância de cada nó ao destino mais perto.
+        """
+        import heapq
+
+        if origens.crs != CRS_METRICO or destinos.crs != CRS_METRICO:
+            raise ValueError("distâncias só em EPSG:31985")
+        dist = np.full(len(self.adj), np.inf)
+        fila = []
+        for k, d0 in zip(*self.no_mais_proximo(destinos)):
+            if d0 < dist[k]:
+                dist[k] = d0
+                heapq.heappush(fila, (d0, k))
+        while fila:
+            d, i = heapq.heappop(fila)
+            if d > dist[i]:
+                continue
+            for j, w in self.adj[i]:
+                nd = d + w
+                if nd < dist[j]:
+                    dist[j] = nd
+                    heapq.heappush(fila, (nd, j))
+        k, d0 = self.no_mais_proximo(origens)
+        return dist[k] + d0
+
+
 def indice_acesso(ind: pd.DataFrame, pesos: tuple[float, float, float] = (1, 1, 1)) -> pd.Series:
     """Média de três posições percentuais (0-100) entre os bairros: perto da escola, perto da UBS/USF
     e mais área verde por habitante. 100 = melhor posição nos três. `pesos` = (escola, UBS, verde);
@@ -507,6 +573,23 @@ def main() -> None:
         dist[f"dist_{nome}_m"] = pond.round(0)
         cidade[f"dist_{nome}_m"] = round(float(np.average(sc[f"d_{nome}"], weights=sc["pop"])), 0)
 
+    # --- distância pelas ruas (OpenStreetMap). Setores sem caminho até a malha principal ficam sem valor
+    # (não são trocados pela linha reta) e são listados.
+    grafo = GrafoRuas()
+    info_rede = {**grafo.info, "setores_sem_caminho": {}}
+    for nome, d in dest.items():
+        sc[f"r_{nome}"] = grafo.distancia(sc_cent, d)
+        ok = np.isfinite(sc[f"r_{nome}"])
+        info_rede["setores_sem_caminho"][nome] = {"setores": sorted(sc.loc[~ok, "cd_setor"]),
+                                                  "moradores": int(sc.loc[~ok, "pop"].sum())}
+        valido = sc[ok].dropna(subset=["cd_bairro"])
+        dist[f"dist_{nome}_rede_m"] = valido.groupby("cd_bairro").apply(
+            lambda x: np.average(x[f"r_{nome}"], weights=x["pop"]), include_groups=False).round(0)
+        cidade[f"dist_{nome}_rede_m"] = round(float(np.average(sc.loc[ok, f"r_{nome}"], weights=sc.loc[ok, "pop"])), 0)
+        razao = sc.loc[ok, f"r_{nome}"] / sc.loc[ok, f"d_{nome}"].clip(lower=1)
+        info_rede[f"razao_rede_reta_{nome}"] = {"mediana": round(float(razao.median()), 2),
+                                               "p90": round(float(razao.quantile(0.9)), 2)}
+
     # --- contagens por bairro
     atrib = pontos[pontos.status == STATUS_BAIRRO]
     cont = atrib.pivot_table(index="cd_bairro", columns="subtipo", values="id", aggfunc="count", fill_value=0)
@@ -600,6 +683,7 @@ def main() -> None:
         "pontos_na_divisa_entre_bairros": pontos.attrs.get("pontos_na_divisa", 0),
         "areas_verdes": info_verde,
         "matas_osm": info_matas,
+        "distancia_rede": info_rede,
         "equipes_saude_familia": info_esf,
         "matriculas": info_mat,
         "sensibilidade_indice": sensibilidade,
