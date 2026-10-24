@@ -133,7 +133,7 @@ INDICADORES_COMPARACAO = [
     ("Fundamental por 100 crianças de 5–14", "vagas_fund_por_100", "vagas_fund_por_100", 1, ""),
     ("Médio por 100 jovens de 15–19", "vagas_medio_por_100", "vagas_medio_por_100", 1, ""),
     ("Renda mediana do responsável (R$, 2022)", "renda_mediana", None, 0, ""),
-    ("Domicílios com esgoto na rede (%)", "pct_esgoto_rede", None, 1, ""),
+    ("Domicílios com esgoto ligado à rede (%)", "pct_esgoto_rede", None, 1, ""),
     ("Praças", "pracas", None, 0, ""),
     ("Parques", "parques", None, 0, ""),
 ]

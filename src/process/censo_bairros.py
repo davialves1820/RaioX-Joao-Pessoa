@@ -31,7 +31,8 @@ ARQ = {
 VARIAVEIS = {
     "domicilios": ("domicilio1", "V00001", "Domicílios particulares permanentes ocupados"),
     "dom_agua_rede": ("domicilio2", "V00111", "... que utilizam a rede geral de distribuição de água"),
-    "dom_esgoto_rede": ("domicilio2", "V00309", "... com esgoto na rede geral ou pluvial"),
+    "dom_esgoto_rede_direto": ("domicilio2", "V00309", "... com esgoto na rede geral ou pluvial"),
+    "dom_esgoto_fossa_rede": ("domicilio2", "V00310", "... com esgoto em fossa séptica ou fossa filtro ligada à rede"),
     "dom_lixo_coletado_porta": ("domicilio2", "V00397", "... com lixo coletado no domicílio por serviço de limpeza"),
     "dom_lixo_cacamba": ("domicilio2", "V00398", "... com lixo depositado em caçamba de serviço de limpeza"),
     "responsaveis": ("renda", "V06001", "Pessoas responsáveis por domicílios particulares permanentes ocupados"),
@@ -74,6 +75,7 @@ def montar(pasta: Path = PASTA) -> tuple[pd.DataFrame, dict]:
         sigilosos[col] = int((bruto.str.strip() == "X").sum())
         ausentes[col] = sorted(out.index[bruto.isna()].tolist())
         out[col] = bruto.map(numero)
+    out["dom_esgoto_rede"] = out["dom_esgoto_rede_direto"] + out["dom_esgoto_fossa_rede"]
     out["dom_lixo_coletado"] = out["dom_lixo_coletado_porta"] + out["dom_lixo_cacamba"]
     for c in ["agua_rede", "esgoto_rede", "lixo_coletado"]:
         out[f"pct_{c}"] = (100 * out[f"dom_{c}"] / out["domicilios"]).round(1)
@@ -83,6 +85,8 @@ def montar(pasta: Path = PASTA) -> tuple[pd.DataFrame, dict]:
         "variaveis": {c: {"tabela": t, "variavel": v, "descricao": d} for c, (t, v, d) in VARIAVEIS.items()},
         "valores_sigilosos_X": sigilosos,
         "bairros_sem_linha": {c: v for c, v in ausentes.items() if v},
+        "esgoto_rede": "ligado à rede: direto na rede geral ou pluvial (V00309) + fossa séptica ou fossa filtro "
+                       "ligada à rede (V00310)",
         "lixo_coletado": "coletado no domicílio (V00397) + depositado em caçamba de serviço de limpeza (V00398)",
         "renda": "rendimento nominal mensal das pessoas responsáveis COM rendimento (o IBGE não inclui "
                  "responsáveis sem rendimento nessas médias e medianas); valores de 2022, sem correção",

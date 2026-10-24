@@ -457,7 +457,7 @@ EIXOS_RENDA = {
     "dist_ubs_m": ("Distância até a UBS/USF (m)", 0),
     "equipes_esf_por_10mil": ("Equipes de Saúde da Família por 10 mil hab.", 2),
     "area_verde_m2_hab": ("Área verde por morador (m²/hab)", 1),
-    "pct_esgoto_rede": ("Domicílios com esgoto na rede (%)", 1),
+    "pct_esgoto_rede": ("Domicílios com esgoto ligado à rede (%)", 1),
 }
 
 
