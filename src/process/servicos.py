@@ -343,13 +343,49 @@ def distancia_mais_proxima(origens: gpd.GeoSeries, destinos: gpd.GeoSeries) -> n
     return shapely.distance(origens.values, destinos.values[idx])
 
 
-def indice_acesso(ind: pd.DataFrame) -> pd.Series:
+def indice_acesso(ind: pd.DataFrame, pesos: tuple[float, float, float] = (1, 1, 1)) -> pd.Series:
     """Média de três posições percentuais (0-100) entre os bairros: perto da escola, perto da UBS/USF
-    e mais área verde por habitante. 100 = melhor posição nos três."""
+    e mais área verde por habitante. 100 = melhor posição nos três. `pesos` = (escola, UBS, verde);
+    o índice publicado usa pesos iguais."""
     p_escola = ind["dist_escola_m"].rank(ascending=False, pct=True) * 100
     p_ubs = ind["dist_ubs_m"].rank(ascending=False, pct=True) * 100
     p_verde = ind["area_verde_m2_hab"].rank(ascending=True, pct=True) * 100
-    return pd.concat([p_escola, p_ubs, p_verde], axis=1).mean(axis=1).round(1)
+    comp = pd.concat([p_escola, p_ubs, p_verde], axis=1)
+    return (comp * list(pesos)).sum(axis=1).div(sum(pesos)).round(1)
+
+
+# Cenários de pesos (escola, UBS/USF, área verde) para medir o quanto o ranking depende da escolha
+CENARIOS_PESOS = {
+    "pesos iguais (publicado)": (1, 1, 1),
+    "escola com peso dobrado": (2, 1, 1),
+    "UBS/USF com peso dobrado": (1, 2, 1),
+    "área verde com peso dobrado": (1, 1, 2),
+    "sem área verde": (1, 1, 0),
+    "só escola": (1, 0, 0),
+    "só UBS/USF": (0, 1, 0),
+}
+
+
+def sensibilidade_indice(ind: pd.DataFrame) -> tuple[pd.DataFrame, list[dict]]:
+    """Posição de cada bairro em cada cenário de pesos e o quanto ela muda em relação à publicada."""
+    base = indice_acesso(ind).rank(ascending=False, method="min")
+    posicoes, resumo = {}, []
+    for nome, pesos in CENARIOS_PESOS.items():
+        pos = indice_acesso(ind, pesos).rank(ascending=False, method="min")
+        posicoes[nome] = pos.astype(int)
+        mudanca = (pos - base).abs()
+        top10 = set(base[base <= 10].index)
+        resumo.append({
+            "cenario": nome, "pesos": list(pesos),
+            # Spearman = Pearson entre as posições (sem depender do scipy)
+            "correlacao_spearman": round(float(base.rank().corr(pos.rank())), 3),
+            "mudanca_media_posicoes": round(float(mudanca.mean()), 1),
+            "mudanca_maxima_posicoes": int(mudanca.max()),
+            "bairros_que_mudam_mais_de_10_posicoes": int((mudanca > 10).sum()),
+            "top10_publicado": len(top10),  # pode passar de 10 com empates na 10ª posição
+            "top10_mantidos": len(top10 & set(pos[pos <= 10].index)),
+        })
+    return pd.DataFrame(posicoes), resumo
 
 
 def main() -> None:
@@ -410,8 +446,11 @@ def main() -> None:
     ind["sem_escola_nem_ubs"] = ind["equipamentos"] == 0
     ind["entra_no_ranking"] = ind["pop_2022"] >= POP_MIN_RANKING
     ind["indice_acesso"] = indice_acesso(ind)
+    posicoes, sensibilidade = sensibilidade_indice(ind)
+    posicoes.insert(0, "nm_bairro", ind["nm_bairro"])
     ind = ind.reset_index()
     ind.to_csv(SAIDA / "indicadores_servicos.csv", index=False)
+    posicoes.rename_axis("cd_bairro").reset_index().to_csv(SAIDA / "sensibilidade_indice.csv", index=False)
 
     # --- média da cidade (para a comparação na página do bairro)
     pop_total = int(ind["pop_2022"].sum())
@@ -462,6 +501,7 @@ def main() -> None:
         "pontos_na_divisa_entre_bairros": pontos.attrs.get("pontos_na_divisa", 0),
         "areas_verdes": info_verde,
         "matas_osm": info_matas,
+        "sensibilidade_indice": sensibilidade,
         "media_cidade": media,
         "setores": {"total": int(len(st)), "com_moradores": int(len(sc)), "pop_total": int(st["pop"].sum()),
                     "pop_fora_de_bairro": int(st.loc[st.cd_bairro.isna(), "pop"].sum())},

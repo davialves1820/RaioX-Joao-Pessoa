@@ -303,6 +303,37 @@ def secao_indice(dados: dict) -> None:
     st.download_button("Baixar CSV", (d.PASTA / "indicadores_servicos.csv").read_bytes(),
                        file_name="servicos_bairros_joao_pessoa.csv", mime="text/csv")
 
+    st.subheader("O resultado depende dos pesos?")
+    sens = pd.DataFrame(dados["meta"]["sensibilidade_indice"])
+    dobrados = sens[sens.cenario.str.contains("dobrado")]
+    st.markdown(
+        "Pesos iguais são uma escolha. Para ver o quanto ela pesa, o índice foi recalculado com outros pesos. "
+        f"Dobrando o peso de um dos três itens, a ordem dos bairros quase não muda: a correlação com o ranking "
+        f"publicado fica entre {fmt_dec(dobrados.correlacao_spearman.min(), 2)} e "
+        f"{fmt_dec(dobrados.correlacao_spearman.max(), 2)} (1 = mesma ordem), e os bairros mudam em média "
+        f"{fmt_dec(dobrados.mudanca_media_posicoes.min(), 1)} a {fmt_dec(dobrados.mudanca_media_posicoes.max(), 1)} "
+        "posições. Tirar um item muda bem mais, o que mostra que cada um acrescenta informação."
+    )
+    tab = sens.assign(pesos=sens.pesos.map(lambda p: " · ".join(str(x) for x in p)))
+    n_top = int(sens.top10_publicado.iloc[0])
+    st.dataframe(
+        dados_bairros.tabela_br(
+            tab[["cenario", "pesos", "correlacao_spearman", "mudanca_media_posicoes", "mudanca_maxima_posicoes",
+                 "bairros_que_mudam_mais_de_10_posicoes", "top10_mantidos"]],
+            decimais={"correlacao_spearman": 2, "mudanca_media_posicoes": 1}),
+        hide_index=True, width="stretch",
+        column_config={
+            "cenario": "Cenário", "pesos": "Pesos (escola · UBS · verde)",
+            "correlacao_spearman": "Correlação", "mudanca_media_posicoes": "Mudança média",
+            "mudanca_maxima_posicoes": "Maior mudança", "bairros_que_mudam_mais_de_10_posicoes": "Mudam > 10 posições",
+            "top10_mantidos": f"Dos {n_top} primeiros, continuam",
+        },
+    )
+    st.caption("Correlação de Spearman com o ranking publicado (1 = mesma ordem); mudanças em número de posições, "
+               "entre os 64 bairros. "
+               + (f"Os primeiros colocados são {n_top}, e não 10, por empate na 10ª posição. " if n_top != 10 else "")
+               + "A posição de cada bairro em cada cenário está em data/processed/servicos/sensibilidade_indice.csv.")
+
 
 def _status_total(meta: dict, camada: str) -> dict:
     tot: dict = {}
