@@ -257,3 +257,28 @@ def test_matriculas(ind, pontos, meta):
     assert (ind.set_index("cd_bairro")["mat_fund"].reindex(em_bairro.index) == em_bairro).all()
     for c in ["vagas_infantil_por_100", "vagas_fund_por_100", "vagas_medio_por_100"]:
         assert (ind[c].dropna() >= 0).all()
+
+
+def test_distancia_pelas_ruas(ind, meta):
+    # pelas ruas nunca é menor que em linha reta
+    assert (ind["dist_escola_rede_m"] >= ind["dist_escola_m"] - 1).all()
+    assert (ind["dist_ubs_rede_m"] >= ind["dist_ubs_m"] - 1).all()
+    assert ind[["dist_escola_rede_m", "dist_ubs_rede_m"]].notna().all().all()
+    dr = meta["distancia_rede"]
+    assert dr["razao_rede_reta_escola"]["mediana"] >= 1 and dr["razao_rede_reta_ubs"]["mediana"] >= 1
+
+
+def test_grafo_de_ruas_em_metros():
+    import geopandas as gpd
+    import shapely
+
+    g = sv.GrafoRuas.__new__(sv.GrafoRuas)  # grafo mínimo: A —3— B —4— C (em metros)
+    g.x, g.y = np.array([0.0, 3.0, 3.0]), np.array([0.0, 0.0, 4.0])
+    g.adj = [[(1, 3.0)], [(0, 3.0), (2, 4.0)], [(1, 4.0)]]
+    g.pontos = shapely.points(g.x, g.y)
+    g.arvore = shapely.STRtree(g.pontos)
+    o = gpd.GeoSeries([shapely.Point(0, 0)], crs=CRS_METRICO)
+    d = gpd.GeoSeries([shapely.Point(3, 4)], crs=CRS_METRICO)
+    assert g.distancia(o, d)[0] == 7.0  # pelas ruas (3 + 4), não 5 em linha reta
+    with pytest.raises(ValueError):
+        g.distancia(o.to_crs(4326), d)

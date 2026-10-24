@@ -121,6 +121,8 @@ INDICADORES_COMPARACAO = [
     ("Índice de acesso (0–100)", "indice_acesso", "indice_acesso_mediana", 1, ""),
     ("Distância até a escola", "dist_escola_m", "dist_escola_m", 0, " m"),
     ("Distância até a UBS/USF", "dist_ubs_m", "dist_ubs_m", 0, " m"),
+    ("Até a escola, pelas ruas", "dist_escola_rede_m", "dist_escola_rede_m", 0, " m"),
+    ("Até a UBS/USF, pelas ruas", "dist_ubs_rede_m", "dist_ubs_rede_m", 0, " m"),
     ("Escolas públicas", "escolas", None, 0, ""),
     ("UBS/USF", "ubs_usf", None, 0, ""),
     ("Escolas por 10 mil hab.", "escolas_por_10mil", "escolas_por_10mil", 2, ""),

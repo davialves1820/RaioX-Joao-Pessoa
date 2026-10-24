@@ -302,6 +302,7 @@ escola e a UBS/USF mais próximas, área verde por habitante e um índice simple
 | Parques | Prefeitura, [Filipeia](https://filipeia.joaopessoa.pb.gov.br/) (shapefile exportado à mão) | `filipeia/Parques_Municipais.zip` (+ `.csv`) | arquivo de 08/02/2021 | 23/10/2026 |
 | Praças | Tabela do Filipeia; contornos da Prefeitura na cópia do geodata-jp (commit `76f128b`), conferidos com a tabela e as quadras | `filipeia/pracas.csv`, `geodata_jp/pracas.geojson` | intervenções registradas até 2018 | 23/10/2026 |
 | Quadras e bairros da Prefeitura (só conferência) | Filipeia | `filipeia/quadras_gerais.zip`, `filipeia/bairros.zip` | quadras de 02/10/2026; bairros de 13/04/2026 | 23/10/2026 |
+| Ruas e caminhos (distância pelas ruas) | OpenStreetMap, Overpass API, © colaboradores do OpenStreetMap (ODbL) | `osm/ruas.json` | base do OSM de 15/07/2026 (carimbo do servidor) | 24/10/2026 |
 | Matas e áreas protegidas (só no mapa) | [OpenStreetMap](https://www.openstreetmap.org/), Overpass API, © colaboradores do OpenStreetMap (ODbL) | `osm/matas.json`, `osm/parques.json` | consulta de 23/10/2026 | 23/10/2026 |
 | Coordenadas de apoio (escolas) | Catálogo do INEP de 2022 (via geodata-jp) e OpenStreetMap (API, 2 elementos fixos) | `geodata_jp/escolas_publicas.geojson`, `osm/escolas.json` | fev/2022; OSM de 23/10/2026 | 22–23/10/2026 |
 | População por setor censitário | IBGE, Censo 2022, malha de setores com atributos (`v0001`) | `ibge_censo2022/PB_setores_CD2022.gpkg` | 2022 | 22/10/2026 |
@@ -393,7 +394,7 @@ Cada ponto recebe um status, e os que não caem num bairro ficam em `pontos_nao_
 
 Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, em metros, nunca em graus.
 
-- **Distância até o serviço mais próximo:** linha reta (não é o caminho pelas ruas) até a escola
+- **Distância até o serviço mais próximo:** linha reta até a escola
   regular ou a UBS/USF mais próxima no município, inclusive de outro bairro. Duas versões:
   - **ponderada pela população (a principal):** distância de cada setor censitário com moradores
     (centroide do setor) até o serviço mais próximo, com média ponderada pelo número de moradores
@@ -402,6 +403,14 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
     mangue, um parque ou uma área vazia. A diferença entre as duas mostra onde as pessoas moram de
     fato em relação ao centro do bairro. No Planalto da Boa Esperança, por exemplo, a escola está a
     29 m do centroide, mas o morador médio está a 366 m de uma escola.
+- **Distância pelas ruas:** caminho mais curto pela malha de ruas e caminhos do OpenStreetMap
+  (`osm/ruas.json`: 100.679 nós e 116.552 trechos; ruas e avenidas, vias de serviço, calçadões, caminhos de pedestre, escadas, trilhas e ciclovias; sentido único é ignorado, porque o trajeto é a pé), do
+  centroide de cada setor ao serviço mais próximo, com média ponderada pelos moradores, como na linha
+  reta. Setor, escola e UBS são ligados ao nó de rua mais próximo, e a distância é a soma dos trechos em
+  metros (EPSG:31985). Na mediana dos setores, o caminho é 1,56 vez a linha reta até a escola e 1,46 vez
+  até a UBS/USF. Em 5 setores (2.047 moradores) não há caminho na malha até nenhum serviço; eles ficam
+  fora da média pelas ruas, e a lista está em `metadados.json` (`distancia_rede`). O índice de acesso
+  continua usando a linha reta.
 - **Serviços por 10 mil habitantes:** contagem no bairro ÷ população 2022 × 10.000. Vale também para as
   equipes de Saúde da Família (soma das equipes das UBS/USF do bairro). Não é cobertura: cada equipe atende uma
   área de abrangência, que não está nos dados e pode incluir outros bairros, por isso não há percentual de cobertura.
@@ -435,6 +444,9 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
 - **A distância não indica a unidade de referência.** Cada família é atendida pela UBS da sua área de
   abrangência, e essas áreas não estão nos dados. A distância mostra só a unidade mais próxima.
 - **Linha reta** subestima o caminho real, ainda mais onde há rios, mangues ou vias expressas no meio.
+- **Distância pelas ruas é aproximada.** Depende de a malha do OpenStreetMap estar completa (vielas e
+  atalhos podem faltar), não considera calçadas, travessias, relevo nem segurança, e liga cada setor ao
+  nó de rua mais próximo do seu centroide.
 - **Efeito de borda:** o serviço mais próximo pode estar em outro bairro (isso é contado); serviços
   em municípios vizinhos não estão nos dados.
 - **Área verde só do cadastro da Prefeitura:** a Mata do Buraquinho e outras matas não são praça nem
@@ -490,7 +502,7 @@ bairros (cor do mapa e painel) e de serviços (gráfico "Renda e acesso").
 
 | Arquivo | Conteúdo |
 |---|---|
-| `indicadores_servicos.csv` | por bairro: contagens por tipo, por 10 mil hab., área verde (m² e m²/hab), distâncias (ponderada e do centroide), habitantes por equipamento, marcação do ranking e índice de acesso |
+| `indicadores_servicos.csv` | por bairro: contagens por tipo, por 10 mil hab., área verde (m² e m²/hab), distâncias (ponderada, do centroide e pelas ruas), habitantes por equipamento, marcação do ranking e índice de acesso |
 | `pontos_servicos.geojson` | escolas e unidades de saúde com coordenada: tipo, rede/natureza, endereço, origem da coordenada, status, bairro e arquivo de origem |
 | `pontos_nao_atribuidos.csv` | pontos sem coordenada ou fora dos bairros, com o motivo e o bairro pela malha da Prefeitura |
 | `areas_verdes.geojson` | praças e parques (simplificados em 1 m para o mapa), com área |
@@ -687,4 +699,4 @@ brutos só rodam quando `data/raw/` está presente; os demais usam só `data/pro
 
 As próximas melhorias estão nas [issues do repositório](https://github.com/davialves1820/RaioX-Joao-Pessoa/issues):
 testes automáticos no GitHub, vagas na escola × crianças por bairro, equipes de Saúde da Família,
-renda e saneamento do Censo 2022, distância pelas ruas, população de 2025 da Prefeitura, entre outras.
+renda e saneamento do Censo 2022, distância pelas ruas (feitas), população de 2025 da Prefeitura, entre outras.
