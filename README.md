@@ -305,6 +305,7 @@ escola e a UBS/USF mais próximas, área verde por habitante e um índice simple
 | Matas e áreas protegidas (só no mapa) | [OpenStreetMap](https://www.openstreetmap.org/), Overpass API, © colaboradores do OpenStreetMap (ODbL) | `osm/matas.json`, `osm/parques.json` | consulta de 23/10/2026 | 23/10/2026 |
 | Coordenadas de apoio (escolas) | Catálogo do INEP de 2022 (via geodata-jp) e OpenStreetMap (API, 2 elementos fixos) | `geodata_jp/escolas_publicas.geojson`, `osm/escolas.json` | fev/2022; OSM de 23/10/2026 | 22–23/10/2026 |
 | População por setor censitário | IBGE, Censo 2022, malha de setores com atributos (`v0001`) | `ibge_censo2022/PB_setores_CD2022.gpkg` | 2022 | 22/10/2026 |
+| Matrículas por escola e etapa | INEP, [microdados do Censo Escolar 2024](https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_2024.zip) (`QT_MAT_INF_CRE`, `QT_MAT_INF_PRE`, `QT_MAT_FUND`, `QT_MAT_MED`) | `inep/microdados_censo_escolar_2024.zip` | Censo Escolar 2024 (arquivo de 07/2026) | 24/10/2026 |
 | Renda e saneamento por bairro | IBGE, Censo 2022: [rendimento do responsável](https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/) (divulgação de 05/2026) e características dos domicílios, partes 1 e 2, por bairro | `ibge_censo2022/Agregados_por_bairros_renda_responsavel_BR_20260508_csv.zip`, `..._caracteristicas_domicilio1_...zip`, `..._caracteristicas_domicilio2_...zip` | 2022 | 24/10/2026 |
 | Equipes de Saúde da Família | Ministério da Saúde, DATASUS, [base completa do CNES](https://cnes.datasus.gov.br/pages/downloads/arquivosBaseDados.jsp) (`tbEquipe`, `tbTipoEquipe`) | `cnes/BASE_DE_DADOS_CNES_202609.ZIP` | competência 09/2026 | 24/10/2026 |
 
@@ -451,6 +452,20 @@ Distâncias e áreas são calculadas em **SIRGAS 2000 / UTM 25S (EPSG:31985)**, 
 - **14 escolas sem coordenada** (lista em `pontos_nao_atribuidos.csv`) não entram nas distâncias;
   a distância até a escola pode estar superestimada nos bairros delas.
 - **Coordenadas declaradas:** são as informadas ao INEP e ao CNES e não foram conferidas uma a uma.
+
+### Matrículas e crianças do bairro
+
+- **Matrículas:** microdados do Censo Escolar 2024 do INEP, por escola e etapa (creche, pré-escola,
+  fundamental, médio), baixados por `python -m src.collect.inep_microdados`. As 301 escolas do site estão
+  todas nos microdados, e suas matrículas são exatamente as das escolas públicas em funcionamento da cidade
+  (as 5 de atividade complementar/AEE não têm turmas regulares). Na cidade, de 54% (pré-escola) a 71% (creche)
+  das matrículas são em escola pública.
+- **Crianças e jovens:** população por idade do Censo 2022, por bairro (`V01031` a `V01034`).
+- **Indicadores:** matrículas públicas no bairro por 100 crianças que moram nele: educação infantil ÷ 0 a 4
+  anos; fundamental ÷ 5 a 14 anos; médio ÷ 15 a 19 anos. As faixas do IBGE são de 5 em 5 anos e não coincidem
+  com as idades das etapas (creche 0–3, pré-escola 4–5, fundamental 6–14, médio 15–17), e muitos alunos estudam
+  fora do bairro onde moram: bairros com escolas grandes e poucos moradores passam de 100. É uma comparação,
+  não uma medida de falta ou sobra de vagas. No mapa, a cor satura no percentil 90.
 
 ### Renda e saneamento (Censo 2022)
 
