@@ -104,3 +104,40 @@ def test_populacao_sem_ano_estimado_por_nos():
     pop = pd.read_csv(P / "populacao.csv")
     assert pop["fonte"].notna().all() and (pop["populacao"] > 0).all()
     assert 2023 not in set(pop["ano"])  # o IBGE não publicou estimativa para 2023
+
+
+# --- por órgão (2022 em diante)
+
+
+@pytest.fixture(scope="module")
+def orgaos():
+    return pd.read_parquet(P / "orgaos.parquet")
+
+
+def test_orgaos_somam_o_mesmo_que_o_cubo(orgaos, cubo):
+    from src.config import ANO_INICIAL_ORGAOS
+
+    assert orgaos.ano.min() == ANO_INICIAL_ORGAOS
+    base = cubo[cubo.ano >= ANO_INICIAL_ORGAOS]
+    for col in ["empenhado", "pago"]:
+        a = orgaos.groupby(["ano", "intra"])[col].sum()
+        b = base.groupby(["ano", "intra"])[col].sum()
+        assert (a - b).abs().max() < 0.05, col
+    # corrigido: cada linha é arredondada ao centavo, e o cubo tem muito mais linhas
+    a = orgaos.groupby(["ano", "intra"])["empenhado_corrigido"].sum()
+    b = base.groupby(["ano", "intra"])["empenhado_corrigido"].sum()
+    assert ((a - b).abs() <= 0.005 * base.groupby(["ano", "intra"]).size()).all()
+
+
+def test_orgao_e_o_prefixo_da_unidade_e_tem_nome(orgaos, meta):
+    assert (orgaos.cod_orgao == orgaos.cod_uo.str[:2]).all()
+    assert not orgaos[["orgao", "unidade_orcamentaria", "nome_no_arquivo", "poder"]].isna().any().any()
+    # um nome por órgão e por unidade, iguais aos dos metadados
+    assert (orgaos.groupby("cod_orgao").orgao.nunique() == 1).all()
+    assert (orgaos.groupby("cod_uo").unidade_orcamentaria.nunique() == 1).all()
+    nomes = {c: v["nome"] for c, v in meta["orgaos"]["orgaos"].items()}
+    assert orgaos.drop_duplicates("cod_orgao").set_index("cod_orgao").orgao.to_dict() == nomes
+
+
+def test_camara_e_o_unico_orgao_do_legislativo(orgaos):
+    assert set(orgaos.loc[orgaos.poder == "Legislativo", "cod_orgao"]) == {"01"}

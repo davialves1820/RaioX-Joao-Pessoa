@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-15T13:11:26Z",
+  "gerado_em": "2026-10-25T16:19:05Z",
   "anos": [
     2009,
     2010,
@@ -38,6 +38,269 @@
       "PF": 206258,
       "indefinido": 57
     }
+  },
+  "orgaos": {
+    "ano_inicial": 2022,
+    "regras": {
+      "orgao": "dois primeiros dígitos do código da unidade orçamentária",
+      "nome_da_unidade": "nome do ano mais recente em que o código aparece; o de cada ano em nome_no_arquivo",
+      "nome_do_orgao": "sigla da unidade «SIGLA - AÇÕES DE GOVERNO»; sem ela, o nome da unidade de maior valor",
+      "nomes_cortados": "o TCE-PB corta a descrição em 50 caracteres; marcados com …"
+    },
+    "orgaos": {
+      "01": {
+        "nome": "CÂMARA MUNICIPAL",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "01101",
+          "01102",
+          "01301"
+        ]
+      },
+      "03": {
+        "nome": "GAVIPRE",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "03101"
+        ]
+      },
+      "05": {
+        "nome": "PROGEM",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "05101",
+          "05301"
+        ]
+      },
+      "06": {
+        "nome": "SEAD",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "06101",
+          "06201"
+        ]
+      },
+      "07": {
+        "nome": "SEFIN",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "07101"
+        ]
+      },
+      "08": {
+        "nome": "SEPLAN",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "08101",
+          "08102",
+          "08301"
+        ]
+      },
+      "09": {
+        "nome": "SEDURB",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "09101"
+        ]
+      },
+      "10": {
+        "nome": "SEDEC",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "10101",
+          "10102",
+          "10201",
+          "10301"
+        ]
+      },
+      "11": {
+        "nome": "SEINFRA",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "11101",
+          "11301"
+        ]
+      },
+      "12": {
+        "nome": "SEMAM",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "12101",
+          "12301"
+        ]
+      },
+      "13": {
+        "nome": "FUNDO MUNICIPAL DE SAÚDE",
+        "origem_do_nome": "nome da unidade de maior valor (13301)",
+        "unidades": [
+          "13201",
+          "13301"
+        ]
+      },
+      "14": {
+        "nome": "SEDES",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "14101"
+        ]
+      },
+      "15": {
+        "nome": "SETUR",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "15101",
+          "15301"
+        ]
+      },
+      "16": {
+        "nome": "RECURSOS SOB A SUPERVISÃO DA SECRETARIA DA ADMINIS…",
+        "origem_do_nome": "nome da unidade de maior valor (16101)",
+        "unidades": [
+          "16101",
+          "16102"
+        ]
+      },
+      "21": {
+        "nome": "SEDEST",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "21101",
+          "21301",
+          "21302"
+        ]
+      },
+      "22": {
+        "nome": "SECOM",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "22101"
+        ]
+      },
+      "24": {
+        "nome": "SEMHAB",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "24101"
+        ]
+      },
+      "25": {
+        "nome": "SEJER",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "25101",
+          "25201"
+        ]
+      },
+      "26": {
+        "nome": "SEREM",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "26101"
+        ]
+      },
+      "27": {
+        "nome": "SECITEC",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "27101",
+          "27301"
+        ]
+      },
+      "28": {
+        "nome": "SEPPM",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "28101",
+          "28301"
+        ]
+      },
+      "29": {
+        "nome": "SEMUSB",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "29101"
+        ]
+      },
+      "30": {
+        "nome": "COMPDEC",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "30101"
+        ]
+      },
+      "31": {
+        "nome": "SMPDC",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "31101",
+          "31301"
+        ]
+      },
+      "32": {
+        "nome": "CGM",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "32101",
+          "32103"
+        ]
+      },
+      "33": {
+        "nome": "INOVACENTRO",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "33101"
+        ]
+      },
+      "34": {
+        "nome": "SESUZ",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "34101"
+        ]
+      },
+      "35": {
+        "nome": "SMCPA",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "35101"
+        ]
+      },
+      "71": {
+        "nome": "SEGGOV",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "71101",
+          "71102",
+          "71103",
+          "71104",
+          "71105",
+          "71201",
+          "71202"
+        ]
+      },
+      "72": {
+        "nome": "SEDHUC",
+        "origem_do_nome": "sigla da unidade «… - AÇÕES DE GOVERNO»",
+        "unidades": [
+          "72101",
+          "72301",
+          "72302",
+          "72303"
+        ]
+      }
+    },
+    "unidades_com_nome_cortado": [
+      "10102",
+      "16101",
+      "16102",
+      "27301",
+      "32103",
+      "71102",
+      "71103",
+      "71104",
+      "71202",
+      "72301"
+    ]
   },
   "aviso": "Valores declarados pela Prefeitura e demais órgãos municipais ao TCE-PB (SAGRES). Podem mudar após análise e auditoria do Tribunal.",
   "arquivos_brutos": {
