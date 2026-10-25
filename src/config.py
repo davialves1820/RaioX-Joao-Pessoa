@@ -31,6 +31,10 @@ COD_MUNICIPIO_TCE = "095"
 # Primeiro ano da série: 2009 é o primeiro com todas as unidades gestoras e com
 # valor liquidado preenchido (2003-2008 ficam fora; ver README).
 ANO_INICIAL_DESPESAS = 2009
+# Primeiro ano da divisão por órgão (unidade orçamentária). A estrutura de órgãos mudou em 2022
+# (ex.: Emlur e Semob passaram do órgão 02 para o 71); antes disso o arquivo só traz o nome da
+# diretoria, repetido em vários órgãos, e não há como nomear o órgão sem outra fonte (ver README).
+ANO_INICIAL_ORGAOS = 2022
 # Anos com dados sabidamente incompletos no TCE-PB: exibidos com aviso e
 # excluídos das comparações entre anos.
 ANOS_INCOMPLETOS_DESPESAS = {2016: "dados incompletos no TCE-PB (só Prefeitura e Câmara; −42% frente ao SICONFI)"}

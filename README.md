@@ -646,6 +646,31 @@ não o total.
 - Microempreendedores individuais (MEI) costumam ter o CPF do titular no nome da empresa: esse
   CPF também é mascarado.
 
+### Por órgão (2022 em diante)
+
+`orgaos.parquet` divide o gasto por **órgão** e **unidade orçamentária** (a secretaria, fundo ou
+autarquia que tem o orçamento), por ano e função, de 2022 em diante. A soma por ano é a mesma do cubo.
+
+- **Órgão** = os dois primeiros dígitos do código da unidade orçamentária (10101 → órgão 10). Cada
+  órgão agrupa as unidades ligadas a ele no orçamento, por exemplo:
+  - órgão 06 (SEAD) inclui o IPM (previdência);
+  - órgão 71 (SEGGOV) inclui a Emlur e a Semob;
+  - órgão 10 (SEDEC) inclui a Funjope e o Fundo Municipal de Cultura.
+- **Nome da unidade:** o do ano mais recente em que o código aparece. O mesmo código muda de nome
+  entre 2022–2023 ("10101-GABINETE DO SECRETÁRIO") e 2024 em diante ("SEDEC - AÇÕES DE GOVERNO"). O
+  nome de cada ano fica em `nome_no_arquivo`.
+- **Nome do órgão:** a sigla da unidade "SIGLA - AÇÕES DE GOVERNO" do órgão. Sem ela, vale o nome da
+  unidade de maior valor: o órgão 13 vira "Fundo Municipal de Saúde" e o 16, "Recursos sob a supervisão
+  da Secretaria da Administração…". O órgão 16 reúne os recursos sob a supervisão das secretarias da
+  Administração e das Finanças, empenhados nas funções Administração e Encargos Especiais.
+- **Siglas ficam como siglas.** O arquivo do TCE-PB não traz o nome por extenso (SEDEC, SEINFRA,
+  SEMUSB…), e o pipeline não completa nada de fora dele.
+- **Nomes cortados:** o TCE-PB corta a descrição em 50 caracteres; esses nomes terminam em "…".
+- **Por que só desde 2022:** a estrutura de órgãos mudou em 2022 (Emlur e Semob passaram do órgão 02
+  para o 71). Antes disso o arquivo traz só o nome da diretoria ("DIRETORIA DE ADMINISTRAÇÃO E
+  FINANÇAS"), repetido em vários órgãos. Nomear esses órgãos exigiria outra fonte (as LOAs de cada
+  ano), com ganho pequeno de precisão.
+
 ### Mapa por bairro (experimental)
 
 O histórico de cada empenho é um texto livre. Procuramos nele os nomes dos 64 bairros oficiais.
@@ -690,6 +715,7 @@ O SICONFI não tem a DCA de João Pessoa antes de 2014. Detalhes em
 | `bairros_citados.csv` / `bairros_cobertura.csv` | valor por bairro citado (nominal e corrigido) e cobertura por ano |
 | `validacao_siconfi.csv` | total anual TCE-PB × SICONFI |
 | `ipca.csv` / `populacao.csv` | séries usadas na correção e no gasto por habitante |
+| `orgaos.parquet` | 2022 em diante: valor por ano, unidade gestora, órgão, unidade orçamentária (com o nome de cada ano em `nome_no_arquivo`), função e repasse interno (`intra`), empenhado, liquidado, pago e corrigidos pelo IPCA |
 | `metadados.json` | mês de referência do IPCA, última data de empenho, checagens, aviso e manifesto dos arquivos brutos |
 
 Cada linha do cubo e da tabela de credores traz o `arquivo_origem` (ex.: `despesas-2025.zip`), e o
