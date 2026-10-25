@@ -43,6 +43,66 @@ UNIDADES_GESTORAS = {
     "614095": ("Fundo da Câmara Municipal (FEJP)", "Legislativo", "Legislativo"),
 }
 
+# --- Nome oficial de cada órgão (dois primeiros dígitos da unidade orçamentária). O arquivo do TCE-PB
+# só traz a sigla ("SEDEC - AÇÕES DE GOVERNO"). Fontes (data/raw/camara_jp, ver src/collect/camara_jp.py):
+# - LOA 2024, Lei 15.066/2024: quadro "ÓRGÃO : XX000 NOME", página indicada (numeração do PDF). Grafia
+#   ajustada só em maiúsculas/minúsculas, acentos e abreviações ("SEC. MUNIC." → "Secretaria Municipal");
+#   a grafia da lei fica no segundo campo.
+# - Órgãos criados em 2025: a lei de criação (art. 1º).
+# Um órgão novo, que não esteja aqui, interrompe o pipeline até ser incluído com a fonte.
+LOA_2024 = "LOA 2024 (Lei 15.066/2024)"
+NOMES_ORGAOS = {
+    "01": ("Câmara Municipal", "CAMARA MUNICIPAL", f"{LOA_2024}, p. 269"),
+    "03": ("Gabinete do Vice-Prefeito", "GABINETE DO VICE-PREFEITO", f"{LOA_2024}, p. 270"),
+    "05": ("Procuradoria Geral do Município", "PROCURADORIA GERAL DO MUNICIPIO", f"{LOA_2024}, p. 270"),
+    "06": ("Secretaria da Administração", "SECRETARIA DA ADMINISTRACAO", f"{LOA_2024}, p. 271"),
+    "07": ("Secretaria das Finanças", "SECRETARIA DAS FINANCAS", f"{LOA_2024}, p. 272"),
+    "08": ("Secretaria de Planejamento", "SECRETARIA DE PLANEJAMENTO", f"{LOA_2024}, p. 272"),
+    "09": ("Secretaria Municipal do Desenvolvimento Urbano", "SEC. MUNIC. DO DESENVOLVIMENTO URBANO",
+           f"{LOA_2024}, p. 274"),
+    "10": ("Secretaria Municipal de Educação e Cultura", "SECRETARIA MUNICIPAL DE EDUCAÇÃO E CULTURA",
+           f"{LOA_2024}, p. 276"),
+    "11": ("Secretaria de Infraestrutura", "SECRETARIA DE INFRAESTRUTURA", f"{LOA_2024}, p. 278"),
+    "12": ("Secretaria Municipal do Meio Ambiente", "SECRETARIA MUNICIPAL DO MEIO-AMBIENTE", f"{LOA_2024}, p. 279"),
+    "13": ("Secretaria Municipal de Saúde", "SECRETARIA MUNICIPAL DE SAUDE", f"{LOA_2024}, p. 280"),
+    "14": ("Secretaria de Desenvolvimento Social", "SECRETARIA DE DESENVOLVIMENTO SOCIAL", f"{LOA_2024}, p. 281"),
+    "15": ("Secretaria de Turismo", "SECRETARIA DE TURISMO", f"{LOA_2024}, p. 283"),
+    "16": ("Encargos Gerais do Município", "ENCARGOS GERAIS DO MUNÍCIPIO", f"{LOA_2024}, p. 284"),
+    "21": ("Secretaria de Desenvolvimento Econômico e Trabalho", "SECRETARIA DE DESENVOLVIMENTO ECONÔMICO E TRABALHO",
+           f"{LOA_2024}, p. 286"),
+    "22": ("Gabinete de Comunicação Social", "GABINETE DE COMUNICACAO SOCIAL", f"{LOA_2024}, p. 287"),
+    "24": ("Secretaria Municipal de Habitação Social", "SECRETARIA MUNICIPAL DE HABITAÇÃO SOCIAL", f"{LOA_2024}, p. 287"),
+    "25": ("Secretaria Municipal da Juventude, Esporte e Recreação", "SEC. MUNIC. DA JUVENTUDE, ESPORTE E RECREAÇÃO",
+           f"{LOA_2024}, p. 288"),
+    "26": ("Secretaria da Receita Municipal", "SECRETARIA DA RECEITA MUNICIPAL", f"{LOA_2024}, p. 289"),
+    "27": ("Secretaria Municipal de Ciência e Tecnologia", "SECRETARIA MUNICIPAL DE CIÊNCIA E TECNOLOGIA",
+           f"{LOA_2024}, p. 290"),
+    # Na LOA 2024: "SECRETARIA EXTRAORDINÁRIA DE POLÍTICAS PÚBLICAS PARA AS MULHERES" (p. 291); novo nome a
+    # partir de 11/12/2024
+    "28": ("Secretaria Municipal de Políticas Públicas para Mulheres",
+           "Secretaria Municipal de Políticas Públicas para Mulheres", "Lei 15.399/2024, art. 1º"),
+    "29": ("Secretaria Municipal de Segurança Urbana e Cidadania", "SECRETARIA MUNICIPAL DE SEGURANÇA URBANA E CIDADANIA",
+           f"{LOA_2024}, p. 291"),
+    # a LOA escreve "COORDENADORA"; a sigla do órgão no TCE-PB é COMPDEC
+    "30": ("Coordenadoria Municipal de Proteção e Defesa Civil de João Pessoa",
+           "COORDENADORA MUNICIPAL DE PROTEÇÃO E DEFESA CIVIL DE JOÃO PESSOA", f"{LOA_2024}, p. 292"),
+    "31": ("Secretaria Municipal de Proteção e Defesa do Consumidor",
+           "SECRETARIA MUNICIPAL DE PROTEÇÃO E DEFESA DO CONSUMIDOR", f"{LOA_2024}, p. 293"),
+    "32": ("Controladoria Geral do Município", "CONTROLADORIA GERAL DO MUNICÍPIO", f"{LOA_2024}, p. 293"),
+    "33": ("Secretaria Municipal de Preservação, Revitalização e Inovação do Centro Histórico",
+           "Secretaria Municipal de Preservação, Revitalização e Inovação do Centro Histórico (INOVACENTRO)",
+           "Lei 15.467/2025, art. 1º"),
+    "34": ("Secretaria Municipal de Serviços Urbanos e Zeladoria",
+           "Secretaria Municipal de Serviços Urbanos e Zeladoria - SESUZ", "Lei 15.468/2025, art. 1º"),
+    # A lei não dá sigla; o TCE-PB usa SMCPA e os contratos, SECUPA. Que o órgão 35 é esta secretaria se vê
+    # nos próprios empenhos (folha "da Sec. Mun. de Cuidado e Proteção Animal").
+    "35": ("Secretaria Municipal de Cuidado e Proteção Animal", "SECRETARIA MUNICIPAL DE CUIDADO E PROTEÇÃO ANIMAL",
+           "Lei 15.469/2025, art. 1º"),
+    "71": ("Secretaria de Gestão Governamental", "SECRETARIA DE GESTÃO GOVERNAMENTAL", f"{LOA_2024}, p. 294"),
+    "72": ("Secretaria de Direitos Humanos e Cidadania", "SECRETARIA DE DIREITOS HUMANOS E CIDADANIA",
+           f"{LOA_2024}, p. 297"),
+}
+
 # --- Modalidade de licitação: os nomes mudam ao longo do tempo (ex.: Lei 14.133/2021).
 # Agrupamos em categorias estáveis; o nome original continua disponível.
 MODALIDADES = {

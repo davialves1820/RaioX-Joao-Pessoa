@@ -1,4 +1,39 @@
 {
+  "camara_jp/lei_15399_2024_mulheres.pdf": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/normajuridica/2024/21947/15.399_-_11.12.24_-_altera_lei_11.902_transforma_secretaria_extraordinaria_politicas_publicas_mulheres.pdf",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (normas jurídicas)",
+    "baixado_em": "2026-10-25T16:30:35Z",
+    "bytes": 642405,
+    "sha256": "1cd705acdace4e5a5e00a1545120e1839f44cdd4915a0c451484b8dd9c65b5b8"
+  },
+  "camara_jp/lei_15467_2025_inovacentro.pdf": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/normajuridica/2025/22078/15.467_-_20.02.25_-_cria_a_secretaria_inovacentro_-_mp_60.pdf",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (normas jurídicas)",
+    "baixado_em": "2026-10-25T16:30:30Z",
+    "bytes": 3694096,
+    "sha256": "2dc1cc8e386028326d02eb4d703e1729d16adda4432b48cae921827afbb97c21"
+  },
+  "camara_jp/lei_15468_2025_sesuz.pdf": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/normajuridica/2025/22079/15.468_-_20.02.25_-_cria_a_secretaria_de_servicos_urbanos_e_zeladoria-sesuz_-_mp_61.pdf",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (normas jurídicas)",
+    "baixado_em": "2026-10-25T16:30:32Z",
+    "bytes": 6102282,
+    "sha256": "c2c0b618434a1c0612c913c3324ec2a2e7477c44330e3ef3996cd8348fc72cee"
+  },
+  "camara_jp/lei_15469_2025_protecao_animal.pdf": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/normajuridica/2025/22080/15.469_-_20.02.25_-_cria_a_secretaria_de_cuidado_e_protecao_animal_-_mp_64.pdf",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (normas jurídicas)",
+    "baixado_em": "2026-10-25T16:30:34Z",
+    "bytes": 4987354,
+    "sha256": "60480235d0a5c0f909bfd737e2b56c682d6e6958b48c7bd9f9297de5500ac549"
+  },
+  "camara_jp/loa_2024_lei_15066.pdf": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/normajuridica/2024/19767/lei_no_15066-2024_loa.pdf",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (normas jurídicas)",
+    "baixado_em": "2026-10-25T16:30:29Z",
+    "bytes": 3365149,
+    "sha256": "eb78f5277bb0f4e8bb71e51927da893d7cd1f51705d6243e229a37db3dde86ef"
+  },
   "cnes/BASE_DE_DADOS_CNES_202609.ZIP": {
     "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202609.ZIP",
     "fonte": "Ministério da Saúde, DATASUS - CNES, base de dados completa (competência mensal)",
