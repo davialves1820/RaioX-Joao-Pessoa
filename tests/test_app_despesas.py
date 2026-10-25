@@ -102,3 +102,54 @@ def test_gasto_por_funcao_bate_com_o_cubo():
     # sem população oficial em 2023: valor por habitante vazio
     if 2023 in g.index:
         assert pd.isna(g.loc[2023, "Saúde por habitante"])
+
+
+# --- por órgão
+
+
+def _orgaos():
+    return pd.DataFrame({
+        "ano": [2025] * 5,
+        "cod_orgao": ["10", "10", "13", "06", "06"],
+        "orgao": ["Secretaria Municipal de Educação e Cultura"] * 2 + ["Secretaria Municipal de Saúde"]
+                 + ["Secretaria da Administração"] * 2,
+        "orgao_sigla": ["SEDEC", "SEDEC", None, "SEAD", "SEAD"],
+        "funcao": ["Educação", "Cultura", "Saúde", "Previdência Social", "Administração"],
+        "v": [90.0, 10.0, 60.0, 30.0, 10.0],
+    })
+
+
+def test_resumo_orgaos_soma_100_e_mostra_a_area_principal():
+    r = d.resumo_orgaos(_orgaos(), 2025, "v")
+    assert list(r.cod_orgao) == ["10", "13", "06"]
+    assert r.pct.sum() == pytest.approx(100)
+    assert r.set_index("cod_orgao").loc["06", "area_principal"] == "Previdência Social"
+    assert r.set_index("cod_orgao").loc["06", "pct_area_principal"] == pytest.approx(75)
+    assert pd.isna(r.set_index("cod_orgao").loc["13", "sigla"])  # órgão sem sigla continua na lista
+
+
+def test_orgaos_da_area():
+    oa = d.orgaos_da_area(_orgaos(), 2025, "v", "Educação")
+    assert list(oa.cod_orgao) == ["10"] and oa.pct.iloc[0] == pytest.approx(100)
+    assert d.orgaos_da_area(_orgaos(), 2025, "v", "Urbanismo").empty
+
+
+def test_nomes_de_unidades_e_orgaos():
+    assert d.nome_unidade("SEDEC - AÇÕES DE GOVERNO") == "Ações de governo (SEDEC)"
+    assert d.nome_unidade("CÂMARA MUNICIPAL - AÇÕES DE GOVERNO") == "Ações de governo (Câmara Municipal)"
+    assert d.nome_unidade("INSTITUTO DE PREVIDÊNCIA DO MUNICIPIO - IPM") == "Instituto de Previdência do Municipio - IPM"
+    assert d.nome_unidade("FUNDO DE APOIO AOS PEQUENOS NEGÓCIOS NO MUNICÍPIO") == \
+        "Fundo de Apoio aos Pequenos Negócios no Município"
+    assert d.nome_unidade("RECURSOS SOB A SUPERVISÃO DA SECRETARIA DA ADMINIS…").endswith("Adminis…")
+    assert d.rotulo_orgao("Secretaria de Infraestrutura", "SEINFRA") == "Secretaria de Infraestrutura (SEINFRA)"
+    assert d.rotulo_orgao("Câmara Municipal", None) == "Câmara Municipal"
+
+
+def test_todo_orgao_dos_dados_tem_nome_oficial_com_fonte():
+    from src.process.despesas_regras import NOMES_ORGAOS
+
+    o = pd.read_parquet(d.PASTA / "orgaos.parquet")
+    assert set(o.cod_orgao) <= set(NOMES_ORGAOS)
+    assert all(nome and fonte for nome, _, fonte in NOMES_ORGAOS.values())
+    assert (o.groupby("cod_orgao").orgao.first() == o.groupby("cod_orgao").cod_orgao.first().map(
+        lambda c: NOMES_ORGAOS[c][0])).all()

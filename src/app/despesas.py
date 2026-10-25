@@ -27,8 +27,10 @@ GLOSSARIO = """
 - **Pagamento:** o dinheiro sai do caixa. Um valor empenhado pode ser pago meses depois, ou cancelado.
 
 **Outros termos**
-- **Órgão (unidade gestora):** quem gasta. Prefeitura, fundos municipais (como o de Saúde), autarquias
-  (como Emlur e Semob), fundações e a Câmara Municipal.
+- **Unidade gestora:** quem executa a despesa no sistema do TCE-PB. Prefeitura, fundos municipais (como o de
+  Saúde), autarquias (como Emlur e Semob), fundações e a Câmara Municipal.
+- **Órgão:** secretaria, procuradoria, Câmara ou outra estrutura do orçamento, com as unidades ligadas a ela
+  (ex.: a Secretaria de Educação e Cultura inclui a Funjope). Na aba "Por órgão", de 2022 em diante.
 - **Área (função):** para que serve o gasto, numa classificação usada por todo o país: Saúde, Educação,
   Urbanismo, Previdência etc. A **subfunção** detalha a área (ex.: Educação → Ensino Fundamental).
 - **Fornecedor:** empresa ou entidade com CNPJ que recebe pelo que vende ou presta.
@@ -263,6 +265,127 @@ def aba_por_area(df, col, corrigido, meta):
         hovertemplate="%{hovertext}<extra></extra>",
     ))
     st.plotly_chart(_layout(fig, 300, "R$ milhões"), config={"displayModeBar": False})
+
+
+def aba_por_orgao(dados, col, corrigido, meta, poder, sem_intra):
+    T = tema.atual()
+    info = meta["orgaos"]
+    _pergunta(
+        "Quais órgãos gastam mais?",
+        f"De {info['ano_inicial']} em diante, por órgão (secretaria, procuradoria, Câmara…) e pelas unidades de cada um "
+        "(fundos, autarquias e a própria secretaria). Clique num órgão para abrir as unidades e no topo do quadro para "
+        "voltar.",
+    )
+    df = d.filtrar(dados["orgaos"], poder, sem_intra)
+    anos = sorted(df["ano"].unique())
+    ano = st.columns([1, 4])[0].selectbox("Ano", anos[::-1], index=1 if len(anos) > 1 else 0, key="po_ano")
+    if nota := _nota_status(ano, meta):
+        st.warning(nota)
+    res = d.resumo_orgaos(df, ano, col)
+    if res.empty:
+        st.write("Nenhum valor com essas opções.")
+        return
+    top = res.head(3)
+    frase = d.lista_pt([f"{d.rotulo_orgao(r.orgao, r.sigla)} ({d.fmt_pct(r.pct)})" for r in top.itertuples()])
+    st.info(_md(f"Em {ano}, {frase} somaram {d.fmt_pct(top.pct.sum())} do valor. Valores {_rotulo_valor(corrigido, meta)}."),
+            icon="💡")
+
+    # treemap órgão → unidade orçamentária
+    a = df[df["ano"] == ano]
+    u = a.groupby(["cod_orgao", "cod_uo", "unidade_orcamentaria"], as_index=False)[col].sum()
+    u = u[u[col] > 0]
+    nomes = res.set_index("cod_orgao")
+    total = res["valor"].sum()
+    ids = list(nomes.index) + [f"{o}/{c}" for o, c in zip(u.cod_orgao, u.cod_uo)]
+    curto = [r.sigla if isinstance(r.sigla, str) else r.orgao for r in nomes.itertuples()]
+    labels = curto + [d.nome_unidade(n) for n in u.unidade_orcamentaria]
+    parents = [""] * len(nomes) + list(u.cod_orgao)
+    values = list(nomes["valor"]) + list(u[col])
+    completos = [d.rotulo_orgao(r.orgao, r.sigla) for r in nomes.itertuples()] + [
+        f"{d.nome_unidade(n)}<br>{d.rotulo_orgao(nomes.loc[o, 'orgao'], nomes.loc[o, 'sigla'])}"
+        for o, n in zip(u.cod_orgao, u.unidade_orcamentaria)]
+    fig = go.Figure(go.Treemap(
+        ids=ids, labels=labels, parents=parents, values=values, branchvalues="total",
+        marker=dict(colors=values, colorscale=[[i / 3, c] for i, c in enumerate(tema.AZUL_SEQ[3:])],
+                    line=dict(color=T["superficie"], width=2)),
+        customdata=completos,
+        hovertext=[f"{d.fmt_reais(v)} ({100 * v / total:.1f}% do total)".replace(".", ",") for v in values],
+        hovertemplate="<b>%{customdata}</b><br>%{hovertext}<extra></extra>",
+        texttemplate="<b>%{label}</b><br>%{percentRoot:.1%}", textfont=dict(color="#ffffff"),
+        maxdepth=2,
+    ))
+    fig.update_layout(height=520, margin=dict(l=0, r=0, t=0, b=0), separators=",.")
+    st.plotly_chart(fig, config={"displayModeBar": False})
+
+    ant = d.resumo_orgaos(df, ano - 1, col).set_index("cod_orgao")["valor"] if ano - 1 in anos else pd.Series(dtype=float)
+    tabela = pd.DataFrame({
+        "Órgão": res["orgao"], "Sigla": res["sigla"].fillna(""), "Valor": res["valor"], "% do total": res["pct"],
+        "Área principal": [f"{a} ({d.fmt_pct(p)})" for a, p in zip(res.area_principal, res.pct_area_principal)],
+    })
+    variacao = f"Variação frente a {ano - 1}"
+    if d.anos_comparaveis(ano, meta) and d.anos_comparaveis(ano - 1, meta) and len(ant):
+        tabela[variacao] = 100 * (res["valor"].values / res["cod_orgao"].map(ant).values - 1)
+    st.dataframe(dados_bairros.tabela_br(tabela, reais=["Valor"], pct={"% do total": 1}, pct_sinal={variacao: 1}),
+                 hide_index=True, width="stretch")
+    st.caption("Área principal: a função de governo em que o órgão mais empenhou no ano, com a parte do valor dele. "
+               "O órgão inclui as unidades ligadas a ele no orçamento: a Secretaria da Administração inclui o IPM "
+               "(previdência), e a de Gestão Governamental inclui a Emlur e a Semob, por isso as áreas delas aparecem ali.")
+
+    st.subheader("Quem gasta em cada área")
+    st.caption("Escolha uma área (função de governo) para ver quanto dela saiu de cada órgão no ano.")
+    areas = a.groupby("funcao")[col].sum().sort_values(ascending=False)
+    areas = list(areas[areas > 0].index)
+    # abre na área dividida entre mais órgãos (Saúde e Educação saem quase só de uma secretaria)
+    n_orgaos = a[a[col] > 0].groupby("funcao")["cod_orgao"].nunique()
+    inicial = max(areas, key=lambda f: (n_orgaos.get(f, 0), -areas.index(f)))
+    area = st.columns([2, 3])[0].selectbox("Área", areas, index=areas.index(inicial), key="po_area")
+    oa = d.orgaos_da_area(df, ano, col, area)
+    rotulos = [d.rotulo_orgao(n, s) for n, s in zip(oa.orgao, oa.sigla)]
+    if len(oa) > 12:  # os 12 maiores; o resto somado numa barra só
+        resto = oa.iloc[12:]
+        rotulos = rotulos[:12] + [f"Outros {len(resto)} órgãos"]
+        oa = pd.concat([oa.iloc[:12], pd.DataFrame([{"valor": resto["valor"].sum(), "pct": resto["pct"].sum()}])])
+    fig = go.Figure(go.Bar(
+        x=oa["valor"] / 1e6, y=rotulos, orientation="h",
+        marker=dict(color=[T["azul_claro"] if r.startswith("Outros ") else T["azul"] for r in rotulos], cornerradius=4),
+        text=[f"{d.fmt_reais(v)} · {d.fmt_pct(p)}" for v, p in zip(oa["valor"], oa["pct"])], textposition="outside",
+        textfont=dict(color=T["tinta"]), cliponaxis=False,
+        hovertemplate="<b>%{y}</b><br>%{text}<extra></extra>",
+    ))
+    fig = _layout(fig, 40 * len(oa) + 40)
+    fig.update_layout(yaxis=dict(autorange="reversed", gridcolor="rgba(0,0,0,0)", tickfont=dict(color=T["tinta"])),
+                      xaxis=dict(visible=False), margin=dict(r=140))
+    st.plotly_chart(fig, config={"displayModeBar": False})
+
+    st.subheader("Um órgão ao longo dos anos")
+    st.caption(tema.texto(f"De {info['ano_inicial']} em diante. Barras claras: ano em andamento.", T))
+    opcoes = dict(zip(res.cod_orgao, [d.rotulo_orgao(r.orgao, r.sigla) for r in res.itertuples()]))
+    cod = st.columns([2, 3])[0].selectbox("Órgão", list(opcoes), format_func=opcoes.get, key="po_orgao")
+    serie = df[df["cod_orgao"] == cod].groupby("ano")[col].sum()
+    cores = [T["azul"] if d.status_ano(x, meta) is None else T["azul_claro"] for x in serie.index]
+    fig = go.Figure(go.Bar(
+        x=list(serie.index), y=serie.values / 1e6, marker=dict(color=cores, cornerradius=4),
+        hovertext=[f"<b>{x}</b><br>{d.fmt_reais(v)}" for x, v in serie.items()],
+        hovertemplate="%{hovertext}<extra></extra>",
+    ))
+    fig = _layout(fig, 280, "R$ milhões")
+    fig.update_xaxes(dtick=1)
+    st.plotly_chart(fig, config={"displayModeBar": False})
+
+    with st.expander("De onde vêm os nomes dos órgãos"):
+        st.markdown(
+            "O arquivo do TCE-PB traz só o código da unidade orçamentária e uma sigla (\"SEDEC - AÇÕES DE GOVERNO\"). "
+            "O órgão são os dois primeiros dígitos do código (10101 → órgão 10). Os nomes por extenso vêm da "
+            "**LOA 2024** (Lei 15.066/2024, quadro por órgão) e, para os órgãos criados em 2025, das **leis de "
+            "criação** (Leis 15.467, 15.468 e 15.469/2025), todas no SAPL da Câmara Municipal. A grafia foi ajustada "
+            "só em maiúsculas, acentos e abreviações; a da lei aparece abaixo. Antes de 2022 a estrutura era outra e o "
+            "arquivo só traz nomes de diretorias, por isso a divisão por órgão começa em 2022."
+        )
+        st.dataframe(pd.DataFrame([
+            {"Código": c, "Sigla no TCE-PB": v["sigla"] or "", "Nome": v["nome"], "Como está na fonte": v["nome_na_fonte"],
+             "Fonte": v["fonte_do_nome"]}
+            for c, v in info["orgaos"].items()]), hide_index=True, width="stretch")
+        st.caption("Nomes de unidades que terminam em \"…\" foram cortados pelo TCE-PB em 50 caracteres.")
 
 
 def aba_fornecedores(dados, metrica, corrigido, meta, poder):
@@ -507,7 +630,7 @@ def main() -> None:
         help="Corrigido: todos os anos no poder de compra de hoje, bom para comparar anos. "
              "Sem correção: valores da época.",
     )
-    poder = c3.selectbox("Órgãos", list(ORGAOS), format_func=ORGAOS.get, key="g_poder")
+    poder = c3.selectbox("Poder", list(ORGAOS), format_func=ORGAOS.get, key="g_poder")
     sem_intra = c4.toggle(
         "Sem dupla contagem de repasses internos", value=True, key="g_intra",
         help="Repasses entre órgãos do próprio município, como a contribuição da Prefeitura à previdência "
@@ -517,16 +640,19 @@ def main() -> None:
     col = d.coluna(metrica, corrigido)
     df = d.filtrar(dados["cubo"], poder, sem_intra)
 
-    abas = st.tabs(["Visão geral", "Por área", "Fornecedores", "Licitação", "Mapa (experimental)", "Sobre os dados"])
+    abas = st.tabs(["Visão geral", "Por área", "Por órgão", "Fornecedores", "Licitação", "Mapa (experimental)",
+                    "Sobre os dados"])
     with abas[0]:
         aba_visao_geral(df, dados, col, corrigido, meta, metrica)
     with abas[1]:
         aba_por_area(df, col, corrigido, meta)
     with abas[2]:
-        aba_fornecedores(dados, metrica, corrigido, meta, poder)
+        aba_por_orgao(dados, col, corrigido, meta, poder, sem_intra)
     with abas[3]:
-        aba_licitacao(df, col, corrigido, meta)
+        aba_fornecedores(dados, metrica, corrigido, meta, poder)
     with abas[4]:
-        aba_mapa(dados, geo, corrigido, meta)
+        aba_licitacao(df, col, corrigido, meta)
     with abas[5]:
+        aba_mapa(dados, geo, corrigido, meta)
+    with abas[6]:
         aba_sobre(dados, meta)

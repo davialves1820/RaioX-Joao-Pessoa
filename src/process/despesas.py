@@ -35,6 +35,7 @@ from src.config import (
 from src.process.despesas_bairros import bairros_citados, _padroes
 from src.process.despesas_regras import (
     COLUNAS,
+    NOMES_ORGAOS,
     UNIDADES_GESTORAS,
     centavos,
     data_iso,
@@ -235,7 +236,7 @@ def agregar(e: pd.DataFrame, ipca: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
 # O TCE-PB corta a descrição da unidade orçamentária em 50 caracteres
 LIMITE_NOME_UO = 50
 _PREFIXO_UO = re.compile(r"^\s*\d{5}\s*-\s*")  # 2022–2023: "10101-GABINETE DO SECRETÁRIO"
-_SIGLA_ORGAO = re.compile(r"^(.+?) - AÇÕES DE GOVERNO$")  # 2024 em diante: "SEDEC - AÇÕES DE GOVERNO"
+_SIGLA_ORGAO = re.compile(r"^(\S+) - AÇÕES DE GOVERNO$")  # 2024 em diante: "SEDEC - AÇÕES DE GOVERNO"
 
 
 def _nome_uo(texto: str) -> str:
@@ -251,9 +252,9 @@ def por_orgao(e: pd.DataFrame, ipca: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     - Nome da unidade: o do ano mais recente em que o código aparece (o mesmo código tem nomes
       diferentes em 2022–2023 e em 2024 em diante: "10101-GABINETE DO SECRETÁRIO" e
       "SEDEC - AÇÕES DE GOVERNO"). O nome de cada ano fica em `nome_no_arquivo`.
-    - Nome do órgão: a sigla da unidade "SIGLA - AÇÕES DE GOVERNO" do órgão; se não houver
-      nenhuma, o nome da unidade de maior valor (ex.: órgão 13 → Fundo Municipal de Saúde).
-      Nada é completado de fora do arquivo: siglas ficam como siglas.
+    - Sigla do órgão: a da unidade "SIGLA - AÇÕES DE GOVERNO" (vazia se o órgão não tiver uma, como o 13).
+    - Nome oficial do órgão: NOMES_ORGAOS (LOA 2024 e leis de criação), com a fonte. Um órgão que não
+      esteja lá interrompe o pipeline.
     """
     o = e[e["ano"] >= ANO_INICIAL_ORGAOS].copy()
     o["cod_orgao"] = o["cod_uo"].str[:2]
@@ -263,23 +264,23 @@ def por_orgao(e: pd.DataFrame, ipca: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
                .sort_values(["cod_uo", "ano", "n"]).groupby("cod_uo").last()["nome_no_arquivo"])
     o["unidade_orcamentaria"] = o["cod_uo"].map(recente)
 
+    sem_nome = sorted(set(o["cod_orgao"]) - set(NOMES_ORGAOS))
+    if sem_nome:
+        raise ValueError(f"órgão sem nome oficial em NOMES_ORGAOS (incluir com a fonte): {sem_nome}")
     valor_uo = o.groupby(["cod_orgao", "cod_uo"])["empenhado_c"].sum()
-    nomes_orgao, origem_nome = {}, {}
+    siglas = {}
     for cod, uos in valor_uo.groupby(level=0):
-        siglas = [m[1] for u in uos.index.get_level_values(1) if (m := _SIGLA_ORGAO.match(recente[u]))]
-        if siglas:
-            nomes_orgao[cod], origem_nome[cod] = siglas[0], "sigla da unidade «… - AÇÕES DE GOVERNO»"
-        else:
-            maior = uos.droplevel(0).idxmax()
-            nomes_orgao[cod], origem_nome[cod] = recente[maior], f"nome da unidade de maior valor ({maior})"
-    o["orgao"] = o["cod_orgao"].map(nomes_orgao)
+        achadas = [m[1] for u in uos.index.get_level_values(1) if (m := _SIGLA_ORGAO.match(recente[u]))]
+        siglas[cod] = achadas[0] if achadas else None
+    o["orgao_sigla"] = o["cod_orgao"].map(siglas)
+    o["orgao"] = o["cod_orgao"].map(lambda c: NOMES_ORGAOS[c][0])
 
     fator = fator_ipca(ipca, o["ano"], o["mes"])[0].round(6)  # mesmo arredondamento do cubo
     o["empenhado_corr_c"] = o["empenhado_c"] * fator
     o["pago_corr_c"] = o["pago_c"] * fator
-    dims = ["ano", "cod_ug", "intra", "cod_orgao", "orgao", "cod_uo", "unidade_orcamentaria", "nome_no_arquivo",
+    dims = ["ano", "cod_ug", "intra", "cod_orgao", "orgao", "orgao_sigla", "cod_uo", "unidade_orcamentaria", "nome_no_arquivo",
             "codigo_funcao", "funcao", "arquivo_origem"]
-    t = (o.groupby(dims, as_index=False)
+    t = (o.groupby(dims, as_index=False, dropna=False)
          .agg(empenhado_c=("empenhado_c", "sum"), liquidado_c=("liquidado_c", "sum"), pago_c=("pago_c", "sum"),
               empenhado_corr_c=("empenhado_corr_c", "sum"), pago_corr_c=("pago_corr_c", "sum"),
               n_empenhos=("empenhado_c", "size")))
@@ -295,11 +296,13 @@ def por_orgao(e: pd.DataFrame, ipca: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
         "regras": {
             "orgao": "dois primeiros dígitos do código da unidade orçamentária",
             "nome_da_unidade": "nome do ano mais recente em que o código aparece; o de cada ano em nome_no_arquivo",
-            "nome_do_orgao": "sigla da unidade «SIGLA - AÇÕES DE GOVERNO»; sem ela, o nome da unidade de maior valor",
+            "sigla_do_orgao": "a da unidade «SIGLA - AÇÕES DE GOVERNO»; vazia se o órgão não tiver uma",
+            "nome_do_orgao": "nome oficial: LOA 2024 (Lei 15.066/2024) e leis de criação dos órgãos de 2025",
             "nomes_cortados": f"o TCE-PB corta a descrição em {LIMITE_NOME_UO} caracteres; marcados com …",
         },
-        "orgaos": {c: {"nome": nomes_orgao[c], "origem_do_nome": origem_nome[c],
-                       "unidades": sorted(valor_uo.loc[c].index)} for c in sorted(nomes_orgao)},
+        "orgaos": {c: {"nome": NOMES_ORGAOS[c][0], "sigla": siglas[c], "nome_na_fonte": NOMES_ORGAOS[c][1],
+                       "fonte_do_nome": NOMES_ORGAOS[c][2], "unidades": sorted(valor_uo.loc[c].index)}
+                   for c in sorted(siglas)},
         "unidades_com_nome_cortado": sorted(u for u, n in recente.items() if n.endswith("…")),
     }
     return t, info

@@ -27,6 +27,7 @@ GRUPO_PESSOAL = "Pessoal e Encargos Sociais"
 def carregar(pasta: Path = PASTA) -> dict:
     return {
         "cubo": pd.read_parquet(pasta / "despesas_cubo.parquet"),
+        "orgaos": pd.read_parquet(pasta / "orgaos.parquet"),
         "credores": pd.read_parquet(pasta / "credores_pj.parquet"),
         "bairros": pd.read_csv(pasta / "bairros_citados.csv", dtype={"cd_bairro": str}),
         "cobertura": pd.read_csv(pasta / "bairros_cobertura.csv"),
@@ -162,6 +163,74 @@ def resumo_credor(credores: pd.DataFrame, cnpj: str, col: str) -> dict:
         "por_orgao": df.groupby("cod_ug")[col].sum().sort_values(ascending=False),
         "arquivos": sorted(df["arquivo_origem"].unique()),
     }
+
+
+# --- por órgão (2022 em diante)
+
+_MINUSCULAS = {"a", "as", "o", "os", "e", "de", "da", "das", "do", "dos", "em", "na", "no", "nas", "nos", "para",
+               "ao", "aos", "à", "com", "sob"}
+_SIGLA_UNIDADE = re.compile(r"^(.+) - AÇÕES DE GOVERNO$")
+
+
+def titulo(texto: str) -> str:
+    """'FUNDO MUNICIPAL DE SAÚDE' -> 'Fundo Municipal de Saúde'. Siglas (IPM, ICV, FUNJOPE...) ficam em maiúsculas."""
+    partes = re.split(r"(\s+|-|,)", texto)
+    out = []
+    for i, p in enumerate(partes):
+        palavra = p.strip("….")
+        if not palavra.strip() or not palavra.isalpha():
+            out.append(p)
+        elif palavra.isupper() and len(palavra) <= 4 and palavra.lower() not in _MINUSCULAS and not any(
+                c in "AEIOUÁÉÍÓÚÂÊÔÃÕ" for c in palavra):
+            out.append(p)  # sigla sem vogal (ex.: "LGBT")
+        elif palavra.isupper() and palavra in _SIGLAS_CONHECIDAS:
+            out.append(p)
+        elif palavra.lower() in _MINUSCULAS and out:
+            out.append(p.lower())
+        else:
+            out.append(p.capitalize())
+    return "".join(out)
+
+
+# siglas que aparecem nos nomes das unidades orçamentárias de 2022 em diante
+_SIGLAS_CONHECIDAS = {"IPM", "ICV", "FUNJOPE", "FUNDURB", "FUMTUR", "PROGEM", "LGBT", "JP", "UGP"}
+
+
+def nome_unidade(nome: str) -> str:
+    """Nome da unidade para o gráfico: 'SEDEC - AÇÕES DE GOVERNO' -> 'Ações de governo (SEDEC)'."""
+    m = _SIGLA_UNIDADE.match(nome)
+    if not m:
+        return titulo(nome)
+    return f"Ações de governo ({m[1] if ' ' not in m[1] else titulo(m[1])})"
+
+
+def rotulo_orgao(nome: str, sigla) -> str:
+    return f"{nome} ({sigla})" if isinstance(sigla, str) and sigla else nome
+
+
+def resumo_orgaos(df: pd.DataFrame, ano: int, col: str) -> pd.DataFrame:
+    """Valor de cada órgão no ano, participação e a área (função) em que ele mais gasta."""
+    a = df[df["ano"] == ano]
+    tot = a.groupby(["cod_orgao", "orgao", "orgao_sigla"], dropna=False)[col].sum()
+    tot = tot[tot > 0].sort_values(ascending=False)
+    por_funcao = a.groupby(["cod_orgao", "funcao"])[col].sum()
+    linhas = []
+    for (cod, nome, sigla), v in tot.items():
+        f = por_funcao.loc[cod].sort_values(ascending=False)
+        linhas.append({"cod_orgao": cod, "orgao": nome, "sigla": sigla, "valor": float(v),
+                       "pct": float(100 * v / tot.sum()), "area_principal": f.index[0],
+                       "pct_area_principal": float(100 * f.iloc[0] / f.sum())})
+    return pd.DataFrame(linhas)
+
+
+def orgaos_da_area(df: pd.DataFrame, ano: int, col: str, funcao: str) -> pd.DataFrame:
+    """Quanto de uma área (função) cada órgão empenhou no ano, do maior para o menor."""
+    a = df[(df["ano"] == ano) & (df["funcao"] == funcao)]
+    t = a.groupby(["cod_orgao", "orgao", "orgao_sigla"], dropna=False)[col].sum()
+    t = t[t > 0].sort_values(ascending=False)
+    out = t.reset_index().rename(columns={col: "valor", "orgao_sigla": "sigla"})
+    out["pct"] = 100 * out["valor"] / out["valor"].sum() if len(out) else []
+    return out
 
 
 # --- formatação pt-BR
