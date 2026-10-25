@@ -566,6 +566,9 @@ ao Tribunal de Contas do Estado da Paraíba (TCE-PB) pelo sistema SAGRES. Gerado
   Todo gráfico diz se o valor é nominal ou corrigido.
 - **Visão geral:** total por ano, gasto por habitante e mês a mês. 2016 e o ano em andamento
   aparecem em tom claro e ficam fora das variações anuais.
+- **Por órgão (2022 em diante):** treemap órgão → unidade orçamentária, tabela com valor, participação,
+  variação e a área em que cada órgão mais gasta, quanto de cada área sai de cada órgão e a série de um
+  órgão. Nomes oficiais dos órgãos, com a fonte de cada um.
 - **Por área:** treemap por função e subfunção de governo, tabela com participação e variação, e a
   série histórica de uma área.
 - **Fornecedores:** ranking de empresas (CNPJ) num período e busca por nome ou CNPJ, com o valor
@@ -582,6 +585,7 @@ ao Tribunal de Contas do Estado da Paraíba (TCE-PB) pelo sistema SAGRES. Gerado
 | Conferência dos totais | Tesouro Nacional, SICONFI, DCA Anexo I-D (despesa por natureza) | `dca-anexo-I-D-AAAA.json` | — | 14/10/2026 |
 | IPCA | IBGE, SIDRA tabela 1737 (número-índice, dez/1993 = 100) | `ipca_tabela1737.json` | até set/2026 | 14/10/2026 |
 | População por ano | IBGE, SIDRA tabela 6579 (estimativas) e Censos 2010 e 2022 | `populacao_estimada_tabela6579.json` | — | 14/10/2026 |
+| Nomes oficiais dos órgãos | Câmara Municipal, [SAPL](https://sapl.joaopessoa.pb.leg.br/): LOA 2024 (Lei 15.066/2024) e Leis 15.399/2024, 15.467, 15.468 e 15.469/2025 | `camara_jp/*.pdf` | leis de 2024 e 2025 | 25/10/2026 |
 
 As datas e os hashes de cada arquivo ficam em `data/raw/manifest.json` (download) e
 `data/raw/tce_pb/listagem.xml` (data de geração no servidor do TCE-PB).
@@ -646,6 +650,46 @@ não o total.
 - Microempreendedores individuais (MEI) costumam ter o CPF do titular no nome da empresa: esse
   CPF também é mascarado.
 
+### Por órgão (2022 em diante)
+
+`orgaos.parquet` divide o gasto por **órgão** e **unidade orçamentária** (a secretaria, fundo ou
+autarquia que tem o orçamento), por ano e função, de 2022 em diante. A soma por ano é a mesma do cubo.
+
+- **Órgão** = os dois primeiros dígitos do código da unidade orçamentária (10101 → órgão 10). Cada
+  órgão agrupa as unidades ligadas a ele no orçamento, por exemplo:
+  - órgão 06 (SEAD) inclui o IPM (previdência);
+  - órgão 71 (SEGGOV) inclui a Emlur e a Semob;
+  - órgão 10 (SEDEC) inclui a Funjope e o Fundo Municipal de Cultura.
+- **Nome da unidade:** o do ano mais recente em que o código aparece. O mesmo código muda de nome
+  entre 2022–2023 ("10101-GABINETE DO SECRETÁRIO") e 2024 em diante ("SEDEC - AÇÕES DE GOVERNO"). O
+  nome de cada ano fica em `nome_no_arquivo`.
+- **Sigla do órgão:** a da unidade "SIGLA - AÇÕES DE GOVERNO" (SEDEC, SEINFRA, SEMUSB…). Os órgãos 01
+  (Câmara), 13 (Saúde) e 16 (Encargos Gerais) não têm sigla no arquivo.
+- **Nome oficial do órgão:** o arquivo do TCE-PB não traz o nome por extenso. Ele vem de leis
+  publicadas no [SAPL da Câmara Municipal](https://sapl.joaopessoa.pb.leg.br/), baixadas por
+  `src/collect/camara_jp.py` e listadas com a página em `NOMES_ORGAOS`
+  (`src/process/despesas_regras.py`):
+  - **LOA 2024** (Lei 15.066/2024), quadro por órgão ("ÓRGÃO : 10000 SECRETARIA MUNICIPAL DE EDUCAÇÃO
+    E CULTURA"), para 26 órgãos. É a última LOA publicada no SAPL com os anexos; as de 2025 e 2026 têm
+    só o texto da lei, digitalizado.
+  - **Leis de criação de 2025:** 15.467 (Preservação, Revitalização e Inovação do Centro Histórico,
+    INOVACENTRO), 15.468 (Serviços Urbanos e Zeladoria, SESUZ) e 15.469 (Cuidado e Proteção Animal). A
+    15.469 não dá sigla; o TCE-PB usa SMCPA, e os empenhos do órgão 35 citam a secretaria pelo nome.
+  - **Lei 15.399/2024:** novo nome da secretaria das mulheres (órgão 28), antes "Secretaria
+    Extraordinária".
+  - A grafia foi ajustada só em maiúsculas, acentos e abreviações ("SEC. MUNIC." → "Secretaria
+    Municipal"); a da lei fica guardada. A LOA escreve "Coordenadora" no órgão 30 (Defesa Civil,
+    COMPDEC); o site usa "Coordenadoria".
+  - O nome vale para 2022–2026. Um órgão novo, que não esteja na lista, interrompe o pipeline até ser
+    incluído com a fonte.
+- **Órgão 16, Encargos Gerais do Município:** reúne os recursos sob a supervisão das secretarias da
+  Administração e das Finanças, empenhados nas funções Administração e Encargos Especiais.
+- **Nomes cortados:** o TCE-PB corta a descrição em 50 caracteres; esses nomes terminam em "…".
+- **Por que só desde 2022:** a estrutura de órgãos mudou em 2022 (Emlur e Semob passaram do órgão 02
+  para o 71). Antes disso o arquivo traz só o nome da diretoria ("DIRETORIA DE ADMINISTRAÇÃO E
+  FINANÇAS"), repetido em vários órgãos. Nomear esses órgãos exigiria outra fonte (as LOAs de cada
+  ano), com ganho pequeno de precisão.
+
 ### Mapa por bairro (experimental)
 
 O histórico de cada empenho é um texto livre. Procuramos nele os nomes dos 64 bairros oficiais.
@@ -690,6 +734,7 @@ O SICONFI não tem a DCA de João Pessoa antes de 2014. Detalhes em
 | `bairros_citados.csv` / `bairros_cobertura.csv` | valor por bairro citado (nominal e corrigido) e cobertura por ano |
 | `validacao_siconfi.csv` | total anual TCE-PB × SICONFI |
 | `ipca.csv` / `populacao.csv` | séries usadas na correção e no gasto por habitante |
+| `orgaos.parquet` | 2022 em diante: valor por ano, unidade gestora, órgão, unidade orçamentária (com o nome de cada ano em `nome_no_arquivo`), função e repasse interno (`intra`), empenhado, liquidado, pago e corrigidos pelo IPCA |
 | `metadados.json` | mês de referência do IPCA, última data de empenho, checagens, aviso e manifesto dos arquivos brutos |
 
 Cada linha do cubo e da tabela de credores traz o `arquivo_origem` (ex.: `despesas-2025.zip`), e o
@@ -726,6 +771,7 @@ brutos só rodam quando `data/raw/` está presente; os demais usam só `data/pro
 - **IBGE, INEP, Ministério da Saúde (CNES), TCE-PB e Tesouro Nacional (SICONFI):** dados públicos
   oficiais, citados em cada página com link e data.
 - **Prefeitura de João Pessoa, Filipeia:** dados públicos do portal da Prefeitura.
+- **Câmara Municipal de João Pessoa, SAPL:** leis municipais (atos oficiais), usadas só para os nomes dos órgãos.
 - **OpenStreetMap:** © colaboradores do OpenStreetMap, sob a licença
   [ODbL](https://opendatacommons.org/licenses/odbl/). O crédito aparece no mapa sempre que a camada de
   matas está ligada. O mapa de fundo também usa dados do OpenStreetMap, com base da CARTO.

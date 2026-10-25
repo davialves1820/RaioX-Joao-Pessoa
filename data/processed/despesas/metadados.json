@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-15T13:11:26Z",
+  "gerado_em": "2026-10-25T16:35:24Z",
   "anos": [
     2009,
     2010,
@@ -38,6 +38,330 @@
       "PF": 206258,
       "indefinido": 57
     }
+  },
+  "orgaos": {
+    "ano_inicial": 2022,
+    "regras": {
+      "orgao": "dois primeiros dígitos do código da unidade orçamentária",
+      "nome_da_unidade": "nome do ano mais recente em que o código aparece; o de cada ano em nome_no_arquivo",
+      "sigla_do_orgao": "a da unidade «SIGLA - AÇÕES DE GOVERNO»; vazia se o órgão não tiver uma",
+      "nome_do_orgao": "nome oficial: LOA 2024 (Lei 15.066/2024) e leis de criação dos órgãos de 2025",
+      "nomes_cortados": "o TCE-PB corta a descrição em 50 caracteres; marcados com …"
+    },
+    "orgaos": {
+      "01": {
+        "nome": "Câmara Municipal",
+        "sigla": null,
+        "nome_na_fonte": "CAMARA MUNICIPAL",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 269",
+        "unidades": [
+          "01101",
+          "01102",
+          "01301"
+        ]
+      },
+      "03": {
+        "nome": "Gabinete do Vice-Prefeito",
+        "sigla": "GAVIPRE",
+        "nome_na_fonte": "GABINETE DO VICE-PREFEITO",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 270",
+        "unidades": [
+          "03101"
+        ]
+      },
+      "05": {
+        "nome": "Procuradoria Geral do Município",
+        "sigla": "PROGEM",
+        "nome_na_fonte": "PROCURADORIA GERAL DO MUNICIPIO",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 270",
+        "unidades": [
+          "05101",
+          "05301"
+        ]
+      },
+      "06": {
+        "nome": "Secretaria da Administração",
+        "sigla": "SEAD",
+        "nome_na_fonte": "SECRETARIA DA ADMINISTRACAO",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 271",
+        "unidades": [
+          "06101",
+          "06201"
+        ]
+      },
+      "07": {
+        "nome": "Secretaria das Finanças",
+        "sigla": "SEFIN",
+        "nome_na_fonte": "SECRETARIA DAS FINANCAS",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 272",
+        "unidades": [
+          "07101"
+        ]
+      },
+      "08": {
+        "nome": "Secretaria de Planejamento",
+        "sigla": "SEPLAN",
+        "nome_na_fonte": "SECRETARIA DE PLANEJAMENTO",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 272",
+        "unidades": [
+          "08101",
+          "08102",
+          "08301"
+        ]
+      },
+      "09": {
+        "nome": "Secretaria Municipal do Desenvolvimento Urbano",
+        "sigla": "SEDURB",
+        "nome_na_fonte": "SEC. MUNIC. DO DESENVOLVIMENTO URBANO",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 274",
+        "unidades": [
+          "09101"
+        ]
+      },
+      "10": {
+        "nome": "Secretaria Municipal de Educação e Cultura",
+        "sigla": "SEDEC",
+        "nome_na_fonte": "SECRETARIA MUNICIPAL DE EDUCAÇÃO E CULTURA",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 276",
+        "unidades": [
+          "10101",
+          "10102",
+          "10201",
+          "10301"
+        ]
+      },
+      "11": {
+        "nome": "Secretaria de Infraestrutura",
+        "sigla": "SEINFRA",
+        "nome_na_fonte": "SECRETARIA DE INFRAESTRUTURA",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 278",
+        "unidades": [
+          "11101",
+          "11301"
+        ]
+      },
+      "12": {
+        "nome": "Secretaria Municipal do Meio Ambiente",
+        "sigla": "SEMAM",
+        "nome_na_fonte": "SECRETARIA MUNICIPAL DO MEIO-AMBIENTE",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 279",
+        "unidades": [
+          "12101",
+          "12301"
+        ]
+      },
+      "13": {
+        "nome": "Secretaria Municipal de Saúde",
+        "sigla": null,
+        "nome_na_fonte": "SECRETARIA MUNICIPAL DE SAUDE",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 280",
+        "unidades": [
+          "13201",
+          "13301"
+        ]
+      },
+      "14": {
+        "nome": "Secretaria de Desenvolvimento Social",
+        "sigla": "SEDES",
+        "nome_na_fonte": "SECRETARIA DE DESENVOLVIMENTO SOCIAL",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 281",
+        "unidades": [
+          "14101"
+        ]
+      },
+      "15": {
+        "nome": "Secretaria de Turismo",
+        "sigla": "SETUR",
+        "nome_na_fonte": "SECRETARIA DE TURISMO",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 283",
+        "unidades": [
+          "15101",
+          "15301"
+        ]
+      },
+      "16": {
+        "nome": "Encargos Gerais do Município",
+        "sigla": null,
+        "nome_na_fonte": "ENCARGOS GERAIS DO MUNÍCIPIO",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 284",
+        "unidades": [
+          "16101",
+          "16102"
+        ]
+      },
+      "21": {
+        "nome": "Secretaria de Desenvolvimento Econômico e Trabalho",
+        "sigla": "SEDEST",
+        "nome_na_fonte": "SECRETARIA DE DESENVOLVIMENTO ECONÔMICO E TRABALHO",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 286",
+        "unidades": [
+          "21101",
+          "21301",
+          "21302"
+        ]
+      },
+      "22": {
+        "nome": "Gabinete de Comunicação Social",
+        "sigla": "SECOM",
+        "nome_na_fonte": "GABINETE DE COMUNICACAO SOCIAL",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 287",
+        "unidades": [
+          "22101"
+        ]
+      },
+      "24": {
+        "nome": "Secretaria Municipal de Habitação Social",
+        "sigla": "SEMHAB",
+        "nome_na_fonte": "SECRETARIA MUNICIPAL DE HABITAÇÃO SOCIAL",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 287",
+        "unidades": [
+          "24101"
+        ]
+      },
+      "25": {
+        "nome": "Secretaria Municipal da Juventude, Esporte e Recreação",
+        "sigla": "SEJER",
+        "nome_na_fonte": "SEC. MUNIC. DA JUVENTUDE, ESPORTE E RECREAÇÃO",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 288",
+        "unidades": [
+          "25101",
+          "25201"
+        ]
+      },
+      "26": {
+        "nome": "Secretaria da Receita Municipal",
+        "sigla": "SEREM",
+        "nome_na_fonte": "SECRETARIA DA RECEITA MUNICIPAL",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 289",
+        "unidades": [
+          "26101"
+        ]
+      },
+      "27": {
+        "nome": "Secretaria Municipal de Ciência e Tecnologia",
+        "sigla": "SECITEC",
+        "nome_na_fonte": "SECRETARIA MUNICIPAL DE CIÊNCIA E TECNOLOGIA",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 290",
+        "unidades": [
+          "27101",
+          "27301"
+        ]
+      },
+      "28": {
+        "nome": "Secretaria Municipal de Políticas Públicas para Mulheres",
+        "sigla": "SEPPM",
+        "nome_na_fonte": "Secretaria Municipal de Políticas Públicas para Mulheres",
+        "fonte_do_nome": "Lei 15.399/2024, art. 1º",
+        "unidades": [
+          "28101",
+          "28301"
+        ]
+      },
+      "29": {
+        "nome": "Secretaria Municipal de Segurança Urbana e Cidadania",
+        "sigla": "SEMUSB",
+        "nome_na_fonte": "SECRETARIA MUNICIPAL DE SEGURANÇA URBANA E CIDADANIA",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 291",
+        "unidades": [
+          "29101"
+        ]
+      },
+      "30": {
+        "nome": "Coordenadoria Municipal de Proteção e Defesa Civil de João Pessoa",
+        "sigla": "COMPDEC",
+        "nome_na_fonte": "COORDENADORA MUNICIPAL DE PROTEÇÃO E DEFESA CIVIL DE JOÃO PESSOA",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 292",
+        "unidades": [
+          "30101"
+        ]
+      },
+      "31": {
+        "nome": "Secretaria Municipal de Proteção e Defesa do Consumidor",
+        "sigla": "SMPDC",
+        "nome_na_fonte": "SECRETARIA MUNICIPAL DE PROTEÇÃO E DEFESA DO CONSUMIDOR",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 293",
+        "unidades": [
+          "31101",
+          "31301"
+        ]
+      },
+      "32": {
+        "nome": "Controladoria Geral do Município",
+        "sigla": "CGM",
+        "nome_na_fonte": "CONTROLADORIA GERAL DO MUNICÍPIO",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 293",
+        "unidades": [
+          "32101",
+          "32103"
+        ]
+      },
+      "33": {
+        "nome": "Secretaria Municipal de Preservação, Revitalização e Inovação do Centro Histórico",
+        "sigla": "INOVACENTRO",
+        "nome_na_fonte": "Secretaria Municipal de Preservação, Revitalização e Inovação do Centro Histórico (INOVACENTRO)",
+        "fonte_do_nome": "Lei 15.467/2025, art. 1º",
+        "unidades": [
+          "33101"
+        ]
+      },
+      "34": {
+        "nome": "Secretaria Municipal de Serviços Urbanos e Zeladoria",
+        "sigla": "SESUZ",
+        "nome_na_fonte": "Secretaria Municipal de Serviços Urbanos e Zeladoria - SESUZ",
+        "fonte_do_nome": "Lei 15.468/2025, art. 1º",
+        "unidades": [
+          "34101"
+        ]
+      },
+      "35": {
+        "nome": "Secretaria Municipal de Cuidado e Proteção Animal",
+        "sigla": "SMCPA",
+        "nome_na_fonte": "SECRETARIA MUNICIPAL DE CUIDADO E PROTEÇÃO ANIMAL",
+        "fonte_do_nome": "Lei 15.469/2025, art. 1º",
+        "unidades": [
+          "35101"
+        ]
+      },
+      "71": {
+        "nome": "Secretaria de Gestão Governamental",
+        "sigla": "SEGGOV",
+        "nome_na_fonte": "SECRETARIA DE GESTÃO GOVERNAMENTAL",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 294",
+        "unidades": [
+          "71101",
+          "71102",
+          "71103",
+          "71104",
+          "71105",
+          "71201",
+          "71202"
+        ]
+      },
+      "72": {
+        "nome": "Secretaria de Direitos Humanos e Cidadania",
+        "sigla": "SEDHUC",
+        "nome_na_fonte": "SECRETARIA DE DIREITOS HUMANOS E CIDADANIA",
+        "fonte_do_nome": "LOA 2024 (Lei 15.066/2024), p. 297",
+        "unidades": [
+          "72101",
+          "72301",
+          "72302",
+          "72303"
+        ]
+      }
+    },
+    "unidades_com_nome_cortado": [
+      "10102",
+      "16101",
+      "16102",
+      "27301",
+      "32103",
+      "71102",
+      "71103",
+      "71104",
+      "71202",
+      "72301"
+    ]
   },
   "aviso": "Valores declarados pela Prefeitura e demais órgãos municipais ao TCE-PB (SAGRES). Podem mudar após análise e auditoria do Tribunal.",
   "arquivos_brutos": {
