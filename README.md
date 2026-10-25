@@ -8,9 +8,9 @@ O site tem três páginas:
 
 | Página | O que mostra | Fontes principais |
 |---|---|---|
-| [**Bairros e população**](#1-bairros-e-população) | população nos Censos 2010 e 2022, variação e densidade, com mapa, detalhe do bairro, ranking e tabela | IBGE |
-| [**Serviços e acesso**](#2-serviços-públicos-e-acesso) | escolas públicas, unidades de saúde do SUS, praças, parques e matas; distância até a escola e a UBS mais próximas, área verde por morador e um índice de acesso | INEP, CNES, Prefeitura (Filipeia), OpenStreetMap, IBGE |
-| [**Para onde vai o dinheiro**](#3-para-onde-vai-o-dinheiro-de-joão-pessoa) | despesas dos órgãos municipais: total por ano, por área, fornecedores, licitação e um mapa experimental | TCE-PB, SICONFI, IBGE |
+| [**Bairros e população**](#1-bairros-e-população) | população nos Censos 2010 e 2022, variação, densidade, renda e esgoto, com mapa, detalhe do bairro, ranking e tabela | IBGE |
+| [**Serviços e acesso**](#2-serviços-públicos-e-acesso) | escolas públicas, unidades de saúde do SUS, praças, parques e matas; distância (em linha reta e pelas ruas) até a escola e a UBS mais próximas, equipes de Saúde da Família, matrículas por criança, área verde por morador e um índice de acesso | INEP, CNES, Prefeitura (Filipeia), OpenStreetMap, IBGE |
+| [**Para onde vai o dinheiro**](#3-para-onde-vai-o-dinheiro-de-joão-pessoa) | despesas dos órgãos municipais: total por ano, por área, por órgão, fornecedores, licitação e um mapa experimental | TCE-PB, SICONFI, IBGE, Câmara Municipal (nomes dos órgãos) |
 
 ## Princípios
 
@@ -42,8 +42,7 @@ streamlit run streamlit_app.py # abre o dashboard em http://localhost:8501
 
 - **Arquivo já baixado não é baixado de novo** (`--force` rebaixa tudo). Downloads interrompidos não
   deixam arquivos pela metade.
-- **Dados que mudam com o tempo** (despesas do ano corrente, IPCA, estimativas de população, CNES):
-  rode `python -m src.collect --atualizar` e depois os passos de processamento.
+- **Dados que mudam com o tempo:** nada se atualiza sozinho; ver [Atualizar os dados](#atualizar-os-dados).
 - **INEP:** o Catálogo de Escolas é exportado por um navegador automatizado (Playwright + Chromium);
   para atualizar, use `python -m src.collect.inep_catalogo --force`. Se o painel mudar, o docstring do
   script explica a exportação manual.
@@ -52,6 +51,47 @@ streamlit run streamlit_app.py # abre o dashboard em http://localhost:8501
   script lista os arquivos.
 
 Os dados brutos não ficam no git (são grandes e reprodutíveis); os processados ficam, porque o app usa só eles.
+
+### Atualizar os dados
+
+**Nada se atualiza sozinho.** O site lê os arquivos de `data/processed/` que estão no repositório; o
+único fluxo automático do GitHub é o de testes. Para atualizar, rode a coleta e o processamento, confira
+com os testes e faça commit dos arquivos processados (o manifesto, `data/raw/manifest.json`, vai junto).
+O Streamlit Cloud publica a nova versão a cada push na `main`.
+
+| O que muda | Com que frequência | Como atualizar |
+|---|---|---|
+| Despesas do ano corrente (TCE-PB) | o TCE-PB regera o arquivo com frequência | receita abaixo |
+| IPCA e estimativas de população (IBGE) | IPCA todo mês; população uma vez por ano | `python -m src.collect.ibge_sidra --atualizar` |
+| Conferência com o Tesouro (SICONFI) | uma vez por ano, após a prestação de contas | `python -m src.collect.siconfi` (baixa até o ano anterior os arquivos que ainda não estão em `data/raw/siconfi/`) |
+| Unidades de saúde e equipes (CNES) | todo mês | `python -m src.collect.cnes --atualizar` e `python -m src.collect.cnes_base --force`, depois `python -m src.process.servicos` |
+| Escolas e matrículas (INEP) | uma vez por ano | `python -m src.collect.inep_catalogo --force`; para os microdados de outro ano, mude `ANO` em `src/collect/inep_microdados.py` (o processamento usa esse ano) e rode `python -m src.collect.inep_microdados` |
+| Praças, parques e bairros da Prefeitura (Filipeia) | quando a Prefeitura atualizar | exportação manual (ver acima) |
+| Censos do IBGE, OpenStreetMap, leis da Câmara | raramente | `--force` no script da fonte |
+
+`python -m src.collect --atualizar` rebaixa de uma vez tudo o que muda com o tempo (despesas do ano
+corrente, IPCA, população e CNES).
+
+**Receita dos gastos:**
+
+```bash
+python -m src.collect.tce_pb --atualizar     # ano corrente do TCE-PB e a listagem com as datas de geração
+python -m src.collect.ibge_sidra --atualizar # IPCA e população mais recentes
+python -m src.collect.siconfi                # anos que ainda não foram baixados para a conferência com o Tesouro
+python -m src.process.despesas               # refaz data/processed/despesas/
+pytest                                       # confere, entre outras coisas, os totais com o SICONFI
+git add data/raw/manifest.json data/processed/despesas && git commit -m "dados: despesas até DD/MM/AAAA"
+```
+
+- **Virada do ano:** o `--atualizar` passa a baixar o arquivo do ano novo. O ano que terminou deixa de
+  ser marcado "em andamento" na próxima vez que o processamento rodar. Para pegar a versão final dele,
+  apague `data/raw/tce_pb/despesas-AAAA.zip` e rode o coletor de novo (`--force` rebaixa todos os anos).
+- **O pipeline para em vez de adivinhar.** Uma modalidade de licitação nova (`MODALIDADES`), um órgão
+  novo sem nome oficial (`NOMES_ORGAOS`, com a fonte), ambas em `src/process/despesas_regras.py`, ou um
+  código de função desconhecido (`FUNCOES`, em `src/process/despesas.py`) interrompem o processamento,
+  com a mensagem do que falta.
+- **Teste que falha depois da atualização** (ex.: um ano novo fora da tolerância do SICONFI) é sinal de
+  conferir a fonte antes de publicar, não de ajustar o teste.
 
 ### Testes automáticos (CI)
 
@@ -128,7 +168,8 @@ logo abaixo, em vez de uma página longa:
 streamlit_app.py   entrada do Streamlit: liga as três páginas
 src/collect/       um script de coleta por fonte (+ download.py, que mantém o manifesto)
 src/process/       leitura, junções e cálculo dos indicadores
-                   build.py (bairros e população), despesas*.py, servicos.py
+                   build.py (bairros e população), censo_bairros.py (renda e saneamento),
+                   despesas*.py, servicos.py
 src/app/           páginas: app.py + dados.py (bairros), servicos.py + dados_servicos.py,
                    despesas.py + dados_despesas.py; tema.py (cores claro/escuro, mapa, estilo)
 data/raw/          dados brutos, uma pasta por fonte (só o manifest.json é versionado)
@@ -138,6 +179,24 @@ certs/             certificado intermediário público usado na coleta do INEP
 notebooks/         exploração inicial das fontes
 tests/             testes do pipeline e das funções do app
 ```
+
+## Usar os dados
+
+O projeto não tem uma API própria. Os dados prontos estão em `data/processed/` (CSV, Parquet e GeoJSON)
+e podem ser lidos direto do GitHub pelo link "raw", por exemplo:
+
+```python
+import pandas as pd
+url = "https://raw.githubusercontent.com/davialves1820/RaioX-Joao-Pessoa/main/data/processed/indicadores_bairros.csv"
+bairros = pd.read_csv(url, dtype={"cd_bairro": str})
+```
+
+- **O que há em cada arquivo:** tabelas "Dados processados" de cada página, mais abaixo.
+- **De onde vem cada coluna:** os `metadados.json` (um por página) trazem a origem das colunas, as
+  regras e o manifesto dos arquivos brutos usados.
+- **No site:** botões "Baixar CSV" na tabela de bairros e na do índice de acesso.
+- **Códigos:** `cd_bairro` é o código de bairro do IBGE (Censo 2022); leia como texto para não perder
+  zeros.
 
 ## Fontes, em resumo
 
@@ -150,12 +209,16 @@ detalhes e as limitações de cada fonte estão na seção da página que a usa.
 | IBGE, Censo 2010 (setores) | Bairros | download do FTP do IBGE | 2010 |
 | IBGE, SIDRA (IPCA e estimativas de população do município) | Dinheiro | API do SIDRA | IPCA até set/2026 |
 | INEP, Catálogo de Escolas | Serviços | exportação do painel por navegador automatizado | situação do Censo Escolar 2024 |
+| INEP, microdados do Censo Escolar (matrículas) | Serviços | download do portal do INEP | Censo Escolar 2024 |
 | Ministério da Saúde, CNES | Serviços | API de dados abertos | cadastros até 16/10/2026 |
+| Ministério da Saúde, DATASUS, base completa do CNES (equipes de Saúde da Família) | Serviços | download do DATASUS | competência 09/2026 |
 | Prefeitura, Filipeia (parques, praças, quadras, bairros) | Serviços | exportação manual pelo navegador | parques: 2021; praças: intervenções até 2018 |
 | OpenStreetMap (matas, áreas protegidas, 2 escolas) | Serviços (só no mapa e em 2 coordenadas) | Overpass API e API do OSM | consulta de 23/10/2026 |
+| OpenStreetMap (ruas e caminhos) | Serviços (distância pelas ruas) | Overpass API | base de 15/07/2026 |
 | geodata-jp (cópia de camadas da Prefeitura e do INEP) | Bairros e Serviços, como apoio | download do GitHub (commit fixo) | fev/2022 |
 | TCE-PB, SAGRES (empenhos) | Dinheiro | download do portal de dados abertos | 2009 a 09/10/2026 |
 | Tesouro Nacional, SICONFI | Dinheiro (conferência dos totais) | API do SICONFI | 2014–2025 |
+| Câmara Municipal, SAPL (LOA 2024 e leis de 2024–2025) | Dinheiro (nomes oficiais dos órgãos) | download do SAPL | leis de 2024 e 2025 |
 
 ### Onde o geodata-jp ainda é usado
 
@@ -777,9 +840,3 @@ brutos só rodam quando `data/raw/` está presente; os demais usam só `data/pro
   matas está ligada. O mapa de fundo também usa dados do OpenStreetMap, com base da CARTO.
 - **geodata-jp:** cópia de camadas da Prefeitura e do INEP. O repositório não declara licença; o
   uso e as conferências estão em [Onde o geodata-jp ainda é usado](#onde-o-geodata-jp-ainda-é-usado).
-
-## Melhorias planejadas
-
-As próximas melhorias estão nas [issues do repositório](https://github.com/davialves1820/RaioX-Joao-Pessoa/issues):
-testes automáticos no GitHub, vagas na escola × crianças por bairro, equipes de Saúde da Família,
-renda e saneamento do Censo 2022, distância pelas ruas (feitas), população de 2025 da Prefeitura, entre outras.
