@@ -129,8 +129,9 @@ rola na horizontal (conferido a 390 px de largura); só as tabelas largas rolam 
 
 ### Modo claro e escuro
 
-O site segue o tema do sistema (claro ou escuro); no menu ⋮, no canto superior direito, dá para
-escolher **Claro** ou **Escuro**. Mapas e gráficos trocam de cor junto: no escuro, o mapa de fundo é o
+O site abre no tema do sistema (claro ou escuro), e o botão do canto superior direito (lua ou sol)
+troca entre **Claro** e **Escuro**. É o único botão do topo: o menu ⋮ do Streamlit e os botões do
+Streamlit Cloud (Share, estrela, editar, que só o dono do app vê) ficam escondidos por CSS. Mapas e gráficos trocam de cor junto: no escuro, o mapa de fundo é o
 CARTO *Dark Matter* e as cores vêm da mesma paleta, em tons escolhidos para o fundo escuro
 (`src/app/tema.py`), e não de uma inversão automática.
 
@@ -142,9 +143,14 @@ CARTO *Dark Matter* e as cores vêm da mesma paleta, em tons escolhidos para o f
   ΔE 13,0, abaixo do mínimo de 15); `#e09a00` dá 15,7. Ele sai um pouco da faixa de luminosidade da
   paleta escura, o que foi aceito porque são pontos sobre o mapa, com legenda e contagem.
 - **Treemap de despesas:** mesma rampa nos dois temas, só nos tons em que o texto branco é legível.
-- **Troca pelo menu:** o Streamlit só informa o novo tema ao Python na próxima atualização da página
-  (issue [#11920](https://github.com/streamlit/streamlit/issues/11920)). Um observador na página percebe a
-  troca e pede essa atualização, no máximo duas vezes a cada 10 segundos.
+- **Como o botão funciona:** o Streamlit não deixa o Python trocar o tema, então o botão usa a opção
+  Claro/Escuro do menu ⋮, que continua na página, invisível. O Streamlit só informa o novo tema ao Python
+  na próxima atualização (issue [#11920](https://github.com/streamlit/streamlit/issues/11920)); um
+  observador na página percebe a troca e pede essa atualização (atalho "R"), no máximo duas vezes a cada
+  10 segundos, para nunca entrar em ciclo.
+- **O que não dá para esconder:** no Streamlit Cloud, os selos do canto inferior direito (a foto do dono e
+  o logo do Streamlit, e o "Manage app" que só o dono vê) ficam fora do app e não podem ser tirados pelo
+  código.
 
 ### Organização das páginas
 
