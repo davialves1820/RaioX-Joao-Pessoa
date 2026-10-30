@@ -73,6 +73,10 @@ def test_mascarar_cpf_em_nome_de_mei():
     assert mascarar_cpf_no_texto("FULANO DE TAL 52998224725") == "FULANO DE TAL ***.982.247-**"
     assert mascarar_cpf_no_texto("FULANO 529.982.247-25") == "FULANO ***.982.247-**"
     assert mascarar_cpf_no_texto("EMPRESA LTDA") == "EMPRESA LTDA"
+    # CPF grudado no nome, como aparece em alguns MEIs do TCE-PB
+    assert mascarar_cpf_no_texto("FULANO DE TAL M52998224725") == "FULANO DE TAL M***.982.247-**"
+    # CNPJ (14 dígitos) não é confundido com CPF
+    assert mascarar_cpf_no_texto("EMPRESA 11222333000181") == "EMPRESA 11222333000181"
 
 
 def test_modalidades_mapeadas_e_nome_novo_falha():
