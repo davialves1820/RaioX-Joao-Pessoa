@@ -141,6 +141,11 @@ python -m src.process.servicos       # serviços (depende do build e do censo_ba
 pytest
 ```
 
+Se uma fonte sair do ar, os arquivos brutos que podem ser redistribuídos estão guardados no release
+[`dados-2026-10`](https://github.com/davialves1820/RaioX-Joao-Pessoa/releases/tag/dados-2026-10) e são
+restaurados com `python -m src.collect.restaurar`, que confere o SHA-256 de cada arquivo. TCE-PB, base
+completa do CNES, Filipeia e geodata-jp ficam fora da cópia ([por quê](docs/manutencao.md#cópia-dos-dados-brutos)).
+
 Duas fontes têm passo manual: o portal Filipeia bloqueia acesso automatizado, e o Catálogo de Escolas
 do INEP é exportado por navegador automatizado (Playwright). Os dados **não se atualizam sozinhos**. A
 coleta, a atualização periódica, as bibliotecas e o deploy estão descritos em
