@@ -76,8 +76,11 @@ def test_ranking_so_de_empresas(credores):
 
 def test_nenhum_cpf_exposto():
     """Nenhum arquivo processado contém CPF completo (11 dígitos) ou documento de pessoa física."""
-    # não colado a letras/dígitos (evita trechos de hashes SHA-256 dos metadados)
-    cpf = re.compile(r"(?<![0-9A-Za-z])\d{3}\.?\d{3}\.?\d{3}-?\d{2}(?![0-9A-Za-z])")
+    from src.process.despesas_regras import cpf_valido
+
+    # 11 dígitos não colados a outros dígitos, mesmo colados a letras ("FULANO M52998224725"); só conta se
+    # for um CPF válido, para não pegar trechos de números que não são documentos
+    padrao = re.compile(r"(?<!\d)\d{3}\.?\d{3}\.?\d{3}-?\d{2}(?!\d)")
     for f in P.iterdir():
         # só colunas de texto: números (índices do IPCA, valores) não são documentos
         if f.suffix == ".parquet":
@@ -90,7 +93,8 @@ def test_nenhum_cpf_exposto():
             texto = json.dumps(meta, ensure_ascii=False)
         texto = re.sub(r"\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}", "", texto)  # CNPJ formatado
         texto = re.sub(r"\b\d{14}\b", "", texto)  # CNPJ só com dígitos
-        assert not cpf.search(texto), f"possível CPF em {f.name}: {cpf.search(texto)[0]}"
+        achados = [m for m in padrao.findall(texto) if cpf_valido(re.sub(r"\D", "", m))]
+        assert not achados, f"possível CPF em {f.name} ({len(achados)} ocorrência(s))"
 
 
 def test_ipca_fator_no_mes_de_referencia_e_um(cubo, meta):

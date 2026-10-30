@@ -252,7 +252,8 @@ def formatar_cnpj(d: str) -> str:
     return f"{d[:2]}.{d[2:5]}.{d[5:8]}/{d[8:12]}-{d[12:]}"
 
 
-_CPF_NO_TEXTO = re.compile(r"(?<![0-9A-Za-z])(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})(?![0-9A-Za-z])")
+# Só não pode estar colado a outros dígitos: o CPF de MEI às vezes vem grudado no nome ("FULANO M52998224725")
+_CPF_NO_TEXTO = re.compile(r"(?<!\d)(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})(?!\d)")
 
 
 def mascarar_cpf_no_texto(texto: str) -> str:
