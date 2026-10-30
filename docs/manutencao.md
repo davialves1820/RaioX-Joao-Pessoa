@@ -36,6 +36,37 @@ Ordem do processamento: `build` → `despesas` e `censo_bairros` → `servicos`.
 
 Os dados brutos não ficam no git (são grandes e reprodutíveis); os processados ficam, porque o app usa só eles.
 
+## Cópia dos dados brutos
+
+Os arquivos brutos usados na versão atual dos dados estão no release
+[`dados-2026-10`](https://github.com/davialves1820/RaioX-Joao-Pessoa/releases/tag/dados-2026-10): um `.zip`
+por fonte, o `manifest.json` e o `SHA256SUMS`. Se uma fonte mudar ou sair do ar:
+
+```bash
+python -m src.collect.restaurar                 # todas as fontes da cópia
+python -m src.collect.restaurar --fonte inep osm
+```
+
+Cada arquivo só é gravado em `data/raw/` se o SHA-256 bater com o de `data/raw/manifest.json`; o que já
+existe e confere não é regravado (`--force` regrava).
+
+| Na cópia | Base para redistribuir |
+|---|---|
+| IBGE (Censos 2010 e 2022, SIDRA), INEP, SICONFI, CNES (API, estabelecimentos de João Pessoa) | dados abertos do Executivo federal, de livre uso com citação da fonte (Decreto 8.777/2016, art. 2º, III) |
+| Câmara Municipal (LOA 2024 e leis de 2024–2025) | texto de lei não tem proteção de direito autoral (Lei 9.610/1998, art. 8º, IV) |
+| OpenStreetMap | ODbL, com crédito: © colaboradores do OpenStreetMap |
+
+| Fora da cópia | Motivo | Como obter |
+|---|---|---|
+| TCE-PB (despesas) | traz CPF completo e nome de pessoas físicas credoras | `python -m src.collect.tce_pb` (o portal mantém 2009 em diante) |
+| CNES, base nacional completa | traz nome, CPF parcial e Cartão Nacional de Saúde de todos os profissionais de saúde do país | `python -m src.collect.cnes_base --competencia 202609`, enquanto o DATASUS listar essa competência |
+| Filipeia (Prefeitura) | o portal não declara licença | exportação manual (ver `src/collect/filipeia.py`) |
+| geodata-jp | o repositório de origem não declara licença | `python -m src.collect.geodata_jp` (commit fixo) |
+
+Para um novo release, depois de atualizar os dados: `python -m src.collect.restaurar --empacotar PASTA`
+gera os anexos (o comando para se algum arquivo local não bater com o manifesto); crie o release com
+eles e atualize `TAG` em `src/collect/restaurar.py`.
+
 ## Atualizar os dados
 
 **Nada se atualiza sozinho.** O site lê os arquivos de `data/processed/` que estão no repositório; o
