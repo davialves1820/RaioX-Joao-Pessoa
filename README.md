@@ -9,6 +9,7 @@ população, acesso a serviços públicos e gasto municipal.**
 [![Testes](https://github.com/davialves1820/RaioX-Joao-Pessoa/actions/workflows/testes.yml/badge.svg)](https://github.com/davialves1820/RaioX-Joao-Pessoa/actions/workflows/testes.yml)
 ![Python 3.12 | 3.13](https://img.shields.io/badge/python-3.12%20%7C%203.13-2a78d6)
 ![Dados públicos](https://img.shields.io/badge/dados-100%25%20p%C3%BAblicos-1baf7a)
+[![Licença MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-555)](LICENSE)
 
 **[Acessar o painel →](https://raio-x-joao-pesoa.streamlit.app/)**
 
@@ -30,6 +31,7 @@ população, acesso a serviços públicos e gasto municipal.**
 - [Usar os dados](#usar-os-dados)
 - [Documentação](#documentação)
 - [Créditos e licenças das fontes](#créditos-e-licenças-das-fontes)
+- [Licença](#licença)
 
 ## Sobre o projeto
 
@@ -227,3 +229,9 @@ a tabela de bairros e a do índice de acesso têm botão "Baixar CSV".
 Os valores de despesa são os **declarados** pelos órgãos municipais ao TCE-PB e podem mudar após a
 análise do Tribunal. O painel mostra para onde vai o dinheiro; não faz juízo sobre a regularidade de
 nenhuma despesa.
+
+## Licença
+
+O código deste repositório está sob a [licença MIT](LICENSE). Os dados continuam sujeitos às
+condições das fontes de origem, listadas em [Créditos e licenças das fontes](#créditos-e-licenças-das-fontes):
+por exemplo, o que vem do OpenStreetMap segue a ODbL e exige o crédito aos colaboradores.
