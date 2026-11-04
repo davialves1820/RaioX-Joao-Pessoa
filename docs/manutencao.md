@@ -7,13 +7,14 @@ Como baixar e atualizar os dados, rodar os testes, atualizar as bibliotecas e pu
 ## Estrutura do código
 
 ```
-streamlit_app.py   entrada do Streamlit: liga as três páginas
+streamlit_app.py   entrada do Streamlit: liga as quatro páginas
 src/collect/       um script de coleta por fonte (+ download.py, que mantém o manifesto);
                    python -m src.collect roda todos
 src/process/       build.py (bairros e população), censo_bairros.py (renda e saneamento),
-                   despesas.py + despesas_regras.py + despesas_bairros.py, servicos.py
+                   despesas.py + despesas_regras.py + despesas_bairros.py, servicos.py, camara.py
 src/app/           app.py + dados.py (bairros), servicos.py + dados_servicos.py,
-                   despesas.py + dados_despesas.py; tema.py (cores claro/escuro, mapa, estilo)
+                   despesas.py + dados_despesas.py, camara.py + dados_camara.py;
+                   tema.py (cores claro/escuro, mapa, estilo)
 data/raw/          dados brutos, uma pasta por fonte (só o manifest.json é versionado)
 data/interim/      tabela de empenhos linha a linha (não versionada; cerca de 40 MB)
 data/processed/    dados prontos para o painel (versionados)
@@ -154,7 +155,7 @@ brutos só rodam quando `data/raw/` está presente; os demais usam só `data/pro
 deploy e uma versão nova pode quebrar o site sem mudança no código. Para atualizar:
 
 1. Num ambiente limpo, instale as versões novas (`pip install -U` das bibliotecas listadas).
-2. Rode o pipeline e `pytest`, e abra o app para conferir as três páginas.
+2. Rode o pipeline e `pytest`, e abra o app para conferir as quatro páginas.
 3. Copie as versões de `pip freeze` para `requirements.txt` e abra um PR: o CI testa nas duas versões
    do Python.
 

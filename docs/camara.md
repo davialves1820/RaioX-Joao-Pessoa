@@ -4,6 +4,9 @@ Dados da Câmara Municipal de João Pessoa: vereadores, produção legislativa, 
 de lei, subsídio e folha de pessoal. A investigação das fontes está na
 [issue #45](https://github.com/davialves1820/RaioX-Joao-Pessoa/issues/45).
 
+A página "Câmara Municipal" do painel (`src/app/camara.py`) usa estes arquivos; as funções de apoio,
+sem Streamlit, estão em `src/app/dados_camara.py`.
+
 ## Fontes
 
 | Fonte | O que traz | Coleta |

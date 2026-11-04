@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from src.app import app, despesas, servicos
+from src.app import app, camara, despesas, servicos
 
 st.set_page_config(page_title="Raio-X dos Bairros de João Pessoa", layout="wide")
 st.navigation(
@@ -10,6 +10,7 @@ st.navigation(
         st.Page(app.main, title="Bairros e população", url_path="bairros", default=True),
         st.Page(servicos.main, title="Serviços e acesso", url_path="servicos"),
         st.Page(despesas.main, title="Para onde vai o dinheiro", url_path="dinheiro"),
+        st.Page(camara.main, title="Câmara Municipal", url_path="camara"),
     ],
     position="top",
 ).run()
