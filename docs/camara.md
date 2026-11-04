@@ -13,6 +13,8 @@ sem Streamlit, estão em `src/app/dados_camara.py`.
 |---|---|---|
 | [SAPL da Câmara](https://sapl.joaopessoa.pb.leg.br/api/) (API aberta) | matérias, autoria, normas jurídicas, tramitações, parlamentares, mandatos, filiações, sessões e presença | `python -m src.collect.camara_sapl` |
 | TCE-PB, dados abertos do SAGRES (`servidores-AAAA.zip`) | folha de pessoal mensal: cargo, vínculo e valor bruto; o CPF já vem mascarado | `python -m src.collect.tce_pb` |
+| TCE-PB, empenhos (`data/interim/empenhos.parquet`) | despesas e diárias da Câmara, por elemento de despesa | `python -m src.process.despesas` (antes do processamento da Câmara) |
+| Tesouro Nacional, SICONFI (RGF Anexo 01, Poder Legislativo) | despesa com pessoal da Câmara e limites da LRF, por quadrimestre | `python -m src.collect.siconfi` |
 | [Lei 14.702/2022](https://sapl.joaopessoa.pb.leg.br/media/sapl/public/normajuridica/2022/19248/lei_no_14702-2022.pdf) | subsídio da legislatura 2025–2028: R$ 26.000 por vereador e R$ 32.000 para o presidente, mais 13º | referência para os testes |
 
 O SAPL derruba conexões com frequência e responde 503 quando sobrecarregado. O coletor usa no
@@ -30,10 +32,15 @@ antes de 2019).
 |---|---|
 | `vereadores.csv` | um mandato por linha, com período de exercício, titular ou suplente, partido atual, foto e link do SAPL |
 | `producao.csv` | matérias por vereador, ano e grupo de tipo |
-| `producao_origem.csv` | matérias por ano, grupo e origem (vereador, Executivo, Mesa, comissão...) |
 | `projetos.parquet` | projetos de lei ordinária e complementar, com autores, situação, lei gerada e links |
 | `subsidio.csv` | valor bruto mensal pago a cada vereador |
-| `folha.csv` | folha da Câmara por mês, vínculo e grupo de cargo: pessoas e total, sem nomes |
+| `materias.parquet` | demais matérias (indicações, requerimentos, votos de aplauso e pesar, resoluções, emendas...), com autores e link |
+| `normas.parquet` | leis, resoluções e decretos legislativos, com link para o texto oficial |
+| `sessoes.csv` | sessões e reuniões, com links da pauta e da ata |
+| `folha_cargos.csv` | folha da Câmara por mês, vínculo e cargo: pessoas e total, sem nomes |
+| `despesas_por_elemento.csv` | despesas da Câmara e do fundo da Câmara (FEJP) por ano e elemento de despesa |
+| `diarias.csv` | diárias por mês, só totais (quem recebe são pessoas físicas) |
+| `rgf.csv` | despesa com pessoal da Câmara frente à Receita Corrente Líquida e aos limites da LRF, por quadrimestre |
 | `metadados.json` | regras, checagens e arquivos brutos usados (URL, data e SHA-256) |
 
 ## Regras

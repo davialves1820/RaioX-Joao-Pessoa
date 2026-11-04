@@ -84,11 +84,12 @@ próprio painel, ao lado dos números.
 
 ### Câmara Municipal
 
-- Um card por vereador (18ª e 19ª legislaturas), em ordem alfabética: partido, mandato, projetos de lei,
-  quantos viraram lei, indicações e requerimentos, com o detalhe dos projetos e do subsídio mês a mês.
-- Matérias apresentadas por ano e situação dos projetos de lei (virou lei, em tramitação, arquivado,
-  vetado...), com busca por palavra ou autor.
-- Despesa anual da Câmara e folha de pessoal por grupo de cargo, sem nomes.
+- Um card por vereador (18ª e 19ª legislaturas), em ordem alfabética, e o perfil de cada um: subsídio,
+  projetos de lei (quantos viraram lei), indicações, requerimentos e votos, com link para o SAPL.
+- Listas pesquisáveis de projetos de lei, indicações, requerimentos, votos de aplauso e pesar, leis,
+  resoluções, decretos legislativos e sessões (com pauta e ata), filtráveis por ano e por vereador.
+- Servidores por cargo (sem nomes), despesas e maiores fornecedores, diárias e a despesa com pessoal
+  frente ao limite da Lei de Responsabilidade Fiscal.
 
 [Fontes, regras e limitações →](docs/camara.md)
 

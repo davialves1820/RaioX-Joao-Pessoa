@@ -16,10 +16,11 @@ logo abaixo, em vez de uma página longa:
   *Mais gente, menos serviços*, *Índice de acesso*, *Matrículas*, *Renda e acesso*, *Gasto em saúde e
   educação* e *Fontes e limitações*.
 - **Para onde vai o dinheiro:** as opções que valem para todas as abas ficam num quadro próprio.
-- **Câmara Municipal:** abas *Vereadores* (cards em ordem alfabética, filtro de legislatura e de
-  titulares/suplentes, e o detalhe de um vereador abaixo dos cards), *Produção e projetos*, *Custo e
-  pessoal* e *Sobre os dados*. No gráfico de produção, os requerimentos de obras ficam de fora por
-  padrão, porque são cerca de 80% das matérias e escondem os demais tipos.
+- **Câmara Municipal:** seções em botões no topo, com listas em vez de gráficos agregados. Em
+  *Vereadores*, cards em ordem alfabética e o perfil de cada vereador ("Ver perfil", com link direto
+  `?vereador=ID`). As listas (projetos, indicações, requerimentos, votos, leis, resoluções, decretos
+  legislativos) têm busca sem acento, filtro de ano e de vereador, e 20 itens por página. *Pautas e
+  atas*, *Servidores*, *Despesas*, *Diárias* e *Prestação de contas* completam a página.
 - **Mapas:** a escala de cor mostra os números no padrão brasileiro (60.000, e não 60,000), com a unidade
   no topo e "≥" na última marca quando a cor satura; o zoom e a posição se mantêm ao trocar de indicador;
   um clique na legenda esconde ou mostra uma camada.

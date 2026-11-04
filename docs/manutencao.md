@@ -21,7 +21,7 @@ data/processed/    dados prontos para o painel (versionados)
 tests/             testes do pipeline, dos dados e das funções do painel
 ```
 
-Ordem do processamento: `build` → `despesas` e `censo_bairros` → `servicos`.
+Ordem do processamento: `build` → `despesas` e `censo_bairros` → `servicos`; `camara` depois de `despesas`.
 
 ## Coleta
 
@@ -86,7 +86,7 @@ O Streamlit Cloud publica a nova versão a cada push na `main`.
 | Unidades de saúde e equipes (CNES) | todo mês | `python -m src.collect.cnes --atualizar` e `python -m src.collect.cnes_base --force`, depois `python -m src.process.servicos` |
 | Escolas e matrículas (INEP) | uma vez por ano | `python -m src.collect.inep_catalogo --force`; para os microdados de outro ano, mude `ANO` em `src/collect/inep_microdados.py` (o processamento usa esse ano) e rode `python -m src.collect.inep_microdados` |
 | Praças, parques e bairros da Prefeitura (Filipeia) | quando a Prefeitura atualizar | exportação manual (ver acima) |
-| Câmara: matérias, sessões e presença (SAPL) e folha de pessoal (TCE-PB) | toda semana há matérias novas; a folha sai por mês | `python -m src.collect.camara_sapl --atualizar` e `python -m src.collect.tce_pb --atualizar`, depois `python -m src.process.camara` |
+| Câmara: matérias e sessões (SAPL), folha e despesas (TCE-PB), RGF (SICONFI) | toda semana há matérias novas; a folha sai por mês; o RGF, por quadrimestre | `python -m src.collect.camara_sapl --atualizar`, `python -m src.collect.tce_pb --atualizar` e `python -m src.collect.siconfi`; depois `python -m src.process.despesas` e `python -m src.process.camara` |
 | Censos do IBGE, OpenStreetMap, leis da Câmara | raramente | `--force` no script da fonte |
 
 `python -m src.collect --atualizar` rebaixa de uma vez tudo o que muda com o tempo (despesas do ano
