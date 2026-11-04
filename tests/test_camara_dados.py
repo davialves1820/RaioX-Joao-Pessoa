@@ -84,14 +84,16 @@ def test_eletivos_da_folha_ligados_ao_sapl(meta):
     assert meta["eletivos_sem_correspondencia_no_sapl"] == []
 
 
-def test_subsidio_so_dentro_do_mandato(sub, ver):
-    """Confere a ligação folha -> SAPL: cada mês pago cai dentro de um mandato do parlamentar."""
-    mandatos = ver.assign(ini=ver["inicio_mandato"].str[:7].str.replace("-", ""),
-                          fim=ver["fim_mandato"].fillna("2100-12-31").str[:7].str.replace("-", ""))
+def test_subsidio_na_legislatura_do_mandato(sub, ver, meta):
+    """Confere a ligação folha -> SAPL: cada mês pago cai numa legislatura em que o parlamentar tem
+    mandato. Meses fora do período exato registrado no SAPL (13º pago depois da saída, suplência
+    que o SAPL não registra) são listados nos metadados."""
+    leg = {18: ("202101", "202412"), 19: ("202501", "202812")}
     for _, s in sub.iterrows():
-        m = mandatos[mandatos["id_parlamentar"] == s["id_parlamentar"]]
-        mes = str(s["ano_mes"])
-        assert ((m["ini"] <= mes) & (mes <= m["fim"])).any(), (s["id_parlamentar"], mes)
+        legs = set(ver.loc[ver["id_parlamentar"] == s["id_parlamentar"], "legislatura"])
+        assert any(leg[x][0] <= str(s["ano_mes"]) <= leg[x][1] for x in legs), (s["id_parlamentar"], s["ano_mes"])
+    fora = meta["subsidio_fora_do_periodo_no_sapl"]
+    assert len(fora) <= 10, fora
 
 
 @sem_brutos

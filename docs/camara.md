@@ -1,7 +1,7 @@
 # Câmara Municipal: fontes, regras e limitações
 
 Dados da Câmara Municipal de João Pessoa: vereadores, produção legislativa, situação dos projetos
-de lei, presença nas sessões, subsídio e folha de pessoal. A investigação das fontes está na
+de lei, subsídio e folha de pessoal. A investigação das fontes está na
 [issue #45](https://github.com/davialves1820/RaioX-Joao-Pessoa/issues/45).
 
 ## Fontes
@@ -29,7 +29,6 @@ antes de 2019).
 | `producao.csv` | matérias por vereador, ano e grupo de tipo |
 | `producao_origem.csv` | matérias por ano, grupo e origem (vereador, Executivo, Mesa, comissão...) |
 | `projetos.parquet` | projetos de lei ordinária e complementar, com autores, situação, lei gerada e links |
-| `presenca.csv` | sessões ordinárias com presença registrada no período de mandato, e em quantas o vereador esteve presente |
 | `subsidio.csv` | valor bruto mensal pago a cada vereador |
 | `folha.csv` | folha da Câmara por mês, vínculo e grupo de cargo: pessoas e total, sem nomes |
 | `metadados.json` | regras, checagens e arquivos brutos usados (URL, data e SHA-256) |
@@ -57,13 +56,13 @@ O SAPL de João Pessoa não tem o tipo "moção": os votos de aplauso e pesar s�
 
 O campo `resultado` do SAPL vem sempre vazio e não é usado. A rejeição em votação no plenário é rara: a maior parte dos projetos que não viram lei é arquivada na comissão.
 
-**Presença.** Só sessões ordinárias em que a Câmara registrou presença no SAPL, dentro do período de
-mandato de cada vereador. Faltas justificadas não são descontadas: o número é de presenças registradas, não de faltas.
-
 **Subsídio.** Campo `valor_vantagem` da folha do TCE-PB: o total bruto do mês. Inclui o 13º e os meses
 proporcionais (posse ou saída no meio do mês). A folha é ligada ao SAPL pelo nome completo. Quando o SAPL
 abrevia ou grafa diferente, a ligação vem de uma tabela conferida pelo período de mandato
-(`CORRESPONDENCIA_FOLHA` em `src/process/camara.py`).
+(`CORRESPONDENCIA_FOLHA` em `src/process/camara.py`). Os meses pagos fora do período de mandato
+registrado no SAPL ficam listados em `metadados.json` (`subsidio_fora_do_periodo_no_sapl`): 13º pago
+depois da saída, ou exercício que o SAPL não registra (Marcelo da Torre recebeu de junho a setembro de
+2022, mas o SAPL só tem a suplência de 2024).
 
 **Folha.** Pessoas distintas (matrícula) e total bruto por mês, vínculo e grupo de cargo. Os grupos de
 cargo saem do nome do cargo: gabinetes dos vereadores, Mesa Diretora e Presidência, comissões,
@@ -74,6 +73,13 @@ tem cerca de 470 cargos de gabinete por mês.
 
 - **Custo por vereador não é calculado.** A folha não informa de qual gabinete é cada assessor. Dividir
   o custo dos gabinetes entre os vereadores seria uma estimativa, então só o total da Câmara é mostrado.
+- **Presença nas sessões não é publicada.** O registro de presença do SAPL existe para quase todas as
+  sessões ordinárias desde 2021, mas é incompleto. A ata da 7ª sessão ordinária (06/03/2025), por
+  exemplo, lista entre os presentes vereadores que o registro do SAPL não tem. O presidente, que conduz
+  a sessão, também quase nunca aparece no registro. Além disso, o SAPL não registra afastamentos (licença para assumir secretaria, por
+  exemplo): há titulares com mandato "ativo" que não recebem subsídio por meses. Um número de presença
+  por vereador seria enganoso. A alternativa é extrair a lista de presentes das atas oficiais
+  (issue #51).
 - **Votos no plenário.** O SAPL guarda só o placar (sim, não e abstenções). Votos nominais existem
   apenas nas comissões.
 - **Pautas** estão incompletas no SAPL em 2025 e 2026.

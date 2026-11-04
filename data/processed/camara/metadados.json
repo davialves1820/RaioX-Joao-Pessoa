@@ -1,0 +1,250 @@
+{
+  "gerado_em": "2026-11-04T15:31:12Z",
+  "anos": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "legislaturas": [
+    18,
+    19
+  ],
+  "ultimo_mes_folha": "202609",
+  "checagens": {
+    "materias": 95175,
+    "materias_sem_autor": 190,
+    "projetos_por_situacao": {
+      "Virou lei": 1897,
+      "Em tramitação": 1064,
+      "Arquivado": 774,
+      "Sem conclusão registrada": 102,
+      "Retirado pelo autor": 84,
+      "Vetado": 75,
+      "Rejeitado em plenário": 11
+    }
+  },
+  "eletivos_sem_correspondencia_no_sapl": [],
+  "subsidio_fora_do_periodo_no_sapl": [
+    {
+      "id_parlamentar": 487,
+      "ano_mes": "202206",
+      "valor": 18991.5
+    },
+    {
+      "id_parlamentar": 487,
+      "ano_mes": "202207",
+      "valor": 18991.5
+    },
+    {
+      "id_parlamentar": 487,
+      "ano_mes": "202208",
+      "valor": 18991.5
+    },
+    {
+      "id_parlamentar": 487,
+      "ano_mes": "202209",
+      "valor": 15826.25
+    },
+    {
+      "id_parlamentar": 487,
+      "ano_mes": "202212",
+      "valor": 6066.73
+    },
+    {
+      "id_parlamentar": 487,
+      "ano_mes": "202401",
+      "valor": 18868.97
+    },
+    {
+      "id_parlamentar": 490,
+      "ano_mes": "202212",
+      "valor": 4853.38
+    }
+  ],
+  "regras": {
+    "producao": "cada matéria conta uma vez para cada vereador autor ou coautor; grupos por tipo do SAPL",
+    "situacao": "'Virou lei' quando uma norma jurídica do SAPL aponta para o projeto; nos demais, pela marcação 'em tramitação' e pelo status e texto da última tramitação",
+    "subsidio": "campo valor_vantagem da folha do TCE-PB: total bruto do mês (inclui 13º e meses proporcionais)",
+    "folha": "pessoas distintas (matrícula) e total bruto por mês, vínculo e grupo de cargo; sem nomes",
+    "subsidio_legal": {
+      "norma": "Lei 14.702/2022",
+      "link": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/normajuridica/2022/19248/lei_no_14702-2022.pdf",
+      "vereador": 26000.0,
+      "presidente": 32000.0,
+      "vigencia": "2025-01-01 a 2028-12-31"
+    }
+  },
+  "arquivos_brutos": {
+    "camara_sapl/materias-2021.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?ano=2021",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:37:50Z",
+      "bytes": 34391755,
+      "sha256": "d3ad594988373df40d4b928271cc4045ea467282073a4950ee4a34312c507e96"
+    },
+    "camara_sapl/materias-2022.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?ano=2022",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:54:13Z",
+      "bytes": 17797898,
+      "sha256": "a0d9f01d97db05e6876237c5f98782ad161638a58f9af13fc9149571f3c475f7"
+    },
+    "camara_sapl/materias-2023.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?ano=2023",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T15:00:03Z",
+      "bytes": 21566189,
+      "sha256": "2deb115b5535539d47e5cf00f0e90d6d71392eb00b0e752f471fb52dcdaafb86"
+    },
+    "camara_sapl/materias-2024.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?ano=2024",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T15:07:44Z",
+      "bytes": 12965987,
+      "sha256": "4fdc824cd9c3b3dc4beaa22de153ac1c2f3ec0cbd923006c41d2ccef4db83074"
+    },
+    "camara_sapl/materias-2025.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?ano=2025",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T15:13:27Z",
+      "bytes": 16352253,
+      "sha256": "1d2543355bab2a72eccb16e57e0593738563d96d9ae41e37945a7c18a10fd999"
+    },
+    "camara_sapl/materias-2026.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?ano=2026",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T15:21:08Z",
+      "bytes": 14550969,
+      "sha256": "e12ac5246e6efb160f17b837837842e3dbc5ec18aff3af01ca57b75aea5be715"
+    },
+    "camara_sapl/normas-2021.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/normajuridica/?ano=2021",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:37:54Z",
+      "bytes": 368451,
+      "sha256": "af2dc6b6852476a4cbb0ccc94470664a05ba73327ce06ed44971c4b886eb8987"
+    },
+    "camara_sapl/normas-2022.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/normajuridica/?ano=2022",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:54:18Z",
+      "bytes": 424688,
+      "sha256": "3a74733dde7f9d4b4c36d49b0c98429ac2c0582d7a86399b0cb2da6c4f3a5f8d"
+    },
+    "camara_sapl/normas-2023.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/normajuridica/?ano=2023",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T15:00:09Z",
+      "bytes": 493313,
+      "sha256": "43389d3ae4c7e62a06b698a71d06ec4345c7989b0115deeba8353f0b9e09f6d3"
+    },
+    "camara_sapl/normas-2024.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/normajuridica/?ano=2024",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T15:07:49Z",
+      "bytes": 494659,
+      "sha256": "a856d04d807d34becd2e96fb9ac220134de4854a6cb49d0c8540066b4c47d997"
+    },
+    "camara_sapl/normas-2025.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/normajuridica/?ano=2025",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T15:13:34Z",
+      "bytes": 573161,
+      "sha256": "69886c5e06446de67a3f88619e5a6b4eb804b2a350f631c8441438032d14c6b1"
+    },
+    "camara_sapl/normas-2026.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/normajuridica/?ano=2026",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T15:21:13Z",
+      "bytes": 401890,
+      "sha256": "ac236fe906ae549f36a04abc935d27ae4aa00b29fc3c3c39faf644de377d13e3"
+    },
+    "camara_sapl/tramitacoes_projetos-2021.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2021)",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:51:06Z",
+      "bytes": 6370625,
+      "sha256": "65deab2162d063b24cbfaeb153e7b35adcf6f465e9662c5c1d2ad04c086d5cb8"
+    },
+    "camara_sapl/tramitacoes_projetos-2022.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2022)",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:56:48Z",
+      "bytes": 3018838,
+      "sha256": "250150f2dd431bea1a40f73469a819444468049baf353b0caed53edd2c35f026"
+    },
+    "camara_sapl/tramitacoes_projetos-2023.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2023)",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T15:04:28Z",
+      "bytes": 4604293,
+      "sha256": "0448908522c06321d73cc427aa1908c374546376d7019e729dbe35b39542d054"
+    },
+    "camara_sapl/tramitacoes_projetos-2024.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2024)",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T15:11:11Z",
+      "bytes": 3408559,
+      "sha256": "e8ae2733786fcb8ea446c2d673f6a1a6f7a431745b98f94a85f8087cc5faf4ad"
+    },
+    "camara_sapl/tramitacoes_projetos-2025.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2025)",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T15:18:55Z",
+      "bytes": 5867607,
+      "sha256": "60a27831f364354255511ccf2626f3aa36158f5ed1919722a18beff9a84d2189"
+    },
+    "camara_sapl/tramitacoes_projetos-2026.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2026)",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T15:26:23Z",
+      "bytes": 3899350,
+      "sha256": "4494b18be6e8a5a3508f44383c7c490df563df8199d08b10f9a64f94ecd78886"
+    },
+    "tce_pb/servidores-2021.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/servidores/servidores-2021.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Servidores (folha de pessoal) por município",
+      "baixado_em": "2026-11-04T14:34:07Z",
+      "bytes": 15158623,
+      "sha256": "2c779dbd7907d9272085876c21533310d183369e59e9a254df14c15bc9ed7f29"
+    },
+    "tce_pb/servidores-2022.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/servidores/servidores-2022.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Servidores (folha de pessoal) por município",
+      "baixado_em": "2026-11-04T14:34:16Z",
+      "bytes": 14729493,
+      "sha256": "0b3155a5e271d823f7eb2fb023462cabd10e67a8a383092c648f79be6ed55e86"
+    },
+    "tce_pb/servidores-2023.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/servidores/servidores-2023.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Servidores (folha de pessoal) por município",
+      "baixado_em": "2026-11-04T14:34:38Z",
+      "bytes": 14725466,
+      "sha256": "05acc67cead615cda7cab967a5f9eb11693013496c60b4fc419282dd38cd0cc4"
+    },
+    "tce_pb/servidores-2024.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/servidores/servidores-2024.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Servidores (folha de pessoal) por município",
+      "baixado_em": "2026-11-04T14:34:47Z",
+      "bytes": 13959366,
+      "sha256": "c64eada55fd21fefd33de129ce072f3824d3743a941525789f7f33369a7b704d"
+    },
+    "tce_pb/servidores-2025.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/servidores/servidores-2025.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Servidores (folha de pessoal) por município",
+      "baixado_em": "2026-11-04T14:34:56Z",
+      "bytes": 12276875,
+      "sha256": "9851df8b84a0fe06f94d3a01b4a36afdc527a94bc6d7caf3a0922ad568a6af31"
+    },
+    "tce_pb/servidores-2026.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/servidores/servidores-2026.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Servidores (folha de pessoal) por município",
+      "baixado_em": "2026-11-04T14:35:05Z",
+      "bytes": 10879583,
+      "sha256": "b2ea50a46862a083508021032cd60e1671036b13f1846a944644f36bf8d5583a"
+    }
+  }
+}

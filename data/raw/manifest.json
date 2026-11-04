@@ -41,12 +41,124 @@
     "bytes": 34391755,
     "sha256": "d3ad594988373df40d4b928271cc4045ea467282073a4950ee4a34312c507e96"
   },
+  "camara_sapl/materias-2022.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?ano=2022",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T14:54:13Z",
+    "bytes": 17797898,
+    "sha256": "a0d9f01d97db05e6876237c5f98782ad161638a58f9af13fc9149571f3c475f7"
+  },
+  "camara_sapl/materias-2023.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?ano=2023",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T15:00:03Z",
+    "bytes": 21566189,
+    "sha256": "2deb115b5535539d47e5cf00f0e90d6d71392eb00b0e752f471fb52dcdaafb86"
+  },
+  "camara_sapl/materias-2024.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?ano=2024",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T15:07:44Z",
+    "bytes": 12965987,
+    "sha256": "4fdc824cd9c3b3dc4beaa22de153ac1c2f3ec0cbd923006c41d2ccef4db83074"
+  },
+  "camara_sapl/materias-2025.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?ano=2025",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T15:13:27Z",
+    "bytes": 16352253,
+    "sha256": "1d2543355bab2a72eccb16e57e0593738563d96d9ae41e37945a7c18a10fd999"
+  },
+  "camara_sapl/materias-2026.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?ano=2026",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T15:21:08Z",
+    "bytes": 14550969,
+    "sha256": "e12ac5246e6efb160f17b837837842e3dbc5ec18aff3af01ca57b75aea5be715"
+  },
   "camara_sapl/normas-2021.json": {
     "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/normajuridica/?ano=2021",
     "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
     "baixado_em": "2026-11-04T14:37:54Z",
     "bytes": 368451,
     "sha256": "af2dc6b6852476a4cbb0ccc94470664a05ba73327ce06ed44971c4b886eb8987"
+  },
+  "camara_sapl/normas-2022.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/normajuridica/?ano=2022",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T14:54:18Z",
+    "bytes": 424688,
+    "sha256": "3a74733dde7f9d4b4c36d49b0c98429ac2c0582d7a86399b0cb2da6c4f3a5f8d"
+  },
+  "camara_sapl/normas-2023.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/normajuridica/?ano=2023",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T15:00:09Z",
+    "bytes": 493313,
+    "sha256": "43389d3ae4c7e62a06b698a71d06ec4345c7989b0115deeba8353f0b9e09f6d3"
+  },
+  "camara_sapl/normas-2024.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/normajuridica/?ano=2024",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T15:07:49Z",
+    "bytes": 494659,
+    "sha256": "a856d04d807d34becd2e96fb9ac220134de4854a6cb49d0c8540066b4c47d997"
+  },
+  "camara_sapl/normas-2025.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/normajuridica/?ano=2025",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T15:13:34Z",
+    "bytes": 573161,
+    "sha256": "69886c5e06446de67a3f88619e5a6b4eb804b2a350f631c8441438032d14c6b1"
+  },
+  "camara_sapl/normas-2026.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/normajuridica/?ano=2026",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T15:21:13Z",
+    "bytes": 401890,
+    "sha256": "ac236fe906ae549f36a04abc935d27ae4aa00b29fc3c3c39faf644de377d13e3"
+  },
+  "camara_sapl/tramitacoes_projetos-2021.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2021)",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T14:51:06Z",
+    "bytes": 6370625,
+    "sha256": "65deab2162d063b24cbfaeb153e7b35adcf6f465e9662c5c1d2ad04c086d5cb8"
+  },
+  "camara_sapl/tramitacoes_projetos-2022.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2022)",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T14:56:48Z",
+    "bytes": 3018838,
+    "sha256": "250150f2dd431bea1a40f73469a819444468049baf353b0caed53edd2c35f026"
+  },
+  "camara_sapl/tramitacoes_projetos-2023.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2023)",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T15:04:28Z",
+    "bytes": 4604293,
+    "sha256": "0448908522c06321d73cc427aa1908c374546376d7019e729dbe35b39542d054"
+  },
+  "camara_sapl/tramitacoes_projetos-2024.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2024)",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T15:11:11Z",
+    "bytes": 3408559,
+    "sha256": "e8ae2733786fcb8ea446c2d673f6a1a6f7a431745b98f94a85f8087cc5faf4ad"
+  },
+  "camara_sapl/tramitacoes_projetos-2025.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2025)",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T15:18:55Z",
+    "bytes": 5867607,
+    "sha256": "60a27831f364354255511ccf2626f3aa36158f5ed1919722a18beff9a84d2189"
+  },
+  "camara_sapl/tramitacoes_projetos-2026.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2026)",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-04T15:26:23Z",
+    "bytes": 3899350,
+    "sha256": "4494b18be6e8a5a3508f44383c7c490df563df8199d08b10f9a64f94ecd78886"
   },
   "cnes/BASE_DE_DADOS_CNES_202609.ZIP": {
     "url": "https://cnes.datasus.gov.br/EstatisticasServlet?path=BASE_DE_DADOS_CNES_202609.ZIP",

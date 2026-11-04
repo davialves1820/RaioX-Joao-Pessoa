@@ -1,5 +1,8 @@
-"""Processa os dados da Câmara Municipal: vereadores, produção legislativa, projetos, presença,
-subsídio e folha de pessoal.
+"""Processa os dados da Câmara Municipal: vereadores, produção legislativa, projetos, subsídio e
+folha de pessoal.
+
+A presença nas sessões fica de fora: o registro de presença do SAPL é incompleto (a ata da
+7ª sessão ordinária de 06/03/2025 lista vereadores presentes que o registro não tem; ver docs/camara.md).
 
 Entradas (data/raw): camara_sapl/*.json (src/collect/camara_sapl.py) e tce_pb/servidores-AAAA.zip
 (src/collect/tce_pb.py).
@@ -9,8 +12,6 @@ Saídas (data/processed/camara/):
 - producao.csv       matérias por vereador, ano e grupo de tipo (coautoria conta para cada autor)
 - producao_origem.csv matérias por ano, grupo e origem (vereadores, Executivo, Mesa, comissões...)
 - projetos.parquet   projetos de lei (ordinária e complementar), com autores e situação
-- presenca.csv       presença nas sessões ordinárias por vereador e ano, só nas sessões em que
-                     a Câmara registrou presença e em que o vereador estava no exercício do mandato
 - subsidio.csv       valor bruto mensal pago a cada vereador (folha do TCE-PB)
 - folha.csv          folha da Câmara por mês, vínculo e grupo de cargo: pessoas e total, sem nomes
 - metadados.json
@@ -57,8 +58,6 @@ TIPOS_PROJETO = {"PLO", "PLC"}
 
 SITUACOES = ["Virou lei", "Vetado", "Rejeitado em plenário", "Retirado pelo autor", "Arquivado",
              "Em tramitação", "Sem conclusão registrada"]
-
-TIPO_SESSAO_ORDINARIA = "SESSÃO ORDINÁRIA"
 
 # Vínculos da folha do TCE-PB, cujos nomes mudam entre os anos
 VINCULOS = {
@@ -261,40 +260,6 @@ def projetos(mat: pd.DataFrame, aut: pd.DataFrame, c: dict, anos: list[int]) -> 
     return out
 
 
-# --- Presença nas sessões ordinárias
-
-
-def presenca(ver: pd.DataFrame, c: dict) -> tuple[pd.DataFrame, dict]:
-    tipos = {t["id"]: t["nome"] for t in _ler("tipos_sessao.json")}
-    sessoes = pd.DataFrame(_ler("sessoes.json"))
-    sessoes = sessoes[sessoes["tipo"].map(tipos) == TIPO_SESSAO_ORDINARIA].copy()
-    sessoes["data"] = pd.to_datetime(sessoes["data_inicio"])
-    sessoes = sessoes[(sessoes["data"].dt.year >= ANO_INICIAL_CAMARA)
-                      & (sessoes["data"] <= pd.Timestamp(date.today()))]
-    pres = pd.DataFrame(_ler("presencas.json"))
-    com_registro = set(pres["sessao_plenaria"])
-    presentes = set(zip(pres["sessao_plenaria"], pres["parlamentar"]))
-    s = sessoes[sessoes["id"].isin(com_registro)]
-
-    linhas = []
-    for (pid, leg), mandatos in ver.groupby(["id_parlamentar", "legislatura"]):
-        no_mandato = pd.Series(False, index=s.index)
-        for _, m in mandatos.iterrows():
-            no_mandato |= (s["data"] >= m["inicio_mandato"]) & (s["data"] <= (m["fim_mandato"] or "2100-01-01"))
-        sm = s[no_mandato]
-        for ano, g in sm.groupby(sm["data"].dt.year):
-            linhas.append({"id_parlamentar": pid, "legislatura": leg, "ano": int(ano),
-                           "sessoes_com_registro": len(g),
-                           "presente": sum((i, pid) in presentes for i in g["id"])})
-    resumo = {
-        "sessoes_ordinarias": int(len(sessoes)),
-        "sessoes_ordinarias_com_presenca_registrada": int(len(s)),
-        "por_ano": {int(a): [int(len(g)), int(g["id"].isin(com_registro).sum())]
-                    for a, g in sessoes.groupby(sessoes["data"].dt.year)},
-    }
-    return pd.DataFrame(linhas), resumo
-
-
 # --- Folha de pessoal (TCE-PB)
 
 
@@ -352,6 +317,19 @@ def subsidio(df: pd.DataFrame, ver: pd.DataFrame) -> tuple[pd.DataFrame, list[st
     return out, sem
 
 
+def fora_do_periodo(sub: pd.DataFrame, ver: pd.DataFrame) -> list[dict]:
+    """Meses pagos fora dos períodos de mandato registrados no SAPL: 13º ou acerto pago depois da
+    saída, ou exercício que o SAPL não registra (a folha é a evidência do pagamento)."""
+    ini = ver["inicio_mandato"].str[:7].str.replace("-", "")
+    fim = ver["fim_mandato"].fillna("2100-12-31").str[:7].str.replace("-", "")
+    linhas = []
+    for _, s in sub.iterrows():
+        m = ver["id_parlamentar"] == s["id_parlamentar"]
+        if not ((ini[m] <= s["ano_mes"]) & (s["ano_mes"] <= fim[m])).any():
+            linhas.append({"id_parlamentar": int(s["id_parlamentar"]), "ano_mes": s["ano_mes"], "valor": s["valor"]})
+    return linhas
+
+
 def checar(mat: pd.DataFrame, aut: pd.DataFrame, proj: pd.DataFrame, ver: pd.DataFrame) -> dict:
     """Checagens que interrompem o pipeline se falharem; devolve um resumo para os metadados."""
     sem_autor = int(mat["autores"].map(len).eq(0).sum())
@@ -377,7 +355,6 @@ def main() -> None:
     aut = autoria(mat, c)
     proj = projetos(mat, aut, c, anos)
     resumo = checar(mat, aut, proj, ver)
-    pres, info_pres = presenca(ver, c)
     df_folha = ler_folha([a for a in anos if (RAW_TCE / f"servidores-{a}.zip").exists()])
     sub, sem_par = subsidio(df_folha, ver)
 
@@ -385,7 +362,6 @@ def main() -> None:
     producao(aut).to_csv(SAIDA / "producao.csv", index=False)
     producao_origem(mat, aut).to_csv(SAIDA / "producao_origem.csv", index=False)
     proj.to_parquet(SAIDA / "projetos.parquet", index=False)
-    pres.to_csv(SAIDA / "presenca.csv", index=False)
     sub.to_csv(SAIDA / "subsidio.csv", index=False)
     folha(df_folha).to_csv(SAIDA / "folha.csv", index=False)
 
@@ -396,14 +372,12 @@ def main() -> None:
         "legislaturas": list(LEGISLATURAS_CAMARA),
         "ultimo_mes_folha": df_folha["ano_mes"].max(),
         "checagens": resumo,
-        "presenca": info_pres,
         "eletivos_sem_correspondencia_no_sapl": sem_par,
+        "subsidio_fora_do_periodo_no_sapl": fora_do_periodo(sub, ver),
         "regras": {
             "producao": "cada matéria conta uma vez para cada vereador autor ou coautor; grupos por tipo do SAPL",
             "situacao": ("'Virou lei' quando uma norma jurídica do SAPL aponta para o projeto; nos demais, "
                          "pela marcação 'em tramitação' e pelo status e texto da última tramitação"),
-            "presenca": ("sessões ordinárias com presença registrada no SAPL, dentro do período de mandato; "
-                         "faltas justificadas não são descontadas"),
             "subsidio": "campo valor_vantagem da folha do TCE-PB: total bruto do mês (inclui 13º e meses proporcionais)",
             "folha": "pessoas distintas (matrícula) e total bruto por mês, vínculo e grupo de cargo; sem nomes",
             "subsidio_legal": {
