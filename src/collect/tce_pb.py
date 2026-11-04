@@ -5,7 +5,8 @@ com um CSV de empenhos de todas as unidades gestoras do município (Prefeitura,
 fundos, autarquias e Câmara). João Pessoa é o código 095.
 
 Baixa também a listagem do repositório de arquivos (formato S3), que traz a data
-em que o TCE-PB gerou cada arquivo.
+em que o TCE-PB gerou cada arquivo, e a folha de pessoal (servidores-AAAA.zip, mensal,
+com nome, cargo e valor; o CPF já vem mascarado pelo TCE-PB), usada no módulo da Câmara.
 
 Uso: python -m src.collect.tce_pb [--force] [--atualizar]
   --force      rebaixa todos os arquivos
@@ -19,10 +20,11 @@ from datetime import date
 from pathlib import Path
 
 from src.collect.download import download
-from src.config import ANO_INICIAL_DESPESAS, COD_MUNICIPIO_TCE
+from src.config import ANO_INICIAL_CAMARA, ANO_INICIAL_DESPESAS, COD_MUNICIPIO_TCE
 
 BASE = "https://download.tce.pb.gov.br/dados-abertos"
 FONTE = "TCE-PB - Dados Abertos do SAGRES - Despesas por município"
+FONTE_SERVIDORES = "TCE-PB - Dados Abertos do SAGRES - Servidores (folha de pessoal) por município"
 # O servidor do TCE-PB derruba conexões com frequência; insistimos mais.
 TENTATIVAS = 8
 
@@ -45,6 +47,14 @@ def main(force: bool = False, atualizar: bool = False) -> None:
             url_despesas(ano),
             Path(f"tce_pb/despesas-{ano}.zip"),
             fonte=FONTE,
+            force=force or (atualizar and ano == ano_corrente),
+            tentativas=TENTATIVAS,
+        )
+    for ano in range(ANO_INICIAL_CAMARA, ano_corrente + 1):
+        download(
+            f"{BASE}/dados-por-municipio/{COD_MUNICIPIO_TCE}/servidores/servidores-{ano}.zip",
+            Path(f"tce_pb/servidores-{ano}.zip"),
+            fonte=FONTE_SERVIDORES,
             force=force or (atualizar and ano == ano_corrente),
             tentativas=TENTATIVAS,
         )

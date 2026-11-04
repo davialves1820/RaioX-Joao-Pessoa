@@ -216,6 +216,7 @@ a tabela de bairros e a do índice de acesso têm botão "Baixar CSV".
 | [Para onde vai o dinheiro](docs/despesas.md) | unidades gestoras, correção pelo IPCA, privacidade, gasto por órgão e conferência com o SICONFI |
 | [Fontes dos dados](docs/fontes.md) | todas as fontes, datas, forma de obtenção e uso do geodata-jp |
 | [Manutenção](docs/manutencao.md) | coleta, atualização dos dados, testes, bibliotecas e deploy |
+| [Câmara Municipal](docs/camara.md) | dados da Câmara (vereadores, produção legislativa, projetos, presença, subsídio e folha): fontes, regras e limitações; a página do painel está em preparação |
 | [Interface](docs/interface.md) | organização das páginas, tema claro e escuro e uso no celular |
 
 ## Créditos e licenças das fontes
