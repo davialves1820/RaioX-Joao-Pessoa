@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-04T15:31:12Z",
+  "gerado_em": "2026-11-04T15:32:17Z",
   "anos": [
     2021,
     2022,
@@ -78,6 +78,34 @@
     }
   },
   "arquivos_brutos": {
+    "camara_sapl/autores.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/base/autor/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:34:15Z",
+      "bytes": 57611,
+      "sha256": "95981db99010fd5126ce705496415be5d2e2c107f82a921eb21924a04046755e"
+    },
+    "camara_sapl/filiacoes.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/parlamentares/filiacao/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:34:12Z",
+      "bytes": 93358,
+      "sha256": "2f60562399522146ce76a37cbd12379aa06448c0d86e863ffd3eaba5b35bfd28"
+    },
+    "camara_sapl/legislaturas.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/parlamentares/legislatura/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:33:56Z",
+      "bytes": 4550,
+      "sha256": "5c2a876ad4372a1f70eef2aef8f932a5c2ef5903974bbd69b924a9ab888afead"
+    },
+    "camara_sapl/mandatos.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/parlamentares/mandato/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:33:58Z",
+      "bytes": 209680,
+      "sha256": "15806261deb1d30a147384039f9a836795790d9fe1de7956eded94197a15b5b9"
+    },
     "camara_sapl/materias-2021.json": {
       "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?ano=2021",
       "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
@@ -161,6 +189,69 @@
       "baixado_em": "2026-11-04T15:21:13Z",
       "bytes": 401890,
       "sha256": "ac236fe906ae549f36a04abc935d27ae4aa00b29fc3c3c39faf644de377d13e3"
+    },
+    "camara_sapl/parlamentares.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/parlamentares/parlamentar/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:33:55Z",
+      "bytes": 252254,
+      "sha256": "1b710665e9d5c916df9725412eac76bcd17af287774ceee532d555ba35da2b13"
+    },
+    "camara_sapl/partidos.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/parlamentares/partido/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:34:13Z",
+      "bytes": 16633,
+      "sha256": "c4c25272abbbcd7ed026ec5f0db2cad5381ea2f623e5159209027c621f2406a7"
+    },
+    "camara_sapl/presencas.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/sessao/sessaoplenariapresenca/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:34:58Z",
+      "bytes": 2196666,
+      "sha256": "c13256382df5edd20e95d5281a12da687b2031eb6b41955d06dbdfb53c3bf306"
+    },
+    "camara_sapl/sessoes.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/sessao/sessaoplenaria/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:34:34Z",
+      "bytes": 1449041,
+      "sha256": "7c935765d180fa5482e3b5b0453f818c5ffa6f250bf45758a7c9a86ee82f3902"
+    },
+    "camara_sapl/status_tramitacao.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/statustramitacao/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:34:19Z",
+      "bytes": 19007,
+      "sha256": "50159b18e0a691d1e95176033ce6f08d3bc632be9372afa5accdeb9e515ef82e"
+    },
+    "camara_sapl/tipos_autor.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/base/tipoautor/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:34:16Z",
+      "bytes": 1693,
+      "sha256": "0549d6bf92332f6018abef05df003105b4c6e67f943aaf48feda22199d3e28c6"
+    },
+    "camara_sapl/tipos_materia.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tipomaterialegislativa/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:34:17Z",
+      "bytes": 19110,
+      "sha256": "dd253bbc356c7cd5aef4eee79d7223ebe0f467382308ca22b325e81d9a2ede94"
+    },
+    "camara_sapl/tipos_norma.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/norma/tiponormajuridica/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:34:20Z",
+      "bytes": 1916,
+      "sha256": "54f6fd957d3682bb8466b02d33fdcee42df289438bf27551f6b1b69a10e7dea1"
+    },
+    "camara_sapl/tipos_sessao.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/sessao/tiposessaoplenaria/",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-04T14:34:21Z",
+      "bytes": 2090,
+      "sha256": "b3e533c58acf1c02a0ebd2b879a4d6ea69a282318f412be6a9de8243bdf213ac"
     },
     "camara_sapl/tramitacoes_projetos-2021.json": {
       "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/tramitacao/?materia=<id> (projetos de lei de 2021)",
