@@ -31,7 +31,7 @@ def proj():
 
 @pytest.fixture(scope="module")
 def folha():
-    return pd.read_csv(P / "folha.csv")
+    return pd.read_csv(P / "folha_cargos.csv")
 
 
 @pytest.fixture(scope="module")
@@ -64,7 +64,7 @@ def test_situacao_dos_projetos(proj):
 
 
 def test_folha_sem_nomes_nem_cpf(folha):
-    assert list(folha.columns) == ["ano_mes", "vinculo", "grupo_cargo", "pessoas", "total"]
+    assert list(folha.columns) == ["ano_mes", "vinculo", "grupo_cargo", "cargo", "pessoas", "total"]
     texto = folha.astype(str).to_string()
     assert not re.search(r"\d{3}\.\d{3}\.\d{3}|\*\*\*", texto)
 
@@ -136,3 +136,34 @@ def test_grupo_de_cargo():
     assert camara.grupo_cargo("Comissionado", "10001021 - ASSESSOR ESPECIAL DA MESA DIRETORA-DSAL-3") == \
         "Mesa Diretora e Presidência"
     assert camara.grupo_cargo("Efetivo", "10000031 - TECNICO LEGISLATIVO-201") == "Administração e apoio"
+
+
+def test_listas_cobrem_todas_as_materias(proj, meta):
+    mat = pd.read_parquet(P / "materias.parquet")
+    assert len(mat) + len(proj) == meta["checagens"]["materias"]
+    assert not set(mat["id_materia"]) & set(proj["id_materia"])
+    assert mat["link_sapl"].str.startswith("https://sapl.joaopessoa.pb.leg.br/materia/").all()
+
+
+def test_normas_e_sessoes_com_links():
+    normas = pd.read_parquet(P / "normas.parquet")
+    assert normas["id_norma"].is_unique and normas["link_sapl"].str.startswith("https://").all()
+    assert set(normas["tipo"]) >= {"Lei", "Resolução", "Decreto Legislativo"}
+    s = pd.read_csv(P / "sessoes.csv")
+    atas = s["link_ata"].dropna()
+    assert len(atas) > 0 and atas.str.startswith("https://").all()
+
+
+def test_rgf_percentual_confere():
+    r = pd.read_csv(P / "rgf.csv")
+    assert len(r) >= 15
+    calc = 100 * r["despesa_pessoal"] / r["rcl_ajustada"]
+    assert (calc - r["pct_rcl"]).abs().max() < 0.01
+    assert (r["limite_maximo_pct"] == 6).all()  # Legislativo municipal: 6% da RCL (LRF, art. 20, III, a)
+
+
+def test_diarias_batem_com_o_elemento():
+    d = pd.read_csv(P / "diarias.csv")
+    el = pd.read_csv(P / "despesas_por_elemento.csv")
+    tot = el[el["elemento_despesa"].str.startswith("Diárias")].groupby("ano")["empenhado"].sum()
+    assert d.groupby("ano")["empenhado"].sum().round(2).equals(tot.round(2))

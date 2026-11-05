@@ -7,20 +7,21 @@ Como baixar e atualizar os dados, rodar os testes, atualizar as bibliotecas e pu
 ## Estrutura do código
 
 ```
-streamlit_app.py   entrada do Streamlit: liga as três páginas
+streamlit_app.py   entrada do Streamlit: liga as quatro páginas
 src/collect/       um script de coleta por fonte (+ download.py, que mantém o manifesto);
                    python -m src.collect roda todos
 src/process/       build.py (bairros e população), censo_bairros.py (renda e saneamento),
-                   despesas.py + despesas_regras.py + despesas_bairros.py, servicos.py
+                   despesas.py + despesas_regras.py + despesas_bairros.py, servicos.py, camara.py
 src/app/           app.py + dados.py (bairros), servicos.py + dados_servicos.py,
-                   despesas.py + dados_despesas.py; tema.py (cores claro/escuro, mapa, estilo)
+                   despesas.py + dados_despesas.py, camara.py + dados_camara.py;
+                   tema.py (cores claro/escuro, mapa, estilo)
 data/raw/          dados brutos, uma pasta por fonte (só o manifest.json é versionado)
 data/interim/      tabela de empenhos linha a linha (não versionada; cerca de 40 MB)
 data/processed/    dados prontos para o painel (versionados)
 tests/             testes do pipeline, dos dados e das funções do painel
 ```
 
-Ordem do processamento: `build` → `despesas` e `censo_bairros` → `servicos`.
+Ordem do processamento: `build` → `despesas` e `censo_bairros` → `servicos`; `camara` depois de `despesas`.
 
 ## Coleta
 
@@ -85,7 +86,7 @@ O Streamlit Cloud publica a nova versão a cada push na `main`.
 | Unidades de saúde e equipes (CNES) | todo mês | `python -m src.collect.cnes --atualizar` e `python -m src.collect.cnes_base --force`, depois `python -m src.process.servicos` |
 | Escolas e matrículas (INEP) | uma vez por ano | `python -m src.collect.inep_catalogo --force`; para os microdados de outro ano, mude `ANO` em `src/collect/inep_microdados.py` (o processamento usa esse ano) e rode `python -m src.collect.inep_microdados` |
 | Praças, parques e bairros da Prefeitura (Filipeia) | quando a Prefeitura atualizar | exportação manual (ver acima) |
-| Câmara: matérias, sessões e presença (SAPL) e folha de pessoal (TCE-PB) | toda semana há matérias novas; a folha sai por mês | `python -m src.collect.camara_sapl --atualizar` e `python -m src.collect.tce_pb --atualizar`, depois `python -m src.process.camara` |
+| Câmara: matérias e sessões (SAPL), folha e despesas (TCE-PB), RGF (SICONFI) | toda semana há matérias novas; a folha sai por mês; o RGF, por quadrimestre | `python -m src.collect.camara_sapl --atualizar`, `python -m src.collect.tce_pb --atualizar` e `python -m src.collect.siconfi`; depois `python -m src.process.despesas` e `python -m src.process.camara` |
 | Censos do IBGE, OpenStreetMap, leis da Câmara | raramente | `--force` no script da fonte |
 
 `python -m src.collect --atualizar` rebaixa de uma vez tudo o que muda com o tempo (despesas do ano
@@ -154,7 +155,7 @@ brutos só rodam quando `data/raw/` está presente; os demais usam só `data/pro
 deploy e uma versão nova pode quebrar o site sem mudança no código. Para atualizar:
 
 1. Num ambiente limpo, instale as versões novas (`pip install -U` das bibliotecas listadas).
-2. Rode o pipeline e `pytest`, e abra o app para conferir as três páginas.
+2. Rode o pipeline e `pytest`, e abra o app para conferir as quatro páginas.
 3. Copie as versões de `pip freeze` para `requirements.txt` e abra um PR: o CI testa nas duas versões
    do Python.
 

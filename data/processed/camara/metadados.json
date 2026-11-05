@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-04T15:32:17Z",
+  "gerado_em": "2026-11-04T22:01:33Z",
   "anos": [
     2021,
     2022,
@@ -68,7 +68,9 @@
     "producao": "cada matéria conta uma vez para cada vereador autor ou coautor; grupos por tipo do SAPL",
     "situacao": "'Virou lei' quando uma norma jurídica do SAPL aponta para o projeto; nos demais, pela marcação 'em tramitação' e pelo status e texto da última tramitação",
     "subsidio": "campo valor_vantagem da folha do TCE-PB: total bruto do mês (inclui 13º e meses proporcionais)",
-    "folha": "pessoas distintas (matrícula) e total bruto por mês, vínculo e grupo de cargo; sem nomes",
+    "folha": "pessoas distintas (matrícula) e total bruto por mês, vínculo e cargo; sem nomes",
+    "despesas": "empenhos da Câmara e do fundo da Câmara (FEJP) no TCE-PB, por ano e elemento de despesa; diárias só em totais mensais, porque quem recebe são pessoas físicas",
+    "rgf": "RGF Anexo 01 do Poder Legislativo no SICONFI: despesa total com pessoal sobre a Receita Corrente Líquida ajustada, nos últimos 12 meses, e os limites da LRF (art. 20 e 22)",
     "subsidio_legal": {
       "norma": "Lei 14.702/2022",
       "link": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/normajuridica/2022/19248/lei_no_14702-2022.pdf",
@@ -294,6 +296,125 @@
       "baixado_em": "2026-11-04T15:26:23Z",
       "bytes": 3899350,
       "sha256": "4494b18be6e8a5a3508f44383c7c490df563df8199d08b10f9a64f94ecd78886"
+    },
+    "siconfi/rgf-legislativo-2021-q1.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2021&in_periodicidade=Q&nr_periodo=1&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:15Z",
+      "bytes": 27163,
+      "sha256": "878b38e5fc2ca971042ff20687e05434aaed749ebd04522d59212b1824532a30"
+    },
+    "siconfi/rgf-legislativo-2021-q2.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2021&in_periodicidade=Q&nr_periodo=2&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:16Z",
+      "bytes": 27170,
+      "sha256": "aaa3f1298b91c997e666e6ce0e72100bb04aa582092d02da232d372deb2d326f"
+    },
+    "siconfi/rgf-legislativo-2021-q3.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2021&in_periodicidade=Q&nr_periodo=3&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:16Z",
+      "bytes": 27168,
+      "sha256": "f47ad3b82296427d1d0afc2e3054282d8f371d66ce56a9d927abee42e700967f"
+    },
+    "siconfi/rgf-legislativo-2022-q1.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2022&in_periodicidade=Q&nr_periodo=1&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:18Z",
+      "bytes": 27173,
+      "sha256": "9a6b9f376695104b918116bad12869f856296623a5cb2801675228dfb74da5aa"
+    },
+    "siconfi/rgf-legislativo-2022-q2.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2022&in_periodicidade=Q&nr_periodo=2&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:19Z",
+      "bytes": 27173,
+      "sha256": "0bada5530d177fbda711f3b9681d36bc56327356ff6cde671e27367aba69fc12"
+    },
+    "siconfi/rgf-legislativo-2022-q3.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2022&in_periodicidade=Q&nr_periodo=3&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:20Z",
+      "bytes": 27172,
+      "sha256": "fa6e85f3e05fe3f2178023dde80ed94d1cb7b7b599c263f2bf937be6e5a3c812"
+    },
+    "siconfi/rgf-legislativo-2023-q1.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2023&in_periodicidade=Q&nr_periodo=1&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:21Z",
+      "bytes": 27501,
+      "sha256": "ba994fe9c74aa62ad19c8ebc0d43dd7c1dd5f56b673bfaa34cd5ac3890538b50"
+    },
+    "siconfi/rgf-legislativo-2023-q2.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2023&in_periodicidade=Q&nr_periodo=2&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:22Z",
+      "bytes": 27172,
+      "sha256": "9ed9edacab831d7c958ce0b908d188b4bba715ddf519b86c9f2651285f3d32c7"
+    },
+    "siconfi/rgf-legislativo-2023-q3.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2023&in_periodicidade=Q&nr_periodo=3&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:23Z",
+      "bytes": 28188,
+      "sha256": "ca905331fe22d0bfbdaff91ce890f55d008a388be14eaa0afa5143b3c607fe90"
+    },
+    "siconfi/rgf-legislativo-2024-q1.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2024&in_periodicidade=Q&nr_periodo=1&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:24Z",
+      "bytes": 31319,
+      "sha256": "17e732d97bb4a4052b5be50638a4d01857859b018f83a3e63a98a33e3e257500"
+    },
+    "siconfi/rgf-legislativo-2024-q2.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2024&in_periodicidade=Q&nr_periodo=2&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:25Z",
+      "bytes": 32902,
+      "sha256": "440af4fe013634daa734e39163ecd6ba86f703713ca99a3cb38715570c0bb30c"
+    },
+    "siconfi/rgf-legislativo-2024-q3.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2024&in_periodicidade=Q&nr_periodo=3&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:27Z",
+      "bytes": 35258,
+      "sha256": "ee640b3f3cecec435eed693e073474fd87b7e6600a45891393c11a3d7b415dbf"
+    },
+    "siconfi/rgf-legislativo-2025-q1.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2025&in_periodicidade=Q&nr_periodo=1&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:28Z",
+      "bytes": 37946,
+      "sha256": "a77b76463ec9962c3131b54be5997a03b2d72f9e37e4599116bd6c4ec0ab142e"
+    },
+    "siconfi/rgf-legislativo-2025-q2.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2025&in_periodicidade=Q&nr_periodo=2&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:29Z",
+      "bytes": 39524,
+      "sha256": "cf39dcc8f645bf7696959de6130cabaeaed811150a9ef3a29afb84105cd35a47"
+    },
+    "siconfi/rgf-legislativo-2025-q3.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2025&in_periodicidade=Q&nr_periodo=3&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:30Z",
+      "bytes": 40331,
+      "sha256": "31dc86633e9a1061ece971d60788816c760bdec169027aa32080c7168a49ade8"
+    },
+    "siconfi/rgf-legislativo-2026-q1.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2026&in_periodicidade=Q&nr_periodo=1&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:30Z",
+      "bytes": 41400,
+      "sha256": "89b497f0e9fbdaccc3f6ac955caed4f82c7ea97f62a1a4eb55e7077f982745fd"
+    },
+    "siconfi/rgf-legislativo-2026-q2.json": {
+      "url": "https://apidatalake.tesouro.gov.br/ords/siconfi/tt/rgf?an_exercicio=2026&in_periodicidade=Q&nr_periodo=2&co_tipo_demonstrativo=RGF&no_anexo=RGF-Anexo%2001&co_esfera=M&co_poder=L&id_ente=2507507",
+      "fonte": "Tesouro Nacional - SICONFI - RGF Anexo 01 (despesa com pessoal), Poder Legislativo",
+      "baixado_em": "2026-11-04T21:51:31Z",
+      "bytes": 39044,
+      "sha256": "4b020e96f4d14bf4a8e1514cf8d7246d422f85235c35860eba0df57d88aa948b"
     },
     "tce_pb/servidores-2021.zip": {
       "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/servidores/servidores-2021.zip",
