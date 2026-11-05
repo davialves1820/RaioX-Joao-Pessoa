@@ -175,4 +175,6 @@ atualiza o site.
 nem sempre recarrega módulos que já estavam importados. Se um push acrescenta um nome novo a um
 módulo antigo (por exemplo, uma constante em `src/config.py`) e o site mostra `ImportError` apontando
 para esse nome, reinicie o app: **Manage app** → menu **⋮** → **Reboot app**. Foi o que aconteceu no
-deploy da página da Câmara (PRs #61 e #63).
+deploy da página da Câmara (PRs #61 e #63). Desde então, `streamlit_app.py` recarrega `src/config.py`
+a cada execução, o que evita o problema para as constantes do config; para outros módulos, o reboot
+continua sendo a solução.
