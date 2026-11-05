@@ -88,7 +88,7 @@ próprio painel, ao lado dos números.
   projetos de lei (quantos viraram lei), indicações, requerimentos e votos, com link para o SAPL.
 - Listas pesquisáveis de projetos de lei, indicações, requerimentos, votos de aplauso e pesar, leis,
   resoluções, decretos legislativos e sessões (com pauta e ata), filtráveis por ano e por vereador.
-- Pedidos de obras dos vereadores no mapa, por bairro e tema, cruzados com renda e saneamento.
+- Pedidos de obras dos vereadores no mapa, por bairro e tema, com renda e saneamento de cada bairro na tabela.
 - Servidores por cargo (sem nomes), despesas e maiores fornecedores, diárias e a despesa com pessoal
   frente ao limite da Lei de Responsabilidade Fiscal.
 

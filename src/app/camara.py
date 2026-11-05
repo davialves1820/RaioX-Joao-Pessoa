@@ -286,18 +286,6 @@ def secao_materias(dados: dict, grupos: list[str], chave: str, explicacao: str) 
     _lista(m[m["grupo"].isin(grupos)], _item_materia, chave, dados)
 
 
-# Pares tema × indicador do bairro para o cruzamento (indicadores do Censo 2022, já no projeto)
-CRUZAMENTOS = {
-    "Drenagem e esgoto × esgoto ligado à rede": ("Drenagem e esgoto", "pct_esgoto_rede",
-                                                 "Domicílios com esgoto ligado à rede (%)"),
-    "Pavimentação e buracos × renda": ("Pavimentação e buracos", "renda_mediana",
-                                       "Renda mediana do responsável (R$)"),
-    "Iluminação × renda": ("Iluminação", "renda_mediana", "Renda mediana do responsável (R$)"),
-    "Limpeza e capinação × lixo coletado na porta": ("Limpeza e capinação", "pct_lixo_coletado",
-                                                     "Domicílios com lixo coletado (%)"),
-}
-
-
 def secao_pedidos(dados: dict, bairros: pd.DataFrame, geo: dict) -> None:
     T = tema.atual()
     st.caption("Requerimentos de obras e serviços dos vereadores (iluminação, calçamento, limpeza, drenagem...) "
@@ -358,24 +346,6 @@ def secao_pedidos(dados: dict, bairros: pd.DataFrame, geo: dict) -> None:
     pequenos = bairros.loc[bairros["pop_2022"] < d.POP_MINIMA_TAXA, "nm_bairro"].sort_values()
     st.caption(f"Sem taxa por mil moradores nos bairros com menos de {_int(d.POP_MINIMA_TAXA)} moradores no Censo 2022 "
                f"({', '.join(pequenos)}): com tão pouca gente, a taxa não diz nada. O total aparece normalmente.")
-
-    st.markdown("#### Pedidos e as condições do bairro")
-    par = st.selectbox("Cruzamento", list(CRUZAMENTOS), key="pb_cruz")
-    tema_x, col, rot_x = CRUZAMENTOS[par]
-    pt = d.pedidos_por_bairro(d.filtrar_pedidos(rb, ano, tema_x, pid), bairros).merge(
-        bairros[["cd_bairro", col]], on="cd_bairro", how="left").dropna(subset=[col, "por_mil"])
-    fig = go.Figure(go.Scatter(
-        x=pt[col], y=pt["por_mil"], mode="markers", marker=dict(color=T["azul"], size=9, opacity=0.8),
-        hovertext=[f"<b>{r.nm_bairro}</b><br>{_int(r.pedidos)} pedidos ({dados_bairros.fmt_dec(r.por_mil, 1)} por mil)"
-                   for r in pt.itertuples()], hovertemplate="%{hovertext}<extra></extra>",
-    ))
-    tema.layout_grafico(fig, T)
-    fig.update_layout(height=380, margin=dict(l=0, r=10, t=10, b=0), separators=",.",
-                      xaxis=dict(title=rot_x, tickformat=",~r"),
-                      yaxis=dict(title=f"Pedidos de {tema_x.lower()} por mil moradores", tickformat=",~r"))
-    st.plotly_chart(fig, config={"displayModeBar": False})
-    st.caption("Cada ponto é um bairro. Um padrão aqui sugere onde a necessidade e os pedidos andam juntos, mas não "
-               "prova causa: o volume de pedidos também depende de quantos vereadores atuam em cada bairro.")
 
     st.markdown("#### Pedidos de um bairro")
     ordem = tab[tab["pedidos"] > 0].sort_values("nm_bairro", key=lambda c: c.map(d.normalizar))

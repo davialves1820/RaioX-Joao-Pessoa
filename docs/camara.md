@@ -99,9 +99,7 @@ citado, com tema(s), órgão destinatário, ano e autores. O resumo fica em `met
 - **Tema** (palavras-chave, um pedido pode ter mais de um) e **órgão** (primeira sigla citada) servem
   para filtrar.
 - **No painel** (seção *Pedidos por bairro* da página da Câmara): mapa e tabela por bairro, em total ou
-  por mil moradores, com filtros de ano, tema e vereador; cruzamento de um tema com um indicador do
-  Censo 2022 (drenagem e esgoto × esgoto na rede, pavimentação e iluminação × renda, limpeza × lixo
-  coletado); e a lista dos pedidos de um bairro, com link para o SAPL. A taxa por mil moradores não é
+  por mil moradores, com filtros de ano, tema e vereador; e a lista dos pedidos de um bairro, com link para o SAPL. A taxa por mil moradores não é
   calculada em bairros com menos de 1.000 moradores (Mussuré, área industrial, tem 3), onde ela não diz
   nada. Pedido não é problema confirmado: mostra o que os vereadores pediram, não o estado da cidade.
 
