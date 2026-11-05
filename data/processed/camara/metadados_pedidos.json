@@ -1,0 +1,38 @@
+{
+  "gerado_em": "2026-11-05T11:53:52Z",
+  "requerimentos": 83603,
+  "com_um_bairro": 68737,
+  "com_mais_de_um_bairro": 1278,
+  "sem_bairro": 13588,
+  "com_tema": 75433,
+  "com_orgao": 54285,
+  "regras": {
+    "bairro": "nomes oficiais do IBGE 2022 e variações do próprio nome; nomes ambíguos só com contexto de endereço; comunidades e loteamentos não são ligados a bairro",
+    "tema": "palavras-chave; um pedido pode ter mais de um tema",
+    "orgao": "primeira sigla de órgão citada no texto",
+    "variacoes": {
+      "CRISTO": "Cristo Redentor",
+      "GEISEL": "Ernesto Geisel",
+      "ALTIPLANO": "Altiplano Cabo Branco",
+      "COLIBRIS": "Cidade dos Colibris",
+      "ERNANI SATYRO": "Ernani Sátiro",
+      "MUSSUMAGRO": "Muçumagro",
+      "PLANALTO BOA ESPERANCA": "Planalto da Boa Esperança",
+      "PONTA DOS SEIXAS": "Ponta do Seixas",
+      "JOSE AMERICO DE ALMEIDA": "José Américo",
+      "VALENTINA FIGUEIREDO": "Valentina",
+      "VALENTINA DE FIGUEIREDO": "Valentina",
+      "VALENTINA FIGUEREDO": "Valentina"
+    },
+    "ambiguos": [
+      "CENTRO",
+      "CUIA",
+      "ESTADOS",
+      "IPES",
+      "PENHA",
+      "ROGER",
+      "TORRE"
+    ],
+    "precisao_amostra": "59 de 60 requerimentos conferidos à mão com o bairro certo (issue #48)"
+  }
+}
