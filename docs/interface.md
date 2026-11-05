@@ -19,8 +19,9 @@ logo abaixo, em vez de uma página longa:
 - **Câmara Municipal:** seções em botões no topo, com listas em vez de gráficos agregados. Em
   *Vereadores*, cards em ordem alfabética e o perfil de cada vereador ("Ver perfil", com link direto
   `?vereador=ID`). As listas (projetos, indicações, requerimentos, votos, leis, resoluções, decretos
-  legislativos) têm busca sem acento, filtro de ano e de vereador, e 20 itens por página. *Pautas e
-  atas*, *Servidores*, *Despesas*, *Diárias* e *Prestação de contas* completam a página.
+  legislativos) têm busca sem acento, filtro de ano e de vereador, e 20 itens por página. *Pedidos por
+  bairro* mostra no mapa os requerimentos de obras por bairro. *Pautas e atas*, *Servidores*, *Despesas*,
+  *Diárias* e *Prestação de contas* completam a página.
 - **Mapas:** a escala de cor mostra os números no padrão brasileiro (60.000, e não 60,000), com a unidade
   no topo e "≥" na última marca quando a cor satura; o zoom e a posição se mantêm ao trocar de indicador;
   um clique na legenda esconde ou mostra uma camada.

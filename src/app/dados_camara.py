@@ -16,6 +16,8 @@ PASTA = DATA_PROCESSED / "camara"
 
 LEGISLATURAS = {18: (2021, 2024), 19: (2025, 2028)}
 POR_PAGINA = 20
+# Abaixo disso a taxa por mil moradores não diz nada (Mussuré, área industrial, tem 3 moradores)
+POP_MINIMA_TAXA = 1000
 
 # Situações em que o projeto não está mais em tramitação e não virou lei
 ENCERRADOS = ["Vetado", "Rejeitado em plenário", "Retirado pelo autor", "Arquivado"]
@@ -42,6 +44,8 @@ def carregar(pasta: Path = PASTA) -> dict:
         "despesas": pd.read_csv(pasta / "despesas_por_elemento.csv"),
         "diarias": pd.read_csv(pasta / "diarias.csv"),
         "rgf": pd.read_csv(pasta / "rgf.csv"),
+        "pedidos": pd.read_parquet(pasta / "requerimentos_bairros.parquet"),
+        "meta_pedidos": json.loads((pasta / "metadados_pedidos.json").read_text(encoding="utf-8")),
         "meta": json.loads((pasta / "metadados.json").read_text(encoding="utf-8")),
     }
 
@@ -178,6 +182,44 @@ def situacao_rgf(pct: float, alerta: float, prudencial: float, maximo: float) ->
     if pct > alerta:
         return "Acima do limite de alerta"
     return "Dentro do limite"
+
+
+# --- Pedidos de obras por bairro
+
+
+def filtrar_pedidos(rb: pd.DataFrame, ano: int | None = None, tema: str | None = None,
+                    id_parlamentar: int | None = None) -> pd.DataFrame:
+    out = rb
+    if ano is not None:
+        out = out[out["ano"] == ano]
+    if tema is not None:
+        out = out[out["temas"].str.split("; ").map(lambda ts: tema in ts)]
+    if id_parlamentar is not None:
+        out = out[_do_vereador(out, id_parlamentar)]
+    return out
+
+
+def pedidos_por_bairro(rb: pd.DataFrame, bairros: pd.DataFrame) -> pd.DataFrame:
+    """Pedidos (requerimentos distintos) por bairro, por mil moradores (Censo 2022) e tema mais
+    frequente. Todos os bairros aparecem, mesmo os sem pedido no filtro."""
+    com = rb.dropna(subset=["cd_bairro"])
+    n = com.groupby("cd_bairro")["id_materia"].nunique().rename("pedidos")
+    temas = com.assign(tema=com["temas"].str.split("; ")).explode("tema")
+    temas = temas[temas["tema"].fillna("") != ""]
+    principal = (temas.groupby(["cd_bairro", "tema"]).size().reset_index(name="n")
+                 .sort_values(["cd_bairro", "n", "tema"], ascending=[True, False, True])
+                 .drop_duplicates("cd_bairro").set_index("cd_bairro")["tema"].rename("tema_principal"))
+    out = bairros[["cd_bairro", "nm_bairro", "pop_2022"]].set_index("cd_bairro").join(n).join(principal)
+    out["pedidos"] = out["pedidos"].fillna(0).astype(int)
+    out["por_mil"] = (1000 * out["pedidos"] / out["pop_2022"]).where(out["pop_2022"] >= POP_MINIMA_TAXA)
+    return out.reset_index()
+
+
+def resumo_pedidos(rb: pd.DataFrame) -> dict:
+    por_req = rb.drop_duplicates("id_materia")
+    total = len(por_req)
+    return {"pedidos": total, "com_bairro": int((por_req["n_bairros"] > 0).sum()),
+            "sem_bairro": int((por_req["n_bairros"] == 0).sum())}
 
 
 # --- Formatos

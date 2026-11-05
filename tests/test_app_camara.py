@@ -93,3 +93,23 @@ def test_formatos():
     assert d.fmt_data("2026-11-03") == "03/11/2026"
     assert d.fmt_periodo("2025-01-01", "2028-12-31") == "01/01/2025 a 31/12/2028"
     assert d.fmt_periodo("2025-01-01", float("nan")) == "desde 01/01/2025"
+
+
+def test_pedidos_por_bairro(dados):
+    from src.app import dados as dados_bairros
+    bairros = dados_bairros.carregar_indicadores()
+    rb = dados["pedidos"]
+    pb = d.pedidos_por_bairro(rb, bairros)
+    assert len(pb) == len(bairros) and pb["cd_bairro"].is_unique
+    assert pb["pedidos"].sum() == rb.dropna(subset=["cd_bairro"]).groupby("cd_bairro")["id_materia"].nunique().sum()
+    pequenos = pb["pop_2022"] < d.POP_MINIMA_TAXA
+    assert pb.loc[pequenos, "por_mil"].isna().all() and pb.loc[~pequenos, "por_mil"].notna().all()
+    r = d.resumo_pedidos(rb)
+    assert r["com_bairro"] + r["sem_bairro"] == r["pedidos"] == dados["meta_pedidos"]["requerimentos"]
+
+
+def test_filtrar_pedidos(dados):
+    rb = dados["pedidos"]
+    t = d.filtrar_pedidos(rb, ano=2025, tema="Iluminação")
+    assert (t["ano"] == 2025).all() and t["temas"].str.contains("Iluminação").all()
+    assert len(d.filtrar_pedidos(rb)) == len(rb)

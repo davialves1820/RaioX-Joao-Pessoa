@@ -8,14 +8,16 @@ sessão, quem trabalha na Câmara e quanto ela gasta.
 from __future__ import annotations
 
 import pandas as pd
+import plotly.graph_objects as go
 import streamlit as st
 
 from src.app import dados as dados_bairros
 from src.app import dados_camara as d
 from src.app import dados_despesas as dd
 from src.app import tema
+from src.process.camara_pedidos import TEMAS as TEMAS_PEDIDOS
 
-SECOES = ["Vereadores", "Projetos de lei", "Indicações", "Requerimentos", "Votos e moções", "Leis",
+SECOES = ["Vereadores", "Projetos de lei", "Indicações", "Requerimentos", "Pedidos por bairro", "Votos e moções", "Leis",
           "Resoluções", "Decretos legislativos", "Pautas e atas", "Servidores", "Despesas", "Diárias",
           "Prestação de contas", "Sobre os dados"]
 
@@ -50,7 +52,9 @@ def _foto(url) -> str | None:
 @st.cache_data(show_spinner="Carregando os dados da Câmara...")
 def _carregar():
     desp = dd.carregar()
-    return d.carregar(), desp["credores"]
+    censo, _ = dados_bairros.carregar_censo_bairros()
+    bairros = dados_bairros.carregar_indicadores().merge(censo.drop(columns="nm_bairro"), on="cd_bairro", how="left")
+    return d.carregar(), desp["credores"], bairros, dados_bairros.carregar_geojson()
 
 
 def _legislatura(chave: str) -> int:
@@ -68,11 +72,15 @@ def _cartao(rotulo: str, valor: str, nota: str = "") -> None:
             st.caption(_md(nota))
 
 
-def _tabela(df: pd.DataFrame, nomes: dict, reais=(), inteiros=(), pct: dict | None = None) -> None:
+def _tabela(df: pd.DataFrame, nomes: dict, reais=(), inteiros=(), pct: dict | None = None,
+            decimais: dict | None = None) -> None:
     """Tabela com cabeçalhos em português e números no padrão brasileiro."""
     t = df[list(nomes)].rename(columns=nomes)
+    numericas = [nomes[c] for c in [*reais, *inteiros, *(pct or {}), *(decimais or {})]]
+    t[numericas] = t[numericas].apply(pd.to_numeric, errors="coerce")
     st.dataframe(dados_bairros.tabela_br(t, inteiros=[nomes[c] for c in inteiros], reais=[nomes[c] for c in reais],
-                                         pct={nomes[c]: k for c, k in (pct or {}).items()}),
+                                         pct={nomes[c]: k for c, k in (pct or {}).items()},
+                                         decimais={nomes[c]: k for c, k in (decimais or {}).items()}),
                  hide_index=True, width="stretch")
 
 
@@ -278,6 +286,109 @@ def secao_materias(dados: dict, grupos: list[str], chave: str, explicacao: str) 
     _lista(m[m["grupo"].isin(grupos)], _item_materia, chave, dados)
 
 
+# Pares tema × indicador do bairro para o cruzamento (indicadores do Censo 2022, já no projeto)
+CRUZAMENTOS = {
+    "Drenagem e esgoto × esgoto ligado à rede": ("Drenagem e esgoto", "pct_esgoto_rede",
+                                                 "Domicílios com esgoto ligado à rede (%)"),
+    "Pavimentação e buracos × renda": ("Pavimentação e buracos", "renda_mediana",
+                                       "Renda mediana do responsável (R$)"),
+    "Iluminação × renda": ("Iluminação", "renda_mediana", "Renda mediana do responsável (R$)"),
+    "Limpeza e capinação × lixo coletado na porta": ("Limpeza e capinação", "pct_lixo_coletado",
+                                                     "Domicílios com lixo coletado (%)"),
+}
+
+
+def secao_pedidos(dados: dict, bairros: pd.DataFrame, geo: dict) -> None:
+    T = tema.atual()
+    st.caption("Requerimentos de obras e serviços dos vereadores (iluminação, calçamento, limpeza, drenagem...) "
+               "pelo bairro citado no texto. **Pedido não é problema confirmado:** mostra o que foi pedido à "
+               "Prefeitura, e o volume depende também do estilo de cada vereador.")
+    rb = dados["pedidos"]
+    f = st.columns([1, 2, 2, 2])
+    anos = sorted(rb["ano"].unique(), reverse=True)
+    ano = f[0].selectbox("Ano", [None] + anos, key="pb_ano", format_func=lambda a: "Todos" if a is None else str(a))
+    temas = list(TEMAS_PEDIDOS)
+    tema_sel = f[1].selectbox("Tema", [None] + temas, key="pb_tema", format_func=lambda t: "Todos os temas" if t is None else t)
+    ver = dados["vereadores"].drop_duplicates("id_parlamentar")
+    ver = ver.assign(o=ver["nome_parlamentar"].map(d.normalizar)).sort_values("o")
+    nomes = dict(zip(ver["id_parlamentar"], ver["nome_parlamentar"]))
+    pid = f[2].selectbox("Vereador", [None] + list(nomes), key="pb_autor",
+                         format_func=lambda i: "Todos os vereadores" if i is None else nomes[i])
+    medida = f[3].radio("Mostrar", ["por_mil", "pedidos"], horizontal=True, key="pb_medida",
+                        format_func={"por_mil": "Por mil moradores", "pedidos": "Total"}.get)
+    sel = d.filtrar_pedidos(rb, ano, tema_sel, pid)
+    res = d.resumo_pedidos(sel)
+    pb = d.pedidos_por_bairro(sel, bairros)
+    k = st.columns(3)
+    with k[0]:
+        _cartao("Pedidos no filtro", _int(res["pedidos"]))
+    with k[1]:
+        pct = 100 * res["com_bairro"] / res["pedidos"] if res["pedidos"] else 0
+        _cartao("Com bairro identificado", dados_bairros.fmt_pct(pct, 1),
+                f"{_int(res['sem_bairro'])} sem bairro: pedidos para a cidade toda ou que citam só a comunidade")
+    with k[2]:
+        _cartao("Bairros com pedidos", f"{_int((pb['pedidos'] > 0).sum())} de {len(pb)}")
+
+    rotulo = "pedidos por mil moradores" if medida == "por_mil" else "pedidos"
+    fmt = (lambda v: dados_bairros.fmt_dec(v, 1)) if medida == "por_mil" else dados_bairros.fmt_int
+    aj = dados_bairros.ajuste_mapa(dados_bairros.eh_celular(st.context.headers.get("User-Agent")), 560, 11.4)
+    zmax = float(pb[medida].quantile(0.95)) or 1.0  # NaN (bairro com poucos moradores) fica sem cor
+    def taxa(v):
+        return f"{dados_bairros.fmt_dec(v, 1)} por mil moradores" if pd.notna(v) else "poucos moradores, sem taxa"
+
+    hover = [f"<b>{r.nm_bairro}</b><br>{_int(r.pedidos)} pedidos · {taxa(r.por_mil)}<br>Tema mais pedido: "
+             f"{r.tema_principal if isinstance(r.tema_principal, str) else '—'}" for r in pb.itertuples()]
+    fig = go.Figure(go.Choroplethmap(
+        geojson=geo, featureidkey="properties.cd_bairro", locations=pb["cd_bairro"], z=pb[medida],
+        zmin=0, zmax=zmax, colorscale=tema.escala(T), marker_line_color=T["superficie"], marker_line_width=1,
+        hovertext=hover, hovertemplate="%{hovertext}<extra></extra>",
+        colorbar=tema.barra_de_cor(aj, T, 0, zmax, fmt, rotulo),
+    ))
+    st.plotly_chart(tema.layout_mapa(fig, T, aj, dict(lat=-7.147, lon=-34.875)), config={"displayModeBar": False})
+    st.caption(tema.texto("Quanto mais escuro, mais pedidos. A escala satura no percentil 95 para que poucos bairros "
+                          "não apaguem os demais; o valor exato aparece ao passar o mouse.", T))
+
+    st.markdown("#### Bairros")
+    tab = pb.merge(bairros[["cd_bairro", "pct_esgoto_rede", "renda_mediana"]], on="cd_bairro", how="left")
+    tab = tab.sort_values([medida, "pedidos"], ascending=False, na_position="last")
+    _tabela(tab, {"nm_bairro": "Bairro", "pedidos": "Pedidos", "por_mil": "Por mil moradores",
+                  "tema_principal": "Tema mais pedido", "pct_esgoto_rede": "Esgoto na rede (%)",
+                  "renda_mediana": "Renda mediana"},
+            inteiros=["pedidos"], reais=["renda_mediana"], pct={"pct_esgoto_rede": 1}, decimais={"por_mil": 1})
+    pequenos = bairros.loc[bairros["pop_2022"] < d.POP_MINIMA_TAXA, "nm_bairro"].sort_values()
+    st.caption(f"Sem taxa por mil moradores nos bairros com menos de {_int(d.POP_MINIMA_TAXA)} moradores no Censo 2022 "
+               f"({', '.join(pequenos)}): com tão pouca gente, a taxa não diz nada. O total aparece normalmente.")
+
+    st.markdown("#### Pedidos e as condições do bairro")
+    par = st.selectbox("Cruzamento", list(CRUZAMENTOS), key="pb_cruz")
+    tema_x, col, rot_x = CRUZAMENTOS[par]
+    pt = d.pedidos_por_bairro(d.filtrar_pedidos(rb, ano, tema_x, pid), bairros).merge(
+        bairros[["cd_bairro", col]], on="cd_bairro", how="left").dropna(subset=[col, "por_mil"])
+    fig = go.Figure(go.Scatter(
+        x=pt[col], y=pt["por_mil"], mode="markers", marker=dict(color=T["azul"], size=9, opacity=0.8),
+        hovertext=[f"<b>{r.nm_bairro}</b><br>{_int(r.pedidos)} pedidos ({dados_bairros.fmt_dec(r.por_mil, 1)} por mil)"
+                   for r in pt.itertuples()], hovertemplate="%{hovertext}<extra></extra>",
+    ))
+    tema.layout_grafico(fig, T)
+    fig.update_layout(height=380, margin=dict(l=0, r=10, t=10, b=0), separators=",.",
+                      xaxis=dict(title=rot_x, tickformat=",~r"),
+                      yaxis=dict(title=f"Pedidos de {tema_x.lower()} por mil moradores", tickformat=",~r"))
+    st.plotly_chart(fig, config={"displayModeBar": False})
+    st.caption("Cada ponto é um bairro. Um padrão aqui sugere onde a necessidade e os pedidos andam juntos, mas não "
+               "prova causa: o volume de pedidos também depende de quantos vereadores atuam em cada bairro.")
+
+    st.markdown("#### Pedidos de um bairro")
+    ordem = tab[tab["pedidos"] > 0].sort_values("nm_bairro", key=lambda c: c.map(d.normalizar))
+    if ordem.empty:
+        st.caption("Nenhum pedido com bairro identificado neste filtro.")
+        return
+    cd = st.selectbox("Bairro", list(ordem["cd_bairro"]), key="pb_bairro",
+                      format_func=dict(zip(ordem["cd_bairro"], ordem["nm_bairro"])).get)
+    ids = set(sel.loc[sel["cd_bairro"] == cd, "id_materia"])
+    m = dados["materias"]
+    _lista(m[m["id_materia"].isin(ids)], _item_materia, "pb_lista", dados)
+
+
 def secao_normas(dados: dict, tipo: str, chave: str, explicacao: str) -> None:
     st.caption(explicacao)
     n = dados["normas"]
@@ -468,7 +579,7 @@ def secao_sobre(dados: dict) -> None:
 
 
 def main() -> None:
-    dados, credores = _carregar()
+    dados, credores, bairros, geo = _carregar()
     tema.preparar_pagina(tema.atual())
     tema.cabecalho("Câmara Municipal de João Pessoa",
                    "Vereadores, projetos, pedidos, leis, sessões, servidores e contas da Câmara, com dados do SAPL "
@@ -494,6 +605,8 @@ def main() -> None:
         secao_materias(dados, ["Requerimentos de obras e serviços", "Outros requerimentos"], "req",
                        "Pedidos de obras e serviços a órgãos como Seinfra, Emlur e Cagepa (a maior parte), e "
                        "requerimentos de informação, de sessão especial, de urgência e outros.")
+    elif secao == "Pedidos por bairro":
+        secao_pedidos(dados, bairros, geo)
     elif secao == "Votos e moções":
         secao_materias(dados, ["Votos de aplauso, pesar e similares"], "vot",
                        "Votos de aplauso, pesar, congratulação e similares. O SAPL de João Pessoa não tem o tipo "
