@@ -30,6 +30,9 @@ Ordem do processamento: `build` → `despesas` e `censo_bairros` → `servicos`.
 - **INEP:** o Catálogo de Escolas é exportado por um navegador automatizado (Playwright + Chromium);
   para atualizar, use `python -m src.collect.inep_catalogo --force`. Se o painel mudar, o docstring do
   script explica a exportação manual.
+- **SAPL da Câmara:** a API derruba conexões e responde 503 quando sobrecarregada. O coletor usa no
+  máximo 2 conexões simultâneas e a coleta completa leva dezenas de minutos. As tramitações são
+  consultadas projeto a projeto; as de anos anteriores só são refeitas com `--force`.
 - **Filipeia (Prefeitura):** o portal bloqueia acesso automatizado. As camadas são exportadas à mão para
   `data/raw/filipeia/` e registradas com `python -m src.collect.filipeia --registrar`; o docstring do
   script lista os arquivos.
@@ -82,10 +85,11 @@ O Streamlit Cloud publica a nova versão a cada push na `main`.
 | Unidades de saúde e equipes (CNES) | todo mês | `python -m src.collect.cnes --atualizar` e `python -m src.collect.cnes_base --force`, depois `python -m src.process.servicos` |
 | Escolas e matrículas (INEP) | uma vez por ano | `python -m src.collect.inep_catalogo --force`; para os microdados de outro ano, mude `ANO` em `src/collect/inep_microdados.py` (o processamento usa esse ano) e rode `python -m src.collect.inep_microdados` |
 | Praças, parques e bairros da Prefeitura (Filipeia) | quando a Prefeitura atualizar | exportação manual (ver acima) |
+| Câmara: matérias, sessões e presença (SAPL) e folha de pessoal (TCE-PB) | toda semana há matérias novas; a folha sai por mês | `python -m src.collect.camara_sapl --atualizar` e `python -m src.collect.tce_pb --atualizar`, depois `python -m src.process.camara` |
 | Censos do IBGE, OpenStreetMap, leis da Câmara | raramente | `--force` no script da fonte |
 
 `python -m src.collect --atualizar` rebaixa de uma vez tudo o que muda com o tempo (despesas do ano
-corrente, IPCA, população e CNES).
+corrente, IPCA, população, CNES, folha de pessoal e dados da Câmara).
 
 **Receita dos gastos:**
 
@@ -138,6 +142,11 @@ brutos só rodam quando `data/raw/` está presente; os demais usam só `data/pro
   - campos essenciais sem nulos e datas dentro do ano do arquivo;
   - nenhum CPF exposto nos dados processados, e ranking só com CNPJs válidos;
   - regras de limpeza, de bairros e de busca do dashboard.
+- **Câmara:**
+  - produção por vereador igual à soma das autorias nos arquivos brutos do SAPL;
+  - só vereadores com mandato nas legislaturas do recorte; situação de projeto sempre numa categoria conhecida, e "Virou lei" sempre com a norma;
+  - subsídio de 2025 em diante igual ao da Lei 14.702/2022, todo eletivo da folha ligado a um vereador do SAPL e pagamento só dentro do mandato;
+  - folha sem nomes nem CPFs.
 
 ## Atualizar as bibliotecas
 

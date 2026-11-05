@@ -44,3 +44,9 @@ EXCECOES_SICONFI = {
     2016: "arquivo do TCE-PB incompleto (−42%)",
     2020: "TCE-PB soma 3,1% a mais que o SICONFI; diferença não explicada pelas fontes disponíveis",
 }
+
+# --- Módulo "Câmara Municipal" (SAPL da Câmara e folha de pessoal do TCE-PB)
+# Primeiro ano: início da 18ª legislatura. Desde 2021 a autoria das matérias, a presença nas
+# sessões ordinárias e as atas estão completas no SAPL (ver issue #45).
+ANO_INICIAL_CAMARA = 2021
+LEGISLATURAS_CAMARA = (18, 19)
