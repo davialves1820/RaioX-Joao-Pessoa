@@ -79,6 +79,26 @@ cargo saem do nome do cargo: gabinetes dos vereadores, Mesa Diretora e Presidên
 lideranças, comunicação e cerimonial, administração e apoio, e cedidos por outros órgãos. A Câmara
 tem cerca de 470 cargos de gabinete por mês.
 
+## Pedidos de obras por bairro
+
+`python -m src.process.camara_pedidos` (depois de `src.process.camara`) gera
+`requerimentos_bairros.parquet`: uma linha por requerimento de obras, serviços e melhoramentos e bairro
+citado, com tema(s), órgão destinatário, ano e autores. O resumo fica em `metadados_pedidos.json`.
+
+- **Bairro:** os 64 nomes oficiais (sem acento e sem diferenciar maiúsculas) e variações do próprio
+  nome ("Cristo", "Geisel", "Valentina de Figueiredo"...; lista em `VARIACOES`). Nomes que também são
+  palavras comuns (Centro, Torre, Estados, Penha, Cuiá, Roger, Ipês) só contam com contexto de endereço
+  ("bairro do Centro", ", Centro"), para não pegar "Centro de Vigilância" ou "torre de telefonia".
+- **Resultado (2021 a 11/2026):** 82,2% dos 83.603 requerimentos citam exatamente um bairro, 1,5%
+  citam mais de um e 16,3% nenhum reconhecível. Numa amostra de 60 conferida à mão, 59 estavam
+  certos (o outro cita um ponto de referência, a falésia do Cabo Branco). Trechos da amostra viraram
+  testes.
+- **Sem bairro:** pedidos para a cidade toda ou por região, e pedidos que citam só a comunidade ou o
+  loteamento (Rangel, Novais, Colinas do Sul, Quadramares...). Esses nomes não são ligados a um bairro
+  porque não há fonte oficial no projeto que diga onde fica cada um.
+- **Tema** (palavras-chave, um pedido pode ter mais de um) e **órgão** (primeira sigla citada) servem
+  para filtrar. Pedido não é problema confirmado: mostra o que os vereadores pediram, não o estado da cidade.
+
 ## Limitações
 
 - **Custo por vereador não é calculado.** A folha não informa de qual gabinete é cada assessor. Dividir
