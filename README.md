@@ -82,6 +82,17 @@ próprio painel, ao lado dos números.
 
 [Metodologia, fontes e limitações →](docs/despesas.md)
 
+### Câmara Municipal
+
+- Um card por vereador (18ª e 19ª legislaturas), em ordem alfabética, e o perfil de cada um: subsídio,
+  projetos de lei (quantos viraram lei), indicações, requerimentos e votos, com link para o SAPL.
+- Listas pesquisáveis de projetos de lei, indicações, requerimentos, votos de aplauso e pesar, leis,
+  resoluções, decretos legislativos e sessões (com pauta e ata), filtráveis por ano e por vereador.
+- Servidores por cargo (sem nomes), despesas e maiores fornecedores, diárias e a despesa com pessoal
+  frente ao limite da Lei de Responsabilidade Fiscal.
+
+[Fontes, regras e limitações →](docs/camara.md)
+
 O painel tem tema claro e escuro e funciona no celular. Detalhes em [Interface](docs/interface.md).
 
 ## Princípios
@@ -162,7 +173,7 @@ flowchart LR
 ```
 
 ```
-streamlit_app.py   entrada do Streamlit: liga as três páginas
+streamlit_app.py   entrada do Streamlit: liga as quatro páginas
 src/collect/       um script de coleta por fonte (+ download.py, que mantém o manifesto)
 src/process/       limpeza, junções e cálculo dos indicadores
 src/app/           páginas do painel, tema claro/escuro e funções de apoio (detalhes em docs/manutencao.md)
@@ -216,7 +227,7 @@ a tabela de bairros e a do índice de acesso têm botão "Baixar CSV".
 | [Para onde vai o dinheiro](docs/despesas.md) | unidades gestoras, correção pelo IPCA, privacidade, gasto por órgão e conferência com o SICONFI |
 | [Fontes dos dados](docs/fontes.md) | todas as fontes, datas, forma de obtenção e uso do geodata-jp |
 | [Manutenção](docs/manutencao.md) | coleta, atualização dos dados, testes, bibliotecas e deploy |
-| [Câmara Municipal](docs/camara.md) | dados da Câmara (vereadores, produção legislativa, projetos, presença, subsídio e folha): fontes, regras e limitações; a página do painel está em preparação |
+| [Câmara Municipal](docs/camara.md) | vereadores, produção legislativa, situação dos projetos, subsídio e folha: fontes, regras e limitações (inclusive por que a presença não é mostrada) |
 | [Interface](docs/interface.md) | organização das páginas, tema claro e escuro e uso no celular |
 
 ## Créditos e licenças das fontes

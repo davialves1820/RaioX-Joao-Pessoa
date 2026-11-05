@@ -23,8 +23,8 @@ As datas exatas (UTC), as URLs e os SHA-256 de cada arquivo estão em
 | TCE-PB, SAGRES (empenhos) | Dinheiro | download do portal de dados abertos | 2009 a 09/10/2026 |
 | Tesouro Nacional, SICONFI | Dinheiro (conferência dos totais) | API do SICONFI | 2014–2025 |
 | Câmara Municipal, SAPL (LOA 2024 e leis de 2024–2025) | Dinheiro (nomes oficiais dos órgãos) | download do SAPL | leis de 2024 e 2025 |
-| Câmara Municipal, SAPL (matérias, normas, tramitações, parlamentares, sessões e presença) | Câmara (página em preparação) | API do SAPL | 2021 em diante, consulta de 04/11/2026 |
-| TCE-PB, SAGRES (folha de pessoal) | Câmara (página em preparação) | download do portal de dados abertos | 2021 a 09/2026 |
+| Câmara Municipal, SAPL (matérias, normas, tramitações, parlamentares, sessões e presença) | Câmara | API do SAPL | 2021 em diante, consulta de 04/11/2026 |
+| TCE-PB, SAGRES (folha de pessoal) | Câmara | download do portal de dados abertos | 2021 a 09/2026 |
 
 ## Onde o geodata-jp ainda é usado
 

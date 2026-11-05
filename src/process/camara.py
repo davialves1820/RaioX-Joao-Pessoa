@@ -4,16 +4,21 @@ folha de pessoal.
 A presença nas sessões fica de fora: o registro de presença do SAPL é incompleto (a ata da
 7ª sessão ordinária de 06/03/2025 lista vereadores presentes que o registro não tem; ver docs/camara.md).
 
-Entradas (data/raw): camara_sapl/*.json (src/collect/camara_sapl.py) e tce_pb/servidores-AAAA.zip
-(src/collect/tce_pb.py).
+Entradas: data/raw/camara_sapl/*.json (src/collect/camara_sapl.py), data/raw/tce_pb/servidores-AAAA.zip
+(src/collect/tce_pb.py), data/raw/siconfi/rgf-legislativo-*.json (src/collect/siconfi.py) e
+data/interim/empenhos.parquet (gerado por src.process.despesas, que deve rodar antes).
 
 Saídas (data/processed/camara/):
 - vereadores.csv     um mandato por linha (18ª e 19ª legislaturas), com partido atual
 - producao.csv       matérias por vereador, ano e grupo de tipo (coautoria conta para cada autor)
-- producao_origem.csv matérias por ano, grupo e origem (vereadores, Executivo, Mesa, comissões...)
 - projetos.parquet   projetos de lei (ordinária e complementar), com autores e situação
 - subsidio.csv       valor bruto mensal pago a cada vereador (folha do TCE-PB)
-- folha.csv          folha da Câmara por mês, vínculo e grupo de cargo: pessoas e total, sem nomes
+- materias.parquet   demais matérias (indicações, requerimentos, votos, resoluções...), com autores
+- normas.parquet     leis, resoluções e decretos legislativos, com link para o texto
+- sessoes.csv        sessões e reuniões, com links da pauta e da ata
+- folha_cargos.csv   folha da Câmara por mês, vínculo e cargo: pessoas e total, sem nomes
+- despesas_por_elemento.csv, diarias.csv  despesas da Câmara (TCE-PB); diárias só em totais mensais
+- rgf.csv            despesa com pessoal da Câmara e limites da LRF (RGF do SICONFI)
 - metadados.json
 
 Uso: python -m src.process.camara
@@ -29,7 +34,7 @@ from datetime import date, datetime, timezone
 import pandas as pd
 
 from src.collect.download import load_manifest
-from src.config import ANO_INICIAL_CAMARA, DATA_PROCESSED, DATA_RAW, LEGISLATURAS_CAMARA
+from src.config import ANO_INICIAL_CAMARA, DATA_INTERIM, DATA_PROCESSED, DATA_RAW, LEGISLATURAS_CAMARA
 from src.process.despesas_regras import centavos, normalizar
 
 RAW = DATA_RAW / "camara_sapl"
@@ -37,6 +42,8 @@ RAW_TCE = DATA_RAW / "tce_pb"
 SAIDA = DATA_PROCESSED / "camara"
 SAPL = "https://sapl.joaopessoa.pb.leg.br"
 UG_CAMARA = "Câmara Municipal de João Pessoa"
+# Unidades gestoras da Câmara nos empenhos do TCE-PB: a Câmara e o fundo da Câmara (FEJP)
+UGS_CAMARA = ("101095", "614095")
 
 # Siglas dos tipos de matéria do SAPL -> grupo exibido. Siglas fora daqui vão para "Outros".
 GRUPOS = {
@@ -187,13 +194,6 @@ def producao(aut: pd.DataFrame) -> pd.DataFrame:
             .sort_values(["id_parlamentar", "ano", "grupo"]))
 
 
-def producao_origem(mat: pd.DataFrame, aut: pd.DataFrame) -> pd.DataFrame:
-    """Matérias por origem, contando cada matéria uma vez (pelo primeiro autor)."""
-    primeiro = aut.drop_duplicates("id_materia").set_index("id_materia")["tipo_autor"]
-    m = mat.assign(origem=mat["id_materia"].map(primeiro).fillna("Sem autor registrado"))
-    return m.groupby(["ano", "grupo", "origem"]).size().rename("materias").reset_index()
-
-
 # --- Projetos de lei e situação
 
 
@@ -216,20 +216,33 @@ def situacao(em_tramitacao: bool, ultima: dict | None, status: dict) -> tuple[st
     return "Sem conclusão registrada", desc
 
 
-def projetos(mat: pd.DataFrame, aut: pd.DataFrame, c: dict, anos: list[int]) -> pd.DataFrame:
-    normas = pd.DataFrame([n for ano in range(anos[0], date.today().year + 1)
-                           if (RAW / f"normas-{ano}.json").exists() for n in _ler(f"normas-{ano}.json")])
+def _normas(anos: list[int]) -> pd.DataFrame:
+    return pd.DataFrame([n for ano in range(anos[0], date.today().year + 1)
+                         if (RAW / f"normas-{ano}.json").exists() for n in _ler(f"normas-{ano}.json")])
+
+
+def autores_por_materia(aut: pd.DataFrame, c: dict) -> pd.DataFrame:
+    """Por matéria: nomes dos autores (nome parlamentar para vereadores), ids dos vereadores e origem
+    (tipo do primeiro autor)."""
+    a = aut.copy()
+    vereador = a["id_parlamentar"].notna()
+    a["nome"] = [c["parlamentares"][int(p)]["nome_parlamentar"].strip() if v else c["autores"][i]["nome"]
+                 for p, v, i in zip(a["id_parlamentar"], vereador, a["id_autor"])]
+    g = a.groupby("id_materia", sort=False)
+    out = pd.DataFrame({
+        "autores": g["nome"].agg("; ".join),
+        "origem": g["tipo_autor"].first(),
+    })
+    out["autores_ids"] = (a[vereador].groupby("id_materia")["id_parlamentar"]
+                          .agg(lambda s: ";".join(str(int(x)) for x in s)))
+    return out
+
+
+def projetos(mat: pd.DataFrame, autores: pd.DataFrame, c: dict, anos: list[int]) -> pd.DataFrame:
+    normas = _normas(anos)
     normas = normas[normas["materia"].notna()].sort_values("data").drop_duplicates("materia", keep="first")
     norma = normas.set_index("materia")
     tram = {int(k): v for ano in anos for k, v in _ler(f"tramitacoes_projetos-{ano}.json").items()}
-
-    nomes = {}
-    for _, r in aut.iterrows():
-        a = c["autores"][r["id_autor"]]
-        nome = (c["parlamentares"][r["id_parlamentar"]]["nome_parlamentar"].strip()
-                if r["id_parlamentar"] is not None and r["id_parlamentar"] == r["id_parlamentar"] else a["nome"])
-        nomes.setdefault(r["id_materia"], []).append(nome)
-    origem = aut.drop_duplicates("id_materia").set_index("id_materia")["tipo_autor"]
 
     p = mat[mat["sigla"].isin(TIPOS_PROJETO)].copy()
     linhas = []
@@ -247,17 +260,107 @@ def projetos(mat: pd.DataFrame, aut: pd.DataFrame, c: dict, anos: list[int]) -> 
         linhas.append({
             "id_materia": m["id_materia"], "sigla": m["sigla"], "numero": m["numero"], "ano": m["ano"],
             "data_apresentacao": m["data_apresentacao"], "ementa": m["ementa"],
-            "origem": origem.get(m["id_materia"], "Sem autor registrado"),
-            "autores": "; ".join(nomes.get(m["id_materia"], [])),
             "situacao": sit, "ultimo_status": ult,
             "data_ultima_tramitacao": ultima["data_tramitacao"] if ultima else None,
             **lei, "link_sapl": f"{SAPL}/materia/{m['id_materia']}",
         })
     out = pd.DataFrame(linhas)
-    out["autores_ids"] = out["id_materia"].map(
-        aut.dropna(subset=["id_parlamentar"]).groupby("id_materia")["id_parlamentar"]
-        .apply(lambda s: ";".join(str(int(x)) for x in s)))
+    a = autores.reindex(out["id_materia"])
+    out["origem"] = a["origem"].fillna("Sem autor registrado").values
+    out["autores"] = a["autores"].fillna("").values
+    out["autores_ids"] = a["autores_ids"].values
     return out
+
+
+def lista_materias(mat: pd.DataFrame, autores: pd.DataFrame) -> pd.DataFrame:
+    """Todas as matérias, uma por linha, para as listas do painel (sem os projetos de lei, que têm
+    tabela própria com a situação)."""
+    m = mat[~mat["sigla"].isin(TIPOS_PROJETO)].drop(columns="autores")
+    a = autores.reindex(m["id_materia"])
+    m = m.assign(origem=a["origem"].fillna("Sem autor registrado").values, autores=a["autores"].fillna("").values,
+                 autores_ids=a["autores_ids"].values, link_sapl=[f"{SAPL}/materia/{i}" for i in m["id_materia"]])
+    return m.sort_values(["data_apresentacao", "id_materia"], ascending=False).reset_index(drop=True)
+
+
+def lista_normas(c: dict, anos: list[int]) -> pd.DataFrame:
+    n = _normas(anos)
+    return pd.DataFrame({
+        "id_norma": n["id"], "tipo": n["tipo"].map(c["tipos_norma"]), "numero": n["numero"], "ano": n["ano"],
+        "data": n["data"], "ementa": n["ementa"].map(lambda e: " ".join(str(e).split())),
+        "id_materia": n["materia"],
+        "link_texto": n["texto_integral"].map(_https),
+        "link_sapl": [f"{SAPL}/norma/{i}" for i in n["id"]],
+    }).sort_values(["data", "id_norma"], ascending=False).reset_index(drop=True)
+
+
+def _https(url):
+    return url.replace("http://", "https://", 1) if isinstance(url, str) and url else None
+
+
+def lista_sessoes() -> pd.DataFrame:
+    tipos = {t["id"]: t["nome"] for t in _ler("tipos_sessao.json")}
+    s = pd.DataFrame(_ler("sessoes.json"))
+    s = s[(s["data_inicio"] >= f"{ANO_INICIAL_CAMARA}-01-01") & (s["data_inicio"] <= date.today().isoformat())]
+    return pd.DataFrame({
+        "id_sessao": s["id"], "data": s["data_inicio"], "tipo": s["tipo"].map(tipos).map(lambda t: t.capitalize() if t.isupper() else t),
+        "numero": s["numero"], "legislatura": s["legislatura"],
+        "link_pauta": s["upload_pauta"].map(_https), "link_ata": s["upload_ata"].map(_https),
+        "link_sapl": [f"{SAPL}/sessao/{i}" for i in s["id"]],
+    }).sort_values(["data", "id_sessao"], ascending=False).reset_index(drop=True)
+
+
+# --- Despesas da Câmara (empenhos do TCE-PB, gerados por src.process.despesas)
+
+
+def despesas_camara() -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Despesas da Câmara por ano e elemento, e diárias por mês (só totais: quem recebe diárias são
+    pessoas físicas)."""
+    caminho = DATA_INTERIM / "empenhos.parquet"
+    if not caminho.exists():
+        raise FileNotFoundError(f"{caminho} não existe: rode antes python -m src.process.despesas")
+    e = pd.read_parquet(caminho, columns=["ano", "mes", "cod_ug", "elemento_despesa", "empenhado_c", "pago_c",
+                                          "numero_empenho"])
+    e = e[e["cod_ug"].isin(UGS_CAMARA) & (e["ano"] >= ANO_INICIAL_CAMARA)]
+    por_elemento = (e.groupby(["ano", "elemento_despesa"])
+                    .agg(empenhado=("empenhado_c", "sum"), pago=("pago_c", "sum"), empenhos=("numero_empenho", "size"))
+                    .reset_index())
+    d = e[e["elemento_despesa"].str.startswith("Diárias", na=False)]
+    diarias = (d.groupby(["ano", "mes"])
+               .agg(empenhado=("empenhado_c", "sum"), pago=("pago_c", "sum"), empenhos=("numero_empenho", "size"))
+               .reset_index())
+    for t in (por_elemento, diarias):
+        t["empenhado"] /= 100
+        t["pago"] /= 100
+    return por_elemento, diarias
+
+
+# --- Prestação de contas (RGF do Legislativo, SICONFI)
+
+
+def rgf() -> pd.DataFrame:
+    """Despesa com pessoal da Câmara frente à Receita Corrente Líquida e aos limites da LRF."""
+    linhas = []
+    for f in sorted((DATA_RAW / "siconfi").glob("rgf-legislativo-*.json")):
+        itens = json.loads(f.read_text(encoding="utf-8"))["items"]
+        if not itens:
+            continue
+        v = {}
+        for r in itens:
+            conta, col = r["conta"], r["coluna"]
+            if conta.startswith("DESPESA TOTAL COM PESSOAL - DTP"):
+                v["despesa_pessoal" if col == "Valor" else "pct_rcl"] = r["valor"]
+            elif conta.startswith("= RECEITA CORRENTE LÍQUIDA AJUSTADA") and col == "Valor":
+                v["rcl_ajustada"] = r["valor"]
+            elif col == "% sobre a RCL Ajustada":
+                for chave, ini in (("limite_maximo_pct", "LIMITE MÁXIMO"), ("limite_prudencial_pct", "LIMITE PRUDENCIAL"),
+                                   ("limite_alerta_pct", "LIMITE DE ALERTA")):
+                    if conta.startswith(ini):
+                        v[chave] = r["valor"]
+        faltam = {"despesa_pessoal", "pct_rcl", "rcl_ajustada", "limite_maximo_pct"} - set(v)
+        if faltam:
+            raise ValueError(f"{f.name}: linhas não encontradas no RGF: {sorted(faltam)}")
+        linhas.append({"ano": itens[0]["exercicio"], "quadrimestre": itens[0]["periodo"], **v})
+    return pd.DataFrame(linhas).sort_values(["ano", "quadrimestre"]).reset_index(drop=True)
 
 
 # --- Folha de pessoal (TCE-PB)
@@ -295,9 +398,11 @@ def grupo_cargo(vinculo: str, cargo: str) -> str:
     return "Administração e apoio"
 
 
-def folha(df: pd.DataFrame) -> pd.DataFrame:
-    df = df.assign(grupo_cargo=[grupo_cargo(v, c) for v, c in zip(df["vinculo"], df["descricao_cargo"])])
-    out = (df.groupby(["ano_mes", "vinculo", "grupo_cargo"])
+def folha_cargos(df: pd.DataFrame) -> pd.DataFrame:
+    """Pessoas e total bruto por mês, vínculo e cargo (sem o código do cargo e sem nomes)."""
+    df = df.assign(grupo_cargo=[grupo_cargo(v, c) for v, c in zip(df["vinculo"], df["descricao_cargo"])],
+                   cargo=df["descricao_cargo"].str.replace(r"^\s*\d+\s*-\s*", "", regex=True).str.strip())
+    out = (df.groupby(["ano_mes", "vinculo", "grupo_cargo", "cargo"])
            .agg(pessoas=("matricula", "nunique"), total_centavos=("valor_centavos", "sum")).reset_index())
     out["total"] = out["total_centavos"] / 100
     return out.drop(columns="total_centavos")
@@ -353,17 +458,25 @@ def main() -> None:
     ver = vereadores(c)
     mat = materias(c, anos)
     aut = autoria(mat, c)
-    proj = projetos(mat, aut, c, anos)
+    autores = autores_por_materia(aut, c)
+    proj = projetos(mat, autores, c, anos)
     resumo = checar(mat, aut, proj, ver)
+    por_elemento, diarias = despesas_camara()
+    contas = rgf()
     df_folha = ler_folha([a for a in anos if (RAW_TCE / f"servidores-{a}.zip").exists()])
     sub, sem_par = subsidio(df_folha, ver)
 
     ver.to_csv(SAIDA / "vereadores.csv", index=False)
     producao(aut).to_csv(SAIDA / "producao.csv", index=False)
-    producao_origem(mat, aut).to_csv(SAIDA / "producao_origem.csv", index=False)
     proj.to_parquet(SAIDA / "projetos.parquet", index=False)
+    lista_materias(mat, autores).to_parquet(SAIDA / "materias.parquet", index=False)
+    lista_normas(c, anos).to_parquet(SAIDA / "normas.parquet", index=False)
+    lista_sessoes().to_csv(SAIDA / "sessoes.csv", index=False)
     sub.to_csv(SAIDA / "subsidio.csv", index=False)
-    folha(df_folha).to_csv(SAIDA / "folha.csv", index=False)
+    folha_cargos(df_folha).to_csv(SAIDA / "folha_cargos.csv", index=False)
+    por_elemento.to_csv(SAIDA / "despesas_por_elemento.csv", index=False)
+    diarias.to_csv(SAIDA / "diarias.csv", index=False)
+    contas.to_csv(SAIDA / "rgf.csv", index=False)
 
     manifest = load_manifest()
     meta = {
@@ -379,7 +492,11 @@ def main() -> None:
             "situacao": ("'Virou lei' quando uma norma jurídica do SAPL aponta para o projeto; nos demais, "
                          "pela marcação 'em tramitação' e pelo status e texto da última tramitação"),
             "subsidio": "campo valor_vantagem da folha do TCE-PB: total bruto do mês (inclui 13º e meses proporcionais)",
-            "folha": "pessoas distintas (matrícula) e total bruto por mês, vínculo e grupo de cargo; sem nomes",
+            "folha": "pessoas distintas (matrícula) e total bruto por mês, vínculo e cargo; sem nomes",
+            "despesas": ("empenhos da Câmara e do fundo da Câmara (FEJP) no TCE-PB, por ano e elemento de despesa; "
+                         "diárias só em totais mensais, porque quem recebe são pessoas físicas"),
+            "rgf": ("RGF Anexo 01 do Poder Legislativo no SICONFI: despesa total com pessoal sobre a Receita "
+                    "Corrente Líquida ajustada, nos últimos 12 meses, e os limites da LRF (art. 20 e 22)"),
             "subsidio_legal": {
                 "norma": "Lei 14.702/2022",
                 "link": f"{SAPL}/media/sapl/public/normajuridica/2022/19248/lei_no_14702-2022.pdf",
@@ -387,7 +504,7 @@ def main() -> None:
             },
         },
         "arquivos_brutos": {k: v for k, v in manifest.items()
-                            if k.startswith("camara_sapl/") or k.startswith("tce_pb/servidores-")},
+                            if k.startswith(("camara_sapl/", "tce_pb/servidores-", "siconfi/rgf-legislativo-"))},
     }
     (SAIDA / "metadados.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"{len(mat):,} matérias ({anos[0]}–{anos[-1]}), {len(proj):,} projetos de lei, "
