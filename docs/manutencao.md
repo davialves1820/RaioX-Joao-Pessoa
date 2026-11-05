@@ -168,3 +168,9 @@ deploy e uma versão nova pode quebrar o site sem mudança no código. Para atua
 
 O app lê apenas `data/processed/`; não é preciso rodar a coleta no deploy. Cada push na `main`
 atualiza o site.
+
+**ImportError depois de um deploy.** O Streamlit Cloud reaproveita o processo do app entre os pushes e
+nem sempre recarrega módulos que já estavam importados. Se um push acrescenta um nome novo a um
+módulo antigo (por exemplo, uma constante em `src/config.py`) e o site mostra `ImportError` apontando
+para esse nome, reinicie o app: **Manage app** → menu **⋮** → **Reboot app**. Foi o que aconteceu no
+deploy da página da Câmara (PRs #61 e #63).
