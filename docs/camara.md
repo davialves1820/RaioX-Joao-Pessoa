@@ -103,6 +103,34 @@ citado, com tema(s), órgão destinatário, ano e autores. O resumo fica em `met
   calculada em bairros com menos de 1.000 moradores (Mussuré, área industrial, tem 3), onde ela não diz
   nada. Pedido não é problema confirmado: mostra o que os vereadores pediram, não o estado da cidade.
 
+## Emendas impositivas e sua execução
+
+`python -m src.collect.camara_emendas` baixa o texto original das emendas impositivas ao orçamento
+(tipos ELO-I e EI-CO do SAPL). `python -m src.process.camara_emendas` (depois de `src.process.camara`;
+requer o `pdftotext`, do pacote poppler-utils) gera:
+
+- `emendas.parquet`: uma linha por emenda, com autor, valor, órgão, unidade orçamentária, natureza da
+  despesa, beneficiário (meta e CNPJ), valores empenhado e pago nos empenhos ligados e a melhor
+  conferência da ligação;
+- `emendas_empenhos.parquet`: os empenhos do TCE-PB que citam o número de uma emenda;
+- `metadados_emendas.json`.
+
+**Valor e beneficiário.** A ementa no SAPL é incompleta (um terço traz o valor ou o CNPJ). O texto
+original é um formulário padrão (PDF ou Word) com "Valor acrescido", dotação e meta, de onde saem os
+campos. Das 401 emendas de 2025 ao orçamento de 2026, 385 têm o valor lido (R$ 46,3 milhões); as 16
+restantes são PDFs digitalizados, sem texto, e ficam com o valor vazio.
+
+**Execução.** O empenho cita a emenda no histórico ("EMENDA IMPOSITIVA Nº 393/2025"); a ligação é pelo
+número e ano (o mesmo número do SAPL), lendo todas as citações de cada histórico. Emendas federais
+(numeração de 11 dígitos) não entram. A ligação é conferida: CNPJ igual ao da emenda; mesma raiz de
+CNPJ (matriz e filial); nome parecido, quando a emenda não traz CNPJ; "a conferir" (por exemplo, um
+fornecedor comprando equipamento para a entidade); ou CNPJ diferente. Nada é descartado: as
+divergências aparecem marcadas.
+
+**Avisos.** "Sem empenho encontrado" não quer dizer "não executada": o empenho pode não citar o número,
+ou ainda não ter saído. Emenda não executada também não é irregularidade (a lei prevê impedimento
+técnico). Credor pessoa física aparece sem nome nem histórico, com o CPF mascarado.
+
 ## Limitações
 
 - **Custo por vereador não é calculado.** A folha não informa de qual gabinete é cada assessor. Dividir

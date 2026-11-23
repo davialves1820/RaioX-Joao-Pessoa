@@ -9,7 +9,7 @@ O Filipeia (Prefeitura) é exportado à mão: ver src/collect/filipeia.py.
 
 import argparse
 
-from src.collect import (camara_jp, camara_sapl, cnes, cnes_base, filipeia, geodata_jp, ibge_censo2010, ibge_censo2022, ibge_sidra,
+from src.collect import (camara_emendas, camara_jp, camara_sapl, cnes, cnes_base, filipeia, geodata_jp, ibge_censo2010, ibge_censo2022, ibge_sidra,
                          inep_microdados, osm, siconfi, tce_pb)
 
 p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -29,6 +29,7 @@ inep_microdados.main(a.force)
 osm.main(a.force)
 camara_jp.main(a.force)
 camara_sapl.main(a.force, a.atualizar)
+camara_emendas.main(a.force)
 filipeia.main()
 try:
     from src.collect import inep_catalogo

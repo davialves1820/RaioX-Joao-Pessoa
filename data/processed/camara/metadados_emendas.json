@@ -1,0 +1,2857 @@
+{
+  "gerado_em": "2026-11-23T21:12:47Z",
+  "emendas": 401,
+  "com_texto_lido": 401,
+  "com_valor": 385,
+  "com_cnpj": 161,
+  "com_empenho": 139,
+  "empenhado": 16981613.72,
+  "pago": 8186181.9,
+  "conferencia": {
+    "CNPJ confere": 55,
+    "Nome confere": 52,
+    "A conferir": 34,
+    "CNPJ diferente": 8,
+    "Mesma entidade (matriz/filial)": 2
+  },
+  "anos_tce": [
+    2026,
+    2027
+  ],
+  "ultima_data_de_empenho": "2026-11-18",
+  "regras": {
+    "valor": "campo 'Valor acrescido' do formulário original; vazio se não encontrado",
+    "ligacao": "número e ano da emenda citados no histórico do empenho (todas as citações)",
+    "conferencia": [
+      "CNPJ confere",
+      "Mesma entidade (matriz/filial)",
+      "Nome confere",
+      "A conferir",
+      "CNPJ diferente"
+    ],
+    "aviso": "'Sem empenho encontrado' não quer dizer 'não executada': o empenho pode não citar o número da emenda. Emenda não executada também não é irregularidade."
+  },
+  "arquivos_brutos": {
+    "camara_sapl/emendas.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/materialegislativa/?tipo=65|66&ano=AAAA",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:08Z",
+      "bytes": 458263,
+      "sha256": "3a728fa8f94633068047a27dffaa8c2ce477e6903374dd5e72994a9f83b89714"
+    },
+    "camara_sapl/emendas/192857.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/192857/emenda_impositiva_01_-_thiago_lucena.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:09Z",
+      "bytes": 199039,
+      "sha256": "04fa7c52338a3d6bc57d35edc24fdc4209596f0c6740ba16df066439f2e3b627"
+    },
+    "camara_sapl/emendas/192873.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/192873/emenda_sedhuc_-_divina_misericoria.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:10Z",
+      "bytes": 200968,
+      "sha256": "769101cf30a88ed60ba2bc06ac297aa687f6c561d823497375300b3368bae8ab"
+    },
+    "camara_sapl/emendas/192884.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/192884/emenda_sms_-_comunidade_filhos_da_misericordia.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:11Z",
+      "bytes": 196109,
+      "sha256": "3197f843e497ca0be7a7ad92bd6113ece143765394047527a91a72eccdb3a51f"
+    },
+    "camara_sapl/emendas/192938.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/192938/emenda_funjop_-_projeto_.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:12Z",
+      "bytes": 201138,
+      "sha256": "d37af6edcfd6c1de535380ad44273cd419f36fb84c41a1b4b275319e82084bdb"
+    },
+    "camara_sapl/emendas/192939.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/192939/emenda_sejer_-_volei_esperanca.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:14Z",
+      "bytes": 141854,
+      "sha256": "3d12e8d0d929d89909a4fca8ce9d19985240e583818d61b1b65b883ae380c9b5"
+    },
+    "camara_sapl/emendas/193086.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193086/13_emenda_tablado_tenda_palco_som_e_iluminacao.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:15Z",
+      "bytes": 396352,
+      "sha256": "13f3c1621b101570c9ff5a3e41b3f097001bcc1bd7f28d40fa7f2ade167660ca"
+    },
+    "camara_sapl/emendas/193087.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193087/12_emenda_casa_peq_davi.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:16Z",
+      "bytes": 427965,
+      "sha256": "0c8dda13a69c76e8ffcdcd1855240999ba63998852b1969640d6a7bde9642945"
+    },
+    "camara_sapl/emendas/193088.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193088/11_emenda_evot.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:17Z",
+      "bytes": 427965,
+      "sha256": "25b72ed2d622d6914b6043ce716a777712235c3fc5aa20ecfba92401f83c5909"
+    },
+    "camara_sapl/emendas/193089.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193089/1_emenda_caap.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:18Z",
+      "bytes": 88896,
+      "sha256": "8b02ad1f9b3a8f40cecf287fc86bef1a9a084b79d541d4afd03ffaf5dbf1d9bd"
+    },
+    "camara_sapl/emendas/193090.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193090/10_emenda_iguais.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:20Z",
+      "bytes": 393947,
+      "sha256": "7bc907ef7a814a9f4d3d0c1870e192b3401e59b2bbbc0735243694547ff0ee1f"
+    },
+    "camara_sapl/emendas/193091.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193091/9_emenda_fmma.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:21Z",
+      "bytes": 394696,
+      "sha256": "1946db08ace2e0251735b2122acada0fad4e767953fadceac27286165171998e"
+    },
+    "camara_sapl/emendas/193092.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193092/8_emenda_concern.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:22Z",
+      "bytes": 395191,
+      "sha256": "3b16e2399a20c3b714e96293015725d571d50462f11c59cac6ad8d86f2fddf43"
+    },
+    "camara_sapl/emendas/193093.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193093/7_emenda_fmdca.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:23Z",
+      "bytes": 497839,
+      "sha256": "25a300f0011f4444b8b6e8c7d556832715ccabb127a9a64ecf0daf66f7fbb9d0"
+    },
+    "camara_sapl/emendas/193094.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193094/6_emenda_sindical.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:25Z",
+      "bytes": 486941,
+      "sha256": "e53339ac5385b45e59db777c8a590d02227953f3bd2e3dbdee50b1bcf5e31ec8"
+    },
+    "camara_sapl/emendas/193095.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193095/2_emenda_balaio_ne.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:25Z",
+      "bytes": 77841,
+      "sha256": "f52749110ab0aec8be3b6fe783ef68776d341e67a244481f3a44741e788e5478"
+    },
+    "camara_sapl/emendas/193096.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193096/5_emenda_danca.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:26Z",
+      "bytes": 102009,
+      "sha256": "5d2355d9e27a2671177da358f970d8f09e9053ba03341e74c1dfae3143671878"
+    },
+    "camara_sapl/emendas/193097.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193097/4_emenda_teia_cult_arretado.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:27Z",
+      "bytes": 80909,
+      "sha256": "65846a40da5e08b0e6dddb69ae3c893a14c156e85088a4b310e6856f8cefe9a2"
+    },
+    "camara_sapl/emendas/193098.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193098/20_emenda_instituto_pe_ze.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:28Z",
+      "bytes": 88440,
+      "sha256": "ba3ece38126d1c575a19a93e73a3da787e9390fa470a1a5cc88f43482797b49b"
+    },
+    "camara_sapl/emendas/193099.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193099/19_emenda_fundacao_laureano.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:29Z",
+      "bytes": 91018,
+      "sha256": "58fe3cfe91ebe012b3150865f84ca98d57919108ed297e4f6f65a27cd52736a0"
+    },
+    "camara_sapl/emendas/193100.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193100/17_emenda_walfredo_guedes_pereira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:30Z",
+      "bytes": 88566,
+      "sha256": "ca282455f67dcd5a19809222acbf6c02eb9fce505acb87e5dcfec1e38fa8d0f2"
+    },
+    "camara_sapl/emendas/193101.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193101/15_emenda_instit_visao_p_todos.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:31Z",
+      "bytes": 90208,
+      "sha256": "d68039c2b94a1fef7546b9f91db1c5dfc5ca3ab432e32e51ebee2d0b916cb252"
+    },
+    "camara_sapl/emendas/193102.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193102/16_emenda_fundacao_jose_l_de_sousa.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:31Z",
+      "bytes": 88070,
+      "sha256": "3624617a8f3f071cb5123aca1623bcc233a8773f03599e54f8d0934b67af0fa8"
+    },
+    "camara_sapl/emendas/193103.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193103/emenda_impositiva_23_-_marcos_henriques.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:32Z",
+      "bytes": 93796,
+      "sha256": "a04121821261509425aa4d3c56e0dff0ed879a4ff732c5bb59869cbed8985bda"
+    },
+    "camara_sapl/emendas/193104.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193104/hospital_candida_vargas.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:33Z",
+      "bytes": 79252,
+      "sha256": "1f8cdd9287c97eee857a4d5fd37550824df811419e8858d2581ee37f31b671e8"
+    },
+    "camara_sapl/emendas/193105.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193105/hospital_santa_isabel.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:34Z",
+      "bytes": 78055,
+      "sha256": "e00b1c5f5c714cdec9ad1f9acb0cbc096de96fb9b5c67119e9025513d0e17b38"
+    },
+    "camara_sapl/emendas/193106.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193106/hospital_napoleao_laureano.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:35Z",
+      "bytes": 77288,
+      "sha256": "f694603b56e3ac81928beb53543be9a7f60c951a701ea04be74dae78cac7eb21"
+    },
+    "camara_sapl/emendas/193107.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193107/hospital_tarcisio_burity1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:36Z",
+      "bytes": 79966,
+      "sha256": "f05d6102704e8b29f69b7b17ccfb40de9ecbb1dc8186f6aca90b3875bf1f109b"
+    },
+    "camara_sapl/emendas/193108.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193108/hospital_padre_ze.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:37Z",
+      "bytes": 78899,
+      "sha256": "82410fe9735cc3daef6a9e070056da8b2a710597d1fa57f9203144cc61c32ebd"
+    },
+    "camara_sapl/emendas/193109.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193109/usf_colibris.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:37Z",
+      "bytes": 78671,
+      "sha256": "3b4b310314fd5cb55362b1d833d88ba8f551e5375d3991e9bf8013fd2541fa7d"
+    },
+    "camara_sapl/emendas/193110.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193110/emenda_impositiva_30_-_odon_bezerra.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:38Z",
+      "bytes": 29455,
+      "sha256": "5059ee7fa7c4062899a259667d4b62349e7a13347b653ccf5071a6d0aec9f7a1"
+    },
+    "camara_sapl/emendas/193111.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193111/associacao_maos_amigas.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:39Z",
+      "bytes": 29177,
+      "sha256": "869d14042d6e9994a887c035804368600fd5201ffc963e2ad759eb18c6d3a177"
+    },
+    "camara_sapl/emendas/193112.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193112/casa_da_paz_maria_de_nazare.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:39Z",
+      "bytes": 80462,
+      "sha256": "3a0542c15eedd91e2c722c12a558e44b31169ab1f9ba9f491335de38d6921af4"
+    },
+    "camara_sapl/emendas/193113.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193113/emenda_impositiva_33_-_odon_bezerra.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:40Z",
+      "bytes": 29906,
+      "sha256": "35392fccb43a14d275692596154518386aa812da6e4db33101e665b182a5761a"
+    },
+    "camara_sapl/emendas/193114.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193114/emtoque.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:41Z",
+      "bytes": 30136,
+      "sha256": "85ce7733066742438fe0df9f618eb47e8edb341ed04d645f8f92d0c1af398546"
+    },
+    "camara_sapl/emendas/193115.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193115/funjope.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:42Z",
+      "bytes": 25143,
+      "sha256": "4aab7e6946904e7155f79ca14d2ff991edde523c99cc4475227d772a6e25d0f9"
+    },
+    "camara_sapl/emendas/193116.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193116/emenda_impositiva_36_-_odon_bezerra.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:42Z",
+      "bytes": 30016,
+      "sha256": "00765626f61d6d56d61d5f20bfd8f2be87c54e92efd7f6f3e990933f67d627e5"
+    },
+    "camara_sapl/emendas/193117.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193117/instituto_inovar_visao.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:43Z",
+      "bytes": 28770,
+      "sha256": "e87f90f0f24da3e43d259e39d643df682163eed8b6fb55455936f1d9265b6630"
+    },
+    "camara_sapl/emendas/193118.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193118/mulheres_alem_das_placas-_map.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:44Z",
+      "bytes": 80582,
+      "sha256": "0a7d8cdfef9d1a43d7a3c8453bd49f8d0bf9e4c76aebc77e25256ced6dfa1862"
+    },
+    "camara_sapl/emendas/193119.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193119/emenda_impositiva_39_-_odon_bezerra.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:45Z",
+      "bytes": 29590,
+      "sha256": "afef7319651f575f3c8a934933c4ace78dde2a4a70ee05d9d4c8df172b0d5c61"
+    },
+    "camara_sapl/emendas/193664.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193664/1_-_emenda_impositiva_2025_-_doce_mae_de_deus.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:45Z",
+      "bytes": 52850,
+      "sha256": "c36b7729bab7421c57655769496046a1d40b8467be4c685d55b0c4994b8107ab"
+    },
+    "camara_sapl/emendas/193687.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193687/3_-_emenda_impositiva_2025_-_funjope.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:46Z",
+      "bytes": 51820,
+      "sha256": "5f2eed11c9bae282f7d215f5b5d5c0f3b6263e1583f3d8879a11fde87beefc02"
+    },
+    "camara_sapl/emendas/193712.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193712/6_-_emenda_impositiva_2025_-_cicovi_-_assistencia.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:47Z",
+      "bytes": 32828,
+      "sha256": "d679a0ce3470fa265a1002afc18f0cac62f477b864202f8f56cd8c8f97b7ba17"
+    },
+    "camara_sapl/emendas/193731.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193731/2_-_emenda_impositiva_2025_-_casa_divina_misericordia.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:48Z",
+      "bytes": 52238,
+      "sha256": "f97780c1893400ba2f14cf84bc7338ffcbe8142d35329fa0b9c973c81076b983"
+    },
+    "camara_sapl/emendas/193732.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193732/4_-_emenda_impositiva_2025_-_vila_vicentina.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:48Z",
+      "bytes": 52086,
+      "sha256": "143a58dcecc39b3d4279276aa9aeecafafd9e9802d192cba9ebcf8db1c6ddd33"
+    },
+    "camara_sapl/emendas/193733.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193733/7_-_emenda_impositiva_2025_-_cicovi-_saude.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:49Z",
+      "bytes": 32826,
+      "sha256": "2db00783d7859443f2480b1ce18f6e8eb86f3d1f0aa3979b8c281f17b6eda42d"
+    },
+    "camara_sapl/emendas/193734.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193734/5_-_emenda_impositiva_2025-_tarcisio_dias.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:50Z",
+      "bytes": 53184,
+      "sha256": "56b77cb465a202966cd9a46f473aaf841c55947c9ca805e449daca12c0df99ee"
+    },
+    "camara_sapl/emendas/193735.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193735/8_-_emenda_impositiva_2025__-_casa_da_paz.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:51Z",
+      "bytes": 32598,
+      "sha256": "48361f5442fa0c1d14c615f19908bf0da48d732f04787bd56b4a05839bf03c68"
+    },
+    "camara_sapl/emendas/193736.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193736/12-_emenda_impositiva_2025_-_ame_down.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:52Z",
+      "bytes": 53011,
+      "sha256": "99580b0215d432542a22b33627cf17572e0472e7c23592f8983efdb85ce93f28"
+    },
+    "camara_sapl/emendas/193737.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193737/9_-_emenda_impositiva_2025_-_pb_sustentavel.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:53Z",
+      "bytes": 53214,
+      "sha256": "cc3762b8ded547a591a0fccd396f43c219ec623dcc4ce571b2641315092d1dee"
+    },
+    "camara_sapl/emendas/193738.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193738/11_-_emenda_impositiva_2025_-_instituto_dos_cegos.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:54Z",
+      "bytes": 32668,
+      "sha256": "ac9c3931d5de18864546c9bfc3bf8adb54c81e150e79901a33b44307c1d37a5e"
+    },
+    "camara_sapl/emendas/193739.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193739/10_-_emenda_impositiva_2025_-_fogueirinha.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:54Z",
+      "bytes": 52852,
+      "sha256": "bf5cdd65f12abb4a97288fe9a71a2eacfdd5e5eb1d55a3b48904056e591c1efa"
+    },
+    "camara_sapl/emendas/193742.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193742/8._funjope_-_sedec_-_emenda_impositiva_-_toinho.docx-1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:55Z",
+      "bytes": 132104,
+      "sha256": "f8e3d72547ddb45a21c2e0c0bf446c87c86875b065341cadd6189d86a1a92a28"
+    },
+    "camara_sapl/emendas/193743.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193743/6._candida_vargas_-_sms_-_emenda_impositiva_-_toinho_.docx-1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:56Z",
+      "bytes": 131100,
+      "sha256": "a09693a72a69f94500cbdd347891917732887096950445f807aa68308536c5ee"
+    },
+    "camara_sapl/emendas/193744.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193744/9._estadio_wilsao-_sejer_-_emenda_impositiva_-_toinho_.docx-1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:57Z",
+      "bytes": 131942,
+      "sha256": "d5dfc50b1cc73d7e4ea0803e7784377d7724c2df6d3498a63665a9f40fc91d8a"
+    },
+    "camara_sapl/emendas/193745.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193745/5._santa_izabel_-_sms_-_emenda_impositiva_-_toinho.docx-1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:58Z",
+      "bytes": 130104,
+      "sha256": "152242e1b73f6a6279caba1df09e306c3837a6a2de82877272ef1386c100fdfa"
+    },
+    "camara_sapl/emendas/193746.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193746/7._cenoft_-_sms_-_emenda_impositiva_-_toinho.docx-1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:05:59Z",
+      "bytes": 122974,
+      "sha256": "048620d476ebfb152872c7780aadbd3c5278f38a74ea035fad0697ba4dca2c31"
+    },
+    "camara_sapl/emendas/193747.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193747/4._sao_vicente_de_paulo-_saude_-_emenda_impositiva_-_toinho.docx-1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:00Z",
+      "bytes": 132575,
+      "sha256": "e5e9a886b68dfdf792db1cb9da9a77e2fa340dad2e5b955e00bc5c074decfd30"
+    },
+    "camara_sapl/emendas/193748.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193748/3._hgc_-_saude_-_emenda_impositiva_-_toinho.docx-1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:01Z",
+      "bytes": 132006,
+      "sha256": "5001d11df334db9e88c65fa9bd3e85fdd461469060b6db5068104a5010f5b9d5"
+    },
+    "camara_sapl/emendas/193749.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193749/2._confederacao_travinha-_sejer_-_emenda_impositiva_-_toinho_.docx-1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:02Z",
+      "bytes": 131037,
+      "sha256": "61cbb75fa87342eab351fc299669fedd3f1e41d0535f874cfe989f4d2b176ef5"
+    },
+    "camara_sapl/emendas/193750.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193750/1._boulevard_-_sms_-_emenda_impositiva_-_toinho_.docx-1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:03Z",
+      "bytes": 130282,
+      "sha256": "f4a457bdf9abe600e8c17d1aede8d59897324236775c8bab3c2533aa4bff8691"
+    },
+    "camara_sapl/emendas/193751.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193751/emenda_09_-_centro_cultural_sao_francisco_-_loa_2026_-_marcilio_do_hbe.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:04Z",
+      "bytes": 161827,
+      "sha256": "9b3d1a3cea3f950919a779478b08e0cb479ee05b62e579401b806b957931b827"
+    },
+    "camara_sapl/emendas/193752.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193752/emenda_impositiva_62_-_marcilio_do_hbe.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:05Z",
+      "bytes": 166882,
+      "sha256": "6b711f1c5a97b0234729b584f79a160dcd7256b43987d25de7b924aa60e2ea04"
+    },
+    "camara_sapl/emendas/193753.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193753/emenda_impositiva_63_-_marcilio_do_hbe.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:06Z",
+      "bytes": 163292,
+      "sha256": "da18c52e5016a2c00b0d18da487edfcde3d4de6d0e2efc4735c0f8c939584f35"
+    },
+    "camara_sapl/emendas/193754.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193754/emenda_impositiva_64_-_marcilio_do_hbe.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:07Z",
+      "bytes": 163127,
+      "sha256": "2a02110b8f7aeb1f37113894f3a4d3692353f65bf8c4dbc0ecbc257468a13a23"
+    },
+    "camara_sapl/emendas/193755.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193755/emenda_05_-_visao_inovar_-_loa_2026_-_marcilio_do_hbe_-_saude.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:08Z",
+      "bytes": 162901,
+      "sha256": "231b4af9727f2b857099ba8e49c289fe6773fc5f2da76cd176d6a31016443688"
+    },
+    "camara_sapl/emendas/193756.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193756/emenda_04_-_hospital_nova_esperanca_-_loa_2026_-_marcilio_do_hbe_-_saude.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:09Z",
+      "bytes": 162312,
+      "sha256": "295b2aaa9bc9b15a4836c2a21f59522c05b2140f796a3ca6a08f497314daf503"
+    },
+    "camara_sapl/emendas/193757.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193757/emenda_03_-_trauminha_mangabeira_-_loa_2026_-_marcilio_do_hbe_-_saude.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:10Z",
+      "bytes": 164556,
+      "sha256": "29a3bf9d3de7162cb012e600f66e61b4c16c298396a97f6170441fb63459f9a1"
+    },
+    "camara_sapl/emendas/193758.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193758/emenda_02_-_hospital_laureano_-_loa_2026_-_marcilio_do_hbe_-_saude.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:11Z",
+      "bytes": 162013,
+      "sha256": "4b1194b6e6dbd93df8ef5098d416076b2a51799a9c0d599a799b8bfb874d3b60"
+    },
+    "camara_sapl/emendas/193759.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193759/emenda_01_-funjope_-_loa_2026_-_marcilio_do_hbe_-_funjope.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:12Z",
+      "bytes": 161488,
+      "sha256": "467f83f9623dd8aece785a419a38fbbe324f43a7e591e86a7cfc4e0787e5d6dd"
+    },
+    "camara_sapl/emendas/193823.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193823/social_amib.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:13Z",
+      "bytes": 457894,
+      "sha256": "b14d40de6cd24422695bd623f6766ee82a91c1554620367140f756bdf1f5bcdf"
+    },
+    "camara_sapl/emendas/193824.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193824/social_casc_criancas.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:15Z",
+      "bytes": 455050,
+      "sha256": "3e2ee87a3bd689fc9e79c81c08995f7032234f40fee605e9241bc68aa831463f"
+    },
+    "camara_sapl/emendas/193825.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193825/social_casc_idosos.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:16Z",
+      "bytes": 456654,
+      "sha256": "bf0487fa102b7d1bbe5905e24fac219250a134822502efb0721c6889ca4dbb3b"
+    },
+    "camara_sapl/emendas/193826.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193826/social_clube_de_choro.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:17Z",
+      "bytes": 454981,
+      "sha256": "5456509d4a1733756691290af47ac065e5d1bddd6ab9610fabe8fc08092c97ad"
+    },
+    "camara_sapl/emendas/193827.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193827/social_funjope.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:19Z",
+      "bytes": 455823,
+      "sha256": "dcf5a2eebfbb8b76d859ea0277ed823915f3f2f8c7573343b43f157a98937ec7"
+    },
+    "camara_sapl/emendas/193828.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193828/saude_icv.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:20Z",
+      "bytes": 455485,
+      "sha256": "78da6707c6e708f3aa7ff0667b49dcc8990a139afc93f1ef0cad3d907bec926b"
+    },
+    "camara_sapl/emendas/193829.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193829/social_liga_carnavalesca.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:21Z",
+      "bytes": 454224,
+      "sha256": "e3703b3db718fe60d479b8c3315b0c2e7fd4a7bc852abc1ba6b809aa757c2423"
+    },
+    "camara_sapl/emendas/193830.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193830/saude_padre_ze.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:22Z",
+      "bytes": 384744,
+      "sha256": "fcd8622f633d1ed0b5c7306bcf37e9f461a3c1417746c3200bf2813bbf630e56"
+    },
+    "camara_sapl/emendas/193831.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193831/social_inovar.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:24Z",
+      "bytes": 454239,
+      "sha256": "3bc3c3bba85a025ca85d2703cf436b868b905f402d7799480bb835f50f7e6ddb"
+    },
+    "camara_sapl/emendas/193832.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193832/saude_santa_isabel.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:25Z",
+      "bytes": 386052,
+      "sha256": "d61576e6f662b8c96d5549bd5ef377852a11bdb1e8a8b7ff47e3d372753d3f12"
+    },
+    "camara_sapl/emendas/193833.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193833/saude_inovar.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:26Z",
+      "bytes": 454733,
+      "sha256": "f6e2021ca0f1a34e496b21a52c144b56f4fc3b3ef7aeab3cdbbbcb810aacf9cf"
+    },
+    "camara_sapl/emendas/193834.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193834/saude_trauminha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:28Z",
+      "bytes": 457004,
+      "sha256": "fbb1d174c372cd365f978a9d6d91e9e15e7cfa83997407ce78ef84ddb19296ea"
+    },
+    "camara_sapl/emendas/193835.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193835/emenda_1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:29Z",
+      "bytes": 813535,
+      "sha256": "4a77f1f0bfd21d02fbc7bfda35e456fbfed6dd2dfdfadc73b035df13e029457f"
+    },
+    "camara_sapl/emendas/193836.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193836/emenda_2.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:30Z",
+      "bytes": 762059,
+      "sha256": "ea6ce6eded417dff2362b526e886220948dafc2390c960ff3de92669d6846457"
+    },
+    "camara_sapl/emendas/193837.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193837/emenda_3.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:31Z",
+      "bytes": 735810,
+      "sha256": "63f6bc0f1b80013e694eea3b22ce2fb52d6a861ad6b08d0225cb74c3d33a56d4"
+    },
+    "camara_sapl/emendas/193838.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193838/emenda_4.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:33Z",
+      "bytes": 747390,
+      "sha256": "34a69a6ff59450a5c6b4b855bf999a0f966b8a2add3f15a6e489fb106caa7cbb"
+    },
+    "camara_sapl/emendas/193839.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193839/emenda_5.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:34Z",
+      "bytes": 690844,
+      "sha256": "4c0b5f1b55e8674075529577ed390e165549f2ae769564e6cedef55fb7a3cb8d"
+    },
+    "camara_sapl/emendas/193840.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193840/emenda_hospital_santa_isabel.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:35Z",
+      "bytes": 1249070,
+      "sha256": "fd0149c16c21b27e871e2423998da10664319950e70bf4916a2b67f7c74c6f9f"
+    },
+    "camara_sapl/emendas/193841.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193841/emenda_maternidade_candida_vargas.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:37Z",
+      "bytes": 733671,
+      "sha256": "fa17fe7a369304906e738a658c016ef2d0dd6fb0ee17e3acdaf2db9e377657ed"
+    },
+    "camara_sapl/emendas/193842.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193842/emenda_instituto_palate.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:38Z",
+      "bytes": 730271,
+      "sha256": "67b107d411dbabb266a87fcb3cf0015726bb6ef41ec18af5b422f288a6f38e9c"
+    },
+    "camara_sapl/emendas/193843.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193843/emenda_secretaria_de_patrimonio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:39Z",
+      "bytes": 1039156,
+      "sha256": "06a2c795fb0d58132de6a715adc625b1222004ade70aecf0ab8fe5186508745d"
+    },
+    "camara_sapl/emendas/193844.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193844/emenda_a_aspador.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:41Z",
+      "bytes": 764335,
+      "sha256": "21f06a04a7042b50ecfca0e9a0f1dcffb541e8f88a7fb859c29ff6182ea8853f"
+    },
+    "camara_sapl/emendas/193845.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193845/emenda_instituto_kumamoto.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:42Z",
+      "bytes": 747176,
+      "sha256": "c41e5b7e358e7d63c38a2d96283df7523b722023b93c7ca0f2ff932ecc32630b"
+    },
+    "camara_sapl/emendas/193846.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193846/emenda_ao_clube_guarani.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:43Z",
+      "bytes": 465842,
+      "sha256": "ecefdbff867ddea76ac3cd4f18e374e4eb66754564077ee7b2b7fd0092c42e55"
+    },
+    "camara_sapl/emendas/193847.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193847/emenda_hospital_do_valentina.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:44Z",
+      "bytes": 741228,
+      "sha256": "5e45c3afdb40c43506a96135bae1a48e0ab1ec9a106ef8ab0e7bf983197c5751"
+    },
+    "camara_sapl/emendas/193848.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193848/aspan_-_despesa_de_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:46Z",
+      "bytes": 195834,
+      "sha256": "26570fb15b9a39af7167b0c513941551e79025f78b39fd1fba510e2f350a06e1"
+    },
+    "camara_sapl/emendas/193849.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193849/hospital_padre_ze_-_despesa_de_custeio.doc.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:47Z",
+      "bytes": 174198,
+      "sha256": "8abff3aef1a9c407081a288d73358fc30def3b48947926bf64bf0248e60ffe3c"
+    },
+    "camara_sapl/emendas/193850.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193850/hospital_napoleao_laureano_-_despesa_de_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:48Z",
+      "bytes": 197753,
+      "sha256": "ab50f3a89889da786a16961e83f706a0ed4a066e9a224f0c89b9858aabf3cb1d"
+    },
+    "camara_sapl/emendas/193851.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193851/iidesv_-_idoso_-_despesa_de_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:49Z",
+      "bytes": 192531,
+      "sha256": "3e64227b8906c745ea4f1e3b74de24e3cf720b884927c780e5446b642186d3c6"
+    },
+    "camara_sapl/emendas/193852.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193852/intituto_visao_inovar_-_despesa_de_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:50Z",
+      "bytes": 190237,
+      "sha256": "15eedcb9bfeb19ff076aeedf795cacf182898b12237c099ea6df1734a26c9985"
+    },
+    "camara_sapl/emendas/193853.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193853/instituto_amor_e_cuidar_-_despesa_de_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:51Z",
+      "bytes": 189675,
+      "sha256": "11b5c179143f07f9dca7a2af092f832f0a558e4a5e78e8053312d77c8cf9984a"
+    },
+    "camara_sapl/emendas/193854.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193854/instituto_visao_para_todos_-_despesa_de_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:52Z",
+      "bytes": 189471,
+      "sha256": "0de5833eff2d99ad18471a6405c203b5d1eaeeb9f59105c684246ff2395d0e60"
+    },
+    "camara_sapl/emendas/193855.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193855/intituto_visao_inovar_-_entidades_esportivas_-_despesa_de_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:53Z",
+      "bytes": 187988,
+      "sha256": "044ec7c1dcf3b165ff8f524c4ee8809ef84a1e52fb807789d01f0804cfc87402"
+    },
+    "camara_sapl/emendas/193856.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193856/centro_amigos_da_saude_-_despesa_de_custeio.doc.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:54Z",
+      "bytes": 197028,
+      "sha256": "51218ecfcfd97da0cf905498993c607c544e7dd6e61c16f68a1437135f50a49b"
+    },
+    "camara_sapl/emendas/193857.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193857/ong_xx_-_sao_joao_-_despesa_de_custeio_2.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:55Z",
+      "bytes": 192470,
+      "sha256": "0193505d927199858c92f8dda7e5354c156f7022886eabd6429eb14880f31aea"
+    },
+    "camara_sapl/emendas/193895.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193895/emenda_impositiva_-_bushido.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:56Z",
+      "bytes": 202135,
+      "sha256": "d3691fb069e8b7f9ef63900261ac77543ecf6316af2718cb53ca5caed54add54"
+    },
+    "camara_sapl/emendas/193896.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193896/emenda_impositiva_-_birimbau_dourado.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:57Z",
+      "bytes": 202033,
+      "sha256": "c10be74d68c095876c290669c0570c52a0da0d4cd5ff756abfa394ce83cf4c75"
+    },
+    "camara_sapl/emendas/193897.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193897/emenda_impositiva_-_clube_pm.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:58Z",
+      "bytes": 196475,
+      "sha256": "7a7e4c724dfc8e82a6d61efdfb8bb3aad160c71ffdad30b295d37d13198f1012"
+    },
+    "camara_sapl/emendas/193898.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193898/emenda_impositiva_-_ideas.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:06:59Z",
+      "bytes": 183554,
+      "sha256": "df09d43b431d18f2c5b54583a05fc5e81007be42e7b2757972d363fe997237d6"
+    },
+    "camara_sapl/emendas/193899.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193899/emenda_impositiva_-_padre_ze.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:00Z",
+      "bytes": 194072,
+      "sha256": "e88c3b48364fbe71eee86e382d2e3a8a206ce5b8d5168dfbfd9d7aaab2f3f3be"
+    },
+    "camara_sapl/emendas/193900.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193900/emenda_impositiva_-_sec_thiago_lucena.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:01Z",
+      "bytes": 202430,
+      "sha256": "3bd04252bb7afad5144ca7875563cf776449daf0957a4543fbc52b888336b00c"
+    },
+    "camara_sapl/emendas/193901.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193901/emenda_impositiva_-_candida_vargas.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:52Z",
+      "bytes": 195221,
+      "sha256": "8a130f68d1951bd5c7fec7b963fa4c0ddbc9038ae06b3639a918305b66f41ebc"
+    },
+    "camara_sapl/emendas/193908.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193908/emenda_impositiva_-_candida_vargas.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:02Z",
+      "bytes": 195221,
+      "sha256": "8a130f68d1951bd5c7fec7b963fa4c0ddbc9038ae06b3639a918305b66f41ebc"
+    },
+    "camara_sapl/emendas/193947.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/193947/emenda_impositiva_112_-_tarcisio_jardim.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:03Z",
+      "bytes": 197330,
+      "sha256": "87851cdfa194e9fe2f078555065b59550ba516bb05a76040a9b7a7b57d83721b"
+    },
+    "camara_sapl/emendas/194023.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194023/emenda_impositiva_-_evento_bjj.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:04Z",
+      "bytes": 203704,
+      "sha256": "514c6e4f7edb7aa4f79524be29f070b69f6a1af037b188e156f87ecfbdbb1e13"
+    },
+    "camara_sapl/emendas/194024.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194024/emenda_impositiva_-_garpb.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:06Z",
+      "bytes": 204124,
+      "sha256": "dfeb0b9766f2e98e83ba127f806c44b8dc3c602b73d558d32381682751022a7c"
+    },
+    "camara_sapl/emendas/194025.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194025/emenda_impositiva_-_sta._isabel.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:07Z",
+      "bytes": 197540,
+      "sha256": "87c7f7f384440d79dd8f8439b021fb475a61045e47ce44d2647da43574cd2f34"
+    },
+    "camara_sapl/emendas/194026.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194026/emenda_impositiva_-_trauminha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:08Z",
+      "bytes": 209344,
+      "sha256": "aabd173e779ce0ef51c560fbf3e700c9504d9d5b9c2e3fab39c2ebec2d3dce44"
+    },
+    "camara_sapl/emendas/194027.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194027/emenda_impositiva_-_valentina.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:09Z",
+      "bytes": 197207,
+      "sha256": "3098ee81c87365652b5a3775e0dfe302d8e6e22a59b3d0554d854777467eee44"
+    },
+    "camara_sapl/emendas/194028.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194028/3_emenda_antiracismo_sistemica.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:11Z",
+      "bytes": 88899,
+      "sha256": "396b781b08c0b6389dd523a263b5e03cdf70f2c37c149719287202f23b55ee05"
+    },
+    "camara_sapl/emendas/194029.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194029/emenda_funjope_arretado_producoes_367.87967.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:12Z",
+      "bytes": 213445,
+      "sha256": "2c28ab77833bb7e0146f7a4b37958fd46856a49f133a74229b5aad26498e9063"
+    },
+    "camara_sapl/emendas/194030.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194030/casc-pb__saude_equipamento_e_material_permanente_guguinha_100.000.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:13Z",
+      "bytes": 193475,
+      "sha256": "5f0f26cfea8db3a3bec2fead7d7ca4faf1ae4327930e827bd09374984bfb8451"
+    },
+    "camara_sapl/emendas/194031.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194031/hospital_napoleao_laureano_despesa_de_custeio_50.000_guguinha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:14Z",
+      "bytes": 197602,
+      "sha256": "9df3ee9fdfd53509f701b78d15fbc798c0867c49a790bcc278a2430ea7c34200"
+    },
+    "camara_sapl/emendas/194032.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194032/hospital_padre_ze_despesa_de_custeio_50.000_guguinha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:15Z",
+      "bytes": 198006,
+      "sha256": "dbc2c204051e57cf1ece5aa74b43fc8f25aff52f6dce67bc391abc7e8f30d328"
+    },
+    "camara_sapl/emendas/194033.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194033/instituto_visao_inovar_despesa_de_custeio_200.000_guguinha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:16Z",
+      "bytes": 197532,
+      "sha256": "a80a723e8d0b0d0b25a00f05b9121024fd6a748fda16ee758d93e00d8e89eab1"
+    },
+    "camara_sapl/emendas/194034.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194034/instituto_visao_inovar__saude_equipamento_e_material_permanente_guguinha_200.000.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:17Z",
+      "bytes": 194859,
+      "sha256": "0bb0cfe688af64ef24a08e5df67a4b4146eb72aef3fc4e22ef42d6da46b6d0e2"
+    },
+    "camara_sapl/emendas/194035.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194035/instituto_visao_para_todos_despesa_de_custeio_50.000_guguinha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:17Z",
+      "bytes": 198497,
+      "sha256": "0772d12c558175f8e894cbc28bfd267a94132d2bbaecb7f7800729597d3afbd2"
+    },
+    "camara_sapl/emendas/194036.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194036/emenda_lar_da_providencia_67.87967.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:19Z",
+      "bytes": 205083,
+      "sha256": "1569bd269920ea8d4b8b537181256ec858815eb0d414baebc55db8d3253d829c"
+    },
+    "camara_sapl/emendas/194037.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194037/casc-pb_despesa_de_custeio_200.000_guguinha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:20Z",
+      "bytes": 196489,
+      "sha256": "20ffad185f2b86b0b7beff16132342bce5858ca42bc380b36c85bf6bddd18e12"
+    },
+    "camara_sapl/emendas/194038.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194038/emenda_funjope_eventos_culturais_100.000.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:20Z",
+      "bytes": 201092,
+      "sha256": "5d9f3a1e3fb92113150f0ea05db73fe75a9e77b59f9897c42f47dde955540ab1"
+    },
+    "camara_sapl/emendas/194039.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194039/emenda_funjope_cultura_popular_30.000.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:22Z",
+      "bytes": 205306,
+      "sha256": "5d4d796001807bb615f2dee5a6ea94c69b6504314ec48b7ce87ee64d6ff82d47"
+    },
+    "camara_sapl/emendas/194040.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194040/emenda_festival_municipal_de_quadrilhas_juninas_50.00000_guguinha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:23Z",
+      "bytes": 206403,
+      "sha256": "a81d8fdbe9c9f8b7290fbcba663f01112127b67e4dd9d5686c5147e5db2a65bb"
+    },
+    "camara_sapl/emendas/194041.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194041/emenda_funjope_sabadinho_bom_20.000.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:24Z",
+      "bytes": 205191,
+      "sha256": "7964a3bf48ab2ddc862516128124d8c9d9806de1db51fd8d625c049b9c03addd"
+    },
+    "camara_sapl/emendas/194042.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194042/hospital_lauro_wanderley_equipamento_e_material_permanente_guguinha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:25Z",
+      "bytes": 198856,
+      "sha256": "f5306658c3728ae8793b127aa45b02c9ba64c8781099b77899d9541a995df7a3"
+    },
+    "camara_sapl/emendas/194043.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194043/instituto_visao_inovar_sejer_despesa_de_custeio_100.000_guguinha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:26Z",
+      "bytes": 209383,
+      "sha256": "8a7c47cb2103614bde811984afef6710e0abcea0a617e9f93e4b97982b160b18"
+    },
+    "camara_sapl/emendas/194044.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194044/emenda_liga_carnavalesca_50.00000_guguinha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:27Z",
+      "bytes": 205287,
+      "sha256": "e570974d10392eccb5201824683b6ccb0e7718b0d6ce392859e2f607f1b327dc"
+    },
+    "camara_sapl/emendas/194045.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194045/entidade_privada_sem_fins_lucrativos_-__despesa_de_custeio_-_emenda_n_1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:28Z",
+      "bytes": 419153,
+      "sha256": "3695d097d638aa604aa902897a619909dd6e7213c13620e025e83f8c17052c71"
+    },
+    "camara_sapl/emendas/194046.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194046/entidade_privada_sem_fins_lucrativos_-__despesa_de_custeio_-_emenda_n_2.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:29Z",
+      "bytes": 419282,
+      "sha256": "f6c9672e333bf10394f4945934c17fbf88428c48eea913e7cd785a2c1027adbc"
+    },
+    "camara_sapl/emendas/194047.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194047/entidade_privada_sem_fins_lucrativos_-__despesa_de_custeio_-_emenda_n_3.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:30Z",
+      "bytes": 419256,
+      "sha256": "46a22928f2316f84a65271dc5aa383e9f1e14c5d093df23009337394e765695e"
+    },
+    "camara_sapl/emendas/194048.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194048/entidade_privada_sem_fins_lucrativos_-__despesa_de_custeio_-_emenda_n_4.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:31Z",
+      "bytes": 419663,
+      "sha256": "a0a4eaf1e970601303aa8d75d97371215796a4b66e5ff443b3a2ec3c29dcbb34"
+    },
+    "camara_sapl/emendas/194049.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194049/entidade_privada_sem_fins_lucrativos_-__despesa_de_custeio_-_emenda_n_5.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:33Z",
+      "bytes": 419539,
+      "sha256": "122b75b2d6ae8beb0d2581193f8c0e9bc9980673bf9bd61ec09ae359c73825cc"
+    },
+    "camara_sapl/emendas/194050.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194050/entidade_privada_sem_fins_lucrativos_-__despesa_de_custeio_-_emenda_n_6.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:34Z",
+      "bytes": 420607,
+      "sha256": "f00d4d953b2428a5409d9a9b3a08d0057b94aebd589dfe6e0c61969b827e5ff7"
+    },
+    "camara_sapl/emendas/194051.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194051/entidade_privada_sem_fins_lucrativos_-__despesa_de_custeio_-_emenda_n_7.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:35Z",
+      "bytes": 419525,
+      "sha256": "468d87dad114887f791040c0dc59c9f1e2252b87d2459801abb95f46407c490b"
+    },
+    "camara_sapl/emendas/194052.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194052/entidade_privada_sem_fins_lucrativos_-__despesa_de_custeio_-_emenda_n_8.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:36Z",
+      "bytes": 419140,
+      "sha256": "8958382f806361cca118dff0b30e3197c29c301bc1122d9490b850bf4cc6b275"
+    },
+    "camara_sapl/emendas/194053.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194053/entidade_privada_sem_fins_lucrativos_-__despesa_de_custeio_-_emenda_n_9.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:37Z",
+      "bytes": 420562,
+      "sha256": "c9575ad73119cfde6e5bf780270c58b8a2ef223a8ba2665cf9223ecca92c79be"
+    },
+    "camara_sapl/emendas/194054.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194054/amapes_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:38Z",
+      "bytes": 198824,
+      "sha256": "0d2a11965df8aa58df869e16285fabcb8b6b6ffcfac3508bc127b9801feaa5e1"
+    },
+    "camara_sapl/emendas/194055.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194055/academia_paraibana_de_letras_-_subvencao_social.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:39Z",
+      "bytes": 197916,
+      "sha256": "4e6ba353adf427ad23684862918c94226eabc5c2a0bdd0319a1589232df73157"
+    },
+    "camara_sapl/emendas/194056.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194056/comunidade_doce_mae_de_deus_-_despesa_de_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:40Z",
+      "bytes": 198235,
+      "sha256": "48342a560c80d1fc318081a193212571ed5e6ae619d1814b4e547d4d8090db9c"
+    },
+    "camara_sapl/emendas/194057.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194057/fundacao_jose_leite_de_souza_-_hospital_ne_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:41Z",
+      "bytes": 198659,
+      "sha256": "dd242e8041b1081f1014ab556b628d4374e4f33efb3a2f966ac1b9dca03f76ae"
+    },
+    "camara_sapl/emendas/194058.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194058/hospital_napoleao_laureano_-_reforma_uti_pediatrica.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:42Z",
+      "bytes": 198451,
+      "sha256": "b1be12b56443fbbf2d53e1966116aa1045f701d665da9cc60f66a92a9f935d18"
+    },
+    "camara_sapl/emendas/194059.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194059/hospital_universitario_-_investimento.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:43Z",
+      "bytes": 201531,
+      "sha256": "72030dbce812245de50dea6677de6e6aabdaafffe0a6cc6994e34d2a90a6f41a"
+    },
+    "camara_sapl/emendas/194061.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194061/rede_feminina_de_combate_ao_cancer_-_investimento.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:44Z",
+      "bytes": 199417,
+      "sha256": "77c36084aeb205da6238df5cfe14a2e4e96fd63a7565e33f8e2276810fd5b24e"
+    },
+    "camara_sapl/emendas/194062.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194062/associacao_beneficente_sao_jose.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:45Z",
+      "bytes": 198686,
+      "sha256": "44f1f7018359b0047a31406a21c70897fbb67d45b8b3b78601de925473894a6d"
+    },
+    "camara_sapl/emendas/194063.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194063/ihgp_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:46Z",
+      "bytes": 198865,
+      "sha256": "b3bad18b67063470445c0644863e596bdb40eedad74cd7654f4c5cf03cc33b62"
+    },
+    "camara_sapl/emendas/194064.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194064/instituto_visao_para_todos_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:47Z",
+      "bytes": 197586,
+      "sha256": "588f27277d89b8649dc9a5e9467c6a03b20ac16faab79b65b6eb44898d67b765"
+    },
+    "camara_sapl/emendas/194066.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194066/instituto_angelim_-_investimento.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:48Z",
+      "bytes": 198848,
+      "sha256": "b673ad053f276cbf6effd651fd9f272542fa380c0ca8bdcd86d18495102f976f"
+    },
+    "camara_sapl/emendas/194068.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194068/hospital_sao_vicente__-_equipamento_e_material_permanente.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:49Z",
+      "bytes": 200077,
+      "sha256": "5d113a2d32e38f729d2f649d7d0b2219455cbca1f37d899b65abea77e037038f"
+    },
+    "camara_sapl/emendas/194070.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194070/instituto_historico_e_geografico_da_paraiba_retificada.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:49Z",
+      "bytes": 28544,
+      "sha256": "11deea2f552903ee76fba9e0206061792d83ccc9fd531c0eee6e4c37c1d7d0ea"
+    },
+    "camara_sapl/emendas/194071.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194071/emenda_sms_-_padre_ze.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:50Z",
+      "bytes": 189968,
+      "sha256": "86a2543e27f6990886ed4c42681a097546548e03ee80464787002082ffbcf2d9"
+    },
+    "camara_sapl/emendas/194072.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194072/emenda_sms_-_hospital_sao_vicente_de_paula_1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:51Z",
+      "bytes": 194939,
+      "sha256": "3202e2c98cc41ffae099f448a3929cf20c4bd2ceedc0387e68b48def498eecbb"
+    },
+    "camara_sapl/emendas/194073.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194073/emenda_sms_-_hospital_nova_eperanca_1_1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:52Z",
+      "bytes": 185721,
+      "sha256": "ec1ae2088b20672c9dafedb596b696abb1ec17f4818ed71df942fc58ed48097e"
+    },
+    "camara_sapl/emendas/194074.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194074/emenda_sedhuc_-_em_adoracao.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:53Z",
+      "bytes": 200687,
+      "sha256": "df5ecd70624f051aca2413dbb4405b1b35a85c430e6783940b36e758304df188"
+    },
+    "camara_sapl/emendas/194075.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194075/emenda_seinfra_-_centro_cultural_sao_francisco.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:54Z",
+      "bytes": 197379,
+      "sha256": "28828418eff69b9b25f36c9d279d2ba26b09a81f85c1a52674081c9282a836ca"
+    },
+    "camara_sapl/emendas/194076.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194076/emenda_impositiva_162_-_thiago_lucena.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:55Z",
+      "bytes": 202549,
+      "sha256": "590085ffc78a4601c36b96dcda76158b7fed59f930ebcdd5c51abb12040fbc6d"
+    },
+    "camara_sapl/emendas/194077.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194077/emenda_sedhuc_-_apace_1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:56Z",
+      "bytes": 194171,
+      "sha256": "e606e309a4f1c9aa25f7dd74315c5134f838e15aaa7f92b242a16bb93a2edef9"
+    },
+    "camara_sapl/emendas/194078.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194078/emenda_impositiva_monumento_eu_amo_jampa_na_entrada_da_cidade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:57Z",
+      "bytes": 176174,
+      "sha256": "050160bd246528cdf5507359a44f6758317891bef580efb16189fedebefe599e"
+    },
+    "camara_sapl/emendas/194079.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194079/emenda_impositiva_165_-_damasio_franca.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:58Z",
+      "bytes": 184071,
+      "sha256": "8b4863dbcd55f875d088f6cbff06bd4106d8642e7fe016b1286ffd88d88e82b6"
+    },
+    "camara_sapl/emendas/194080.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194080/emenda_impositiva_11_-damasio_franca_neto_-_aspan.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:07:59Z",
+      "bytes": 177378,
+      "sha256": "68e1ec0c12130c2f2f90d4bd98944e173e84db7d46adb4fbbf51eea2eb785eba"
+    },
+    "camara_sapl/emendas/194081.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194081/emenda_impositiva_8_-damasio_franca_neto_-documentario.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:00Z",
+      "bytes": 178977,
+      "sha256": "16926e7ba009c2f3b1483f72d86f4ee5b06aed7320a02ec3977dab031c9de92d"
+    },
+    "camara_sapl/emendas/194082.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194082/emenda_impositiva_16_-damasio_franca_neto_-_banco_de_racao.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:01Z",
+      "bytes": 177919,
+      "sha256": "19056e3768bd3758d7f5e283e9843191a41c08041f3043c0cdfabd64db9a1fc0"
+    },
+    "camara_sapl/emendas/194083.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194083/emenda_impositiva_169_-_damasio_franca.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:02Z",
+      "bytes": 178197,
+      "sha256": "68ee9dee5f52894052e39be05c61256e32f94ebc84a95631976cf099f2f521f2"
+    },
+    "camara_sapl/emendas/194084.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194084/emenda_impositiva_2_-damasio_franca_neto_-funjope.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:03Z",
+      "bytes": 176118,
+      "sha256": "19202b21f2f3d28ff8ce0958e267561488d46391b94b93c98dcade0ffd55933c"
+    },
+    "camara_sapl/emendas/194085.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194085/emenda_impositiva_17_-damasio_franca_neto_-_hospital_infantil_municipal_de_valentina.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:04Z",
+      "bytes": 178666,
+      "sha256": "e0358bed499b0dc4b83d761c040ae9c7561b497f17f42abf8e4d60f6ee894f9f"
+    },
+    "camara_sapl/emendas/194086.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194086/emenda_impositiva_1_-damasio_franca_neto_-_associacao_dos_moradores_do_parque_do_sol.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:05Z",
+      "bytes": 179830,
+      "sha256": "748cbe6ddb9b0852736ce721250c1e9eddf626cab1d0fd031351dca5768ea462"
+    },
+    "camara_sapl/emendas/194087.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194087/emenda_impositiva_5_-damasio_franca_neto_-_hospital_santa_isabel.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:06Z",
+      "bytes": 178687,
+      "sha256": "8a7f2c323c85a37d91d0ccd22fa4b217885c5758316a0db27059f45ebd005301"
+    },
+    "camara_sapl/emendas/194088.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194088/emenda_impositiva_12_-damasio_franca_neto_-_eduardo_holanda.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:07Z",
+      "bytes": 178515,
+      "sha256": "d92a7fed9c498d16881175309d567dc0c5733f71d7ad3b8c72b9239a9a206041"
+    },
+    "camara_sapl/emendas/194089.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194089/emenda_impositiva_3_-damasio_franca_neto_-_ceo_cristo_-_saude_bucal.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:08Z",
+      "bytes": 177924,
+      "sha256": "ccc88b7ff0dae2db6cdd4fb410a5796dd2630a4411949e079d2730eaba17883d"
+    },
+    "camara_sapl/emendas/194090.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194090/emenda_impositiva_4_-damasio_franca_neto_-_policlinica_municipal_do_cristo.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:09Z",
+      "bytes": 177228,
+      "sha256": "37625c3560f69225df1812d7c2a51a84befe9672703a1a747765284060033576"
+    },
+    "camara_sapl/emendas/194091.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194091/emenda_impositiva_boulevard_-_despesa_de_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:10Z",
+      "bytes": 196055,
+      "sha256": "1d6b51e66daa4204448886b142693bddeb5b928d6f36506a79f6cf89eae5ded5"
+    },
+    "camara_sapl/emendas/194092.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194092/emenda_impositiva_7_-damasio_franca_neto_-_candida_vargas.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:10Z",
+      "bytes": 178330,
+      "sha256": "2e9d1b20dc11320ebfbeb91f30005f3a9a75dcf217ccd0ff29203b5a9b0c2289"
+    },
+    "camara_sapl/emendas/194093.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194093/emenda_impositiva_12_-damasio_franca_neto_-_aspador.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:12Z",
+      "bytes": 176551,
+      "sha256": "703bc9b58646ee1c1796a57765c9c786e16011642db1f84fe8ed18ca23f98aac"
+    },
+    "camara_sapl/emendas/194094.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194094/emenda_impositiva_5_-damasio_franca_neto_-_hospital_napoleao_laureano_.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:12Z",
+      "bytes": 177601,
+      "sha256": "8229d934ea715c3d073a2df4d2f998f61367607d2f064260717aa0d5287a4622"
+    },
+    "camara_sapl/emendas/194095.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194095/emenda_impositiva_14_-damasio_franca_neto_-_inovacentro.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:13Z",
+      "bytes": 178778,
+      "sha256": "29a55b359bb51fcd15337529e9cc683ca962b218b1e08c9f3530cd6168edac51"
+    },
+    "camara_sapl/emendas/194096.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194096/emenda_impositiva_10_-damasio_franca_neto_-_hospital_padre_ze.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:15Z",
+      "bytes": 177144,
+      "sha256": "3a04f431bd7f83bf740e0750e715da98abdc93995054587372eca21863a5ef19"
+    },
+    "camara_sapl/emendas/194097.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194097/1._emenda_fundacao_jose_leite_de_souza.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:16Z",
+      "bytes": 378238,
+      "sha256": "902b16f763e4165041a4376b7b6c234dc3ec87fcb97eb8602aef710e6b220c4e"
+    },
+    "camara_sapl/emendas/194098.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194098/2._emenda_instituto_visao_inovar.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:17Z",
+      "bytes": 507660,
+      "sha256": "8d66bd3bbab5fd07794868e2f4fb6bad87c8085700fade9c1891d257d70f124f"
+    },
+    "camara_sapl/emendas/194099.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194099/emenda_impositiva_185_-_joao_almeida.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:18Z",
+      "bytes": 367108,
+      "sha256": "bc3d2c983a7080b920716a83fa1cc5bbced276e566c7376847faf7c5df06a04f"
+    },
+    "camara_sapl/emendas/194100.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194100/4._emenda_espectros.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:19Z",
+      "bytes": 425953,
+      "sha256": "7602d90d6df4d185dc332f2b47b81043651edcb1794754ac9a3321dc03a3dd15"
+    },
+    "camara_sapl/emendas/194101.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194101/5._emenda_ibis.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:21Z",
+      "bytes": 445449,
+      "sha256": "5b00d5ef47cdae0ae621581d481c49c98c98b7cb59d69fc485c0cbc3fe87412a"
+    },
+    "camara_sapl/emendas/194102.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194102/6._emenda_ong_luz_do_mundo.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:22Z",
+      "bytes": 471358,
+      "sha256": "297c819109401f41cda2e2fe85939b98f870bf984b508d0b0ef09d1439bf2ab8"
+    },
+    "camara_sapl/emendas/194103.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194103/7._emenda_guarda_civil_metropolitana.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:23Z",
+      "bytes": 349204,
+      "sha256": "332e7034a3b8d16c5ca299e6984e32dcbdef2afff21b2a26f7fa464d8440507d"
+    },
+    "camara_sapl/emendas/194104.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194104/emenda_impositiva_190_-_joao_almeida.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:24Z",
+      "bytes": 340370,
+      "sha256": "d9898898a3afb0d099e545a05f7d957c93a06a758c33c7b6e1238736ae51d08f"
+    },
+    "camara_sapl/emendas/194105.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194105/9._emenda_casc.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:26Z",
+      "bytes": 454231,
+      "sha256": "36ecce6b0e0c14c6ece86f114971b693b365455b1748866d44b9b1e98053b7fd"
+    },
+    "camara_sapl/emendas/194106.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194106/10.__emenda_coletivo_de_capoeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:27Z",
+      "bytes": 359974,
+      "sha256": "5c051c3b0a58c0a31fcfadb8c2ed31c276b572243340319bfff55a4fde994090"
+    },
+    "camara_sapl/emendas/194107.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194107/11._emenda_ile_axe_yapara.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:28Z",
+      "bytes": 346560,
+      "sha256": "50dd5712e6513b062c2454bc7f52bed279d559a96d4ff13bf8f1346c3ffd7b97"
+    },
+    "camara_sapl/emendas/194162.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194162/monsenhor_catao_-_despesas_de_custeio_-_r_120.00000_-_14.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:29Z",
+      "bytes": 232989,
+      "sha256": "89b2346879ebd9b310bd930ebebe08cefef8d5f685d9758638c3433ba4ac0b09"
+    },
+    "camara_sapl/emendas/194163.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194163/instituto_viva_-_despesas_de_custeio_-_r_250.00000_12.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:30Z",
+      "bytes": 233643,
+      "sha256": "179192a3698d8a8ad00b0f31565250b7d30aa9acf0d4742bb36b1285ec10c0d6"
+    },
+    "camara_sapl/emendas/194164.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194164/instituto_result_acca_-_despesas_de_custeio_-_r_170.00000_-_011.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:31Z",
+      "bytes": 231780,
+      "sha256": "0175a9d31fd69636073d0c7565c644fb96b40d78282039753b8b6c3017c4a075"
+    },
+    "camara_sapl/emendas/194165.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194165/casc_pb_entidades_esportivas_-_despesa_de_custeio_-_r_100.00000_-_010.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:32Z",
+      "bytes": 233751,
+      "sha256": "4d7916d021ae3909e82201043d88875ac312fd1378a08c9b0aa018eda2fe7f64"
+    },
+    "camara_sapl/emendas/194166.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194166/emenda_impositiva_198_-_fabio_lopes.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:33Z",
+      "bytes": 369987,
+      "sha256": "a21894cb12bae5de7ab39076e5edec8b57d70113b620fe25493d432b658bce95"
+    },
+    "camara_sapl/emendas/194167.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194167/asforro-pb_-_despesa_de_custeio_-_r_40.00000_-_09.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:34Z",
+      "bytes": 232986,
+      "sha256": "14ea5bc745bfd60259047341d21f4ed9d60c3fe2d7cc0d69369c6ee067c9ca43"
+    },
+    "camara_sapl/emendas/194168.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194168/instituto_result_saude_-_despesa_de_custeio_-_r_250.00000_-_06.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:35Z",
+      "bytes": 233312,
+      "sha256": "3b589bbfa80fdf992b46a8dce50bc18c0278518291b8d0e297cb682c5ee88a11"
+    },
+    "camara_sapl/emendas/194169.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194169/instituto_walfredo_guedes_pereira_-_despesa_de_custeio_-_r_100.00000_-_07.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:37Z",
+      "bytes": 233894,
+      "sha256": "c9c825e488069c2dafd89695219e332c77029e04366dc3700a5a6ab53bfa1a91"
+    },
+    "camara_sapl/emendas/194170.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194170/hospital_padre_ze_-_despesa_de_custeio_-_r_100.00000_-_05.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:38Z",
+      "bytes": 232973,
+      "sha256": "31c915c121a3edca572c6d413307976ab2f50fa65b77d88fb3818d199e730624"
+    },
+    "camara_sapl/emendas/194171.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194171/casa_da_paz_maria_de_nazare_-_equipamento_e_material_permanente_-_r_50.75934_-_04.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:39Z",
+      "bytes": 232447,
+      "sha256": "dead823d8a795661c0ee45b6010485653cae17918ae434811fd2b411808798a7"
+    },
+    "camara_sapl/emendas/194172.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194172/associacao_instituto_visao_inovar_-_equipamento_e_material_permanente_-_r_100.00000_-_03.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:40Z",
+      "bytes": 232189,
+      "sha256": "245d74e369cff14f625120052c65f624a4ec86b62e01d8e5491f5c2e3ad63b47"
+    },
+    "camara_sapl/emendas/194173.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194173/aspador_-_despesa_de_custeio_-_r_60.00000_-_01.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:41Z",
+      "bytes": 232478,
+      "sha256": "034f8de15f629b9f73d77c1fd062df2f33009594062a31f3c6b39045a0fc5aff"
+    },
+    "camara_sapl/emendas/194174.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194174/associacao_instituto_visao_inovar_-_despesa_de_custeio_-_r_200.00000_-_para_mesclagem_-_02.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:42Z",
+      "bytes": 232610,
+      "sha256": "a28a35152bc929a1e6e3986a0f7ba5a8183f819620dee9df65d44dfa7ddfed4e"
+    },
+    "camara_sapl/emendas/194175.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194175/instituto_viva_-_material_permanente_-_r_50.00000_-_013.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:43Z",
+      "bytes": 233515,
+      "sha256": "1d39630d85350d3576a50ab1cadc397730b051aeb49b73601ead460b65ec8b53"
+    },
+    "camara_sapl/emendas/194176.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194176/emenda_impositiva_05.2025_cendac_.docx_1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:44Z",
+      "bytes": 253146,
+      "sha256": "d250861b612374890f218c0bea146ec94d329a68dff53ce92ac4bf3ed02f0bc3"
+    },
+    "camara_sapl/emendas/194177.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194177/emenda_impositiva_12.2025_ac_social.docx_1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:45Z",
+      "bytes": 246222,
+      "sha256": "ee8bbf044cc90ca694bec3071a3f36b843dbbbf7f7f3c143f49f9a31ec0931d2"
+    },
+    "camara_sapl/emendas/194178.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194178/emenda_impositiva_04.2025_casa_pequeno_davi.docx_1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:47Z",
+      "bytes": 254220,
+      "sha256": "09986f713aa071f1322ece339589dab4e52bd55683e29632dd49098c21ac27ce"
+    },
+    "camara_sapl/emendas/194179.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194179/emenda_impositiva_08.2025_aapdpb.docx_1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:48Z",
+      "bytes": 252793,
+      "sha256": "83a5bd9e9717a3242ba7d6c91d079b07ac305b5a3ef911532366ace3ed258db5"
+    },
+    "camara_sapl/emendas/194180.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194180/emenda_impositiva_01.2025_instituto_soluar.docx_1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:49Z",
+      "bytes": 244393,
+      "sha256": "a6bf18d0aa86e1e111fab1c3ca52ca2394729f9861910ff896f74e9a84ae143b"
+    },
+    "camara_sapl/emendas/194181.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194181/emenda_impositiva_19.2025_hospital_hulw.docx_2.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:50Z",
+      "bytes": 223878,
+      "sha256": "70fc6fb020eb7df20209c4fd010adcf70c94d44b310ef41591f38268e02e43ff"
+    },
+    "camara_sapl/emendas/194182.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194182/emenda_impositiva_18.2025_instituto_visao_para_todos.docx.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:51Z",
+      "bytes": 221856,
+      "sha256": "afcea85151e65c44b2a13d932c6569acedf8b0dd14b214139582683de7baf525"
+    },
+    "camara_sapl/emendas/194183.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194183/emenda_impositiva_13.2025_a-ima_.docx.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:52Z",
+      "bytes": 246921,
+      "sha256": "ca042531544d246598d6f37fefe7577bdb8608bf8c7690ec6f6249b5fdea476d"
+    },
+    "camara_sapl/emendas/194184.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194184/emenda_impositiva_09.2025_associacao_santo_dias.docx.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:53Z",
+      "bytes": 253380,
+      "sha256": "994b1b5d0ce644ce5ea5adf7b25254c5dbc3036dbdf8ae5e9e473e0cc7b83434"
+    },
+    "camara_sapl/emendas/194185.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194185/emenda_impositiva_11.2025_ideias.docx_1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:54Z",
+      "bytes": 230023,
+      "sha256": "a45d70f7032fcbde20ed2a93bc34a993d3a0e2850eacff600601cce0fbdaac9f"
+    },
+    "camara_sapl/emendas/194186.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194186/emenda_impositiva_15.2025_cdmd_mae_ternura.docx.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:55Z",
+      "bytes": 241023,
+      "sha256": "10bc3aeda0373bf7f58972289f68e6cc8086a1aaa97d0ff65b69ad2bc7782fd1"
+    },
+    "camara_sapl/emendas/194187.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194187/emenda_impositiva_06.2025_escola_viva_olho_no_tempo.docx.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:56Z",
+      "bytes": 254095,
+      "sha256": "1fdf450a5fb8a9c1143360d7de27442dbe472605ccf79dfb409f05a6e35264a2"
+    },
+    "camara_sapl/emendas/194188.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194188/emenda_impositiva_10.2025_rede_feminina_de_combate_ao_cancer.docx.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:57Z",
+      "bytes": 246030,
+      "sha256": "f0ed156f13ea51f8530ca2459f19e2746eda2b0211cb49ecc90fdb013062e541"
+    },
+    "camara_sapl/emendas/194189.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194189/emenda_impositiva_02.2025_aldeias_infantis_sos.docx.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:08:59Z",
+      "bytes": 252476,
+      "sha256": "564a8059ad652bac314b0a6f5872f2fd9cb9d263149e3c046eb1deeb9793dc1a"
+    },
+    "camara_sapl/emendas/194190.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194190/emenda_impositiva_03.2025_eventos_do_carnaval_realizada_pela_prefeitura_-_despesa_de_custeio.docx.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:00Z",
+      "bytes": 237494,
+      "sha256": "ecedc0be399a8fa9f0434942fc450655918e41fab50af09531edc84af52fb3f6"
+    },
+    "camara_sapl/emendas/194191.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194191/emenda_impositiva_07.2025_inovacentro.docx.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:01Z",
+      "bytes": 230964,
+      "sha256": "0331b81ce4327c31929f95d1b1f2d34050cbb594608603bd00f740f6f76e4d1d"
+    },
+    "camara_sapl/emendas/194192.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194192/emenda_impositiva_14.2025_aspan.docx.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:02Z",
+      "bytes": 230192,
+      "sha256": "01bd9162122687d23c803d02264a5fe2442f502651df8a885faf23318df3e9c0"
+    },
+    "camara_sapl/emendas/194193.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194193/emenda_impositiva_16.2025_ac_social_-_saude_.docx.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:03Z",
+      "bytes": 231550,
+      "sha256": "617795c473ccb1648cd37a8242aa1306e9002af98ccdb31213e837ac1a8e4e0a"
+    },
+    "camara_sapl/emendas/194194.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194194/emenda_impositiva_17.2025_hospital_laureano.docx.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:04Z",
+      "bytes": 231706,
+      "sha256": "7f692fdbd2ffec788fd04db032d91e9546782c1ff92e37369fe09c25bd8c4b1d"
+    },
+    "camara_sapl/emendas/194195.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194195/01_emenda_impositiva_laureano.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:05Z",
+      "bytes": 253387,
+      "sha256": "bef1e9a3ef4a396ad97faf53389dc1a3bd1821d2eb07702acae6a4b43f9275f9"
+    },
+    "camara_sapl/emendas/194196.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194196/03_emenda_impositiva_associacao-_inovar.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:06Z",
+      "bytes": 206572,
+      "sha256": "725874e0542bb8a1bc261670f8a68c82a3ae8218920b8452bf6ef810804e09a5"
+    },
+    "camara_sapl/emendas/194197.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194197/emenda_impositiva_229_-_romulo_dantas.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:07Z",
+      "bytes": 85539,
+      "sha256": "ebf8609e18ecada923c81c77d648d27fbc6205b73016fdf45327936dc9bb284e"
+    },
+    "camara_sapl/emendas/194198.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194198/02_emenda_impositiva_trauminha_mangabeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:08Z",
+      "bytes": 177170,
+      "sha256": "74ce3092d65a0336b9eb0233c30c84fe43c2759ba444cfb880a649c320fe6a95"
+    },
+    "camara_sapl/emendas/194199.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194199/emenda_impositiva_231_-_romulo_dantas.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:09Z",
+      "bytes": 163464,
+      "sha256": "3650f5817b969d8b78f5255547e235a055e6326f1fcded633ed56b391f2db060"
+    },
+    "camara_sapl/emendas/194200.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194200/03_emenda_impositiva_med_mais.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:10Z",
+      "bytes": 174726,
+      "sha256": "af3a37b7ac0c37c590c28d69a777a305f55dc9583e1bafc4de63c4c85708133c"
+    },
+    "camara_sapl/emendas/194201.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194201/04_emenda_impositiva_hne.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:11Z",
+      "bytes": 175072,
+      "sha256": "331f36db4c6c3333397f17c0793c1bae491ad1035f8d06e94c5c83f82b051e17"
+    },
+    "camara_sapl/emendas/194202.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194202/04_emenda_impositiva_semeart.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:12Z",
+      "bytes": 206661,
+      "sha256": "6d063d722a1996054a43a56640ba795162ffbefa038e45a8670d44de0b0fef04"
+    },
+    "camara_sapl/emendas/194203.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194203/05_emenda_impositiva_tarcisio_dias.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:13Z",
+      "bytes": 174706,
+      "sha256": "a10c37a70975646668ffb5ad6ed83a0170f4af63b6c08e738bb265267854f05b"
+    },
+    "camara_sapl/emendas/194204.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194204/05_emenda_impositiva_em_adoracao.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:14Z",
+      "bytes": 206715,
+      "sha256": "ba1918b903159ddeb024e6d9814ec78d68331e42d13c4a168d2d27255b903699"
+    },
+    "camara_sapl/emendas/194205.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194205/06_emenda_impositiva_associacao_apavi.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:15Z",
+      "bytes": 206580,
+      "sha256": "7115a108d637a151e6d4d80cd4e0b1e5bd5903722404c7e5b72fbb63f69ecb59"
+    },
+    "camara_sapl/emendas/194206.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194206/07_emenda_impositiva_federacao_travinha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:16Z",
+      "bytes": 208171,
+      "sha256": "75c34694e2c2a42dc4713790fed3e8070363927b5815dc1b4b5b2f2cba24ac41"
+    },
+    "camara_sapl/emendas/194207.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194207/08_emenda_impositiva_sao_jose.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:17Z",
+      "bytes": 207423,
+      "sha256": "ed43d7ce8e20fe773d2e4869ab763164985c246ab52f059063f50accf70e8496"
+    },
+    "camara_sapl/emendas/194208.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194208/09_emenda_impositiva_casa_da_paz.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:18Z",
+      "bytes": 206501,
+      "sha256": "47f8e73d3e63eb8280619ff20ab3f35bfa82a8a43af8804c6e54593cc8f5c1da"
+    },
+    "camara_sapl/emendas/194215.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194215/espelho_seja_vida_assevi_.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:20Z",
+      "bytes": 1707507,
+      "sha256": "0c2946fa85df64c0eb5ed20affccc7a8a85bc1f538525bbaa1da4f2d8ae4a221"
+    },
+    "camara_sapl/emendas/194216.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194216/liga_carnavalesca_funjope.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:20Z",
+      "bytes": 33141,
+      "sha256": "63e0dfea61c5d95212fe7d9da04140284f65f3ce6d77faa378ae0232a0e8dd94"
+    },
+    "camara_sapl/emendas/194218.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194218/espelho_emenda_iidesv__1.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:22Z",
+      "bytes": 3242642,
+      "sha256": "392396d09f88f8c4e812daa0938c8899ff9a314eb0a915c945b240bcd02f30b9"
+    },
+    "camara_sapl/emendas/194219.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194219/emenda_impositiva_244_-_joao_corujinha.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:23Z",
+      "bytes": 136382,
+      "sha256": "e81dfa54cdbd7690f32f0b75a727ae450bb0826ff31befbfcf99e9e5b2a66e1f"
+    },
+    "camara_sapl/emendas/194220.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194220/padre__ze_2_1.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:24Z",
+      "bytes": 3273470,
+      "sha256": "35dd14752383c3577a2b8c5014cccdb3260aeab45281ae4bdaab52c3adf32bad"
+    },
+    "camara_sapl/emendas/194221.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194221/espelho_mulheres_do_bem.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:26Z",
+      "bytes": 2627594,
+      "sha256": "5007457ae79fbff061ad682db7fe16476747a1b9f8a212930919b3fe499d355b"
+    },
+    "camara_sapl/emendas/194222.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194222/espelho_emenda_cultura_popular_e_quadrilha_xiado_do_xinelo_-_funjope.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:27Z",
+      "bytes": 3242768,
+      "sha256": "717e8911ac39b33a3538fee98b1800912975ab3e082c0648e68da6de364998e0"
+    },
+    "camara_sapl/emendas/194223.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194223/espelho_casa_da_paz.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:28Z",
+      "bytes": 34668,
+      "sha256": "151ed3e03b9de23c7b7b0a86da1b571a0aeae0a622b021c5acca0af5e6a2f36c"
+    },
+    "camara_sapl/emendas/194224.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194224/espelho_inovar.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:29Z",
+      "bytes": 17116,
+      "sha256": "3884352a7909665d60ee2b21a023688a7982b538cb8b1d59a70a9b5e95efa982"
+    },
+    "camara_sapl/emendas/194225.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194225/espelho_emenda_hune.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:29Z",
+      "bytes": 34689,
+      "sha256": "ca40ce7458256c4ead4e37e557f67f429c6832e03b91ad54a5b8b73d462a89a8"
+    },
+    "camara_sapl/emendas/194226.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194226/espelho_assevi_seja_vida_saude.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:30Z",
+      "bytes": 34644,
+      "sha256": "a50e3beccd451665dc0d23f6be1e59294204fde26d5e890d7d1762f4437ef7ab"
+    },
+    "camara_sapl/emendas/194227.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194227/espelho_emenda_amigos_da_saude__1.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:31Z",
+      "bytes": 34676,
+      "sha256": "54d376501e33f07ef45e24abd477fd9a77e78df8134f1c06fdece68448be8012"
+    },
+    "camara_sapl/emendas/194229.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194229/sms___hne.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:31Z",
+      "bytes": 39084,
+      "sha256": "ba00e81a5f3e49b1a6248de859ed869bc4d59599d19726710f55c65e34567d77"
+    },
+    "camara_sapl/emendas/194230.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194230/sms__instituto_walfredo_guedes_pereira.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:32Z",
+      "bytes": 45619,
+      "sha256": "24fc12ff80034b0cc73c89c94cd03c86df9e1cbd79b11aaba298ccaf42734044"
+    },
+    "camara_sapl/emendas/194231.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194231/sms_santa_isabel.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:33Z",
+      "bytes": 45585,
+      "sha256": "e021da90bb712d313759c1d90a9790910653ebc62db7f1b235eabd73349f9a7d"
+    },
+    "camara_sapl/emendas/194232.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194232/sms__fund_laureano.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:34Z",
+      "bytes": 45083,
+      "sha256": "9575ac20ff7ec1e4314ceec0125ad0d1efb969d5f622634588bdbe437c1bfa6c"
+    },
+    "camara_sapl/emendas/194233.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194233/sms__candida_vargas.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:35Z",
+      "bytes": 48879,
+      "sha256": "b718ff6a5725379e548a4c7e285fc68c32b7778325e96228023da38df5c66b96"
+    },
+    "camara_sapl/emendas/194234.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194234/sms__aspador.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:35Z",
+      "bytes": 45588,
+      "sha256": "98d7db901aaf713c5f471c2b3e15b8f75dcb1e4b3ee61ad2213a133d21f2ae7e"
+    },
+    "camara_sapl/emendas/194235.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194235/sms_regulacao.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:36Z",
+      "bytes": 45441,
+      "sha256": "4f20bf48b9dba7d3854690009535c88f8a6c6b66fe8e13859010ec1005ad7404"
+    },
+    "camara_sapl/emendas/194236.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194236/sedhuc_acev.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:37Z",
+      "bytes": 45467,
+      "sha256": "baf9f62558513450b4be869f90f8d6915a1e98b626267ef66f63855d92972c9e"
+    },
+    "camara_sapl/emendas/194237.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194237/funjope_sabadinho_bom.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:38Z",
+      "bytes": 45519,
+      "sha256": "23f9edf14b612698d1e2c05aca2d3274419506337f147093dfe4f6b6a3eec36a"
+    },
+    "camara_sapl/emendas/194238.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194238/funjope__eventos_igrejas.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:39Z",
+      "bytes": 45481,
+      "sha256": "5fbe16ebee690cd9f6577813f0c3db833da1886398534a669caf51a16e5192d7"
+    },
+    "camara_sapl/emendas/194239.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194239/emenda_impositiva_263_-_durval_ferreira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:39Z",
+      "bytes": 81065,
+      "sha256": "1094c76fb4c2faaa8a143b6f8aca2ac9d408df30995183dbcf2c48d56d56a505"
+    },
+    "camara_sapl/emendas/194240.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194240/funjope__apep.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:40Z",
+      "bytes": 45558,
+      "sha256": "2c1b6595577fc4993ab5295e097edd7a3bcdd97a031d1a8c6708ec192dde063d"
+    },
+    "camara_sapl/emendas/194241.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194241/funjope_atos.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:41Z",
+      "bytes": 45613,
+      "sha256": "ebe69b194e2ff4a47578f75ee31d7a8d8a3dbc29d216bd08c91f117bc11e053e"
+    },
+    "camara_sapl/emendas/194242.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194242/emenda_impositiva_266_-_durval_ferreira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:42Z",
+      "bytes": 122126,
+      "sha256": "8fbce694f3e39fe2d336db51ed6593d841686fdbdd3932638ef926b8bd48bfe3"
+    },
+    "camara_sapl/emendas/194243.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194243/emenda_impositiva_centro_social_sonhadores_do_amanha_-_censsondam_-_2025-2.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:43Z",
+      "bytes": 195967,
+      "sha256": "8ec2dbb8e275a5cfa2aa40046381a92043b8e50d91f97daa25a353a57d72e391"
+    },
+    "camara_sapl/emendas/194244.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194244/espelho_salesiana_.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:44Z",
+      "bytes": 133529,
+      "sha256": "cc16c22a2f4f63daf2fec75dbe595a32a1e44b0f4d922484707cd200d0e61089"
+    },
+    "camara_sapl/emendas/194245.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194245/emenda_impositiv_associacao_beneficente_casa_da_esperanca_-__chico_do_sindicato.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:45Z",
+      "bytes": 142194,
+      "sha256": "d6bf2275aa9290259655010433c6bb6ee4658224727a6d6839c3f397d175fed1"
+    },
+    "camara_sapl/emendas/194246.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194246/emenda_impositiva_270_-_chico_do_sindicato.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:46Z",
+      "bytes": 93241,
+      "sha256": "5ba7c880d4acbfc87a813b5cc3ad87645e8adf368a7d5ce41bf3ce94b866df04"
+    },
+    "camara_sapl/emendas/194247.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194247/emenda_impositiva_271_-_chico_do_sindicato.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:47Z",
+      "bytes": 121042,
+      "sha256": "0428f2e9c490ab6794c29527df040e15d7d03bd112328f836cabf3f83697f2ff"
+    },
+    "camara_sapl/emendas/194248.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194248/emenda_impositiva_apae_-_chico_do_sindicato.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:48Z",
+      "bytes": 76305,
+      "sha256": "57ad89f5b35c7f8b0700f535bc64d25c2126c1905107a5ed4aa32000bfe1e594"
+    },
+    "camara_sapl/emendas/194249.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194249/emenda_impositiva_273_-_chico_do_sindicato.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:48Z",
+      "bytes": 82070,
+      "sha256": "6295e49bf49a952392d2cbc9f277d43c20f9156945c72c4c414bfe30688b8aa2"
+    },
+    "camara_sapl/emendas/194250.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194250/emenda_impositiva_centro_cultural_sao_francisco_-_chico_do_sindicato.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:49Z",
+      "bytes": 92536,
+      "sha256": "b0eb001cadd47aa514fe65baa980b9902dbb3fb228cc12596ef66b508b782a11"
+    },
+    "camara_sapl/emendas/194251.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194251/emenda_impositiva_275_-_chico_do_sindicato.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:50Z",
+      "bytes": 145396,
+      "sha256": "ee066ffb05268caa3bd99af279c0d31e21fd54c428168aded1fa352ba6335530"
+    },
+    "camara_sapl/emendas/194252.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194252/emenda_impositiva_amas-_chico_do_sindicato.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:51Z",
+      "bytes": 76434,
+      "sha256": "f6bb19a908438b6e47be3b93ef5a45ae031a4e3962be6a808785026d867b134e"
+    },
+    "camara_sapl/emendas/194253.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194253/emenda_impositiva_277_-_chico_do_sindicato.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:52Z",
+      "bytes": 123833,
+      "sha256": "77dbab3754466010a0ff097073de427d2910acb1ea6c1f5454163c7b278fa48b"
+    },
+    "camara_sapl/emendas/194254.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194254/emenda_impositiva_278_-_chico_do_sindicato.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:53Z",
+      "bytes": 89262,
+      "sha256": "88f9a05950c68af8b0aacf6d4b9f767f2375560d5419ae8cbed5230da469f3a5"
+    },
+    "camara_sapl/emendas/194255.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194255/emenda_impositiva_funjope-_chico_do_sindicato.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:54Z",
+      "bytes": 90515,
+      "sha256": "886f132810e7fefbe7c80c316bba5a9fa77704982410824fcff69e3c1f670e66"
+    },
+    "camara_sapl/emendas/194256.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194256/santa_isabel_-_sms_-_100k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:55Z",
+      "bytes": 163329,
+      "sha256": "7430bdeb0cda7bc57ea81f6a86e59b3cddfed9df17f367a37898416aad97cff4"
+    },
+    "camara_sapl/emendas/194257.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194257/projeto_evolucao-_seduhc_-_20k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:56Z",
+      "bytes": 162246,
+      "sha256": "8da1ca9085aac7f2cd812585c6a6e0377ce21ad10c7ec0109cad42483ed929ec"
+    },
+    "camara_sapl/emendas/194258.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194258/produtores_rurais_-_seduhc_-_20k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:57Z",
+      "bytes": 163340,
+      "sha256": "b66588c7feb16a850f08e2110ee59a9bf11605128e9e0a02166b5da6d27db7be"
+    },
+    "camara_sapl/emendas/194259.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194259/marcha_para_jesus_-_funjope_-_100k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:58Z",
+      "bytes": 162008,
+      "sha256": "5aab812794830e3f4b78f50b8d757299e6581e922a0c2681badda6e4099dfa3a"
+    },
+    "camara_sapl/emendas/194260.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194260/instituto_luta_pelo_bem-_seduhc_-_120k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:09:59Z",
+      "bytes": 165616,
+      "sha256": "b184bd07a9e6b517238fefd26a51853b41335c4cbefd8a62a677e0175761341a"
+    },
+    "camara_sapl/emendas/194261.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194261/funjope_-_funjope_-_97k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:00Z",
+      "bytes": 161036,
+      "sha256": "1edc24df3603f3774082277562ddc2a91c17d0836cced72907bb2c970a445f2e"
+    },
+    "camara_sapl/emendas/194262.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194262/centro_integrado_do_autista_da_paraiba_-_sms_-_280k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:00Z",
+      "bytes": 168272,
+      "sha256": "d8eea118868d073d47ee804a651f7f41668c03393142a0a53656f8feaaa57360"
+    },
+    "camara_sapl/emendas/194263.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194263/centro__amigos_da_saude_-_sms_-_650k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:01Z",
+      "bytes": 164647,
+      "sha256": "d8464feabf75fa644a4a51c00b152f325617418523cbb06bdf2d6aa27e2a4268"
+    },
+    "camara_sapl/emendas/194264.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194264/casa_shalom-_seduhc_-_30k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:02Z",
+      "bytes": 160952,
+      "sha256": "07c18d6809359a278ab4107a6e10599a11b49c66c623d3ebcd76c5219efa2eca"
+    },
+    "camara_sapl/emendas/194265.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194265/associacao_projeto_abencoando_vidas_-_sms_-_30k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:03Z",
+      "bytes": 168820,
+      "sha256": "6774a509bb1637bec3f57858466aecc0f836453a91717ea0627caa0d8bcfd7e1"
+    },
+    "camara_sapl/emendas/194266.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194266/associacao_amigos_da_familia_-_seduhc_-_60k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:04Z",
+      "bytes": 167239,
+      "sha256": "bbc9de61a12ecd4bf443112d62f6c6174c64850ba66b5f162b08e7903afaa2f5"
+    },
+    "camara_sapl/emendas/194267.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194267/asmac_pb_-_seduhc_-_10k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:05Z",
+      "bytes": 164728,
+      "sha256": "f056cdf4c27c919bba80df09982030ef2d538bf11e4d94736b47f6cbedc3fe9b"
+    },
+    "camara_sapl/emendas/194268.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194268/apsoc_-_funjope_-_20k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:06Z",
+      "bytes": 162193,
+      "sha256": "7a7325070f442e1888a95bc96474815d500ef436c42e9f3a91d9f45f3059262b"
+    },
+    "camara_sapl/emendas/194269.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194269/aceab_-_funjope_-_20k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:07Z",
+      "bytes": 165316,
+      "sha256": "e1b5e7361ba3e8c00e8b222b3f4b56e9835e7ed50702c0c580e3eaf57bd56ed1"
+    },
+    "camara_sapl/emendas/194270.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194270/angelus-_seduhc_-_10k_1.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:08Z",
+      "bytes": 167027,
+      "sha256": "969efdb8d7382959be02d1898a29a573f52b82786821f8c691de2493594f4e41"
+    },
+    "camara_sapl/emendas/194271.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194271/ufpb-_seduhc_-_10k_2.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:09Z",
+      "bytes": 176267,
+      "sha256": "067783add00ab3d5aa35935f6f1fd15915cb741fd4ebdde06f5616487c6f5cd1"
+    },
+    "camara_sapl/emendas/194272.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194272/emenda_impositiva_296_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:10Z",
+      "bytes": 199252,
+      "sha256": "0d8e412ccb84036cad97d7fc3b5aa8bab9e0878df038343fb5e690baaa5a1e1e"
+    },
+    "camara_sapl/emendas/194273.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194273/emenda_impositiva_297_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:11Z",
+      "bytes": 199915,
+      "sha256": "910b3309de079427230a8e242cff07976d3f5ac0afefc57f56890ffe92240898"
+    },
+    "camara_sapl/emendas/194274.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194274/emenda_impositiva_298_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:12Z",
+      "bytes": 199419,
+      "sha256": "58de0d93a060d30658f7acd8f8ba45a86ccfd408b06f6dc7be0798136e2bc9cc"
+    },
+    "camara_sapl/emendas/194275.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194275/emenda_impositiva_299_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:13Z",
+      "bytes": 94577,
+      "sha256": "d4984b8c10ff99c4029985c5d9a655f2e41aba7e544e0e466601fb607d2d2316"
+    },
+    "camara_sapl/emendas/194276.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194276/emenda_impositiva_300_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:14Z",
+      "bytes": 200693,
+      "sha256": "259525720634295d599eda1fd2a66d7a9b8f2ff525bc25a588f3342726b4a1ae"
+    },
+    "camara_sapl/emendas/194277.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194277/emenda_impositiva_301_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:15Z",
+      "bytes": 199953,
+      "sha256": "039dc16a99bffa5cb8adfbc54ee12dfc05a8974ae98d067881ec70f90275c81d"
+    },
+    "camara_sapl/emendas/194278.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194278/emenda_impositiva_302_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:16Z",
+      "bytes": 199090,
+      "sha256": "23fac0b657629de3a57723bfbcdc878a575340f20e28a43a0e00679f71692fc9"
+    },
+    "camara_sapl/emendas/194279.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194279/emenda_impositiva_303_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:17Z",
+      "bytes": 200912,
+      "sha256": "f4fc46b21841ea10169868a7d2f29fd79e76e6e6706cd44510c797b4074ad65a"
+    },
+    "camara_sapl/emendas/194280.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194280/emenda_impositiva_304_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:18Z",
+      "bytes": 200136,
+      "sha256": "61c1fa577da6038f8af0a745a03fbbf26f079dabecdc3ddf55f27f3cbe057a6f"
+    },
+    "camara_sapl/emendas/194281.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194281/emenda_impositiva_305_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:19Z",
+      "bytes": 201260,
+      "sha256": "5faf496ac2620c0f3be5cfa0c54bee35013fd9fc7a124db440755da9091a5da1"
+    },
+    "camara_sapl/emendas/194282.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194282/emenda_impositiva_306_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:21Z",
+      "bytes": 198724,
+      "sha256": "8aacb5495ab53f2e8cca290844096a876b39ea1e4ce834cd1edf23c83d3b89f3"
+    },
+    "camara_sapl/emendas/194283.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194283/emenda_impositiva_307_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:22Z",
+      "bytes": 94674,
+      "sha256": "83ca3a9b5dab29248f5ec1e59e015db9d13ac2abb98e1e825c1ca11935509cde"
+    },
+    "camara_sapl/emendas/194284.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194284/emenda_impositiva_308_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:23Z",
+      "bytes": 198697,
+      "sha256": "23ebfc8d2bab8f19acc3f40d0f0b084ca5cd9b983faff3ec98c2aac7192a2d71"
+    },
+    "camara_sapl/emendas/194285.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194285/emenda_impositiva_309_-_valdir_trindade.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:23Z",
+      "bytes": 94632,
+      "sha256": "b07ecf3b166dbd4449cae00430c1b0304e9a642c186a31d0b6404d6b778a9d70"
+    },
+    "camara_sapl/emendas/194286.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194286/emenda_-_med_mais.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:24Z",
+      "bytes": 170107,
+      "sha256": "ef5d0def53c92654b0cd8e1fbd1ff1a8645037093e2ed8b1c20d1b53daeed17d"
+    },
+    "camara_sapl/emendas/194287.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194287/emenda_-_sao_vicente.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:25Z",
+      "bytes": 159767,
+      "sha256": "dfb2c0be2a821757099e2674abf4c3bbe11a86c31fe8dcb4284b4f32e3749106"
+    },
+    "camara_sapl/emendas/194288.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194288/emenda_-_padre_pio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:27Z",
+      "bytes": 159653,
+      "sha256": "9fd2a8c6991e9958ef61ef99097f6aeadc2ec1bc894e58b7d0b7e170d724372b"
+    },
+    "camara_sapl/emendas/194289.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194289/emenda_-_padre_ze.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:28Z",
+      "bytes": 159924,
+      "sha256": "33b25af2cb5a21c2ccdbd09aa1247beea612be17e646433f915e11dd3be3dafb"
+    },
+    "camara_sapl/emendas/194290.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194290/emenda_-_nova_berith.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:28Z",
+      "bytes": 169654,
+      "sha256": "6a30b7b0f12646450b083b51f3bc6ed127404b8bc346ca1dfc330064879a8520"
+    },
+    "camara_sapl/emendas/194291.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194291/emenda_-_mons._catao.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:29Z",
+      "bytes": 169777,
+      "sha256": "011b27b93be42654947d1a0f2477ec7fb64478bee0dd24418bd84896b4c8facb"
+    },
+    "camara_sapl/emendas/194292.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194292/emenda_-_missao_es_fiel.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:30Z",
+      "bytes": 169382,
+      "sha256": "76d9a731d1e7016b4c5d4a5a37ea2bbbb1c37d40782f13da706f36e4c6b742b2"
+    },
+    "camara_sapl/emendas/194293.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194293/emenda_-_em_adoracao.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:31Z",
+      "bytes": 169332,
+      "sha256": "147233660f60aa71ce30d50a2f9b6e48e20e57950c0e78a65b4a83462e966daf"
+    },
+    "camara_sapl/emendas/194294.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194294/emenda_-_mel_de_deus.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:32Z",
+      "bytes": 169027,
+      "sha256": "ec29399511053a4b2d9bd79b7d8ce56edbbe12f01cb702984c50014b2476946f"
+    },
+    "camara_sapl/emendas/194295.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194295/emenda_-_aspeq.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:33Z",
+      "bytes": 160105,
+      "sha256": "21038958cdb19cda91c27a170379db4c7303b5fd101a2ff3288030d8794b43f1"
+    },
+    "camara_sapl/emendas/194296.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194296/emenda_-_doce_mae_de_deus.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:34Z",
+      "bytes": 169845,
+      "sha256": "488e0cd1759a6a6f438408162bd28bffe129e9ef5f7fec6f9640a75e72687a30"
+    },
+    "camara_sapl/emendas/194297.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194297/emenda_-_criando_lacos.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:35Z",
+      "bytes": 171752,
+      "sha256": "8f440b029d83cf8c6c64e24da5939b06be9dd98de0159ef52fee76c300a40226"
+    },
+    "camara_sapl/emendas/194298.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194298/emenda_-_casa_da_paz.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:36Z",
+      "bytes": 169627,
+      "sha256": "6c4037f774b0199cde97ce0bbab14c9f596876198977c92c395b8321bc0cb440"
+    },
+    "camara_sapl/emendas/194299.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194299/emenda_-_candida_vargas.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:37Z",
+      "bytes": 168456,
+      "sha256": "23aa833c6a74abfe5d399560e50eea5958b9fdf27ea55ab65d5178fb8db02d84"
+    },
+    "camara_sapl/emendas/194300.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194300/emenda_-_ass._sao_jose.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:38Z",
+      "bytes": 169301,
+      "sha256": "3be234be46f80cd9423e5935c82ec6a8d9f3527299aa4a0d5a6664273680a904"
+    },
+    "camara_sapl/emendas/194301.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194301/emenda_-_aspan.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:39Z",
+      "bytes": 161065,
+      "sha256": "5ede1bcfd18e0210756c8da2adff6dc7ce64be183f9fbaf5f0c2d4c04fc8971f"
+    },
+    "camara_sapl/emendas/194302.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194302/emenda_-_asforro.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:40Z",
+      "bytes": 163960,
+      "sha256": "b52cf8b6cae84d99a911d36883f056604d2f4a2d229f4d3ab49d2c30bfad72f7"
+    },
+    "camara_sapl/emendas/194303.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194303/emenda_-_arquidiocese_da_paraiba.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:41Z",
+      "bytes": 164271,
+      "sha256": "9c0c0b58418af8ae3611ab98fa2f56c1575d9361c6579702bf34c38cb32dc348"
+    },
+    "camara_sapl/emendas/194304.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194304/emenda_-_amigos_da_saude.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:42Z",
+      "bytes": 159632,
+      "sha256": "d98da1e7d6bf81f5ff674f5d31083a30e0eb01c0aa59403dc236fba7cc510bc1"
+    },
+    "camara_sapl/emendas/194305.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194305/emenda_-_luta_pelo_bem.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:43Z",
+      "bytes": 162647,
+      "sha256": "2ea0ee993e4a1658d1b694aad57e0f09eb056c7dda9f94b7088fc66607a72033"
+    },
+    "camara_sapl/emendas/194306.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194306/amib.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:43Z",
+      "bytes": 145770,
+      "sha256": "8bdc987f589b92833745d826c411a2ec0de012ba5a7eb680b283f68877b93d65"
+    },
+    "camara_sapl/emendas/194307.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194307/hospital_sao_vicente_de_paula.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:44Z",
+      "bytes": 165910,
+      "sha256": "256c2e116053dfcf3243cae9ae73151852fa64353f6bcd63db2e22ca4d416d29"
+    },
+    "camara_sapl/emendas/194308.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194308/eventos.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:45Z",
+      "bytes": 144852,
+      "sha256": "c4d993c8366fb51b9739f043a9efc74ec227419571958d7dbc4e60ec793113e6"
+    },
+    "camara_sapl/emendas/194309.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194309/aima.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:46Z",
+      "bytes": 145653,
+      "sha256": "2d0293c3d8cd00e1d6a4dacfb4b8d89cb9b1c4c89724aceac495461350c4cb1c"
+    },
+    "camara_sapl/emendas/194310.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194310/casa_da_crianca_com_cancer.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:47Z",
+      "bytes": 165671,
+      "sha256": "f032ae97f8c725ea1f78e892963f5d96891861e91042270c1784435947d241d7"
+    },
+    "camara_sapl/emendas/194311.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194311/hospital_napoleao_laureano.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:48Z",
+      "bytes": 165890,
+      "sha256": "da96f908e6b8b4c04b70aa04f41c991625f128f6b246edaa28d13ce4d79a8905"
+    },
+    "camara_sapl/emendas/194312.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194312/hospital_padre_ze.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:49Z",
+      "bytes": 166138,
+      "sha256": "803623af1408bb341a595ab9b9a73ecec5efc29a7f45acdbed33f521aecfde2a"
+    },
+    "camara_sapl/emendas/194313.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194313/inovar.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:50Z",
+      "bytes": 165833,
+      "sha256": "1fa058040f91fd334a107dfc1c4ceb23c79a7275315daa0a64d6fdd33c59d13b"
+    },
+    "camara_sapl/emendas/194314.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194314/instituto_visao_para_todos.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:51Z",
+      "bytes": 165530,
+      "sha256": "c671a37160eb951755c99dcced83fac9ffa4f22cd09bd81fac2eacf6ba987f3b"
+    },
+    "camara_sapl/emendas/194315.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194315/ippeds.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:52Z",
+      "bytes": 166295,
+      "sha256": "c1bed840795d23cc3d1ffa794ae939291c159418c5cd5064062e13c22b6d6606"
+    },
+    "camara_sapl/emendas/194316.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194316/seja_vida.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:53Z",
+      "bytes": 145884,
+      "sha256": "ccf232c124ba9665698be99cafa782d823493a81ff4cbeb8d948773bbe635a60"
+    },
+    "camara_sapl/emendas/194317.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194317/racao.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:54Z",
+      "bytes": 145696,
+      "sha256": "7b249f73f5fa5e742510ee807214cfa1ef2bdceb5e4adc971154ca8ca79c2f3b"
+    },
+    "camara_sapl/emendas/194318.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194318/vila_vicentina.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:55Z",
+      "bytes": 145300,
+      "sha256": "d58a933062c911e163f4ee96fc230ce8c107b398a15f2d6439f843e6a1b4e3b4"
+    },
+    "camara_sapl/emendas/194319.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194319/abmdb.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:56Z",
+      "bytes": 146300,
+      "sha256": "a470d75c1a16b2daa7b4cb7f6c106fe551f206901a72abb5444aa4fd67703b96"
+    },
+    "camara_sapl/emendas/194320.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194320/emenda_impositiva__dorinha_.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:57Z",
+      "bytes": 181810,
+      "sha256": "ca3e77fb7304451c1c60d7b7fc4fa71afceedddff12c05e81201c6f485005ede"
+    },
+    "camara_sapl/emendas/194321.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194321/emenda_impositiva_aniversario_bairro_das_industrias_-_marcos_bandeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:58Z",
+      "bytes": 163011,
+      "sha256": "c4a6137e6059fa73a3f7e9994c0fa921b49506e43f3d34d4e7618d3ca464bac4"
+    },
+    "camara_sapl/emendas/194322.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194322/emenda_impositiva_aniversario_bairro_dos_novais_-_marcos_bandeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:59Z",
+      "bytes": 162214,
+      "sha256": "7fa24f9ed284e5b8bba8d28fe894121c4eb85941fc011cd316269a868cc19480"
+    },
+    "camara_sapl/emendas/194323.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194323/emenda_impositiva_associacao_instituto_visao_inovar_-_marcos_bandeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:10:59Z",
+      "bytes": 162404,
+      "sha256": "119a62658f49f6375f1567cbaf98f35ac809f62110ef7bacc310fb9aac124b36"
+    },
+    "camara_sapl/emendas/194324.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194324/emenda_impositiva_centro_amigos_da_saude_-_marcos_bandeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:00Z",
+      "bytes": 161875,
+      "sha256": "b971088cbc0017be6b3a98c66846a707e0b4595ad31c4ee2862ffa5722b51e16"
+    },
+    "camara_sapl/emendas/194325.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194325/emenda_impositiva_cia_oxente_de_atividades_culturais_-_marcos_bandeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:01Z",
+      "bytes": 164497,
+      "sha256": "60e4048b2cdd98e0edc488915b6a3ee0ba7a36fea5ae13cc89ec605f57f22f5c"
+    },
+    "camara_sapl/emendas/194326.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194326/emenda_impositiva_futebol_de_rua_nordeste_-_marcos_bandeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:03Z",
+      "bytes": 447496,
+      "sha256": "b35d2d61b721e6cbd14f4e6029fe2aa9513569dda1b12c9773ebd7b9e83bc196"
+    },
+    "camara_sapl/emendas/194327.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194327/emenda_impositiva_icv_-_equipamento_e_material_permanente_-_marcos_bandeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:04Z",
+      "bytes": 163722,
+      "sha256": "474955c827b3a077731dda779cb2c737d324bd3d31b217c7db3d74e878522002"
+    },
+    "camara_sapl/emendas/194328.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194328/emenda_impositiva_medmais_associacao_de_saude_-_marcos_bandeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:04Z",
+      "bytes": 162211,
+      "sha256": "34f36abf34abb00a93f7aeeeb5f6c8e88043aea268328b4fa9b0d00b1d826b85"
+    },
+    "camara_sapl/emendas/194329.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194329/emenda_impositiva_quadrilha_junina_santo_antonio-_marcos_bandeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:05Z",
+      "bytes": 165547,
+      "sha256": "b9f4c8b970c423d7dfecd62e2ea234967aac2bc225ad5e1d1d9da9f020ee2f6e"
+    },
+    "camara_sapl/emendas/194330.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194330/emenda_impositiva_reforma_praca_da_juventude_bdi_-_marcos_bandeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:06Z",
+      "bytes": 160749,
+      "sha256": "9a4b5dad578eee202ca1dc87f8e577d603aa0880ac3b877f432833bddc18d2a5"
+    },
+    "camara_sapl/emendas/194331.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194331/emenda_impositiva_santa_isabel_-_equipamento_e_material_permanente_-_marcos_bandeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:07Z",
+      "bytes": 163730,
+      "sha256": "ef664c58b37865b7518bd7bd61b8b8f12697f57e093e9d841a067976bbc769e5"
+    },
+    "camara_sapl/emendas/194332.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194332/emenda_impositiva_trauminha_-_equipamento_e_material_permanente_-_marcos_bandeira.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:08Z",
+      "bytes": 164447,
+      "sha256": "98963035e12b556c3a45515d26b8fe5badd46b25b7ed37f502803d527062c68a"
+    },
+    "camara_sapl/emendas/194333.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194333/14_-_padre_ze_-_despesa_de_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:09Z",
+      "bytes": 165154,
+      "sha256": "fec5f7d096e4985355c8f2fc918533ced46148bb7f7d937930114b5e096b74f0"
+    },
+    "camara_sapl/emendas/194334.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194334/15_-_sao_vicente_de_paula_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:10Z",
+      "bytes": 164438,
+      "sha256": "a88309cf0cc6b52c0e5c920c1f632f1df6fd5b7be87768001d0c9e51f623e3e5"
+    },
+    "camara_sapl/emendas/194335.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194335/03_-associacao_sao_jose_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:11Z",
+      "bytes": 164406,
+      "sha256": "673465914f106f412b3b025cc2d5480350d502e2b811c681622ed4c920de903b"
+    },
+    "camara_sapl/emendas/194336.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194336/10_-_instituto_visao_para_todos_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:12Z",
+      "bytes": 164030,
+      "sha256": "d877e4bfbd6f270b6bf2e681dff8d9053cbc993f60086c0b3ee0aaff1496fd53"
+    },
+    "camara_sapl/emendas/194337.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194337/09_-_icv_-_investimento.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:13Z",
+      "bytes": 164156,
+      "sha256": "ee9fdcc002b498ffa071f46ca730e7227e0baa613976749bdc70ceb67736f20d"
+    },
+    "camara_sapl/emendas/194338.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194338/07_-_hospital_napoleao_laureano_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:14Z",
+      "bytes": 163806,
+      "sha256": "257d393ec8e1b30c1441b0d81dad6a13795d34adc73f1252442134c95e4606fa"
+    },
+    "camara_sapl/emendas/194339.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194339/01_-_aspador_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:15Z",
+      "bytes": 155838,
+      "sha256": "1f1d2f3288f92d269821f9282fed4aee24ad96b08bf53bd7fe74abb8f0e42291"
+    },
+    "camara_sapl/emendas/194340.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194340/12_-_nosso_lar_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:16Z",
+      "bytes": 164296,
+      "sha256": "1fab8026e17cc1b51b3465f4c23cd8ce1764962814790d93888e0d1f64a5feb4"
+    },
+    "camara_sapl/emendas/194341.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194341/05_-_centro_cultural_sao_francisco_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:17Z",
+      "bytes": 164520,
+      "sha256": "3539ea554fbb392d6bad0915a514f584e2bd306ed0e8387892af2e253370da8e"
+    },
+    "camara_sapl/emendas/194342.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194342/19_-_result_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:18Z",
+      "bytes": 164867,
+      "sha256": "f7648513b1e187ba77bab25e2f41bbde9a49ce23962c356fd53dc83a005eff84"
+    },
+    "camara_sapl/emendas/194343.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194343/16_-_inovacentro.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:19Z",
+      "bytes": 164830,
+      "sha256": "d188e8aff5ebf51570eec6c26e0f3bfa116db85bfc47c2953b55f92c098f8831"
+    },
+    "camara_sapl/emendas/194344.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194344/02_-_aspan_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:20Z",
+      "bytes": 164079,
+      "sha256": "b3c172c42ccb62a88057e543de991f589c5afb7263142957d31714e4b2fdfe8d"
+    },
+    "camara_sapl/emendas/194345.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194345/08_-_hune-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:20Z",
+      "bytes": 164158,
+      "sha256": "7bbec59cd2f40c0f36adabe07f9075e23b24cca64039f57e77bb889d01dd3bac"
+    },
+    "camara_sapl/emendas/194346.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194346/18_-_castelo_de_mulheres.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:21Z",
+      "bytes": 165263,
+      "sha256": "8401e072f2c91e600b121eb44b440ceed24f4a7d2907c777808022ad8b556724"
+    },
+    "camara_sapl/emendas/194347.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194347/04_-caminho_da_esperanca_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:22Z",
+      "bytes": 157813,
+      "sha256": "e4f48838b0f4fb9699f5ee978fd38aeb8ebfd8a047cd67c343c950db0788a7ff"
+    },
+    "camara_sapl/emendas/194348.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194348/11_-_ippeds_-_custeio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:23Z",
+      "bytes": 164773,
+      "sha256": "6f148ab0a344ad58e35b76888da3bd0b5cc7e8a06fbfd3e5be88e122f9e43945"
+    },
+    "camara_sapl/emendas/194349.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194349/17_-_ameg.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:24Z",
+      "bytes": 165458,
+      "sha256": "814a59a6b5039bad6f5ad6bd95cc88c94ea7d91bd8a75b8a3cc0811698201f6c"
+    },
+    "camara_sapl/emendas/194350.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194350/06_-_funjope.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:25Z",
+      "bytes": 163840,
+      "sha256": "53505154f24a922261ec58dde230699fdd8acda6d4c1df3fc3ab79cff0b2f83c"
+    },
+    "camara_sapl/emendas/194351.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194351/13_-_onze.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:26Z",
+      "bytes": 164349,
+      "sha256": "530a63a8e0f1b514f557445eb176109fd1bf2ff4959951358a5b52ca8387117b"
+    },
+    "camara_sapl/emendas/194355.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194355/candida_vargas_-_sms_-_68k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:27Z",
+      "bytes": 175227,
+      "sha256": "9036dda9ba845771acd14d1fcc220bef02ce1e0ec0db055ddcf313b396e51c2c"
+    },
+    "camara_sapl/emendas/194356.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194356/associacao_reviver_-_sms_-_20k.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:28Z",
+      "bytes": 166715,
+      "sha256": "2831a871c9378190fefbd3e0c30e2af1d633ce4badd387808461faa1da935263"
+    },
+    "camara_sapl/emendas/194384.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194384/emenda_impositiva_vila_vicentina_.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:29Z",
+      "bytes": 209120,
+      "sha256": "06c7217e9afce33242ac3b79f91b9cb7aca0397687961741e475a09632b5fb14"
+    },
+    "camara_sapl/emendas/194386.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194386/emenda_impositiva_-_sao_padre_pio.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:30Z",
+      "bytes": 182122,
+      "sha256": "066496190b1943dea72247dae8af57e498901cdc4a3d33c8d7c60e8cc0051f55"
+    },
+    "camara_sapl/emendas/194390.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194390/emenda_impositiva_380_-_bosquinho.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:31Z",
+      "bytes": 195030,
+      "sha256": "174d031abcbf93d14cdb7a3ce4785d9f8ce05e4a368e2b672bb157fe03c82c79"
+    },
+    "camara_sapl/emendas/194391.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194391/emenda_impositiva_-_ivpt.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:32Z",
+      "bytes": 182976,
+      "sha256": "7af5fac4a062d70d2781127483b580d660c7e4e4a48de6361bc2fda06cbd453a"
+    },
+    "camara_sapl/emendas/194396.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194396/emenda_impositiva_382_-_bosquinho.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:33Z",
+      "bytes": 211152,
+      "sha256": "a8a47c2299f11a02e755bdabb249302aeabc9ceef6920ba493bb376f9459b45e"
+    },
+    "camara_sapl/emendas/194397.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194397/emenda_impositiva_-_iidesv.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:34Z",
+      "bytes": 212055,
+      "sha256": "1c75a1c4a867318e25fa1cfd358973c2bb749d10aa99d1476d31bc05719bf418"
+    },
+    "camara_sapl/emendas/194400.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194400/emenda_impositiva_-_icv.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:35Z",
+      "bytes": 168544,
+      "sha256": "d00b395c173ad519291dd5e17783332b221348aa8f594f772fb86970bffac9e8"
+    },
+    "camara_sapl/emendas/194405.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194405/emenda_impositiva_-_icb.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:36Z",
+      "bytes": 212990,
+      "sha256": "defb05879f685990bcd0dd6770922125bc549f693777e44a8b3b9c40d95c15e2"
+    },
+    "camara_sapl/emendas/194406.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194406/emenda_impositiva_386_-_bosquinho.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:38Z",
+      "bytes": 195635,
+      "sha256": "c8ffa6f26bd222b54d4d006ac98afb968249ee2c7d737aa5c5706ba22dd90224"
+    },
+    "camara_sapl/emendas/194407.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194407/emenda_impositiva_-_doce_mae_de_deus.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:39Z",
+      "bytes": 211773,
+      "sha256": "87411c78b7201c5485594b68c03b0da0c62df15e1fa3376e4204e22c196fe3d5"
+    },
+    "camara_sapl/emendas/194408.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194408/emenda_impositiva_-_casa_shalom.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:40Z",
+      "bytes": 211970,
+      "sha256": "34cc493048742a912d390803b2d064cc8c34727520c8e68fa87d85809b012319"
+    },
+    "camara_sapl/emendas/194409.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194409/emenda_impositiva_-_casa_da_paz.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:41Z",
+      "bytes": 184955,
+      "sha256": "f8fe01c460d20e4b36e86916621e8c9f1a326441641a34c63444b4997af2ba44"
+    },
+    "camara_sapl/emendas/194421.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194421/emenda_impositiva_390_-_bosquinho.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:42Z",
+      "bytes": 212960,
+      "sha256": "bd016cb081759b4d4120e1e98f0c0a5b9e5e60c84b578ffda2a542bbe8c71c43"
+    },
+    "camara_sapl/emendas/194423.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194423/emenda_impositiva_-_amigos_da_saude.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:43Z",
+      "bytes": 182856,
+      "sha256": "98589aa5e95fef9228596277c5c9d84336bb6017951178313ed209a9f7cd344b"
+    },
+    "camara_sapl/emendas/194500.docx": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194500/sedec_arte_e_cultura_1_infancia.docx",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:43Z",
+      "bytes": 45944,
+      "sha256": "1816cd62038932191e113bdbd238d9d0d6e31c477d3fa2835fa9f0ac5a9a1bf9"
+    },
+    "camara_sapl/emendas/194523.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194523/emenda_impositiva_393_-_edmilson_soares.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:44Z",
+      "bytes": 142165,
+      "sha256": "c05f6ba92a6a9e8650937b04b8edc77510f8e56ce0992d043e317fb74c347217"
+    },
+    "camara_sapl/emendas/194524.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194524/emenda_impositiva_394_-_edmilson_soares.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:45Z",
+      "bytes": 142085,
+      "sha256": "cf406a059cfaa7d7ad570b3d4cd821eb8a0e526fd3066067ef12cce1bb314545"
+    },
+    "camara_sapl/emendas/194525.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194525/emenda_impositiva_395_-_edmilson_soares.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:46Z",
+      "bytes": 140241,
+      "sha256": "55cd6a9146462fd25cdb3b73aab110d4bbc6690acdec0c7d288957e023ae43da"
+    },
+    "camara_sapl/emendas/194526.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194526/emenda_impositiva_396_-_edmilson_soares.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:47Z",
+      "bytes": 141254,
+      "sha256": "411337f14e57b2bf865429d3051847e6f9f54b47f7190cc981cd829397107389"
+    },
+    "camara_sapl/emendas/194527.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194527/emenda_impositiva_397_-_edmilson_soares.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:48Z",
+      "bytes": 143325,
+      "sha256": "cce60a7defc2ccef2c458670742b1c56c7e3a9e3aec4072075f89df4cba27587"
+    },
+    "camara_sapl/emendas/194528.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194528/emenda_impositiva_398_-_edmilson_soares.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:49Z",
+      "bytes": 142892,
+      "sha256": "5f39bce75a8166e8ef8d4db32b2947908e7ad957743518a32ac7202ef4c15db1"
+    },
+    "camara_sapl/emendas/194529.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194529/emenda_impositiva_399_-_edmilson_soares.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:50Z",
+      "bytes": 142049,
+      "sha256": "ae8679d3c0ad67492f303570561af31f6186d72f89744346438bb7e43d1f6e85"
+    },
+    "camara_sapl/emendas/194530.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/materialegislativa/2025/194530/emenda_impositiva_400_-_edmilson_soares.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T21:11:51Z",
+      "bytes": 140321,
+      "sha256": "c154235766265369b4a37a9fd50c26ec1a4eae8133326a5f6e43944b2a1e26ae"
+    },
+    "tce_pb/despesas-2026.zip": {
+      "url": "https://download.tce.pb.gov.br/dados-abertos/dados-por-municipio/095/despesas/despesas-2026.zip",
+      "fonte": "TCE-PB - Dados Abertos do SAGRES - Despesas por município",
+      "baixado_em": "2026-10-14T21:48:36Z",
+      "bytes": 3224852,
+      "sha256": "ce4f35faddf4665ecfaa7b8e02c49aebb26bdc7320bba44e1a9772199463be6b"
+    }
+  }
+}
