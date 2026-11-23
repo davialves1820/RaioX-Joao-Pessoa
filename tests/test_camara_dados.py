@@ -11,7 +11,7 @@ from src.process import camara
 
 P = DATA_PROCESSED / "camara"
 RAW = DATA_RAW / "camara_sapl"
-sem_brutos = pytest.mark.skipif(not RAW.exists(), reason="dados brutos (data/raw) ausentes")
+sem_brutos = pytest.mark.skipif(not any(RAW.glob("materias-*.json")), reason="dados brutos (data/raw) ausentes")
 
 
 @pytest.fixture(scope="module")
