@@ -188,7 +188,8 @@ def votos_comissoes(materias: pd.DataFrame) -> pd.DataFrame:
     # serve quando o voto é de um item do expediente
     v["descricao"] = v["__str__"].str.extract(r"Expediente: \d+ - (.+?) em \d+ª")[0]
     v = v.merge(materias, left_on="materia", right_on="id_materia", how="left")
-    v["resultado"] = v["resultado"].replace({"APROVAD0": "Aprovado", "REJEITADO": "Rejeitado"}).replace("", None)
+    v["resultado"] = v["resultado"].replace({"APROVAD0": "Aprovado", "Aprovado em Comissão": "Aprovado", "REJEITADO": "Rejeitado",
+                                         "Rejeitado na Comissão": "Rejeitado", "RETIRADO": "Retirado"}).replace("", None)
     return pd.DataFrame({
         "id_votacao": v["votacao"].astype(int), "data": v["data_hora"].str[:10],
         "sigla_comissao": v["sigla_comissao"], "comissao": v["comissao"],

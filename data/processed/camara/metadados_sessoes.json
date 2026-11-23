@@ -1,0 +1,3351 @@
+{
+  "gerado_em": "2026-11-23T22:20:18Z",
+  "atas_lidas": 442,
+  "atas_conferidas": 403,
+  "atas_nao_conferidas": [
+    {
+      "id_sessao": 2002,
+      "data": "2026-11-19",
+      "motivo": "bloco de presença não encontrado"
+    },
+    {
+      "id_sessao": 1997,
+      "data": "2026-11-17",
+      "motivo": "bloco de presença não encontrado"
+    },
+    {
+      "id_sessao": 1980,
+      "data": "2026-11-05",
+      "motivo": "bloco de presença não encontrado"
+    },
+    {
+      "id_sessao": 1908,
+      "data": "2026-06-11",
+      "motivo": "lista 27 vereadores para 29 cadeiras"
+    },
+    {
+      "id_sessao": 1905,
+      "data": "2026-06-09",
+      "motivo": "lista 27 vereadores para 29 cadeiras"
+    },
+    {
+      "id_sessao": 1901,
+      "data": "2026-06-02",
+      "motivo": "lista 28 vereadores para 29 cadeiras"
+    },
+    {
+      "id_sessao": 1875,
+      "data": "2026-05-07",
+      "motivo": "lista 28 vereadores para 29 cadeiras"
+    },
+    {
+      "id_sessao": 1860,
+      "data": "2026-04-16",
+      "motivo": "bloco de presença não encontrado"
+    },
+    {
+      "id_sessao": 1728,
+      "data": "2025-10-07",
+      "motivo": "bloco de presença não encontrado"
+    },
+    {
+      "id_sessao": 1695,
+      "data": "2025-09-04",
+      "motivo": "lista 28 vereadores para 29 cadeiras"
+    },
+    {
+      "id_sessao": 1694,
+      "data": "2025-09-02",
+      "motivo": "lista 28 vereadores para 29 cadeiras"
+    },
+    {
+      "id_sessao": 1594,
+      "data": "2025-03-20",
+      "motivo": "lista 28 vereadores para 29 cadeiras"
+    },
+    {
+      "id_sessao": 1591,
+      "data": "2025-03-18",
+      "motivo": "lista 28 vereadores para 29 cadeiras"
+    },
+    {
+      "id_sessao": 1589,
+      "data": "2025-03-13",
+      "motivo": "lista 28 vereadores para 29 cadeiras"
+    },
+    {
+      "id_sessao": 1566,
+      "data": "2025-01-01",
+      "motivo": "bloco de presença não encontrado"
+    },
+    {
+      "id_sessao": 1523,
+      "data": "2024-11-19",
+      "motivo": "bloco de presença não encontrado"
+    },
+    {
+      "id_sessao": 1430,
+      "data": "2024-06-13",
+      "motivo": "lista 26 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 1416,
+      "data": "2024-06-06",
+      "motivo": "lista 26 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 1418,
+      "data": "2024-06-06",
+      "motivo": "lista 26 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 1419,
+      "data": "2024-06-06",
+      "motivo": "lista 26 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 1420,
+      "data": "2024-06-06",
+      "motivo": "lista 26 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 1421,
+      "data": "2024-06-06",
+      "motivo": "lista 26 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 1422,
+      "data": "2024-06-06",
+      "motivo": "lista 26 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 1409,
+      "data": "2024-06-04",
+      "motivo": "lista 25 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 1257,
+      "data": "2023-11-16",
+      "motivo": "lista 25 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 1230,
+      "data": "2023-10-17",
+      "motivo": "lista 25 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 1099,
+      "data": "2023-04-13",
+      "motivo": "lista 25 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 1009,
+      "data": "2022-10-27",
+      "motivo": "lista 25 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 966,
+      "data": "2022-08-23",
+      "motivo": "nome sem ligação: usentes com justificativa: A"
+    },
+    {
+      "id_sessao": 956,
+      "data": "2022-08-11",
+      "motivo": "lista 25 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 951,
+      "data": "2022-06-21",
+      "motivo": "lista 28 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 892,
+      "data": "2022-04-26",
+      "motivo": "lista 28 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 797,
+      "data": "2021-11-11",
+      "motivo": "lista 26 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 784,
+      "data": "2021-10-21",
+      "motivo": "lista 25 vereadores para 27 cadeiras"
+    },
+    {
+      "id_sessao": 729,
+      "data": "2021-09-09",
+      "motivo": "nome sem ligação: ista de vereadores"
+    },
+    {
+      "id_sessao": 675,
+      "data": "2021-04-27",
+      "motivo": "vereador em mais de uma situação"
+    },
+    {
+      "id_sessao": 639,
+      "data": "2021-01-01",
+      "motivo": "nome sem ligação: o Sr. Presidente convidou os componentes da chapa vitoriosa para a colheita das assinaturas do Termo de Posse; conforme dispõe a Lei Orgânica Municipal e o Regimento Interno da casa; cumprindo as disposições legais. Após o cumprimento das formalidades legais referidas; o Presidente; convidou a Mesa Diretora eleita para assumir os trabalhos. Na Presidência; o Presidente eleito; Retomando a Presidência; O Primeiro-Secretário; solicitou a lavratura da ata desta sessão para aprovação. Nada mais havendo a tratar; declarou encerrada a presente sessão; convocando uma Sessão Extraordinária com a finalidade de apreciar o Projeto de Resolução nº 01/2021. Sala das Sessões da Câmara Municipal de João Pessoa ao 1º dia do mês de janeiro do ano de 2021"
+    },
+    {
+      "id_sessao": 640,
+      "data": "2021-01-01",
+      "motivo": "nome sem ligação: 11. Discussão do projeto: consenso do plenário. Votação: favoráveis: 15; contrários: 00; abstenções: 00; ausentes: 11. Situação: aprovado em discussão e votação única. O Primeiro Secretário fez a leitura Resolução nº 181/2021. O Presidente deu como fixado e publicizado o ato. Ainda; convocou os vereadores para a Sessão Extraordinária; na sequência; para eleição da Mesa Diretora para o biênio 2023/2024 e; nada mais havendo a tratar; declarou encerrada a presente sessão. Sala das Sessões da Câmara Municipal de João Pessoa ao 1º dia do mês de janeiro do ano de 2021"
+    },
+    {
+      "id_sessao": 641,
+      "data": "2021-01-01",
+      "motivo": "nome sem ligação: 04. Situação: Eleita a Chapa Única. O Sr. Presidente Valdir Dowlsey declarou a chapa única eleita para o biênio 2023/2024. Nada mais havendo a tratar; encerrou a presente sessão; convocando os presentes para a Sessão Solene de Posse do Prefeito; Vice-Prefeito de João Pessoa. Sala das Sessões da Câmara Municipal de João Pessoa ao 1º dia do mês de janeiro do ano de 2021"
+    }
+  ],
+  "cadeiras": {
+    "18": 27,
+    "19": 29
+  },
+  "presencas": {
+    "Presente": 7901,
+    "Presente (virtual)": 1322,
+    "Ausente com justificativa": 843,
+    "Ausente": 1055
+  },
+  "votos_comissoes": 12784,
+  "votacoes_comissoes": 2549,
+  "votos": {
+    "Sim": 12391,
+    "Não": 276,
+    "Abstenção": 81,
+    "Não Votou": 36
+  },
+  "votos_sem_materia": 8,
+  "sessoes_com_video": 184,
+  "regras": {
+    "presenca": "lista de presentes e ausentes da ata, na abertura dos trabalhos; só atas em que cada vereador aparece uma vez, todos os nomes foram ligados ao SAPL e o total é igual ao número de cadeiras",
+    "cadeiras": "titulares cujo mandato começa no primeiro dia da legislatura (SAPL)",
+    "votos": "votos nominais do SAPL; existem só nas reuniões de comissão (o plenário vota de forma simbólica)"
+  },
+  "arquivos_brutos": {
+    "camara_sapl/atas/1000.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1000/ata/minuta_-_53a_sessao_ordinaria_13.10.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:34Z",
+      "bytes": 422604,
+      "sha256": "07a52a3c866c87fa2e251cc3e31dca18f396850ea604eb53059d531fde910353"
+    },
+    "camara_sapl/atas/1001.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1001/ata/minuta_ata_54_so_18.10.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:35Z",
+      "bytes": 794974,
+      "sha256": "2c70083e2af5f2fc51ec4aa8bd9c404878ad8e1638fe155df30a34bad31fdabd"
+    },
+    "camara_sapl/atas/1004.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1004/ata/minuta_-__55a_sessao_ordinaria_20.10.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:36Z",
+      "bytes": 413123,
+      "sha256": "b49b86d6429a9bf2f614f97ba880af05899a2935091c08f3d2a0a5e7f861337b"
+    },
+    "camara_sapl/atas/1007.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1007/ata/minuta_-_56a_so_hibrida_25.10.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:37Z",
+      "bytes": 372578,
+      "sha256": "a7ba9492806e383a90bfde22e767040191e5453bcbc5c49ed04d2320e4a45cbc"
+    },
+    "camara_sapl/atas/1009.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1009/ata/minuta_ata_57_so_27.10.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:38Z",
+      "bytes": 591698,
+      "sha256": "be79a5726a07ead371a3a96f68deef1ff48990fa7c1fc42ee24414b44acb7155"
+    },
+    "camara_sapl/atas/1010.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1010/ata/minuta_ata_58_so_01.11.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:40Z",
+      "bytes": 626467,
+      "sha256": "5c535ec31ccf17f0be733dd25ba5cba73b1c6bff84a702cd768283125ec86ded"
+    },
+    "camara_sapl/atas/1012.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1012/ata/minuta_-_59a_sessao_ordinaria_08.11.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:41Z",
+      "bytes": 185768,
+      "sha256": "396bc512fa43b6a6b0ab92b70a20679894612543a2e926abf921831899b99ed0"
+    },
+    "camara_sapl/atas/1013.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1013/ata/minuta_ata_60_so_10.11.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:42Z",
+      "bytes": 535816,
+      "sha256": "7ec9a6d4c2a0c98498e1e9456cfce9482e768ccc09d1d5d8c33e58f39b6ffcc2"
+    },
+    "camara_sapl/atas/1015.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1015/ata/minuta_-_61a_so_hibrida_17.11.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:43Z",
+      "bytes": 195060,
+      "sha256": "312b5a4fbeaecac74436b973881407f2ce668b6a05b997b830c88f8398615eb0"
+    },
+    "camara_sapl/atas/1018.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1018/ata/minuta_ata_62_so_22.11.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:44Z",
+      "bytes": 737536,
+      "sha256": "c3b9d85c55d27a57d79a20c46b8a8f375c01e3857cb2cc39a465a7bdc36dec2f"
+    },
+    "camara_sapl/atas/1021.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1021/ata/minuta_-_63a_so_24.11.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:45Z",
+      "bytes": 251802,
+      "sha256": "357ced706aa8d9cf1b421197b5b50e3a56e0132b90fe812cfd51b4288feddcdd"
+    },
+    "camara_sapl/atas/1023.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1023/ata/minuta_ata_64_so_29.11.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:46Z",
+      "bytes": 527546,
+      "sha256": "1502fba92de75a575f291c1a8088b5b45f85cb254124a323ae18a11582b3d541"
+    },
+    "camara_sapl/atas/1026.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1026/ata/minuta_-_65a_so_01.12.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:47Z",
+      "bytes": 259384,
+      "sha256": "996f803fc7d028d6b2f9098424b1a7894aec88ef21fe4d6eb901b9c95e9ff409"
+    },
+    "camara_sapl/atas/1028.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1028/ata/minuta_ata_66_so_06.12.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:49Z",
+      "bytes": 564980,
+      "sha256": "eabe26f446b5b9253bdc0c4a82b295f0eb3a9c686f55e3410cf64bc6804186c9"
+    },
+    "camara_sapl/atas/1030.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1030/ata/minuta_-__67a_so_13.12.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:50Z",
+      "bytes": 197124,
+      "sha256": "884a1105426551a5edfbc18d12519158fbe2fa67854f928f803396091877f034"
+    },
+    "camara_sapl/atas/1035.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1035/ata/minuta_ata_68_so_15.12.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:51Z",
+      "bytes": 612638,
+      "sha256": "3d474e72064faf1f3d52ec7414e386afa8abb9b280bf2f317b1bb72837bfbd76"
+    },
+    "camara_sapl/atas/1040.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1040/ata/ata_69_so_20.12.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:52Z",
+      "bytes": 750226,
+      "sha256": "1ed1cc36aee2e7f7e3b99af52e12dd4ac28c39cc58e1df3a891f6f2ffd3bce0f"
+    },
+    "camara_sapl/atas/1045.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1045/ata/minuta_extraordinaria_30.12.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:53Z",
+      "bytes": 507254,
+      "sha256": "5122cfd6736fbb4e522b950644cc371857c2644a5d24f4d1d9f24e37779d4608"
+    },
+    "camara_sapl/atas/1046.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1046/ata/minuta_-_1_so_hibrida_09.02.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:54Z",
+      "bytes": 225776,
+      "sha256": "b4f0e6761a864164109f8616bd81de162887477c78c246645d8dcbe89286e735"
+    },
+    "camara_sapl/atas/1048.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1048/ata/minuta_ata_2_so_14.02.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:56Z",
+      "bytes": 525487,
+      "sha256": "f3985efec55f80aa2bcf8dd51655fc103fe57cad000f75a8c944d17eb51eef22"
+    },
+    "camara_sapl/atas/1049.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1049/ata/minuta_-__3_so_hibrida_23.02.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:57Z",
+      "bytes": 213588,
+      "sha256": "63864fb4bd63a6037a718c13b3b19e070b1d38747ac812819cd59cf2554e1832"
+    },
+    "camara_sapl/atas/1050.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1050/ata/minuta_ata_4_so_28.02.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:58Z",
+      "bytes": 579384,
+      "sha256": "43eb280c260866e637907006774daa99da75e69519c21cf6c9c4cfe7d55a0fee"
+    },
+    "camara_sapl/atas/1052.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1052/ata/minuta_5a_so_hibrida_02.03.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:59Z",
+      "bytes": 211312,
+      "sha256": "40c4647a84f801a5093201b4319b9b1e99ea07ca611aa86eed7f144707dd6957"
+    },
+    "camara_sapl/atas/1054.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1054/ata/ata_6_soh_07.03.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:00Z",
+      "bytes": 62689,
+      "sha256": "ec283baffc6c51b8979d491f278acd36407c79555e908f47ec117cdff8edea5e"
+    },
+    "camara_sapl/atas/1060.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1060/ata/minuta_ata_7_so_09.03.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:02Z",
+      "bytes": 552036,
+      "sha256": "4ab1ff0a88f7d1bdb22ab1799c23d164f3eb0ced965a6243b1691098906be877"
+    },
+    "camara_sapl/atas/1063.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1063/ata/minuta_-_8a_so__14.03.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:03Z",
+      "bytes": 174891,
+      "sha256": "79554f93f0422a0278aa6175e9ea9cc63796e1ee84e874542916554d04ecc899"
+    },
+    "camara_sapl/atas/1065.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1065/ata/minuta_ata_9_so_16.03.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:04Z",
+      "bytes": 906119,
+      "sha256": "5e3f63d089bf98a4bed7904614a6a7b9ab756bc3ff872734cd449ca520b41ca6"
+    },
+    "camara_sapl/atas/1069.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1069/ata/minuta_-_10a_so_21.03.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:05Z",
+      "bytes": 202272,
+      "sha256": "92fb7bfe6f4ef0b80ddc33b5edb2153a5565987529ab0c8fdc717f7f11a97e3d"
+    },
+    "camara_sapl/atas/1073.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1073/ata/minuta_ata_11_so_23.03.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:06Z",
+      "bytes": 610896,
+      "sha256": "6645224f70e1fc799a9e5981a6e9bb0c59e598e07651fb8e87cd7569050be4be"
+    },
+    "camara_sapl/atas/1077.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1077/ata/minuta_-_12a_so_hibrida_28.03.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:07Z",
+      "bytes": 270292,
+      "sha256": "2212e380abff518b51b5c2b0ac2d63f8ba1cc1d201c107f973bb8bf59489adf2"
+    },
+    "camara_sapl/atas/1085.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1085/ata/minuta_ata_13_so_30.03.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:08Z",
+      "bytes": 468436,
+      "sha256": "fc3bd89c002fbc70b84d04a540bee3315719450aa17172f43aef7875d8faa7bc"
+    },
+    "camara_sapl/atas/1090.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1090/ata/minuta_-_14a_so_hibrida_04.04.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:10Z",
+      "bytes": 226146,
+      "sha256": "d1ab723a078433c7176e8607f99239842c3eac6ea1eb2f4e006eea9ed3514fb3"
+    },
+    "camara_sapl/atas/1092.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1092/ata/minuta_ata_15_so_11.04.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:11Z",
+      "bytes": 565260,
+      "sha256": "6d41af4cde8f765cfffb69264c8d58a0e1849370987ff675f76293d69aa25836"
+    },
+    "camara_sapl/atas/1099.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1099/ata/minuta_-_16a_soh_13.04.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:12Z",
+      "bytes": 216420,
+      "sha256": "f9de563eaaec9e8c132bf6779963e2febecbcb21f691c170b7b4b8295e2107ee"
+    },
+    "camara_sapl/atas/1104.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1104/ata/minuta_ata_17_so_18.04.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:13Z",
+      "bytes": 586347,
+      "sha256": "7e85ba77f98be65e00901f2b774c0bb340054304ed48d964dcb5f6a02cfee112"
+    },
+    "camara_sapl/atas/1106.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1106/ata/minuta_-_18a_so_hibrida_20.04.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:14Z",
+      "bytes": 269183,
+      "sha256": "fa9a65f27eca53f330b23d5ae5f671aa484e2f41ed7b5cfafbe750c4517d7a5f"
+    },
+    "camara_sapl/atas/1110.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1110/ata/minuta_ata_19_so_25.04.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:15Z",
+      "bytes": 661464,
+      "sha256": "d5819f37c17480c6ca5def4f25f029909251edac2b532dd753e91456bb941f22"
+    },
+    "camara_sapl/atas/1112.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1112/ata/minuta_-_20_so_27.04.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:16Z",
+      "bytes": 165223,
+      "sha256": "ee908d3003747f4a22505c37a2cc5e5abddbc13bec942143660f1cc236c7bb98"
+    },
+    "camara_sapl/atas/1115.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1115/ata/minuta_ata_21_so_02.05.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:17Z",
+      "bytes": 658777,
+      "sha256": "66f040bd0b63664faf34654ba224bf7a565c40f0f5690dc1823bffaa09d95652"
+    },
+    "camara_sapl/atas/1116.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1116/ata/minuta_-_22a_soh_04.05.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:18Z",
+      "bytes": 155648,
+      "sha256": "d0054fef1f41d595b89fdb2f786535f7a59b9151ecd31af422fc01f5b6cd7380"
+    },
+    "camara_sapl/atas/1118.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1118/ata/minuta_ata_23_so_09.05.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:20Z",
+      "bytes": 660598,
+      "sha256": "7e72607850927583c9cdc614101c31737531b5b036db6fc539dc4bdfd69dbd68"
+    },
+    "camara_sapl/atas/1122.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1122/ata/minuta_-_24a_so_hibrida_11.05.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:21Z",
+      "bytes": 228330,
+      "sha256": "d66cdbbf0dff0d5cd5bc68814fe0a83ce98b26cd3b309ab9aecb07b13b24c64c"
+    },
+    "camara_sapl/atas/1124.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1124/ata/minuta_ata_25_so_16.05.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:22Z",
+      "bytes": 811768,
+      "sha256": "9eea5347c76c21de241288264da162c9d682204d296525bac2fcfb7e60574315"
+    },
+    "camara_sapl/atas/1128.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1128/ata/minuta_-_26a_so_hibrida_18.05.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:23Z",
+      "bytes": 242084,
+      "sha256": "21d7d790127d3a9cecbdccc0d4d8fdd685fb66e840ceb45bd556d4f02393c928"
+    },
+    "camara_sapl/atas/1130.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1130/ata/minuta_ata_27_so_23.05.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:24Z",
+      "bytes": 576003,
+      "sha256": "67e35f94cbc8c4b3b30407915662ca38685b6c2ea0750453aa7faca4f902ac4f"
+    },
+    "camara_sapl/atas/1134.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1134/ata/minuta_-_28a_so_hibrida_25.05.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:25Z",
+      "bytes": 236558,
+      "sha256": "2b6305602b4cffdb3b23c78cbf30207b0e7a5a2bb1d1e2e5f5a513b8554d12dc"
+    },
+    "camara_sapl/atas/1136.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1136/ata/minuta_ata_29_so_30.05.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:27Z",
+      "bytes": 634717,
+      "sha256": "b631b4e8607516d0238abbf2a67f9278a2c1f84e32c220189ea8c519a3a9082f"
+    },
+    "camara_sapl/atas/1137.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1137/ata/minuta_-_30a_soh_06.06.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:28Z",
+      "bytes": 151880,
+      "sha256": "553e3b0523849afcc6ed0bb82fc4f39887d2eeb9cfe6f855623196c433edcb5d"
+    },
+    "camara_sapl/atas/1146.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1146/ata/minuta_-_31a_soh_15.06.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:29Z",
+      "bytes": 250797,
+      "sha256": "2eca39aae90d418dd054bcea5a35cacc0660d6d87a72896db913839f3e7e0479"
+    },
+    "camara_sapl/atas/1155.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1155/ata/minuta_ata_32_so_20.06.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:30Z",
+      "bytes": 536404,
+      "sha256": "77557ea6075ee4171bc64ba115f2e74e6718f93f03ab450a0cbee5788d11daaf"
+    },
+    "camara_sapl/atas/1158.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1158/ata/minuta_-_33a_soh_08.08.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:31Z",
+      "bytes": 237212,
+      "sha256": "9ff2d4a7d7da498f79585ed8f8ce61a3136385be06300f1999c2720a91be8378"
+    },
+    "camara_sapl/atas/1159.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1159/ata/minuta_-_1_sext_18jul23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:32Z",
+      "bytes": 143708,
+      "sha256": "0a67651228c273b2e1b236247ffca633ad10141fc731b3b9be807525d969b30b"
+    },
+    "camara_sapl/atas/1160.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1160/ata/minuta_-_2_sext_18jul23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:33Z",
+      "bytes": 128451,
+      "sha256": "f74051e208d7cdba007da3dd504f0efb87ab16ba79ca0e5c56765bdc965acd34"
+    },
+    "camara_sapl/atas/1163.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1163/ata/minuta_ata_34_so_10.08.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:34Z",
+      "bytes": 584167,
+      "sha256": "30c01718dca249385e7c1757b261fd8a431effc8006cb3895036b0f139305ce1"
+    },
+    "camara_sapl/atas/1165.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1165/ata/minuta_-__35_so_hibrida_15.08.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:35Z",
+      "bytes": 237095,
+      "sha256": "3f4a1ee236940a8a667ad8d1055eb101b7bbe01cf6a88b5a7e3b2e9e34dab845"
+    },
+    "camara_sapl/atas/1168.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1168/ata/minuta_ata_36_so_17.08.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:37Z",
+      "bytes": 512486,
+      "sha256": "25d4831e8d2b22e6b967d72adf1dfc7369bad7562ca3ccdf8cd932a136d2562f"
+    },
+    "camara_sapl/atas/1172.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1172/ata/minuta_-__37a_-_soh_22.08.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:37Z",
+      "bytes": 131245,
+      "sha256": "cbaa3f19f86a41d802092e8023bede9369379c04fc754843a58f219c6271d2ad"
+    },
+    "camara_sapl/atas/1173.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1173/ata/minuta_ata_38_so_24.08.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:39Z",
+      "bytes": 694211,
+      "sha256": "1133d13b625c160687eb7d821974819df1db0de2569df436e843900672cc6317"
+    },
+    "camara_sapl/atas/1177.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1177/ata/minuta_-__39a_so_29.08.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:40Z",
+      "bytes": 239088,
+      "sha256": "b3ef3a40992a563c9fbd2ecfd464d06811723f10c0df8dad8163b1b13f8ebbe8"
+    },
+    "camara_sapl/atas/1180.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1180/ata/minuta_ata_40_so_30.08.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:41Z",
+      "bytes": 555988,
+      "sha256": "68aac362b048dd1e5ec8a5eb3cccb09915ab4df9cc405943deea90389d90d0bd"
+    },
+    "camara_sapl/atas/1182.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1182/ata/minuta_ata_3_s_ext_01.09.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:42Z",
+      "bytes": 585427,
+      "sha256": "855729f32d1855ed33fb981d0092f77f806a508495990a864a5eaf630d71782d"
+    },
+    "camara_sapl/atas/1188.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1188/ata/minuta_-_41a_so_05.09.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:43Z",
+      "bytes": 254627,
+      "sha256": "2c5140013e1675617905fb22c770db263403152f3425dad1203ea786aa2bf3a5"
+    },
+    "camara_sapl/atas/1190.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1190/ata/minuta_ata_42_so_12.09.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:45Z",
+      "bytes": 629690,
+      "sha256": "c05e4ad6ad9c48bbe01de95d68a7486e6d6f8d54d521f0e7345738f1bb6a9e42"
+    },
+    "camara_sapl/atas/1195.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1195/ata/minuta_-__43_so_14.09.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:46Z",
+      "bytes": 256485,
+      "sha256": "c7301afed11505f5b7b843c2471d2e3a14cbd95e6c817dd52df204c7ecd325be"
+    },
+    "camara_sapl/atas/1198.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1198/ata/minuta_ata_44_so_19.09.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:47Z",
+      "bytes": 610248,
+      "sha256": "fce7458e2e7dd2fe229f2660293bb9ca2979d1e467f2dca0e99d3b17d6c24ff5"
+    },
+    "camara_sapl/atas/1202.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1202/ata/minuta_-_45a_so_21.09.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:48Z",
+      "bytes": 169551,
+      "sha256": "063c003052e02cfe15f99e9cb043d64e161062293a85db4d2dbfd87192cc6479"
+    },
+    "camara_sapl/atas/1207.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1207/ata/minuta_ata_46_so_26.09.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:49Z",
+      "bytes": 637949,
+      "sha256": "8026e33f7f195a47762c63208baf4689ea348a9c1cfe0c559aa830e2e2b92e54"
+    },
+    "camara_sapl/atas/1211.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1211/ata/minuta_-_47a_so_27.09.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:50Z",
+      "bytes": 217787,
+      "sha256": "e0571ab5068ed9706e41f89a2722f5ef8060e4ee75c9f41bebf666698993f893"
+    },
+    "camara_sapl/atas/1217.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1217/ata/minuta_ata_48_so_03.10.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:51Z",
+      "bytes": 856220,
+      "sha256": "c7cff93849c6cbd1620f76cab5e444a195d5c44eca4c0a734d35d9bc02dac93e"
+    },
+    "camara_sapl/atas/1221.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1221/ata/minuta_-_49a_so_05.10.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:52Z",
+      "bytes": 232322,
+      "sha256": "9bfc2f10f35f90e64924b07b839d41147b2ff19723a1ff6beaaf80b0ead0b8ef"
+    },
+    "camara_sapl/atas/1223.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1223/ata/minuta_ata_50_so_10.10.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:54Z",
+      "bytes": 557795,
+      "sha256": "0b9f810e6c20432046ee1164078d1ac289f0b4ee877c1c523bd3557e146eb4e2"
+    },
+    "camara_sapl/atas/1230.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1230/ata/minuta_-_51a_so_17.10.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:55Z",
+      "bytes": 246372,
+      "sha256": "91a948f5f9f1d0317972291d6f10b1c4e33ab9e6290b89fae4370e154e48123a"
+    },
+    "camara_sapl/atas/1235.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1235/ata/minuta_ata_52_so_19.10.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:56Z",
+      "bytes": 657910,
+      "sha256": "3e95f3bd29ed1c4bd685476e080b720c91b863fae06626c4d699d8502d7eae73"
+    },
+    "camara_sapl/atas/1237.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1237/ata/minuta_-_53a_so_24.10.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:57Z",
+      "bytes": 248978,
+      "sha256": "ccb68281dd752279dae8656efa1989c11075a07be345dbbf96360104c119f8be"
+    },
+    "camara_sapl/atas/1241.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1241/ata/minuta_ata_54_so_25.10.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:58Z",
+      "bytes": 564247,
+      "sha256": "c197fa16e59659a9e13d18b2f4288fa14c638c31a5de2ea9d7400d8c0a7a626e"
+    },
+    "camara_sapl/atas/1246.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1246/ata/minuta_-_55a_so_31.10.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:11:59Z",
+      "bytes": 293945,
+      "sha256": "df2ca8e85612ea539032d272b12b441572f961da1965fd62df83988ecc446a3d"
+    },
+    "camara_sapl/atas/1248.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1248/ata/minuta_ata_56_so_07.11.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:01Z",
+      "bytes": 879006,
+      "sha256": "61c33e142616d22d1cbbccf6d6dc3271d6415aef8d84b6640acd6fb3b9117c6e"
+    },
+    "camara_sapl/atas/1249.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1249/ata/minuta_-_57a_so_09.11.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:02Z",
+      "bytes": 264148,
+      "sha256": "de2c8f35e11a5f4b8121300b13d9eff0020f78b73b6171bef97ec7c5f97747be"
+    },
+    "camara_sapl/atas/1252.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1252/ata/minuta_ata_58_so_14.11.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:03Z",
+      "bytes": 436813,
+      "sha256": "c6c77d3477206e951226b771bca16a1cd6c9e0d13f0ec17c38f4ee231d045f5a"
+    },
+    "camara_sapl/atas/1257.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1257/ata/minuta_-_59a_so_16.11.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:04Z",
+      "bytes": 263362,
+      "sha256": "cbe4d7a39dc682003fd6d1984686d9b6c712f48b015e908fd8885d05450b0ad0"
+    },
+    "camara_sapl/atas/1258.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1258/ata/minuta_ata_60_so_21.11.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:05Z",
+      "bytes": 747349,
+      "sha256": "4736e57e860fb5052598c2e02a55c49f0706c8cc459caeee8a6de3fcb1b53bd6"
+    },
+    "camara_sapl/atas/1267.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1267/ata/minuta_-_61a_so_hibrida_23.11.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:06Z",
+      "bytes": 304272,
+      "sha256": "b8711f9ee69b58555073d508ba93276c939f208a98a4d21d195d576a45bc251d"
+    },
+    "camara_sapl/atas/1271.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1271/ata/minuta_ata_62_so_28.11.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:08Z",
+      "bytes": 673144,
+      "sha256": "6769ac83c8370cf312f708edddf2906a6c70633432838421997561276e0a9a14"
+    },
+    "camara_sapl/atas/1275.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1275/ata/minuta_-_63a_so_29.11.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:09Z",
+      "bytes": 204391,
+      "sha256": "bb83cbb3e131338ac109743a2b7661e9b94db393409461efe25e242e7226cc05"
+    },
+    "camara_sapl/atas/1279.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1279/ata/minuta_ata_64_so_05.12.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:10Z",
+      "bytes": 689479,
+      "sha256": "5d8623b43dea3527462d3c16d534f57bd99260c669d0e3684fb389a193d1795b"
+    },
+    "camara_sapl/atas/1281.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1281/ata/minuta_ata_65_so_05.12.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:11Z",
+      "bytes": 629742,
+      "sha256": "70566b21bed60282621d775b19afb48877c1cda37c9906ec91118b1ab4588d0b"
+    },
+    "camara_sapl/atas/1282.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1282/ata/minuta_ata_66_so_05.12.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:12Z",
+      "bytes": 629517,
+      "sha256": "6690cba1bd35195442506ae60722437ced79009903f6bc36cb26d7fef0e2b52f"
+    },
+    "camara_sapl/atas/1283.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1283/ata/minuta_ata_67_so_05.12.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:14Z",
+      "bytes": 630404,
+      "sha256": "431174b83e79634aa1cbe23f2b4f094b346bb4ae505e3ddb4a461f4021ff710c"
+    },
+    "camara_sapl/atas/1284.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1284/ata/minuta_ata_68_so_05.12.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:15Z",
+      "bytes": 674936,
+      "sha256": "198a574445f36230ade8cbc3488d216f5d5786c53f21114aa3fbfacf463c7edd"
+    },
+    "camara_sapl/atas/1285.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1285/ata/minuta_-_69a_soh_07.12.23.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:16Z",
+      "bytes": 238721,
+      "sha256": "6710b14062f7e7753d1a398648703a218e537a1285526a2e7fb108347236ded6"
+    },
+    "camara_sapl/atas/1289.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1289/ata/minuta_ata_70_so_12.08.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:17Z",
+      "bytes": 616710,
+      "sha256": "b42b6bcd470f167d6ecfafd780eaf91e17db544dc8b9386f743b8b222a66d6cc"
+    },
+    "camara_sapl/atas/1296.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1296/ata/minuta_-_71a_so_hibrida_13.12.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:18Z",
+      "bytes": 230561,
+      "sha256": "03873fdbc3174dc856a6dc8019a435a22e6996c3e3053a3ae87e1977c4f7b8a2"
+    },
+    "camara_sapl/atas/1299.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1299/ata/minuta_ata_72_so_14.12.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:19Z",
+      "bytes": 494292,
+      "sha256": "648125619fbcb44f9721a172b730c06c9831b0c100d8f103e35cdee9c5914b3a"
+    },
+    "camara_sapl/atas/1304.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1304/ata/minuta_ata_73_so_19.12.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:21Z",
+      "bytes": 563217,
+      "sha256": "33f6afdc6ed9bba2c675814d455bcd8d830e7d0cb0c1e9ace3be97d39b10de36"
+    },
+    "camara_sapl/atas/1309.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1309/ata/minuta_ata_74_so_20.12.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:22Z",
+      "bytes": 433637,
+      "sha256": "74fdec6a4dd9fc0eb64d484cbb86626dacc77c6ed5ffe534303cb7650befc165"
+    },
+    "camara_sapl/atas/1312.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1312/ata/minuta_-_75a_soh_21.12.2023.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:23Z",
+      "bytes": 274500,
+      "sha256": "bf89eed405f4065b01a376f180a10d063c33e9d477d1eba7a53ad02875cc5f95"
+    },
+    "camara_sapl/atas/1315.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1315/ata/minuta_-_1a_soh_01.02.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:24Z",
+      "bytes": 151186,
+      "sha256": "0074fb6cf0a0d509967b75272446b9f22d994ca14ff0e9f8fa76d40927cbce2d"
+    },
+    "camara_sapl/atas/1316.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1316/ata/minuta_ata_2_so_06.02.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:25Z",
+      "bytes": 773971,
+      "sha256": "014bec479a028aa30a2bc9357d19e050b2fdd4b93d3d5899b59e2a9ba9853e6a"
+    },
+    "camara_sapl/atas/1317.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1317/ata/minuta_-_3a_soh_15.02.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:26Z",
+      "bytes": 495486,
+      "sha256": "c884b7f352dbeae5121b0e1c915e5c82a9aa9f5ab32b0e999b2577906ec63c0c"
+    },
+    "camara_sapl/atas/1319.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1319/ata/minuta_ata_4_so_20.02.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:28Z",
+      "bytes": 670053,
+      "sha256": "f8e5c0f36adb6dc7e0e72513e6604be0dbf80c4365fb92dbeba4883997dccc6e"
+    },
+    "camara_sapl/atas/1321.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1321/ata/minuta_-_5a_soh_22.02.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:29Z",
+      "bytes": 849732,
+      "sha256": "6a5202238687e3958851e7d8fb5538764f428a1d9cce00e62e1e010074ae32f5"
+    },
+    "camara_sapl/atas/1322.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1322/ata/minuta_ata_6_so_27.02.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:30Z",
+      "bytes": 628278,
+      "sha256": "46b03d439bd806ac0976f597a4c7b2a34831dcdaa0b7e6852460160b73b4ce61"
+    },
+    "camara_sapl/atas/1327.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1327/ata/minuta_-_7a_soh_29.02.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:31Z",
+      "bytes": 312792,
+      "sha256": "8d0fa16ef33feb30fc91b54931f118caa712dbb9494be5f55a02a27a6faa24a4"
+    },
+    "camara_sapl/atas/1329.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1329/ata/8a_so_05.03.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:32Z",
+      "bytes": 389293,
+      "sha256": "52f4de75bcdeb85f216ffb265bbfe63e7359e92199f2e3fb310b694343210083"
+    },
+    "camara_sapl/atas/1331.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1331/ata/minuta_-_9a_so__07.03.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:33Z",
+      "bytes": 309463,
+      "sha256": "e89f07f13d72364e0fca747b007392be635f69b1d8b683c7e629a446347243d0"
+    },
+    "camara_sapl/atas/1332.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1332/ata/minuta_ata_10_so_12.03.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:34Z",
+      "bytes": 709975,
+      "sha256": "110cecad85db1dcc935f7560af1daa4e5168cf1bea953eeeb867898b12b8ac57"
+    },
+    "camara_sapl/atas/1337.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1337/ata/minuta_-_11o__soh_14.03.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:36Z",
+      "bytes": 380890,
+      "sha256": "5086827017dc101dee3486ec4063dfa3de9dc7e321a374f74fd68faa1483cb6f"
+    },
+    "camara_sapl/atas/1339.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1339/ata/minuta_ata_12_so_19.03.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:37Z",
+      "bytes": 573825,
+      "sha256": "39d4fd761713f65550c5747ff8d277f30cc4f628d7a646628e592efb438d99c7"
+    },
+    "camara_sapl/atas/1342.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1342/ata/minuta_-_13a_soh_21.03.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:38Z",
+      "bytes": 347685,
+      "sha256": "bb05c36e5a8592147caa757fb4349cc9a986b4a1a7435f68c5739d5302ab2f5c"
+    },
+    "camara_sapl/atas/1344.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1344/ata/minuta_ata_14_so_26.03.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:39Z",
+      "bytes": 458968,
+      "sha256": "ba3f7336227ccc09c89aa46f866cfea045b9d08ca8f2bf342738a9c0baf5dac4"
+    },
+    "camara_sapl/atas/1348.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1348/ata/minuta_-__15a_soh_02.04.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:40Z",
+      "bytes": 297823,
+      "sha256": "bc98a6aafe0c2740f9c41f115aa0178c70e959183e01615d1c4ddbe7c0783554"
+    },
+    "camara_sapl/atas/1352.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1352/ata/ata_16_so_04.04.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:42Z",
+      "bytes": 503416,
+      "sha256": "ac8852e983723f3e503ea1159c2af03871671d321010563a964cae1c2e5a7c65"
+    },
+    "camara_sapl/atas/1355.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1355/ata/minuta_-_17a_so_9.4.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:43Z",
+      "bytes": 575927,
+      "sha256": "7f8001efdbdd5ecff0f8f4128af518cc11bd2e1ad3e132eb24661cce3311bbad"
+    },
+    "camara_sapl/atas/1360.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1360/ata/minuta_ata_18_so_11.04.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:44Z",
+      "bytes": 679941,
+      "sha256": "303770838d7c839757d3e3e009906465fbcaa815570fc27ccefc1b3dee9f2ff1"
+    },
+    "camara_sapl/atas/1362.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1362/ata/minuta_-_19a_soh_16.04.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:46Z",
+      "bytes": 526153,
+      "sha256": "023001c02499440fe544291eafd2aacea9076f5c5aadbfcd297967128bd74cb8"
+    },
+    "camara_sapl/atas/1367.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1367/ata/minuta_ata_20_so_18.04.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:47Z",
+      "bytes": 770202,
+      "sha256": "a40cab8af2a332daae966302bc0e9f94b98ae9531284fda6e6b39b8b3b375ca7"
+    },
+    "camara_sapl/atas/1370.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1370/ata/minuta_-_21a_soh_23.04.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:48Z",
+      "bytes": 520785,
+      "sha256": "d8362b91f27ef44ae1f8ce63b6fc26cdc47ad0111985d0ecdf683e947c239434"
+    },
+    "camara_sapl/atas/1380.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1380/ata/minuta_ata_22_so_25.04.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:49Z",
+      "bytes": 620068,
+      "sha256": "501ac7656f25ed30c51b9962002a326e802fdb3ab3e102421950399e8029e9c2"
+    },
+    "camara_sapl/atas/1383.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1383/ata/minuta_-_23a_so_30.04.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:51Z",
+      "bytes": 778868,
+      "sha256": "f75b3343e2f1c40324ee42d4c502ab36d950f22704f34d3e370b36dec020f545"
+    },
+    "camara_sapl/atas/1386.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1386/ata/minuta_ata_24_so_09.05.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:52Z",
+      "bytes": 612492,
+      "sha256": "ff07d614ec89af494488cfde682aa780172945c78a5b4feab78fa2837ddfb487"
+    },
+    "camara_sapl/atas/1393.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1393/ata/minuta_ata_25_so_14.05.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:53Z",
+      "bytes": 638384,
+      "sha256": "6ab5418b727fddb804ea7c06a5bfcad2ab7b85764affe86d82c7124b17219597"
+    },
+    "camara_sapl/atas/1398.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1398/ata/minuta_-_26a_soh_16.05.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:54Z",
+      "bytes": 537041,
+      "sha256": "1b96f638f0c829b3cdd1c20d9b6f83573a61d95f3741df111cdede637873be2b"
+    },
+    "camara_sapl/atas/1401.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1401/ata/minuta_ata_27_so_21.05.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:56Z",
+      "bytes": 538755,
+      "sha256": "774d21a8938ccfb3be743dcd2c6aae2dadbbe50a308481e555ebbc1da8ac1f1a"
+    },
+    "camara_sapl/atas/1407.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1407/ata/minuta_-_28a_so_23.05.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:57Z",
+      "bytes": 596601,
+      "sha256": "119b99463104689ce8ea063d278f22d6a01cc63f98d65586b1d2533741adba5e"
+    },
+    "camara_sapl/atas/1409.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1409/ata/minuta_ata_29_so_04.06.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:58Z",
+      "bytes": 459576,
+      "sha256": "9a80f504f00d5f6c6f1c78a9a7ef56877ca1d64dd371f4b3efd544b70fe18314"
+    },
+    "camara_sapl/atas/1416.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1416/ata/minuta_-_30a_soh_06.06.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:12:59Z",
+      "bytes": 248713,
+      "sha256": "6099be0f118b4c80750ff77ca58f954112d8f3838ee4355cd21bc32d986e8677"
+    },
+    "camara_sapl/atas/1418.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1418/ata/minuta_-_31a_soh_06.06.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:00Z",
+      "bytes": 155974,
+      "sha256": "d7ed7d48dfbd1ac59d0eac0fdcccd4e21cad2acc40092e1e97309f59e827d903"
+    },
+    "camara_sapl/atas/1419.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1419/ata/minuta_-_32a_soh_06.06.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:01Z",
+      "bytes": 155826,
+      "sha256": "f24dbbcc595efb490fb1122e07964182c2276165d8b6f81483e02a2016927c4b"
+    },
+    "camara_sapl/atas/1420.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1420/ata/minuta_-_33a_soh_06.06.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:02Z",
+      "bytes": 155934,
+      "sha256": "ca611da1ad30dc22a8c5b738c863c99bf233ead098945ec55000477d91e02dfb"
+    },
+    "camara_sapl/atas/1421.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1421/ata/minuta_-_34a_soh_06.06.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:03Z",
+      "bytes": 155900,
+      "sha256": "1fb9575d1bd279f37efea9163b2877347f5571bd1725d257817bbc1311096504"
+    },
+    "camara_sapl/atas/1422.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1422/ata/minuta_-_35a_soh_06.06.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:04Z",
+      "bytes": 615468,
+      "sha256": "9bfec6310a4af88d5c1238353fc8fe43dc2a071a13a9bcff13e6fabe0f135f99"
+    },
+    "camara_sapl/atas/1428.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1428/ata/minuta_ata_36_so_11.06.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:05Z",
+      "bytes": 554451,
+      "sha256": "480719ce5691aa88a5ee12ded8fb4b1496bd5744d54718fb83f449c016dd08c6"
+    },
+    "camara_sapl/atas/1430.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1430/ata/minuta_-_37a_soh_13.06.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:07Z",
+      "bytes": 372755,
+      "sha256": "1b70af4c1561a8b0f90e036c269fbbbd09ffa838a78732441a89dbd6025e85ce"
+    },
+    "camara_sapl/atas/1433.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1433/ata/minuta_ata_38_so_18.06.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:08Z",
+      "bytes": 1105333,
+      "sha256": "24630454d72d047f1442f34990db36ef300752ef17f5ab198dbdf870805fa131"
+    },
+    "camara_sapl/atas/1439.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1439/ata/minuta_39a_so01.08.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:09Z",
+      "bytes": 161400,
+      "sha256": "6e5aad8444a1e6527c0d8a25f66916f4b530cc339fae67c0b0592bcc2914105c"
+    },
+    "camara_sapl/atas/1440.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1440/ata/minuta_ata_40_so_06.08.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:10Z",
+      "bytes": 584587,
+      "sha256": "665b26be77788f6fc3595ee7bfed4ac509440e93b45f1b6286dc3ea1f28eeaf0"
+    },
+    "camara_sapl/atas/1441.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1441/ata/minuta_-_41a_so_08.08.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:11Z",
+      "bytes": 288382,
+      "sha256": "5483556661233bbb14f141079561a62c26c3042dc3d5f163b8016d51318f1948"
+    },
+    "camara_sapl/atas/1444.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1444/ata/minuta_ata_42_so_13.08.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:12Z",
+      "bytes": 514345,
+      "sha256": "f1180794ae8f0e31bc252a044d08e6b66649ccbe35ebddc11b16409f637dc1f1"
+    },
+    "camara_sapl/atas/1446.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1446/ata/minuta_-_43a_so_15.08.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:13Z",
+      "bytes": 181423,
+      "sha256": "d578da5f7f3dd292c9f88098535d93eb91f4c5378449141ee1a23beeb1b967a3"
+    },
+    "camara_sapl/atas/1449.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1449/ata/minuta_ata_44_so_20.08.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:14Z",
+      "bytes": 587192,
+      "sha256": "54f56c9462ba02913022be1f2be42e5b37293635c75d5093ac45e5808a75f588"
+    },
+    "camara_sapl/atas/1451.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1451/ata/minuta_-_45a_so_22.08.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:15Z",
+      "bytes": 172070,
+      "sha256": "15139f2f8592aea568327869911f7fa96ba5d073b92d712856dade2bf423deb5"
+    },
+    "camara_sapl/atas/1453.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1453/ata/minuta_ata_46_so_27.08.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:17Z",
+      "bytes": 433295,
+      "sha256": "abb861fbc5c14ac8653da2edf6edd3d0d6fa84101bb7f60d9ce4f4cd63607b87"
+    },
+    "camara_sapl/atas/1457.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1457/ata/minuta_-_47a_so_29.08.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:18Z",
+      "bytes": 242167,
+      "sha256": "43b7d4e43b00800ad044d4392df52267330f07237ed8493a8c243d96279fcd74"
+    },
+    "camara_sapl/atas/1460.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1460/ata/minuta_ata_48_so_03.09.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:19Z",
+      "bytes": 423559,
+      "sha256": "a44ec5984dc9c8667bc594de7f0e89b6e5386a2002be745f123cda4a7bbf6071"
+    },
+    "camara_sapl/atas/1465.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1465/ata/minuta_-_49a_so_05.09.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:20Z",
+      "bytes": 211813,
+      "sha256": "9b144de0b84b33d9c1338c63ad49a819e559b8cfa0ae875abb7726592184d863"
+    },
+    "camara_sapl/atas/1470.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1470/ata/minuta_ata_50_so_12.09.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:21Z",
+      "bytes": 512276,
+      "sha256": "cfbabecfb6e03978c6382e0cbfb0cf2bb1a75fd07958a7c1374c2584151b628f"
+    },
+    "camara_sapl/atas/1482.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1482/ata/minuta_-_51a_so_17.9.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:22Z",
+      "bytes": 194579,
+      "sha256": "d4012a31a10fafbccc3421a0868fbfa4cf292a616554d7c47a8ab9265594d4d7"
+    },
+    "camara_sapl/atas/1484.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1484/ata/minuta_ata_52_so_19.09.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:23Z",
+      "bytes": 431624,
+      "sha256": "9d18718e579b330ae279d97bb37b6bcd53fadf245b687d6a021317241f064132"
+    },
+    "camara_sapl/atas/1489.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1489/ata/minuta_-_53a_so_26.09.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:24Z",
+      "bytes": 315450,
+      "sha256": "69461f78c7270bc5f0f685c63f40c96c10d855de092f3542bf71b72544744cf1"
+    },
+    "camara_sapl/atas/1490.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1490/ata/minuta_ata_54_so_08.10.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:26Z",
+      "bytes": 497080,
+      "sha256": "79a79077651c99a40d4304a395e166eb964744ee4cb07412c19b1ac66750ad94"
+    },
+    "camara_sapl/atas/1492.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1492/ata/minuta_-_55a_so_10.10.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:27Z",
+      "bytes": 168940,
+      "sha256": "28d491451613d5f84dba59d2b7a8d902058dca2c2f94e52b8f0a8d1788359caf"
+    },
+    "camara_sapl/atas/1495.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1495/ata/minuta_ata_56_so_15.10.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:28Z",
+      "bytes": 646603,
+      "sha256": "128dc24b1e747b8c5fbb7a8e35209441d2bd7e7f5d83fdb235b61a160f2d9dc1"
+    },
+    "camara_sapl/atas/1496.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1496/ata/minuta_-_57a_so_17.10.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:29Z",
+      "bytes": 141919,
+      "sha256": "da8a46450fa74c20e3f43583a35a35e9871557f20b3787ce7ceccd2bf285362b"
+    },
+    "camara_sapl/atas/1498.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1498/ata/minuta_ata_58_so_22.10.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:30Z",
+      "bytes": 556464,
+      "sha256": "541678cd7710e2841069f995fb7c6e067c46826a013c1d86d4c37fb1f4ef7b21"
+    },
+    "camara_sapl/atas/1499.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1499/ata/minuta-_59a_so_24.10.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:31Z",
+      "bytes": 208117,
+      "sha256": "a8e60391ddbb15f83709678b8e773bb6cf10127d74268c2ac99b7e5f11e0b5aa"
+    },
+    "camara_sapl/atas/1501.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1501/ata/minuta_ata_60_so_29.10.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:32Z",
+      "bytes": 503479,
+      "sha256": "633f9ecf8b431f1dcf16fef168c542327e1be21091a1519336f018b8eb917f79"
+    },
+    "camara_sapl/atas/1504.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1504/ata/minuta_-_61a_so_31.10.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:33Z",
+      "bytes": 197517,
+      "sha256": "9b7393b1e0c3322a9ed9bb686464b250933e8fc94db00f0da1e136b43b770a2e"
+    },
+    "camara_sapl/atas/1506.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1506/ata/minuta_-__62a_so_31.10.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:34Z",
+      "bytes": 138601,
+      "sha256": "2cd479c48c25b0e74ac0d8dc7a757f980f5bffad704ea7aa61af74efa5435748"
+    },
+    "camara_sapl/atas/1507.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1507/ata/minuta_-_63a_so_31.10.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:35Z",
+      "bytes": 138841,
+      "sha256": "f232a78b164899264fe72ad696e7118b03dbc3d62930a4bfd3d74d313d3ae238"
+    },
+    "camara_sapl/atas/1508.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1508/ata/minuta_-_64a_so_31.10.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:36Z",
+      "bytes": 139405,
+      "sha256": "1e3056c40629c600a4fd8e90437f7618c9a5b9938a688be395865052688494a9"
+    },
+    "camara_sapl/atas/1509.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1509/ata/minuta_-_65a_so_31.10.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:37Z",
+      "bytes": 140477,
+      "sha256": "c6a0324bf6f5c1294b32626dd790834d99a6c9c48d01af28372f20b6d04e68fd"
+    },
+    "camara_sapl/atas/1510.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1510/ata/minuta_-_66a_so_31.10.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:38Z",
+      "bytes": 242369,
+      "sha256": "93839100b97ffeb357574ab0721428abd0e0cfa7e22cf23c7650376d4db16e94"
+    },
+    "camara_sapl/atas/1512.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1512/ata/minuta_ata_67_so_05.11.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:39Z",
+      "bytes": 531217,
+      "sha256": "736b3c45659c3eb0a9814097d1350578805c0b7a32d3c2ec285cccea7afc329b"
+    },
+    "camara_sapl/atas/1514.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1514/ata/minuta_-__68a_so_07.11.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:40Z",
+      "bytes": 261172,
+      "sha256": "094559af077f55c7fe52ea0cbf4b070dbb6386809f40c449d343853695650107"
+    },
+    "camara_sapl/atas/1517.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1517/ata/minuta_-_69a_so_12.11.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:41Z",
+      "bytes": 265766,
+      "sha256": "bcec0ee732c626aeb194483f80ed3ea6136c297e4aa50fb87b84dcd2c4c0702a"
+    },
+    "camara_sapl/atas/1519.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1519/ata/minuta_-_70a_so_14nov2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:42Z",
+      "bytes": 242855,
+      "sha256": "4e4de4e258ac46f3c86a19449432db40d4274ea1379b0676ad06221a89952639"
+    },
+    "camara_sapl/atas/1523.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1523/ata/71_so_19.11.2024.doc",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:43Z",
+      "bytes": 175104,
+      "sha256": "c5e6fdd8fc0ffc329ba9eee1fe0b438e1a260ea3fcb0f0dce8feab0df6a60a02"
+    },
+    "camara_sapl/atas/1524.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1524/ata/minuta_ata_72_so_21.11.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:46Z",
+      "bytes": 395677,
+      "sha256": "70b133c0f8be08f1f8681b2fc8835693cb865271a1d344d171b194fdac58225e"
+    },
+    "camara_sapl/atas/1530.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1530/ata/minuta_ata_73_so_26.11.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:47Z",
+      "bytes": 577957,
+      "sha256": "a3c39f04ba8e18b70dd30380de91acd2123f3423201200dc3825f74d4be43437"
+    },
+    "camara_sapl/atas/1531.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1531/ata/minuta_-_74a_so_28.11.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:48Z",
+      "bytes": 179560,
+      "sha256": "88b643f28f4330e0e24287d611a77f034bfebb5a5590d24181d718dc051f694e"
+    },
+    "camara_sapl/atas/1532.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1532/ata/minuta_ata_75_so_03.12.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:49Z",
+      "bytes": 749563,
+      "sha256": "8b8d5b983c1d8880c6f58bf6d3f50cb1fd4c981108108af43326e2085797111b"
+    },
+    "camara_sapl/atas/1539.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1539/ata/minuta_ata_76_so_03.12.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:51Z",
+      "bytes": 559858,
+      "sha256": "f01fc65c5214083948e11b359b78c1656a644414f2e574f75ef2f9ce378d3172"
+    },
+    "camara_sapl/atas/1542.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1542/ata/minuta_ata_77_so_03.12.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:52Z",
+      "bytes": 560474,
+      "sha256": "945de1d7d743a1ef7d49f892ff96589b75a277f56e12b977272fd35cefa7f68d"
+    },
+    "camara_sapl/atas/1544.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1544/ata/minuta_ata_78_so_03.12.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:53Z",
+      "bytes": 560422,
+      "sha256": "4e05475a9dab7aa7aebcdead64b437c4efe33ac2d4056ddb5cc0ad21353d6c64"
+    },
+    "camara_sapl/atas/1545.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1545/ata/minuta_ata_79_so_03.12.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:54Z",
+      "bytes": 431640,
+      "sha256": "c862b2811ca6959437294c86841067740431afb8f9d87be79311cf6683a6a4c0"
+    },
+    "camara_sapl/atas/1546.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1546/ata/minuta_-_80a_so_05.12.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:55Z",
+      "bytes": 147132,
+      "sha256": "e7a68c09c03dde590a97685262326fd7140d4c7f5e6a0dd79c230b0c6ee4c0fe"
+    },
+    "camara_sapl/atas/1553.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1553/ata/minuta_ata_81_so_10.12.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:57Z",
+      "bytes": 833001,
+      "sha256": "cc6f99f2dc50360f78dfd768cc8c240f50f7d9bb63ed6c11cee62223c5a50a51"
+    },
+    "camara_sapl/atas/1555.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1555/ata/minuta_-_82a_so_12.12.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:58Z",
+      "bytes": 240804,
+      "sha256": "55b3312dcf5a3690b0fd2aaf6f2fb093de367065ff8089370f4cdfac69d53f5b"
+    },
+    "camara_sapl/atas/1556.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1556/ata/minuta_ata_83_so_17.12.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:13:59Z",
+      "bytes": 580193,
+      "sha256": "5b68044bdc8a452f0c3393a43b35e249f09929d4d745ad62d50125843903b456"
+    },
+    "camara_sapl/atas/1562.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1562/ata/minuta_-_84a_so_18.12.24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:00Z",
+      "bytes": 425169,
+      "sha256": "d69de66fcc6d092962f09259cd9679495c0dd809ef33ff8e2fabdb5b5f2a7178"
+    },
+    "camara_sapl/atas/1563.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1563/ata/minuta_ata_85_so_19.12.2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:02Z",
+      "bytes": 755539,
+      "sha256": "e4c14babe72160dd0dd8260e9c1301b56e78f79d2f0a17eb9f7326531a74028f"
+    },
+    "camara_sapl/atas/1564.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1564/ata/minuta_-_1a_sext_26dez24.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:03Z",
+      "bytes": 218462,
+      "sha256": "ca9e0f56f38212c753f65f66b597a7e496470a1601630623142032b95854b0da"
+    },
+    "camara_sapl/atas/1566.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1566/ata/ata_sessao_extraordinaria_eleicao_e_posse_mesa_diretora_2025_2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:04Z",
+      "bytes": 1236257,
+      "sha256": "f35f663441c0fd608456b1459eb3a7d73344fbb357d614ed511e02bbe7788a80"
+    },
+    "camara_sapl/atas/1569.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1569/ata/minuta_-_1a_so_06.02.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:05Z",
+      "bytes": 302419,
+      "sha256": "41bde368838f1c3bb686d74a508613b843f56672364067e445a1d1fbbc8d6995"
+    },
+    "camara_sapl/atas/1571.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1571/ata/minuta_-_2a_so_11.02.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:06Z",
+      "bytes": 276373,
+      "sha256": "bad21f17cc39f59460715d2be752622170d6f9394360bc666a6d8d26ecaacc33"
+    },
+    "camara_sapl/atas/1572.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1572/ata/minuta_-_3a_so_13.02.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:07Z",
+      "bytes": 329805,
+      "sha256": "560b5d4cecfba40e35b43552d0200bf81941a1ffb21e16a0e09c3c41f8bc3ad3"
+    },
+    "camara_sapl/atas/1574.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1574/ata/minuta_ata_4_so_18.02.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:09Z",
+      "bytes": 598885,
+      "sha256": "fb3f40dcd2f351e6a23761caa59bba79ed48c05028c9723cc6d83c12881c20cd"
+    },
+    "camara_sapl/atas/1578.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1578/ata/minuta_ata_5_so_20.02.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:10Z",
+      "bytes": 684744,
+      "sha256": "a1fc85fa3cbef0a86acd5305a028d839fcc24057becda74b731c8c62d8cd8465"
+    },
+    "camara_sapl/atas/1582.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1582/ata/minuta_ata_6_so_25.02.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:11Z",
+      "bytes": 547879,
+      "sha256": "aa99a3f84b61f12cf1636d3acb91ba5d7af318bae2fa41e13ba0f9a0ac6711f2"
+    },
+    "camara_sapl/atas/1584.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1584/ata/minuta_ata_7_so_06.03.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:12Z",
+      "bytes": 644198,
+      "sha256": "87fd4157a505ea4c81480d42a1b3764f6719c23b3f87d9e59cc6c99592a452bc"
+    },
+    "camara_sapl/atas/1587.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1587/ata/minuta_ata_8_so_11.03.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:14Z",
+      "bytes": 743083,
+      "sha256": "b9b10ebbe1653dad64c020061f1d2a27385a77ad1f29f28d2edc9941bb22a879"
+    },
+    "camara_sapl/atas/1589.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1589/ata/minuta_ata_9_so_13.03.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:15Z",
+      "bytes": 576115,
+      "sha256": "ce3d1beafb80e602f9c08b0b066b42fec2179d809fb1cddf71b9733203e86b40"
+    },
+    "camara_sapl/atas/1591.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1591/ata/minuta_10a_so_18.03.25.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:16Z",
+      "bytes": 329897,
+      "sha256": "07b3d652f3e35466fa607c6a48f1f431f16a4dc5f3c955eb1ad8246a68ae26a1"
+    },
+    "camara_sapl/atas/1594.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1594/ata/minuta_ata_11_so_20.03.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:17Z",
+      "bytes": 584928,
+      "sha256": "1680a866e61d40e2aeb823ba0b262ef5cd306f5b05d11050069642b55cea8fb5"
+    },
+    "camara_sapl/atas/1596.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1596/ata/minuta_-12a_so_25.03.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:18Z",
+      "bytes": 302474,
+      "sha256": "41b53715648ae8e2ba0ffd2e0abb47f2cf1b7f6a29db369a86164227375b577e"
+    },
+    "camara_sapl/atas/1598.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1598/ata/minuta_ata_13_so_27.03.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:19Z",
+      "bytes": 678137,
+      "sha256": "5089fa5334d3b53148221a32582a214e5a55683ef4bd5e3dd9c49ba17db56108"
+    },
+    "camara_sapl/atas/1602.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1602/ata/minuta_-_14a_so_01.04.205.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:20Z",
+      "bytes": 335016,
+      "sha256": "3da2e8e5ba6dc03afa222bfc2c7571386a9543205724f3693190a03676cda718"
+    },
+    "camara_sapl/atas/1605.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1605/ata/minuta_-_15a_so_03.04.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:22Z",
+      "bytes": 230790,
+      "sha256": "5beb54bcbf8591e6c57473ecd19d6169982677457efc5fd022bc69c2ff337c12"
+    },
+    "camara_sapl/atas/1610.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1610/ata/minuta_16_so_08.04.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:23Z",
+      "bytes": 317614,
+      "sha256": "86ec8ad2b7692da0e48e359cf577d17ca0dd1e1d22bc813ae5d650f2e5be6392"
+    },
+    "camara_sapl/atas/1612.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1612/ata/minuta_17a_so_10.04.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:24Z",
+      "bytes": 410850,
+      "sha256": "3f9fceb0129d7da5068a5eb8dc2e43a180e34f2ccbb3525fc213ce654d8c0371"
+    },
+    "camara_sapl/atas/1617.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1617/ata/minuta_ata_18_so_15.04.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:25Z",
+      "bytes": 566010,
+      "sha256": "516b666922a16f21cb704ef04cb6ad96c48f6983d0aff74c14f04f142e9b470d"
+    },
+    "camara_sapl/atas/1619.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1619/ata/minuta_ata_19_so_22.04.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:26Z",
+      "bytes": 658166,
+      "sha256": "dd5d3c548e774c2fcf9a94d07a1019c0ebf72f000c34d4f2bd7f0761e01880f6"
+    },
+    "camara_sapl/atas/1620.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1620/ata/minuta_-__20a_so_24.04.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:27Z",
+      "bytes": 331814,
+      "sha256": "e9639f43ba38b87116fa0fcd0b40259558b61f1866f49919806b32c51df1bffe"
+    },
+    "camara_sapl/atas/1622.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1622/ata/minuta_ata_21_so_29.05.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:29Z",
+      "bytes": 540684,
+      "sha256": "ff1b303e1abcbdf1e2f5fea245601c30f06fd978b248575a49a87e76ae00187d"
+    },
+    "camara_sapl/atas/1627.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1627/ata/minuta_-_22a_so_06.05.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:30Z",
+      "bytes": 285466,
+      "sha256": "16045ad90ca794d547fc89e4f66de5f65525bf5f0322ba498cf08c45af453bc7"
+    },
+    "camara_sapl/atas/1630.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1630/ata/minuta_ata_23_so_08.05.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:31Z",
+      "bytes": 621454,
+      "sha256": "3b7524a389ed032757a26e311106efd296d082f6c08c7d3de69e66f56107236e"
+    },
+    "camara_sapl/atas/1633.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1633/ata/minuta_ata_24_so_13.05.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:32Z",
+      "bytes": 553407,
+      "sha256": "50a5b305a11cc5d0ed657d4c8b403dc4055221e909d4c765a9cc137c5caea1a2"
+    },
+    "camara_sapl/atas/1637.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1637/ata/minuta_ata_25_so_15.05.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:33Z",
+      "bytes": 702857,
+      "sha256": "f7c037acad338a1f743c2fbf8f4a21f31a4fafa92967953c3c2753a8372e732b"
+    },
+    "camara_sapl/atas/1640.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1640/ata/minuta_-_26a_so_20.05.25.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:34Z",
+      "bytes": 316193,
+      "sha256": "6f47f38139260a48552ee96a9ea813403c0f72b4fd103888e7372046db307004"
+    },
+    "camara_sapl/atas/1643.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1643/ata/minuta_-27a_so_22.05.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:35Z",
+      "bytes": 395846,
+      "sha256": "98a388d1a99aaaee75e524da101795f6122bd213e1cdbc9d3844a79ae032efc5"
+    },
+    "camara_sapl/atas/1647.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1647/ata/minuta_-_28a_so_27.05.25.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:37Z",
+      "bytes": 389748,
+      "sha256": "8b973fa4cb9b2823999def2bc03e7c2d1e699ae2c145863713ca4c2b6d8a33b1"
+    },
+    "camara_sapl/atas/1653.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1653/ata/minuta_ata_29a_so_03.06.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:38Z",
+      "bytes": 523196,
+      "sha256": "62b4f6cb1dc587ec01141e6aef12ccea12248a1651f7c192bf92d26299922e71"
+    },
+    "camara_sapl/atas/1655.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1655/ata/minuta_30a_so_05.06.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:39Z",
+      "bytes": 343053,
+      "sha256": "e3800405a7be3961d391132d9357e260367fe662ab8baf69fb21c45574351210"
+    },
+    "camara_sapl/atas/1657.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1657/ata/minuta_ata_31_so_10.06.25.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:40Z",
+      "bytes": 437079,
+      "sha256": "67e7b9abbff9033646da0f3adc632f18cd6854e8c48f8ff6c746e5f097e2d130"
+    },
+    "camara_sapl/atas/1662.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1662/ata/minuta_32_so_12.06.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:41Z",
+      "bytes": 435503,
+      "sha256": "0b8cd63195e751fbba6c96bba4ae300259214349e7eb6f2453de094edff46a3f"
+    },
+    "camara_sapl/atas/1668.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1668/ata/minuta_ata_33a_so_17.06.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:42Z",
+      "bytes": 753948,
+      "sha256": "de19e1a96310d6b91e66c4e39a8beff054d64003733bd7884a1a50b3bda3f4d6"
+    },
+    "camara_sapl/atas/1672.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1672/ata/minuta_ata_34a_so_07.08.25.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:44Z",
+      "bytes": 653634,
+      "sha256": "f67812758dd09e72934538b629d1a8e8f2d5a55e9d2cfb64f47e634fcd47b311"
+    },
+    "camara_sapl/atas/1675.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1675/ata/minuta_ata_35a_so_12.08.25.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:45Z",
+      "bytes": 636745,
+      "sha256": "7c7fa363c582de4f7cbbe3054726b49a873c9cc2c2c2da3fc94f52845ef800f2"
+    },
+    "camara_sapl/atas/1677.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1677/ata/minuta_ata_36a_so_14.08.25.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:46Z",
+      "bytes": 657023,
+      "sha256": "5b49c07d2d7cefb271e927759b601f020e72e118a9881486df6184a4097de869"
+    },
+    "camara_sapl/atas/1680.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1680/ata/minuta_37a_so_19.08.25.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:47Z",
+      "bytes": 307923,
+      "sha256": "f7677461d7ccdb187ad894e8cf8c2d62b7915cd05bb0064fc3eaac0e65e74c11"
+    },
+    "camara_sapl/atas/1682.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1682/ata/minuta_-_38a_so_21.8.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:49Z",
+      "bytes": 425693,
+      "sha256": "b9db63df4406ff7bbe2e5313fe8d4beb4cffb47b79949fe73640faa5c16430d3"
+    },
+    "camara_sapl/atas/1687.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1687/ata/minuta_39a_so_25ago25.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:50Z",
+      "bytes": 401892,
+      "sha256": "f4d353846e3ffe412d348f145ac7aef94da5dca7e24d488e6aeba81b1fcb4bc4"
+    },
+    "camara_sapl/atas/1694.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1694/ata/minuta_ata_40a_so_02.09.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:51Z",
+      "bytes": 597021,
+      "sha256": "652d3c90e152aa73902de1b3aba2fe3acedfb09378378b066709f7717e5080d9"
+    },
+    "camara_sapl/atas/1695.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1695/ata/minuta_41a_so_04.09.25.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:52Z",
+      "bytes": 348819,
+      "sha256": "6c6ebb6ae47eb2e6bf89d0171e9080490fab183c18ba3cc177cbcfa378515bae"
+    },
+    "camara_sapl/atas/1700.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1700/ata/minuta_42a_so_09.09.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:53Z",
+      "bytes": 320788,
+      "sha256": "747137d53d60fa4f63fc285073f6d68466b541dd8bfd5913d55b1302ad531939"
+    },
+    "camara_sapl/atas/1701.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1701/ata/minuta_ata_43a_so_11.09.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:54Z",
+      "bytes": 697568,
+      "sha256": "c2d85f48463bf66cb647d49f7bbec2f864f6605965d774f28f52bfb72a0dcfa2"
+    },
+    "camara_sapl/atas/1708.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1708/ata/minuta-_44a_so_16.09.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:55Z",
+      "bytes": 348886,
+      "sha256": "91664636858c4ac942d6ce6767ae9717be783f431a89f8fda96e7bdb90dc1600"
+    },
+    "camara_sapl/atas/1711.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1711/ata/minuta_ata_45a_so_18.09.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:57Z",
+      "bytes": 526535,
+      "sha256": "564254c5585326ded7649bd1ef3fadc7bfcbfdfc7bfab8fd8918ab1afcd15484"
+    },
+    "camara_sapl/atas/1716.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1716/ata/minuta_46a_so_23.09.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:58Z",
+      "bytes": 336329,
+      "sha256": "babb5a4a4652c305dc068ddfa88a538bb6decb0d32df149883e83dd2ae061300"
+    },
+    "camara_sapl/atas/1722.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1722/ata/minuta_ata_47a_so_30.09.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:14:59Z",
+      "bytes": 554207,
+      "sha256": "d1eccd68e1a296cf74bfd28a61bbfda78443a42f69c9f7ce824b59bcc4389554"
+    },
+    "camara_sapl/atas/1725.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1725/ata/minuta_48a_so_02.10.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:00Z",
+      "bytes": 425674,
+      "sha256": "a6c3147bf4d9b272c9bc54aa0029c947f060fa7e552885928ee8e317321cc417"
+    },
+    "camara_sapl/atas/1728.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1728/ata/minuta_ata_49a_so_07.10.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:05Z",
+      "bytes": 48018764,
+      "sha256": "71983a2a4f47c82a860b4535f0cf6a2aa68c21762df89eb2cea7bec70ef313e2"
+    },
+    "camara_sapl/atas/1730.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1730/ata/minuta_-_50a_so_09.10.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:06Z",
+      "bytes": 434825,
+      "sha256": "e76a8b1e3c4be1b89a7f4b6c63cb9320ce0125fe451a5e49e0e8265ed86853ad"
+    },
+    "camara_sapl/atas/1735.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1735/ata/minuta_ata_51a_so_14.10.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:07Z",
+      "bytes": 564879,
+      "sha256": "07e1f600817950a0f969c4e723be0d797a923f6489d94f9252dda0fb06ccfc56"
+    },
+    "camara_sapl/atas/1739.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1739/ata/minuta_52a_so_16.10.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:08Z",
+      "bytes": 362832,
+      "sha256": "ef67846414d839ab4069115f3fb8f7b338895374d5f1dccaaa57152fd140020d"
+    },
+    "camara_sapl/atas/1743.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1743/ata/minuta_-_53a_so_21.10.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:09Z",
+      "bytes": 304869,
+      "sha256": "c88bcc0506fddb1910fa8bef0d438e464b41536a26697ae65524b0b27c11dffb"
+    },
+    "camara_sapl/atas/1747.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1747/ata/minuta_ata_54a_so_23.10.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:10Z",
+      "bytes": 591647,
+      "sha256": "0333a7ae07b9a9f0e35b8ad1a35612c1b511ad7ba6262032f2e2f6144f678543"
+    },
+    "camara_sapl/atas/1751.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1751/ata/minuta_55a_so_28.10.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:12Z",
+      "bytes": 373475,
+      "sha256": "0e6fb712dacaf42654863f611f81b813a588feda456f1409b4ee205590b417d5"
+    },
+    "camara_sapl/atas/1757.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1757/ata/minuta_56a_so_04.11.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:13Z",
+      "bytes": 252924,
+      "sha256": "d6fed00858e26e0d6baa25f9625df33ba346d28d4a2091c879e7ef56e23f4b18"
+    },
+    "camara_sapl/atas/1764.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1764/ata/ata_57a_so_06.11.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:14Z",
+      "bytes": 690539,
+      "sha256": "c04e5d0ddc2031f41e6f47cfc837b14a4204a9c019496b1225838fed5c848c7e"
+    },
+    "camara_sapl/atas/1765.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1765/ata/minuta_-_58a_so_11.11.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:15Z",
+      "bytes": 361850,
+      "sha256": "d21ef53770565def8015115366a7b738314180b9ec8c12d2dda117136576b21a"
+    },
+    "camara_sapl/atas/1768.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1768/ata/ata_59a_so_13.11.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:16Z",
+      "bytes": 646988,
+      "sha256": "662ffbcaa249f1dd6bd92c3ab91dc4ec42e253089b6e12ff014832631417a4e6"
+    },
+    "camara_sapl/atas/1774.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1774/ata/ata_60a_so_18.11.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:17Z",
+      "bytes": 616876,
+      "sha256": "15492576c7b7f2282478173f97d82d24091e854f14824aa196b15a25cb8baa25"
+    },
+    "camara_sapl/atas/1776.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1776/ata/minuta_61_so_25.11.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:19Z",
+      "bytes": 327834,
+      "sha256": "ad477081e02f1b8fb6da9d7028c69bdd53d9abe0670cdd4f9d0eb6436b2b90c7"
+    },
+    "camara_sapl/atas/1781.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1781/ata/ata_62a_so_02.12.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:20Z",
+      "bytes": 559733,
+      "sha256": "9c94a92a1161202d6eaddf07e572d0d9137faea83ba8d8bdc0f412c5b25bab1e"
+    },
+    "camara_sapl/atas/1791.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1791/ata/ata_63a_so_04.12.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:21Z",
+      "bytes": 569643,
+      "sha256": "6f1f7f91d67118b59eb130b736afb08cce210ee51e3115d7e6bb03ff958048a4"
+    },
+    "camara_sapl/atas/1793.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1793/ata/ata_64a_so_09.12.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:22Z",
+      "bytes": 483168,
+      "sha256": "a2b9fffdddf416619c76d4083c478f2b818fe23710369ca9bf65589e47b5943f"
+    },
+    "camara_sapl/atas/1800.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1800/ata/minuta_-_65a_so_11.12.25.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:23Z",
+      "bytes": 354918,
+      "sha256": "a9e2ab99fd341c3a09a20f10cd077178cc9e06f27b6f6a05bef22613daf7b466"
+    },
+    "camara_sapl/atas/1805.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1805/ata/ata_66a_so_16.12.2025.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:25Z",
+      "bytes": 596265,
+      "sha256": "a90eaec682f9987ec58c001a27197cce763b7349af870ec6be08af19281723f9"
+    },
+    "camara_sapl/atas/1810.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1810/ata/minuta_1a_so_10.02.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:26Z",
+      "bytes": 294976,
+      "sha256": "7e529ae4aa99ea46662054b7006df8810cb7c3b7d0c7f4ab7f2f58acca1ad75f"
+    },
+    "camara_sapl/atas/1811.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1811/ata/ata_2a_so_19.02.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:27Z",
+      "bytes": 586811,
+      "sha256": "39d0cdbc52422c4b2ba1784644ae73abbf825a0e5713208e7e29fa3a24f0444f"
+    },
+    "camara_sapl/atas/1813.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1813/ata/minuta_3a_so_24.02.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:28Z",
+      "bytes": 312708,
+      "sha256": "3968547ac2224bb095c61f9ec7cd060c01edd9254ea0dbfb9ec0fc55ca42753d"
+    },
+    "camara_sapl/atas/1814.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1814/ata/ata_4a_so_26.02.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:29Z",
+      "bytes": 520792,
+      "sha256": "85a35d243937893967744cdfde1bbc62e7bfac5034f495de9f9d666a6a03d2b8"
+    },
+    "camara_sapl/atas/1817.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1817/ata/minuta_5a_so_03.03.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:30Z",
+      "bytes": 258600,
+      "sha256": "a02b2001f3903435fa4ee9ed581c5c677d2981c2c3eb51cb2f8176e23675242c"
+    },
+    "camara_sapl/atas/1819.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1819/ata/ata_6a_so_05.03.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:31Z",
+      "bytes": 700561,
+      "sha256": "7927eeb458582d970d736b8ddff2802905879b9e03899969f8692ea5f9632d73"
+    },
+    "camara_sapl/atas/1822.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1822/ata/minuta_-_7a_so_10.3.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:33Z",
+      "bytes": 289303,
+      "sha256": "3a78484f4f5d162f8d7a27f21eb4b4dadfa5ccc8f16baa62672b0e57a1264ee3"
+    },
+    "camara_sapl/atas/1827.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1827/ata/ata_da_8a_so_12.03.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:34Z",
+      "bytes": 329948,
+      "sha256": "04bb1e87022589137e8d20529016295e0ceef9326615502669bf5338aed19445"
+    },
+    "camara_sapl/atas/1829.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1829/ata/minuta_9a_so_17.03.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:35Z",
+      "bytes": 311115,
+      "sha256": "934137299308716421b162e24592f2a2e6d6360af9193e790411fa701f853f64"
+    },
+    "camara_sapl/atas/1832.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1832/ata/ata_10a_so_19.03.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:36Z",
+      "bytes": 532874,
+      "sha256": "ab55ac6a4952c56e9def9af0239e927853579a023eb1bfa942a71ac147839ccb"
+    },
+    "camara_sapl/atas/1837.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1837/ata/minuta_11a_so_24.03.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:37Z",
+      "bytes": 362393,
+      "sha256": "743456ccdcd7016a9615b6230c4c4912c4dc011399b98d5619ef7edf8f03687f"
+    },
+    "camara_sapl/atas/1840.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1840/ata/ata_12a_so_26.03.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:38Z",
+      "bytes": 500807,
+      "sha256": "937b576bd1ee1e42121a435245cbee2c6312dd70b6dc39b412c27ff9ba135244"
+    },
+    "camara_sapl/atas/1845.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1845/ata/minuta13a_so_31.03.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:39Z",
+      "bytes": 381893,
+      "sha256": "4e3087700b145e09c01c69292dd8c354bf522ba03270916e9623554ca9864e95"
+    },
+    "camara_sapl/atas/1848.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1848/ata/ata_14a_so_07.04.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:41Z",
+      "bytes": 630191,
+      "sha256": "4367768820e54083ff26a1fd78c751f85291bcbd46fa07d56debe2d1be944b83"
+    },
+    "camara_sapl/atas/1850.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1850/ata/minuta_-_15a_so_09.04.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:42Z",
+      "bytes": 302954,
+      "sha256": "abf9f40cbbad9dcb8f1c29d7723f7361616aefd9809b77433564c6d73ed99842"
+    },
+    "camara_sapl/atas/1857.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1857/ata/minuta_16a_so_14.04.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:43Z",
+      "bytes": 557638,
+      "sha256": "2745f3bcc2586ab1d187a42971bef87863535755eb2289adf0932adf6f2e2cd6"
+    },
+    "camara_sapl/atas/1860.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1860/ata/ata_17a_so_16.04.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:48Z",
+      "bytes": 51676278,
+      "sha256": "9ba3501c1675ba6615e84d501283b349139b4717ff79a2192a40c16dcb5bd758"
+    },
+    "camara_sapl/atas/1864.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1864/ata/ata_18a_so_23.04.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:50Z",
+      "bytes": 447116,
+      "sha256": "2880c7cf53a732bf4c783e88418d823032a90975e86da4ed200a7aa2a9e14b7f"
+    },
+    "camara_sapl/atas/1868.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1868/ata/ata_19a_so_28.04.26.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:51Z",
+      "bytes": 355206,
+      "sha256": "7071c8221f007babc2db0bfdb038e0dd013f14f3456cbdf6ccf617f1a7bc601e"
+    },
+    "camara_sapl/atas/1870.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1870/ata/ata_20a_so_30.04.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:52Z",
+      "bytes": 498224,
+      "sha256": "64b1930c26022fba54f60e8f47a8ca6e158276ca9d152617599bf8d112a061b3"
+    },
+    "camara_sapl/atas/1872.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1872/ata/minuta_da_ata_21a_so_05.05.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:53Z",
+      "bytes": 607529,
+      "sha256": "e494e4e549036fbdff4b93dd09bef02035dd5f2430e53543f6e5bd35856ae81d"
+    },
+    "camara_sapl/atas/1875.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1875/ata/ata_22a_so_07.05.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:54Z",
+      "bytes": 673583,
+      "sha256": "8bf0311bc56bf54d29895f3c06a628b74a334d1f1d3fd20cbcdd12558fce8a93"
+    },
+    "camara_sapl/atas/1878.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1878/ata/minuta_da_ata_23a_so_13.05.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:56Z",
+      "bytes": 625950,
+      "sha256": "7acf4242c0020f02ae1c10da31f04c7ab94a537356ae255ce5e1d9e093b6beb4"
+    },
+    "camara_sapl/atas/1881.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1881/ata/ata_24a_so_14.05.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:57Z",
+      "bytes": 637397,
+      "sha256": "c40798ebee4842504b95dcf4c71a4389406be6e0efeb24635680113f0337bc7a"
+    },
+    "camara_sapl/atas/1883.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1883/ata/minuta_da_ata_da_25a_so_20.05.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:58Z",
+      "bytes": 640404,
+      "sha256": "bebe5774aaeb132ec187a14a44db2f7fbb459de0ad1d54d9f42ae18af2ac8946"
+    },
+    "camara_sapl/atas/1887.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1887/ata/ata_26a_so_21.05.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:15:59Z",
+      "bytes": 551387,
+      "sha256": "fe5e4bd61f800613b64990dda4494b1aa141abf1a6beec6b183a9538cdcfc2ec"
+    },
+    "camara_sapl/atas/1892.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1892/ata/ata_-_27a_so_26.05.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:01Z",
+      "bytes": 623211,
+      "sha256": "23b6a8393cf02596e1ac5c5a74862943ae63232bfbf88138679bb651706af900"
+    },
+    "camara_sapl/atas/1897.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1897/ata/ata_28a_so_28.05.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:02Z",
+      "bytes": 493010,
+      "sha256": "d4a8f7819d5c119a772786b1ff02c5bf8a6d7b71e90e4481babb9bd513fe136f"
+    },
+    "camara_sapl/atas/1901.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1901/ata/ata_-_29a_so_02.06.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:03Z",
+      "bytes": 168914,
+      "sha256": "020fc774c382d3a6d18cfb45dcef72dad198efaf20b9139ac4b68e9598de0d8a"
+    },
+    "camara_sapl/atas/1905.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1905/ata/minuta_da_ata_da_30a_so_09.06.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:04Z",
+      "bytes": 781746,
+      "sha256": "62692e57fe67d484cd6dd2891adcf9c4f550beb529657b54042ec4517c587c97"
+    },
+    "camara_sapl/atas/1908.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1908/ata/ata_-_31aso_11jun2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:05Z",
+      "bytes": 623205,
+      "sha256": "9ee9833793c02eec14af4627581d079e9e3b1c5db4a1481068a82b9808c2c0ce"
+    },
+    "camara_sapl/atas/1912.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1912/ata/minuta_da_ata_da_32a_so_16.06.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:07Z",
+      "bytes": 595631,
+      "sha256": "9365b4743950beb7001715dffa0ae8a5d7db0ebd2d11faa511c29df25d0ec8aa"
+    },
+    "camara_sapl/atas/1915.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1915/ata/ata_33a_so_18.06.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:08Z",
+      "bytes": 812324,
+      "sha256": "989cbe299e8a82622dd302faa38c41d0f1403ce9b16626215e75b97bdd2bac0f"
+    },
+    "camara_sapl/atas/1916.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1916/ata/1a_s_ext_16.07.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:09Z",
+      "bytes": 450972,
+      "sha256": "fda27a8458f9ad12ac4f1ccdc11075d3a4a29f8f2339618f801ce0309fd79de7"
+    },
+    "camara_sapl/atas/1918.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1918/ata/ata_34a_so_06.08.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:14Z",
+      "bytes": 550594,
+      "sha256": "b7068c2845572fb9c2261fccb945befb8405f6822770491a1662a9cbcb3cad66"
+    },
+    "camara_sapl/atas/1919.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1919/ata/minuta_da_ata_da_35a_so_11.08.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:15Z",
+      "bytes": 703606,
+      "sha256": "2829091a2701986c8b68b3c43deb4908222ce9df8d2f9a8df0623098ea4d419e"
+    },
+    "camara_sapl/atas/1922.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1922/ata/minuta_-_36_a_so_13.08.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:16Z",
+      "bytes": 734012,
+      "sha256": "caa98658292f5e28e6ac79db5227ddb766bbbb9dd3cefa2494c93bce246aba08"
+    },
+    "camara_sapl/atas/1926.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1926/ata/minuta_da_ata_da_37a_so_19.08.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:18Z",
+      "bytes": 516251,
+      "sha256": "57922588abb18b3e670c74656647e76d44e286a3fb0f5b51b8188e539b2e6919"
+    },
+    "camara_sapl/atas/1930.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1930/ata/ata_38a_so_20.08.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:19Z",
+      "bytes": 609061,
+      "sha256": "6a5e68a2523fac91f0c1ae02b00f3225683c70ca7015c3be12951a2da659d73a"
+    },
+    "camara_sapl/atas/1934.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1934/ata/minuta_-_39a_so_25ago2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:20Z",
+      "bytes": 348072,
+      "sha256": "7c89706071411357a26ad69d284f9c79e6813e906c41b7e7a921eebafceedb7b"
+    },
+    "camara_sapl/atas/1937.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1937/ata/minuta_da_ata_da_40a_so_28.08.26_e_tit._joao_suassuna_ii.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:21Z",
+      "bytes": 528598,
+      "sha256": "bf259e9da7a73d40c3db2a6a9071a2b9a430f5d300b5db7320b1c498327b00c3"
+    },
+    "camara_sapl/atas/1941.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1941/ata/ata_41a_so_01.09.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:22Z",
+      "bytes": 702164,
+      "sha256": "d3d612f477b8f4cdb073962802ab7e969bd12c263371e0d8c698c118dc08d468"
+    },
+    "camara_sapl/atas/1943.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1943/ata/minuta_-_ata_42a_so_03.09.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:24Z",
+      "bytes": 635906,
+      "sha256": "3c3700a7837c367e073ea71edb54723c13167466ea932bd91fda337d743d9c1c"
+    },
+    "camara_sapl/atas/1947.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1947/ata/ata_43a_so_08.09.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:25Z",
+      "bytes": 660244,
+      "sha256": "4c54a024e39e7a67224baf6a017c337eefc546b83b831b927451a022a5ec948e"
+    },
+    "camara_sapl/atas/1948.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1948/ata/minuta_-_ata_44a_so_10.09.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:26Z",
+      "bytes": 395641,
+      "sha256": "996b5f25716f401282508772217b8e9034670a0af5a18998b3171be867a2776a"
+    },
+    "camara_sapl/atas/1951.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1951/ata/minuta_da_ata_da_45a_so_15.09.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:27Z",
+      "bytes": 668083,
+      "sha256": "050a01b7e4c48577071a05968059364ddb66e080690168088c22455a93d8e9ae"
+    },
+    "camara_sapl/atas/1953.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1953/ata/ata_46a_so_17.09.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:28Z",
+      "bytes": 673862,
+      "sha256": "67ecd0c548ff57463bdb31a1957292ad69d8d32ad55b6066c3ac146b3442cd57"
+    },
+    "camara_sapl/atas/1956.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1956/ata/minuta_-_ata_47a_so_22.09.26.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:30Z",
+      "bytes": 523776,
+      "sha256": "dec72f35962583b808affdea8022628f7f61c1f75ab1efbdd06bb2b8c88d2415"
+    },
+    "camara_sapl/atas/1958.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1958/ata/minuta_da_ata_da_48a_so_24.09.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:31Z",
+      "bytes": 459238,
+      "sha256": "cb12712e97e63f0c1e4a3ad479b75b1cee29a48a8ea72d32b3b7e71573629ccc"
+    },
+    "camara_sapl/atas/1961.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1961/ata/ata_49a_so_29.09.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:32Z",
+      "bytes": 534664,
+      "sha256": "ede002a1a0ccee51db4170c056e471fd9d165afb550fe44000b70d99a6f9e520"
+    },
+    "camara_sapl/atas/1963.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1963/ata/minuta_-_ata_50a_so_01.10.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:33Z",
+      "bytes": 589388,
+      "sha256": "59bef71688952c643e1715bc5535e11b47547c2dfafcb39aed88a883203aa304"
+    },
+    "camara_sapl/atas/1966.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1966/ata/minuta_da_ata_da_51a_so_06.10.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:35Z",
+      "bytes": 530065,
+      "sha256": "ba6237247357552af4f11e595ebe584e6f788425a3bc77b05e6f94000eaa5865"
+    },
+    "camara_sapl/atas/1967.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1967/ata/minuta-_52a_so_08.10.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:36Z",
+      "bytes": 403194,
+      "sha256": "8367f334c7473d63cd1f8f927060475004c647b8f00fa2d424d400c717cb0181"
+    },
+    "camara_sapl/atas/1970.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1970/ata/minuta_da_ata_da_53a_ss_13.10.26.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:37Z",
+      "bytes": 520721,
+      "sha256": "92efe821aaa3d37fdf054959d2376a6f893078a023740b2d52de24f7682dab89"
+    },
+    "camara_sapl/atas/1971.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1971/ata/ata_54a_so_15.10.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:38Z",
+      "bytes": 559974,
+      "sha256": "1ffe3c03570dc39a11a723b25aa17c5ef96960cfc1fa79aa0cc79f2ffc546c21"
+    },
+    "camara_sapl/atas/1973.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1973/ata/minuta_da_ata_da_55a_so_20.10.26.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:39Z",
+      "bytes": 455824,
+      "sha256": "3a2b60a127066cbeaecb7815af832cb46933d9a33f3baf64f8c51d21c036ae57"
+    },
+    "camara_sapl/atas/1975.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1975/ata/minuta_da_ata_da_56a_so_20.10.26.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:41Z",
+      "bytes": 697513,
+      "sha256": "e915c2290942f412a78ae0ea934d46179bcf870178e419305061391e30b00427"
+    },
+    "camara_sapl/atas/1978.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1978/ata/ata_57a_so_27.10.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:42Z",
+      "bytes": 552001,
+      "sha256": "e298543e3273950ffe21e0f36fde52bab2bad786e1f34a4ec7761e57e4ad6167"
+    },
+    "camara_sapl/atas/1979.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1979/ata/minuta_da_ata_da_58a_so_03.11.26.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:43Z",
+      "bytes": 659803,
+      "sha256": "7f69574705a295abd85d7166eb95388224022a033ace4c8a7a5fc87c35b5b43e"
+    },
+    "camara_sapl/atas/1980.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1980/ata/revisada_59a_so_05.11.2026_copia.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:53Z",
+      "bytes": 98731557,
+      "sha256": "b34d4d5e26bd2c0e67078650766d30380d43675cdb500aef151a821b2584c8c2"
+    },
+    "camara_sapl/atas/1984.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1984/ata/ata_60a_so_10.11.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:54Z",
+      "bytes": 438978,
+      "sha256": "ba3622143570e39a31a084779066a784c0f548d9679e86793277608f41f43e26"
+    },
+    "camara_sapl/atas/1985.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1985/ata/ata_61a_so_10.11.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:55Z",
+      "bytes": 389051,
+      "sha256": "5271dc77b5ed0bcd540f6a70c269abc7f4999dbbf5822ec66744fac6aff7f021"
+    },
+    "camara_sapl/atas/1986.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1986/ata/ata_62a_so_10.11.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:56Z",
+      "bytes": 389587,
+      "sha256": "293931f2e109f41daec0e42e41507d9716e7eabaef16e471315ef25d704209c7"
+    },
+    "camara_sapl/atas/1987.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1987/ata/ata_63a_so_10.11.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:58Z",
+      "bytes": 388766,
+      "sha256": "3e3d9fe18d896b1f764dd0a9c7f7ab09fc8fcb8713d34f85f3f40d49177d6ca7"
+    },
+    "camara_sapl/atas/1988.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1988/ata/ata_64a_so_10.11.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:16:59Z",
+      "bytes": 507582,
+      "sha256": "d024332712cdf2ec697d374419a69592f564468cee35383f41f71fc48ae65bb4"
+    },
+    "camara_sapl/atas/1991.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1991/ata/minuta_da_ata_da_65a_so_12.11.2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:17:00Z",
+      "bytes": 626511,
+      "sha256": "6e2ca373dbe818a337796b76f34a53415f87fdd89999de144661b0383cd7194c"
+    },
+    "camara_sapl/atas/1997.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/1997/ata/minuta_66a_so_17-11-2026.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:17:07Z",
+      "bytes": 69834834,
+      "sha256": "7384b1d83b9639cd1aa99746d40446e1953b21ec73e02dbf4212e41b16d4ccdf"
+    },
+    "camara_sapl/atas/2002.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/2002/ata/minuta_da_ata_da_2a_ssextraord._eleicao_mesa_19.11.26.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:17:08Z",
+      "bytes": 405133,
+      "sha256": "82a25c56da01240f89cbfe546d6a9c75f88622fd5c010cba14c480dbc30dc6ba"
+    },
+    "camara_sapl/atas/639.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/639/ata/ata_da_1a_sessao_extraordinaria_de_eleicao_e_posse_mesa_diretora_2021-2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:11Z",
+      "bytes": 151485,
+      "sha256": "baf41095d1f02d4b90c5cf81af5fb0c4a6cb56e1f48c7d85bd3b92d864614184"
+    },
+    "camara_sapl/atas/640.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/640/ata/ata_da_2a_sessao_extraordinaria_pr.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:12Z",
+      "bytes": 126981,
+      "sha256": "bf7319298bd573f78fa3efcf8754557d45e0168c62f92b05c00b1a56655e138c"
+    },
+    "camara_sapl/atas/641.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/641/ata/ata_da_3a_sessao_extraordinaria_eleicao_mesa_diretora_2023-2024.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:13Z",
+      "bytes": 137626,
+      "sha256": "843ea253421c7f5f96e8543b2ab68c988a38af8c30ca5ca2ef8120a79560c0f8"
+    },
+    "camara_sapl/atas/646.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/646/ata/minuta_1a_sessao_ordinaria_hibrida_2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:14Z",
+      "bytes": 249158,
+      "sha256": "962f670fb505e6f4acfb4f234941929eb9506b3665d9d40b158bd829c5de3956"
+    },
+    "camara_sapl/atas/647.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/647/ata/minuta_ata_2_so_02.03.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:15Z",
+      "bytes": 515329,
+      "sha256": "99ff235b48bca9874614aee0ecd4c0ac78d268e10bcfbf4f8687d84d75db2501"
+    },
+    "camara_sapl/atas/649.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/649/ata/minuta_-_3a_sessao_ordinaria_04_03_2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:16Z",
+      "bytes": 248909,
+      "sha256": "51362336efe958962a0faac75a7da1e1c61109bd254f3391cc9e3ba976580ab9"
+    },
+    "camara_sapl/atas/650.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/650/ata/minuta_ata_4_so_09.03.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:18Z",
+      "bytes": 662420,
+      "sha256": "47476fe05c31fc28bd0db4f702dcdd87fecbe432b566a6c0992ce1c1ef3bc315"
+    },
+    "camara_sapl/atas/653.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/653/ata/minuta_5a_sessao_ordinaria_11.03.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:19Z",
+      "bytes": 239764,
+      "sha256": "2c5e023dfbde0e08519630ce8401d135ff4e1e86f3564a7d747fbe9415935a1e"
+    },
+    "camara_sapl/atas/655.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/655/ata/minuta_ata_6_so_16.03.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:20Z",
+      "bytes": 543812,
+      "sha256": "7f1dc92ee4494b3cbe4ab60fdae268f02bf5250babf6d1ad305b68e024193652"
+    },
+    "camara_sapl/atas/656.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/656/ata/minuta_-_7a_sessao_ordinaria_18.03.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:21Z",
+      "bytes": 222605,
+      "sha256": "494470b425c22e7b7d4193781cdb83f0eb2bc70195beb326c41c81705707c95b"
+    },
+    "camara_sapl/atas/659.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/659/ata/minuta_8_so_23.03.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:22Z",
+      "bytes": 691263,
+      "sha256": "09b5323477e693a4de62c2f32c35f2893fd0a81f7b8fad35c851849465b1ad7b"
+    },
+    "camara_sapl/atas/660.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/660/ata/minuta_-_9a_sessao_ordinaria_25.03.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:23Z",
+      "bytes": 248316,
+      "sha256": "6430f9f8661d8b21fc5f83e106c3d2069904da56f623ece1f07eeb248167b540"
+    },
+    "camara_sapl/atas/662.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/662/ata/minuta_ata_10_so_06.04.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:25Z",
+      "bytes": 632593,
+      "sha256": "7f7484a38d92983fc788cdb5e56127aeb412ecbedbb2e3d713591d5d0feb3425"
+    },
+    "camara_sapl/atas/663.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/663/ata/minuta_-_11a_sessao_ordinaria_13.04.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:26Z",
+      "bytes": 530767,
+      "sha256": "e76af1c92799f675d7eb1047397fab09db8a773bcb3ff8b127bc04c1e21aa90b"
+    },
+    "camara_sapl/atas/667.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/667/ata/minuta_ata_12_so_15.04.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:27Z",
+      "bytes": 695026,
+      "sha256": "0665a505106e38180919f946b0c601fb04336e0a74a507ef3fcf5e9487c50ef0"
+    },
+    "camara_sapl/atas/670.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/670/ata/minuta_-_13a_sessao_ordinaria_20.04.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:28Z",
+      "bytes": 233257,
+      "sha256": "a058b8fba6132ae1fcbd431857b3297904874d778bbf6235c29883fa65705b95"
+    },
+    "camara_sapl/atas/671.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/671/ata/minuta_ata_14_so_22.04.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:29Z",
+      "bytes": 740731,
+      "sha256": "d198b024691504c52bad19c869373a420f39ae46bd3d4ab0c60fefd41364dc2a"
+    },
+    "camara_sapl/atas/675.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/675/ata/minuta_-_15a_sessao_oordinaria_27.04.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:30Z",
+      "bytes": 237487,
+      "sha256": "43a7aedcc02a243b710d6ede4868b43ac8a2d5de62cef8adcf100569f93bd322"
+    },
+    "camara_sapl/atas/677.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/677/ata/minuta_ata_16_so_29.04.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:32Z",
+      "bytes": 639117,
+      "sha256": "864514d988bbbb5fd4e4c3634316bc4faf521aa80474286cb6ac2233435d2c0e"
+    },
+    "camara_sapl/atas/678.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/678/ata/minuta_-_17a_sessao_ordinaria_4.5.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:33Z",
+      "bytes": 218131,
+      "sha256": "36eae3ad6642bdf5b662b93ddb7558e7f813de4d0a8f351b2f04e1665e2f2051"
+    },
+    "camara_sapl/atas/679.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/679/ata/minuta_ata_18_so_06.05.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:34Z",
+      "bytes": 678173,
+      "sha256": "4910a3aa1d55adeb46bf62cb3e589e10bd394e83074976605de26509dfabc5f6"
+    },
+    "camara_sapl/atas/681.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/681/ata/minuta_-_19a_sessao_ordinaria_11.5.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:35Z",
+      "bytes": 255031,
+      "sha256": "e41d72ac6d9e45a3ceef1aee5b78f4848aa47a1ed8a428fa257bc8de185216db"
+    },
+    "camara_sapl/atas/683.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/683/ata/minuta_ata_20_so_remota_13.05.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:36Z",
+      "bytes": 663284,
+      "sha256": "d597f50a8a7430ac0a652e8e0e59ebd338c99622be1e9c6b93f53af8ab0cd336"
+    },
+    "camara_sapl/atas/685.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/685/ata/minuta_-_21a_sessao_ordinaria_18.05.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:37Z",
+      "bytes": 214215,
+      "sha256": "f2c6f1028a99a25aeb1c47a868eefcdb2ddbf9aeecccfe7ecd2a17c466c41343"
+    },
+    "camara_sapl/atas/686.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/686/ata/minuta_ata_22_so_remota_20.05.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:38Z",
+      "bytes": 691493,
+      "sha256": "10eeb4f52f9efa1f5f16d8cdb4b4ecf644a57271efe55f13a581b75546ce351d"
+    },
+    "camara_sapl/atas/689.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/689/ata/minuta_-_23a_sessao_ordinaria_25.05.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:39Z",
+      "bytes": 187002,
+      "sha256": "7f8a7bc14a7ef659e91686bba8a7598484e554c0b2a2f3f77c1223bd5806c6d1"
+    },
+    "camara_sapl/atas/690.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/690/ata/minuta_ata_24_so_remota_27.05.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:41Z",
+      "bytes": 612996,
+      "sha256": "6d59ab794f591dd8ba8ec50ef75836596690d53d47a97e456f5c5840b65c8e23"
+    },
+    "camara_sapl/atas/692.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/692/ata/minuta_-_25a_sessao_ordinaria_01.06.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:42Z",
+      "bytes": 230803,
+      "sha256": "5090161a2742cb06662800686312e4c1f5e0d6e261e422783543176c4dc8f3b6"
+    },
+    "camara_sapl/atas/696.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/696/ata/minuta_ata_26_so_08.06.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:43Z",
+      "bytes": 535768,
+      "sha256": "99cb585aa81bf3da4c1bcc788a1908c0897521d63d4234717cd50dc20f8c6ba0"
+    },
+    "camara_sapl/atas/697.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/697/ata/minuta-_27a_sessao_ordinaria_10.06.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:44Z",
+      "bytes": 251371,
+      "sha256": "36fe7837ae2903987eb66eb8faee9589ade8d55a00d1e7c4672bb636d7180ecc"
+    },
+    "camara_sapl/atas/700.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/700/ata/minuta_ata_28_so_remota_17.06.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:45Z",
+      "bytes": 644609,
+      "sha256": "8ec4d340276e96fb367fb1f6965a08ebeac88d44cb47258389e58936611ca939"
+    },
+    "camara_sapl/atas/704.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/704/ata/minuta_-_29a_sessao_ordinaria_22.06.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:46Z",
+      "bytes": 351398,
+      "sha256": "d0c9ab8f624a66ef91e34933276f9c553749cf6059b84f459242f7e465db3fb1"
+    },
+    "camara_sapl/atas/706.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/706/ata/minuta_ata_30_so.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:48Z",
+      "bytes": 645742,
+      "sha256": "73c755822eaeac06184fa45be8127f15f2c45f80bbecc50aee7ff42edeff458e"
+    },
+    "camara_sapl/atas/709.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/709/ata/minuta_-_31a_sessao_ordinaria_01.07.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:49Z",
+      "bytes": 212494,
+      "sha256": "05fb94ac7ac95b90ab4d9e9c02cbe999a1e8d2bc690c83ff868b35f16d6532ee"
+    },
+    "camara_sapl/atas/711.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/711/ata/minuta_-__4a_sessao_extraordinaria_remota_29.07.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:50Z",
+      "bytes": 229986,
+      "sha256": "b86783d0d324e50ab3e960fb5f91fa6d28cc1664d2b5914093c3c598d9fef4ff"
+    },
+    "camara_sapl/atas/712.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/712/ata/minuta_ata_32_so_2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:51Z",
+      "bytes": 427449,
+      "sha256": "a6764aa5e83679aaa5442d0ddd51052eaf951b09a4d02e2d67e9d917bd3c3e2e"
+    },
+    "camara_sapl/atas/714.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/714/ata/minuta_-_33a_sessao_oordinaria_12.08.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:52Z",
+      "bytes": 211182,
+      "sha256": "f28bee4c7ea5069d346f4e1b110442b787825fd11315e525b121d196501f0dac"
+    },
+    "camara_sapl/atas/716.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/716/ata/minuta_ata_34_so_17.08.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:53Z",
+      "bytes": 514117,
+      "sha256": "99b1c1b323481f4cc437f978387a8a26768db54eaf4f26d22752670261334286"
+    },
+    "camara_sapl/atas/718.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/718/ata/minuta_-_35a_sessao_ordinaria_19.08.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:54Z",
+      "bytes": 252300,
+      "sha256": "a4ce2a853a409cc5c594c75b2aa2dbdf0d8872c4371c15056320bbc8f7dbaabc"
+    },
+    "camara_sapl/atas/719.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/719/ata/minuta_ata_36_so_24.08.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:56Z",
+      "bytes": 658400,
+      "sha256": "e793bc895d8bbf57a681f3568f12d9070cd8452bb3f5a2b5d5d84d5eea20ad62"
+    },
+    "camara_sapl/atas/721.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/721/ata/minuta_-_37a_sessao_ordinaria_26.08.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:57Z",
+      "bytes": 243336,
+      "sha256": "5e8d63cee4e474bb2d77ff208fef7af2308247c2db3b361c21542e9ad3a037b9"
+    },
+    "camara_sapl/atas/724.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/724/ata/minuta_ata_38_so_31.08.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:58Z",
+      "bytes": 574041,
+      "sha256": "e5bc1cb6a5a5bb96058e16a54c6a2945bfbdbcac54e9ce6330696fa83cf0f6c1"
+    },
+    "camara_sapl/atas/726.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/726/ata/minuta_-_39a_sessao_ordinaria_02.09.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:59Z",
+      "bytes": 213161,
+      "sha256": "5d0e399a239def1e01a33b20be25d21ecb790654c7c60fc900e1c3462631140d"
+    },
+    "camara_sapl/atas/729.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/729/ata/40_so_09.09.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:00Z",
+      "bytes": 292245,
+      "sha256": "0ab2505f39b838e13ee4f4aa434f423273ecc1ae6f3f489fe23a989b48b706d0"
+    },
+    "camara_sapl/atas/742.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/742/ata/minuta_-_41a_sessao_ordinaria_14.09.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:01Z",
+      "bytes": 250963,
+      "sha256": "f062460cde70b32fa7baa15edfa9d33bb2e58f66fd12a04314697bac3f91e343"
+    },
+    "camara_sapl/atas/745.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/745/ata/minuta_ata_42_so_16.09.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:02Z",
+      "bytes": 516827,
+      "sha256": "8ccf7136e6bcf2e09b2e7560e0ea727772f10dd211846f8471ad04603bfe9f18"
+    },
+    "camara_sapl/atas/748.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/748/ata/minuta_-_43a_sessao_ordinaria_21.09.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:03Z",
+      "bytes": 239024,
+      "sha256": "d82640a567a3ccbd68266e3f6b5736232f4103bfa12d810205c90a9e176234af"
+    },
+    "camara_sapl/atas/750.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/750/ata/minuta_ata_44_so_23.09.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:05Z",
+      "bytes": 858459,
+      "sha256": "1091b5c097bda61fa2e06bfe6753df43143968bffad4b21107c189868bce5359"
+    },
+    "camara_sapl/atas/762.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/762/ata/minuta_-_45a_sessao_ordinaria_28.09.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:06Z",
+      "bytes": 219693,
+      "sha256": "b20c5c2aed5558b4b8e0e40da83ef0e4c7ec0249aed729d7ea59051dc547ea34"
+    },
+    "camara_sapl/atas/764.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/764/ata/minuta_ata_46_so_30.09.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:07Z",
+      "bytes": 644352,
+      "sha256": "58e35fae6475bade9d8f3251bff10bd55d7212e7f143dd550fce3c3bc52d61a0"
+    },
+    "camara_sapl/atas/766.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/766/ata/minuta_-_47a_sessao_ordinaria_05.10.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:08Z",
+      "bytes": 246683,
+      "sha256": "492715358785193b3282b114cb6183d4dec7a9c4e01ab22ac20c6068d44cf607"
+    },
+    "camara_sapl/atas/768.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/768/ata/minuta_ata_48_so_07.10.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:09Z",
+      "bytes": 602470,
+      "sha256": "362fe3d032a387ece4e7923fb49eff8a18692a82660a3dba3004ab047b291da6"
+    },
+    "camara_sapl/atas/771.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/771/ata/minuta_-_49a_sessao_ordinaria_hibrida_14.10.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:10Z",
+      "bytes": 192450,
+      "sha256": "5ec0ee64dfb56c9c03ff4b104ee0a8f4c39a6e36b404ad6b4e0d5b00fdfb216f"
+    },
+    "camara_sapl/atas/774.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/774/ata/minuta_ata_50_so_19.10.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:11Z",
+      "bytes": 600515,
+      "sha256": "6bad27426c4c7c5a5ac4ec1f95b1f68e204300f1f560f9696a46e3e7575e864f"
+    },
+    "camara_sapl/atas/784.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/784/ata/minuta_-_51a_sessao_ordinaria_21.10.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:13Z",
+      "bytes": 247523,
+      "sha256": "beb4eb8d43592be46e1bc644194f28ee5cdb642c23eb2a2fe10d2c6597115534"
+    },
+    "camara_sapl/atas/787.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/787/ata/minuta_ata_52_so_26.10.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:14Z",
+      "bytes": 655993,
+      "sha256": "f9738ff718b6aa338d3400b784f0b34e7259528d9626efd62f9bc50c1007e341"
+    },
+    "camara_sapl/atas/789.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/789/ata/minuta_53a_sessao_ordinaria_28.10.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:15Z",
+      "bytes": 5028999,
+      "sha256": "46910fd43d501630f27b61ee18beeffa9d4a07b65681bd50889d03881e3e9f9c"
+    },
+    "camara_sapl/atas/792.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/792/ata/minuta_ata_54_so_04.11.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:17Z",
+      "bytes": 480017,
+      "sha256": "c1f9a4ee243ab558b1f86fbd27239380a26e3bc5654fef18ee42b82253fadab8"
+    },
+    "camara_sapl/atas/795.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/795/ata/minuta_-_55a_sessao_ordinaria_09.11.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:18Z",
+      "bytes": 124068,
+      "sha256": "1b0ab3f7bea363f0ddb76aed08b05a97c7b4b050e5100a9da27bf4f2f379e66e"
+    },
+    "camara_sapl/atas/797.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/797/ata/minuta_ata_56_so_11.11.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:19Z",
+      "bytes": 550038,
+      "sha256": "843f55818d1a72dcd0000910fa2bb59216ed43c43bf401af8853dc6e2d474394"
+    },
+    "camara_sapl/atas/805.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/805/ata/minuta_-_57a_sessao_ordinaria_16.11.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:20Z",
+      "bytes": 219891,
+      "sha256": "cfa5b1eeb8b778e451f771442a4fe09ec4238bea039b5ed752128c48748a241e"
+    },
+    "camara_sapl/atas/806.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/806/ata/minuta_ata_58_so_18.11.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:21Z",
+      "bytes": 574067,
+      "sha256": "9eb8fc8cd9fc06afe6e7d5bb48cbb099c5594f8ed13b7fc6d293c10c82ea77ab"
+    },
+    "camara_sapl/atas/811.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/811/ata/minuta_59a_sessao_ordinaria_23.11.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:22Z",
+      "bytes": 254237,
+      "sha256": "37c50b4b160f17e60ae1b19c7e802c838865699b787941e23a8babeea1b3205c"
+    },
+    "camara_sapl/atas/812.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/812/ata/minuta_-_60a_sessao_ordinaria_25.11.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:23Z",
+      "bytes": 250087,
+      "sha256": "b709111d8486569796cae533f041646c8caf4fe4a4b457b527a4d33e0597bbfc"
+    },
+    "camara_sapl/atas/818.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/818/ata/minuta_ata_61_so_30.11.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:25Z",
+      "bytes": 481006,
+      "sha256": "2d41211b0944e57b3877f18ea67cbdb0e6c532a63daabe00c47cbf29371acb4c"
+    },
+    "camara_sapl/atas/819.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/819/ata/minuta_ata_62_so_02.12.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:26Z",
+      "bytes": 536008,
+      "sha256": "d1ec70892cbb5ea79e1d54842e3f099447f9036d67d2c6bc33df7e7496a1e2b0"
+    },
+    "camara_sapl/atas/824.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/824/ata/minuta_ata_63_so_07.12.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:27Z",
+      "bytes": 169955,
+      "sha256": "a417547265abe91fdd7df241bca2cf3a3a2c930678eeb5251d2f1052d72f8246"
+    },
+    "camara_sapl/atas/828.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/828/ata/minuta_ata_64_so_14.12.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:28Z",
+      "bytes": 616715,
+      "sha256": "4129bc29a92fd87fb4ceafa0b24b16ab72b4ac36d0c9f653b98ca8acb98abf22"
+    },
+    "camara_sapl/atas/830.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/830/ata/minuta_ata_65_so_16.12.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:29Z",
+      "bytes": 419292,
+      "sha256": "c1c60d3f5139e041eebb6d07f071e6c006922faabc5c5e04b730ede0724a4549"
+    },
+    "camara_sapl/atas/832.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/832/ata/minuta_sextraord_16.12.2021.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:30Z",
+      "bytes": 362999,
+      "sha256": "8198a499def81966add2aada561f48b0db08251b7f4f027f76f76c48178fb292"
+    },
+    "camara_sapl/atas/836.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/836/ata/minuta_-_66a_sessao_oordinaria_21.12.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:31Z",
+      "bytes": 300501,
+      "sha256": "24088378346b88e7bc1e35938b4de26d5bb5571c064067f81f2eef8070d112c6"
+    },
+    "camara_sapl/atas/842.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/842/ata/minuta_-_67a_sessao_ordinaria_28.12.21.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:33Z",
+      "bytes": 1072996,
+      "sha256": "768dcb9b7205d29a175ee6f1defbc545fd7fbb9e12c119cdc1ef5de317a77e2a"
+    },
+    "camara_sapl/atas/845.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/845/ata/minuta_ata_1_so_17.02.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:34Z",
+      "bytes": 558317,
+      "sha256": "6df4efba487c0e37b499344c4d931c61e15fedb8e75d22bffe26b83cf81ddc3b"
+    },
+    "camara_sapl/atas/846.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/846/ata/minuta_-_2a_sessao_ordinaria_22.02.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:35Z",
+      "bytes": 212731,
+      "sha256": "9e94725341dd70897b372404083bc0d51020b530989cb986795d3d4acd6d8ea8"
+    },
+    "camara_sapl/atas/847.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/847/ata/minuta_ata_3_so_24.02.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:36Z",
+      "bytes": 512650,
+      "sha256": "c49f1e6cd12eb11b6a9c62b0df6b1d135c7944af6b3b26a3f708ed888d8f17d7"
+    },
+    "camara_sapl/atas/848.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/848/ata/minuta_ata_4_so_03.03.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:37Z",
+      "bytes": 579180,
+      "sha256": "950900e96e32941745f8ee414e663402d9a4b777379320fad11528f6b6d024ed"
+    },
+    "camara_sapl/atas/849.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/849/ata/minuta_-_5a_sessao_ordinaria_08.03.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:39Z",
+      "bytes": 213793,
+      "sha256": "44d56b3d428da2a1e0595cd90713217048df613bf76decc67d3c67a7f834ab37"
+    },
+    "camara_sapl/atas/850.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/850/ata/minuta_ata_6_so_10.03.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:40Z",
+      "bytes": 597471,
+      "sha256": "2d6b2fd87f0fe33573429124e1d7ff2104c1f1d356430bab23acbff88960d188"
+    },
+    "camara_sapl/atas/852.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/852/ata/minuta_-_7a_sessao_ordinaria_15.03.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:41Z",
+      "bytes": 136172,
+      "sha256": "6c4a5bd990311d84f6fe94d1e538406f07cdf86aa9455be214be61e970e753c5"
+    },
+    "camara_sapl/atas/853.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/853/ata/minuta_-_8a_sessao_ordinaria_15.03.22_.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:42Z",
+      "bytes": 122913,
+      "sha256": "e1f4c53042fcc1e304313092331d1005ab0a497673a0bf8fa78f9ba194ff1ea3"
+    },
+    "camara_sapl/atas/854.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/854/ata/minuta_-_10a_sessao_ordinaria_15.03.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:43Z",
+      "bytes": 121946,
+      "sha256": "3d823ee2f7ab952dd41c4d023dd0e498be47bf5051cc41cb3f4fd4907191c992"
+    },
+    "camara_sapl/atas/855.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/855/ata/minuta_-_11a_sessao_ordinaria_15.03.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:44Z",
+      "bytes": 121917,
+      "sha256": "56940d8f8ae21d48cc182322a69214bd40a84c5ed8e43ea159d49637a7403084"
+    },
+    "camara_sapl/atas/856.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/856/ata/minuta_-_12a_sessao_ordinaria_15.03.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:44Z",
+      "bytes": 122001,
+      "sha256": "30b4a2cc4d77a403982467f04950caa2f4f9ce553cdf548244474a7772f0f7f5"
+    },
+    "camara_sapl/atas/859.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/859/ata/minuta_ata_13_so_17.03.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:46Z",
+      "bytes": 541447,
+      "sha256": "971d23483174089cce26a39f446fadfe2953925a2edd3ac383a4190cc9340f29"
+    },
+    "camara_sapl/atas/862.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/862/ata/minuta_-_9a_sessao_ordinaria_15.03.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:47Z",
+      "bytes": 122495,
+      "sha256": "aafccb41807a4ac5b22efaf2b67d8e3cdb37ddb9f1f3ff456ba9e4677fb967bd"
+    },
+    "camara_sapl/atas/864.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/864/ata/minuta_-_1a_sessao_extraordinaria_15.03.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:48Z",
+      "bytes": 139693,
+      "sha256": "375b33bb1282ec1f14c237249027aba5c0804afa512ece4f2d89b2ad0e18f276"
+    },
+    "camara_sapl/atas/865.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/865/ata/minuta_-_14a_sessao_ordinaria_22.03.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:49Z",
+      "bytes": 245319,
+      "sha256": "420f0dc10c602b31d2b8583a347629b50c70be912969768c78462a6d3576d921"
+    },
+    "camara_sapl/atas/866.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/866/ata/minuta_ata_15_so_24.03.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:50Z",
+      "bytes": 594215,
+      "sha256": "a43ba1cd150a664db42a42dc369382665e2f321247b6e1a5d5cb6947d6d28ded"
+    },
+    "camara_sapl/atas/872.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/872/ata/minuta_-_16a_sessao_ordinaria_29.03.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:51Z",
+      "bytes": 210950,
+      "sha256": "9818daa120c3d23ec790e5958bf049c5e1cce892807b2dde2f5c929300c36179"
+    },
+    "camara_sapl/atas/874.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/874/ata/minuta_ata_17_so_31.03.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:52Z",
+      "bytes": 756775,
+      "sha256": "33e9c3beed94bdbd4b2f07534172d63cc81ccc533ccaec0a552a056dfea61ca2"
+    },
+    "camara_sapl/atas/878.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/878/ata/minuta_-_18a_sessao_ordinaria_05.04.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:53Z",
+      "bytes": 219226,
+      "sha256": "5238c08a4ecd65d19a372af3774c932a52c41df90fa84ee11914c606a0fc5dee"
+    },
+    "camara_sapl/atas/881.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/881/ata/minuta_ata_19_so_07.04.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:56Z",
+      "bytes": 850051,
+      "sha256": "6f3090c8eb26da5a1bac86521badfd4ed33233f2891ac9f0f87d022cd5e8bdc3"
+    },
+    "camara_sapl/atas/884.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/884/ata/minuta_-_20a_sessao_ordinaria_12.04.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:57Z",
+      "bytes": 238513,
+      "sha256": "e89c1e85b2e2d2c324bf91a40887ea85d52d00b42c89d9f5862c6b9ec40f6477"
+    },
+    "camara_sapl/atas/889.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/889/ata/minuta_ata_21_so_19.04.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:58Z",
+      "bytes": 699741,
+      "sha256": "995819a60007918720a3ff2e5632875b314365edab71f13a390127699c6a099f"
+    },
+    "camara_sapl/atas/892.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/892/ata/minuta_-_22a_sessao_ordinaria__26.04.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:09:59Z",
+      "bytes": 212409,
+      "sha256": "b5ed9711a7aaea1ccaf089420eac945da023ecb5d0c71d11132f5465f16d9114"
+    },
+    "camara_sapl/atas/894.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/894/ata/minuta_23_so_28.04.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:00Z",
+      "bytes": 514097,
+      "sha256": "62a1c319840638bdb60f8da2a7ed51b15f4bac9f0f0e7ad8878c05af839b821a"
+    },
+    "camara_sapl/atas/899.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/899/ata/minuta_-_24a_sessao_ordinaria_03.05.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:01Z",
+      "bytes": 203668,
+      "sha256": "a73a7bfd50e07faec742949bf73a17e7272f0e2d0e22087ad6038a653f96e17a"
+    },
+    "camara_sapl/atas/900.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/900/ata/minuta_ata_25_so_05.05.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:02Z",
+      "bytes": 562705,
+      "sha256": "a19d610197d5a7a57663cedc9795f9b32a11c7e588d71f85e76c1ddc2f896662"
+    },
+    "camara_sapl/atas/903.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/903/ata/minuta_-_26a_sessao_ordinaria_10.05.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:04Z",
+      "bytes": 268093,
+      "sha256": "c87b5611dc0697356b129c7da1f0b06ef9200d3269b78d360215f4093502aeeb"
+    },
+    "camara_sapl/atas/907.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/907/ata/minuta_ata_27_so_12.05.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:05Z",
+      "bytes": 465622,
+      "sha256": "cb51f0c1e44ad6ad461fa9df2d18031aa4c9b4b9bffaaccd88646585bf7ac18c"
+    },
+    "camara_sapl/atas/914.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/914/ata/minuta_-_28a_sessao_ordinaria_17.05.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:06Z",
+      "bytes": 225025,
+      "sha256": "1909b0ab114ce9a7f008c75c6d3c7b7cb6e1ef748a9fd75bf66c1fe114a3e46e"
+    },
+    "camara_sapl/atas/917.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/917/ata/minuta_ata_29_so19.05.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:07Z",
+      "bytes": 560038,
+      "sha256": "11be83cdec3350e40412616ab87aa78b84458ab8090123b3253d655ac04e47de"
+    },
+    "camara_sapl/atas/920.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/920/ata/minuta_-_30a_sessao_ordinaria_24.05.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:08Z",
+      "bytes": 196451,
+      "sha256": "4e50cd8a073ae564b61763adb52d813a4d9f1288c79815855e646810947ab136"
+    },
+    "camara_sapl/atas/924.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/924/ata/minuta_ata_31_so_26.05.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:09Z",
+      "bytes": 786629,
+      "sha256": "571a03408fba0d664d414a2142113b35d1b7c0967ab716e0138a6875238b360e"
+    },
+    "camara_sapl/atas/928.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/928/ata/minuta_-_32a_sessao_ordinaria_31.05.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:10Z",
+      "bytes": 194758,
+      "sha256": "2d48e619af5e0e8a4d99a4a4ba7998147db92c9a013bade297fe564c30053ff7"
+    },
+    "camara_sapl/atas/931.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/931/ata/minuta_ata_33_so_02.06.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:11Z",
+      "bytes": 458267,
+      "sha256": "0daa6b54a1f16c3d2ea5382348ede226ea4a3544c2fef226516e96ac14883c7c"
+    },
+    "camara_sapl/atas/937.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/937/ata/minuta_-_34a_sessao_ordinaria__07.06.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:12Z",
+      "bytes": 194071,
+      "sha256": "5f36f82657e74107020d4c0199c8049ed39f0c0a8eef9c6062e74ba1ea6b124d"
+    },
+    "camara_sapl/atas/943.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/943/ata/minuta_ata_35_so_14.06.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:14Z",
+      "bytes": 565770,
+      "sha256": "071f4c8888f948e01c4e37d2bc4feee78ac194fc508ab985a6443bfc737eb63b"
+    },
+    "camara_sapl/atas/951.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/951/ata/minuta_-_36a_sessao_ordinaria_21.06.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:15Z",
+      "bytes": 244550,
+      "sha256": "f1dba2a923492ecefa073ea50632591e65fe42d4729140c8953c59d724b7d9de"
+    },
+    "camara_sapl/atas/953.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/953/ata/minuta_ata_37_so_04.08.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:16Z",
+      "bytes": 457584,
+      "sha256": "49314776750904b927229fff4a9a2440912597aee8252692f56d8b8ba2d56cc2"
+    },
+    "camara_sapl/atas/954.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/954/ata/minuta_-_38a_sessao_ordinaria_9.8.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:17Z",
+      "bytes": 235098,
+      "sha256": "3563656dd3a8d1c168183ae9b71a0cf039687220587d1428e845c42f61c9d0cf"
+    },
+    "camara_sapl/atas/956.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/956/ata/minuta_-_39a_soh_11.08.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:18Z",
+      "bytes": 254216,
+      "sha256": "70f20ebad99b5300d1222840d94ee5ad527b2cc5ef3177a9e1d40a5f7cbeb632"
+    },
+    "camara_sapl/atas/958.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/958/ata/minuta_-_40a_soh_16.08.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:19Z",
+      "bytes": 197285,
+      "sha256": "00ba03624ab992395694384501bfc6021eea7f1482687da1c0e492fcbfe93bdf"
+    },
+    "camara_sapl/atas/962.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/962/ata/minuta_-_41a_so_18.08.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:20Z",
+      "bytes": 212191,
+      "sha256": "d5c98e10111516817079f376f77db31416339267c948c7f01343e47566a694e0"
+    },
+    "camara_sapl/atas/966.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/966/ata/42_so_23.08.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:21Z",
+      "bytes": 227056,
+      "sha256": "b114cccd806fdb75a38b4baef88db55fe02c735db1ce0d31e4991026e6e66ce8"
+    },
+    "camara_sapl/atas/968.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/968/ata/minuta_-_43a_sessao_ordinaria_25.08.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:22Z",
+      "bytes": 166969,
+      "sha256": "a287cbd4b96f8a7da2c6f3ae9b2a6a1dca4222dca3200cc75b06bc7b960e7330"
+    },
+    "camara_sapl/atas/971.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/971/ata/minuta_ata_44_so_13.09.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:23Z",
+      "bytes": 524272,
+      "sha256": "d603b54431f9d75c3ee75cfddd2ebad2acfebb460e76e40c04c794d7b1d95dba"
+    },
+    "camara_sapl/atas/976.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/976/ata/minuta_-_45a_sessao_ordinaria_15.09.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:24Z",
+      "bytes": 220584,
+      "sha256": "69261dd624e424d1fa782158ed4f71bf4a74e7bbd1d94a31424728d0de36a584"
+    },
+    "camara_sapl/atas/977.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/977/ata/minuta_ata_46_so_20.09.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:26Z",
+      "bytes": 836764,
+      "sha256": "8b2ebf6b73e236ea480d49816190537cbf5300b97069a8f0d60a0b1a8498a636"
+    },
+    "camara_sapl/atas/984.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/984/ata/minuta_-_47a_sessao_ordinaria_22.09.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:27Z",
+      "bytes": 190162,
+      "sha256": "dff6048180c5329c154efc8717227b2f7ea3b8b6c6c1d53183531c8758c69822"
+    },
+    "camara_sapl/atas/990.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/990/ata/minuta_ata_48_so_27.09.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:28Z",
+      "bytes": 521859,
+      "sha256": "326c9534009754c8d418ffb0e25a6e259cf22543f24b0370f7a272e6dc6c1869"
+    },
+    "camara_sapl/atas/993.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/993/ata/minuta_-_49a_sessao_ordinaria_29.09.22.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:29Z",
+      "bytes": 287277,
+      "sha256": "1d7c8931e1a6722a7c7a641922af89eaf1476a8f6e6eb4999dde703f45b497c9"
+    },
+    "camara_sapl/atas/995.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/995/ata/minuta_50_so_04.10.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:30Z",
+      "bytes": 630482,
+      "sha256": "b4e99b51245708845284dfc6c676e2f182013a729af37a33e0c9dd0a83f46c1e"
+    },
+    "camara_sapl/atas/996.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/996/ata/minuta_-_51a_sessao_ordinaria_06.10.12.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:31Z",
+      "bytes": 531663,
+      "sha256": "7623d4a5fdff2210a013bc91fd495185fe0417d5e44211542b4b707fe350d1e0"
+    },
+    "camara_sapl/atas/997.pdf": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/media/sapl/public/sessaoplenaria/997/ata/minuta_ata_52_so_11.10.2022.pdf",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:10:33Z",
+      "bytes": 558469,
+      "sha256": "a1521b6c619b4830a934679d00c81aac0cd7f175ce6bf69958fc61abbf38fb32"
+    },
+    "camara_sapl/comissoes.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/comissoes/comissao/?o=id",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:17:20Z",
+      "bytes": 12086,
+      "sha256": "11ce29e3e5e26ec0e81323896e702a896cc52c34ba75833cf840c2cb66ec586b"
+    },
+    "camara_sapl/ordemdia.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/sessao/ordemdia/?o=id",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:04:57Z",
+      "bytes": 9476806,
+      "sha256": "5697082b4d7f36b93c881cd5498fd3e2b75c417d040b4c85a69123fabf48575e"
+    },
+    "camara_sapl/sessoes.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/sessao/sessaoplenaria/?o=id",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:01:50Z",
+      "bytes": 1468282,
+      "sha256": "00e3ff21983926274115b89715ae4b5810c66040e21ebd44f2d57a402fbfdd1a"
+    },
+    "camara_sapl/votoparlamentar.json": {
+      "url": "https://sapl.joaopessoa.pb.leg.br/api/sessao/votoparlamentar/?o=id",
+      "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+      "baixado_em": "2026-11-23T22:08:10Z",
+      "bytes": 6889947,
+      "sha256": "b07a03c180534b274732cd31406bcddd73bfe4cb9123fc7398b22196661c8ce5"
+    }
+  }
+}

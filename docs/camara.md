@@ -164,9 +164,11 @@ foi ligado, cada vereador aparece numa só situação e o total listado é igual
 (titulares que tomaram posse no primeiro dia da legislatura, no SAPL: 27 na 18ª e 29 na 19ª). As demais
 ficam em `atas_presenca.csv` com o motivo; em geral, a própria ata lista um vereador a menos ou a mais.
 
-A lista é a da **abertura dos trabalhos**: quem chega depois aparece como ausente. O registro de presença
-do próprio SAPL não é usado, porque a paginação da API repetia e perdia registros (corrigido na coleta
-com `o=id`) e porque a ata é o documento oficial.
+A lista é a da **abertura dos trabalhos**: quem chega depois aparece como ausente. A ata é o documento
+oficial; o registro de presença do SAPL serviu de conferência (11/2026, sessões com registro): 97% dos
+presentes na ata estão no registro, e 6% dos ausentes também (chegaram depois da abertura). Resultado:
+403 das 442 atas de 2021 a 11/2026 conferidas; das 39 restantes, 7 não têm o bloco de presença no
+formato padrão (posse e eleição da mesa, por exemplo) e a maioria lista um vereador a mais ou a menos.
 
 **Votos nas comissões.** O SAPL registra o voto de cada membro nas reuniões de comissão (CCJRLP, CPP,
 CFOOAP e CCDHDC), quase sempre sobre o parecer do relator. São votos sobre pareceres, não a votação final
