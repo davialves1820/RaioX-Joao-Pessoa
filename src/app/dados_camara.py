@@ -45,9 +45,18 @@ def carregar(pasta: Path = PASTA) -> dict:
         "diarias": pd.read_csv(pasta / "diarias.csv"),
         "rgf": pd.read_csv(pasta / "rgf.csv"),
         "pedidos": pd.read_parquet(pasta / "requerimentos_bairros.parquet"),
+        "emendas": _emendas(pasta),
+        "emendas_empenhos": pd.read_parquet(pasta / "emendas_empenhos.parquet"),
+        "meta_emendas": json.loads((pasta / "metadados_emendas.json").read_text(encoding="utf-8")),
         "meta_pedidos": json.loads((pasta / "metadados_pedidos.json").read_text(encoding="utf-8")),
         "meta": json.loads((pasta / "metadados.json").read_text(encoding="utf-8")),
     }
+
+
+def _emendas(pasta: Path) -> pd.DataFrame:
+    e = pd.read_parquet(pasta / "emendas.parquet")
+    e["busca"] = e[["ementa", "meta", "autores"]].fillna("").agg(" ".join, axis=1).map(normalizar)
+    return e
 
 
 # --- Vereadores
@@ -220,6 +229,51 @@ def resumo_pedidos(rb: pd.DataFrame) -> dict:
     total = len(por_req)
     return {"pedidos": total, "com_bairro": int((por_req["n_bairros"] > 0).sum()),
             "sem_bairro": int((por_req["n_bairros"] == 0).sum())}
+
+
+# --- Emendas impositivas
+
+
+SITUACOES_EMENDA = ["Empenho encontrado", "Sem empenho encontrado"]
+
+
+def filtrar_emendas(em: pd.DataFrame, texto: str = "", id_parlamentar: int | None = None,
+                    situacao: str | None = None, conferencia: str | None = None) -> pd.DataFrame:
+    out = em
+    if id_parlamentar is not None:
+        out = out[_do_vereador(out, id_parlamentar)]
+    if situacao is not None:
+        out = out[out["situacao"] == situacao]
+    if conferencia is not None:
+        out = out[out["conferencia"] == conferencia]
+    for p in normalizar(texto).split():
+        num = out["numero"].astype(str) == p.lstrip("0") if p.isdigit() else False
+        out = out[out["busca"].str.contains(p, regex=False) | num]
+    return out.sort_values(["ano", "numero"], ascending=[False, True])
+
+
+def resumo_emendas(em: pd.DataFrame) -> dict:
+    return {
+        "emendas": int(len(em)),
+        "valor": float(em["valor"].sum()),
+        "sem_valor": int(em["valor"].isna().sum()),
+        "com_empenho": int((em["situacao"] == "Empenho encontrado").sum()),
+        "empenhado": float(em["empenhado"].sum()),
+        "pago": float(em["pago"].sum()),
+    }
+
+
+def emendas_por_vereador(em: pd.DataFrame, ver: pd.DataFrame) -> pd.DataFrame:
+    """Emendas, valor, empenhado e pago por vereador autor, em ordem alfabética."""
+    e = em.assign(id_parlamentar=em["autores_ids"].fillna("").str.split(";")).explode("id_parlamentar")
+    e = e[e["id_parlamentar"] != ""].astype({"id_parlamentar": int})
+    t = e.groupby("id_parlamentar").agg(emendas=("id_materia", "nunique"), valor=("valor", "sum"),
+                                        com_empenho=("situacao", lambda s: int((s == "Empenho encontrado").sum())),
+                                        empenhado=("empenhado", "sum"), pago=("pago", "sum"))
+    nomes = ver.drop_duplicates("id_parlamentar").set_index("id_parlamentar")["nome_parlamentar"]
+    t = t.join(nomes).reset_index()
+    t["ordem"] = t["nome_parlamentar"].map(normalizar)
+    return t.sort_values("ordem").drop(columns="ordem")
 
 
 # --- Formatos

@@ -12,7 +12,8 @@ Saídas (data/processed/camara/):
 
 Regras (investigação na issue #49):
 - O texto original é um formulário padrão: valor acrescido, órgão, unidade orçamentária, natureza da
-  despesa e meta (com o beneficiário). O que não for encontrado fica vazio; nada é estimado.
+  despesa e meta (com o beneficiário). O que não for encontrado fica vazio; nada é estimado. Valor mal
+  digitado no original ("30.0000,00") também fica vazio, com o texto guardado em valor_no_texto.
 - O empenho cita a emenda no histórico ("EMENDA IMPOSITIVA Nº 393/2025"); a ligação é pelo número e
   pelo ano da emenda, e um histórico pode citar várias.
 - A ligação é conferida: CNPJ igual ao da emenda; mesma raiz de CNPJ (matriz e filial); CNPJ diferente;
@@ -37,7 +38,7 @@ import pandas as pd
 
 from src.collect.download import load_manifest
 from src.config import DATA_PROCESSED, DATA_RAW
-from src.process.despesas_regras import centavos, mascarar_cpf, normalizar, tipo_documento
+from src.process.despesas_regras import centavos, limpar_historico, mascarar_cpf, normalizar, tipo_documento
 
 RAW = DATA_RAW / "camara_sapl"
 RAW_TCE = DATA_RAW / "tce_pb"
@@ -47,6 +48,9 @@ TIPOS = {65: "ELO-I", 66: "EI-CO"}
 
 _CNPJ = re.compile(r"(?<!\d)(\d{2})\.?(\d{3})\.?(\d{3})\s*/?\s*(\d{4})\s*-?\s*(\d{2})(?!\d)")
 _VALOR = re.compile(r"VALOR ACR[EÉ]SCIDO\s*\(R\$\)\s*(?:R\$\s*)?([\d.]+,\d{2})", re.I)
+# Número bem formado no padrão brasileiro: grupos de 3 dígitos separados por ponto ("30.0000,00", digitado
+# assim em algumas emendas, é ambíguo: 30 mil ou 300 mil?)
+_VALOR_VALIDO = re.compile(r"\d{1,3}(?:\.\d{3})*,\d{2}|\d+,\d{2}")
 _ORGAO = re.compile(r"ÓRGÃO\s+(\d[\d.]*)\s*[–-]\s*(.+?)\s+UNIDADE OR", re.I | re.S)
 _UO = re.compile(r"UNIDADE OR[ÇC]AMENT[ÁA]RIA\s+(\d[\d.]*)\s*[–-]\s*(.+?)\s+CLASSIFICA", re.I | re.S)
 _NATUREZA = re.compile(r"NATUREZA DA DESPESA\s+.*?(\d\.?\d\.?\d{2}\.\d{2})", re.I | re.S)
@@ -86,7 +90,8 @@ def extrair(texto: str) -> dict:
     nat = _NATUREZA.search(corpo)
     meta = _META.search(corpo)
     return {
-        "valor": centavos(valor[1]) / 100 if valor else None,
+        "valor": centavos(valor[1]) / 100 if valor and _VALOR_VALIDO.fullmatch(valor[1]) else None,
+        "valor_no_texto": valor[1] if valor else None,
         "orgao": f"{orgao[1]} – {orgao[2].strip()}" if orgao else None,
         "unidade_orcamentaria": f"{uo[1]} – {uo[2].strip()}" if uo else None,
         "natureza_despesa": nat[1] if nat else None,
@@ -144,24 +149,33 @@ def ler_empenhos(anos: list[int]) -> pd.DataFrame:
 
 
 def empenhos_das_emendas(emp: pd.DataFrame, emendas: pd.DataFrame) -> pd.DataFrame:
-    chave = {(int(n), int(a)): r for n, a, r in zip(emendas["numero"], emendas["ano"], emendas.index)}
+    """Empenhos que citam o número de uma emenda. A emenda corrigida (EI-CO) tem numeração própria e
+    pode repetir o número de uma ELO-I: com mais de uma candidata, fica a de melhor conferência do
+    beneficiário; se nenhuma confere pelo CNPJ ou pelo nome, a ligação fica "A conferir"."""
+    chave: dict[tuple[int, int], list] = {}
+    for n, a, r in zip(emendas["numero"], emendas["ano"], emendas.index):
+        chave.setdefault((int(n), int(a)), []).append(r)
     linhas = []
     for e in emp.itertuples():
         for n, a in citacoes(e.historico or ""):
             if (n, a) not in chave:
                 continue
-            em = emendas.loc[chave[(n, a)]]
             doc = re.sub(r"\D", "", e.cpf_cnpj or "")
             pj = tipo_documento(doc, e.nome_credor or "") == "PJ"
+            candidatas = [(conferir(emendas.loc[r, "cnpj_beneficiario"], emendas.loc[r, "meta"], doc, e.nome_credor or "")
+                           if pj else "A conferir", r) for r in chave[(n, a)]]
+            conf, r = min(candidatas, key=lambda c: ORDEM_CONFERENCIA.index(c[0]))
+            if len(candidatas) > 1 and conf not in ORDEM_CONFERENCIA[:3]:
+                conf = "A conferir"
+            em = emendas.loc[r]
             linhas.append({
                 "id_materia": em["id_materia"], "numero_emenda": n, "ano_emenda": a,
                 "unidade_gestora": e.descricao_unidade_gestora, "numero_empenho": e.numero_empenho,
                 "data_empenho": e.data_empenho, "cnpj_credor": doc if pj else mascarar_cpf(doc),
                 "nome_credor": (e.nome_credor or "").strip() if pj else None,
                 "empenhado": centavos(e.valor_empenhado) / 100, "pago": centavos(e.valor_pago) / 100,
-                "historico": " ".join((e.historico or "").split()) if pj else None,
-                "conferencia": conferir(em["cnpj_beneficiario"], em["meta"], doc, e.nome_credor or "") if pj
-                else "A conferir",
+                "historico": limpar_historico(e.historico) if pj else None,
+                "conferencia": conf,
             })
     return pd.DataFrame(linhas)
 
@@ -213,6 +227,7 @@ def main() -> None:
         "emendas": int(len(em)),
         "com_texto_lido": int(em["texto_lido"].sum()),
         "com_valor": int(em["valor"].notna().sum()),
+        "valor_mal_digitado": int((em["valor"].isna() & em["valor_no_texto"].notna()).sum()),
         "com_cnpj": int(em["cnpj_beneficiario"].notna().sum()),
         "com_empenho": int((em["empenhos"] > 0).sum()),
         "empenhado": round(float(em["empenhado"].sum()), 2) if "empenhado" in em else 0.0,
