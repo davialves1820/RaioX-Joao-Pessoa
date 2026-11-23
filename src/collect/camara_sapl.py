@@ -12,6 +12,9 @@ e registrada no manifesto.
   matéria por matéria.
 - Sessões plenárias e presença: um arquivo cada (todas as sessões cadastradas).
 
+As listas são pedidas em ordem de id (`o=id`): sem isso, a paginação de algumas listas repete
+registros e perde outros.
+
 O servidor derruba conexões com frequência e responde 503 quando sobrecarregado: as consultas usam
 no máximo 2 conexões simultâneas, e cada página é tentada até 8 vezes.
 
@@ -79,7 +82,13 @@ def _get(caminho: str, **params) -> dict:
 
 
 def consultar(caminho: str, paralelo: int = PARALELO, **params) -> list[dict]:
-    """Todas as páginas de uma consulta à API, na ordem."""
+    """Todas as páginas de uma consulta à API, ordenadas por id.
+
+    Sem ordenação explícita, algumas listas (a ordem do dia, por exemplo) mudam de ordem entre uma
+    página e outra: registros vêm repetidos e outros somem, com o total certo. Por isso a consulta
+    pede `o=id` e confere que nenhum id se repete.
+    """
+    params.setdefault("o", "id")
     primeira = _get(caminho, page_size=POR_PAGINA, page=1, **params)
     total = primeira["pagination"]["total_entries"]
     paginas = math.ceil(total / POR_PAGINA)
@@ -89,6 +98,9 @@ def consultar(caminho: str, paralelo: int = PARALELO, **params) -> list[dict]:
     linhas = [r for pagina in res for r in pagina]
     if len(linhas) != total:
         raise RuntimeError(f"{caminho} {params}: {len(linhas)} linhas, a API informa {total}")
+    ids = [r["id"] for r in linhas if "id" in r]
+    if len(ids) != len(set(ids)):
+        raise RuntimeError(f"{caminho} {params}: {len(ids) - len(set(ids))} registros repetidos entre as páginas")
     return linhas
 
 

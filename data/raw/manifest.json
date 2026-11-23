@@ -2960,6 +2960,13 @@
     "bytes": 401890,
     "sha256": "ac236fe906ae549f36a04abc935d27ae4aa00b29fc3c3c39faf644de377d13e3"
   },
+  "camara_sapl/ordemdia.json": {
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/sessao/ordemdia/?o=id",
+    "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
+    "baixado_em": "2026-11-23T22:04:57Z",
+    "bytes": 9476806,
+    "sha256": "5697082b4d7f36b93c881cd5498fd3e2b75c417d040b4c85a69123fabf48575e"
+  },
   "camara_sapl/parlamentares.json": {
     "url": "https://sapl.joaopessoa.pb.leg.br/api/parlamentares/parlamentar/",
     "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
@@ -2982,11 +2989,11 @@
     "sha256": "c13256382df5edd20e95d5281a12da687b2031eb6b41955d06dbdfb53c3bf306"
   },
   "camara_sapl/sessoes.json": {
-    "url": "https://sapl.joaopessoa.pb.leg.br/api/sessao/sessaoplenaria/",
+    "url": "https://sapl.joaopessoa.pb.leg.br/api/sessao/sessaoplenaria/?o=id",
     "fonte": "Câmara Municipal de João Pessoa - SAPL (API de dados abertos)",
-    "baixado_em": "2026-11-04T14:34:34Z",
-    "bytes": 1449041,
-    "sha256": "7c935765d180fa5482e3b5b0453f818c5ffa6f250bf45758a7c9a86ee82f3902"
+    "baixado_em": "2026-11-23T22:01:50Z",
+    "bytes": 1468282,
+    "sha256": "00e3ff21983926274115b89715ae4b5810c66040e21ebd44f2d57a402fbfdd1a"
   },
   "camara_sapl/status_tramitacao.json": {
     "url": "https://sapl.joaopessoa.pb.leg.br/api/materia/statustramitacao/",
