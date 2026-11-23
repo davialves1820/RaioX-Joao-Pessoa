@@ -18,7 +18,7 @@ from src.app import tema
 from src.process.camara_pedidos import TEMAS as TEMAS_PEDIDOS
 
 SECOES = ["Vereadores", "Projetos de lei", "Indicações", "Requerimentos", "Pedidos por bairro", "Emendas impositivas", "Votos e moções", "Leis",
-          "Resoluções", "Decretos legislativos", "Pautas e atas", "Servidores", "Despesas", "Diárias",
+          "Resoluções", "Decretos legislativos", "Pautas e atas", "Presença", "Votações nas comissões", "Servidores", "Despesas", "Diárias",
           "Prestação de contas", "Sobre os dados"]
 
 AVISO_QUANTIDADE = (
@@ -264,6 +264,31 @@ def perfil_vereador(dados: dict, pid: int) -> None:
     st.caption("O custo do gabinete não aparece aqui: a folha do TCE-PB não informa de qual vereador é cada "
                "assessor, então qualquer valor por vereador seria uma estimativa.")
 
+    pr = d.presenca_do_vereador(dados["presencas"], pid, leg)
+    if sum(pr.values()):
+        st.markdown("#### Presença nas sessões")
+        k = st.columns(4)
+        for col, (sit, n) in zip(k, pr.items()):
+            with col:
+                _cartao(sit, _int(n), "sessão(ões)")
+        st.caption("Sessões ordinárias e extraordinárias desta legislatura com ata conferida, pela lista da ata "
+                   "na abertura dos trabalhos (quem chega depois aparece como ausente). Detalhes na seção *Presença*.")
+
+    vv = d.votos_do_vereador(dados["votos"], pid, leg)
+    if len(vv):
+        cont = vv["voto"].value_counts()
+        st.markdown(f"#### Votos nas comissões ({_int(len(vv))})")
+        st.caption(f"Sim: {_int(cont.get('Sim', 0))} · Não: {_int(cont.get('Não', 0))} · Abstenção: "
+                   f"{_int(cont.get('Abstenção', 0))}. Votos sobre pareceres nas reuniões de comissão; o plenário vota "
+                   "de forma simbólica, sem registro nominal. Abaixo, os votos contrários e as abstenções.")
+        diverg = vv[vv["voto"].isin(["Não", "Abstenção"])]
+        for _, r in diverg.head(20).iterrows():
+            _item_voto(r)
+        if diverg.empty:
+            st.caption("Nenhum voto contrário ou abstenção nesta legislatura.")
+        elif len(diverg) > 20:
+            st.caption("Mostrando os 20 mais recentes. Todos estão na seção *Votações nas comissões*.")
+
     st.markdown(f"#### Projetos de lei ({len(pj)})")
     if pj.empty:
         st.caption("Nenhum projeto de lei como autor ou coautor nesta legislatura.")
@@ -479,10 +504,140 @@ def secao_normas(dados: dict, tipo: str, chave: str, explicacao: str) -> None:
     _lista(n[n["tipo"] == tipo], _item_norma, chave, dados, com_autor=False, placeholder="Buscar por ementa ou número")
 
 
+COR_VOTO = {"Sim": "green", "Não": "red", "Abstenção": "orange", "Não Votou": "gray"}
+COR_RESULTADO = {"Aprovado": "green", "Rejeitado": "red", "Retirado": "gray"}
+
+
+def _titulo_materia(r) -> str:
+    if pd.notna(r["sigla"]):
+        return f"{_nome_tipo(r['sigla'], r['tipo'])} nº {r['numero']}/{r['ano']}"
+    return r["materia"].replace(" de 20", "/20") if isinstance(r["materia"], str) else "Matéria"
+
+
+def _obs(texto) -> str | None:
+    """Observação da ordem do dia sem os asteriscos que o Markdown leria como lista ou negrito."""
+    return " ".join(texto.replace("*", " ").split()) if isinstance(texto, str) else None
+
+
+def _item_voto(r: pd.Series) -> None:
+    with st.container(border=True):
+        topo = st.columns([5, 2])
+        topo[0].markdown(f"**{_titulo_materia(r)}** :{COR_VOTO.get(r['voto'], 'gray')}-badge[{r['voto']}]")
+        topo[1].markdown(f"<div style='text-align:right;opacity:.7'>{d.fmt_data(r['data'])} · {r['sigla_comissao']}</div>",
+                         unsafe_allow_html=True)
+        if isinstance(r["ementa"], str):
+            st.markdown(_md(r["ementa"]))
+        extra = [x for x in [_obs(r["observacao"]), f"resultado: {r['resultado']}" if isinstance(r["resultado"], str)
+                             else None] if isinstance(x, str)]
+        link = f" · [Ver no SAPL]({r['link_sapl']})" if isinstance(r["link_sapl"], str) else ""
+        st.caption(_md(" · ".join(extra)) + link)
+
+
+def _item_votacao(r: pd.Series) -> None:
+    with st.container(border=True):
+        topo = st.columns([5, 2])
+        res = f" :{COR_RESULTADO.get(r['resultado'], 'gray')}-badge[{r['resultado']}]" if isinstance(r["resultado"], str) else ""
+        topo[0].markdown(f"**{_titulo_materia(r)}**{res}")
+        topo[1].markdown(f"<div style='text-align:right;opacity:.7'>{d.fmt_data(r['data'])} · {r['sigla_comissao']}</div>",
+                         unsafe_allow_html=True)
+        if isinstance(r["ementa"], str):
+            st.markdown(_md(r["ementa"]))
+        linhas = [f"**{rot}** ({len(r[c])}): {', '.join(r[c])}" for rot, c in
+                  (("Sim", "sim"), ("Não", "nao"), ("Abstenção", "abstencao"), ("Não votou", "nao_votou")) if r[c]]
+        st.markdown("  \n".join(linhas))
+        link = f"[Ver no SAPL]({r['link_sapl']})" if isinstance(r["link_sapl"], str) else ""
+        st.caption(_md(" · ".join(x for x in [r["comissao"], _obs(r["observacao"]), link] if isinstance(x, str) and x)))
+
+
+def secao_presenca(dados: dict) -> None:
+    meta = dados["meta_sessoes"]
+    st.caption("Presença nas sessões ordinárias e extraordinárias, pela lista de presentes e ausentes da ata "
+               "oficial, na abertura dos trabalhos: quem chega depois aparece como ausente. Só entram as atas "
+               "conferidas (todos os nomes reconhecidos, cada vereador uma vez e o total igual ao número de cadeiras).")
+    with st.expander("Como ler"):
+        st.markdown(
+            "- **Presente (virtual):** a ata lista o vereador entre os presentes de forma virtual (remota). "
+            "Essa lista aparece nas atas de 2021 a 2024.\n"
+            "- **Ausente com justificativa:** a ata registra a ausência como justificada.\n"
+            "- Vereador licenciado não aparece na ata; aparece o suplente em exercício.\n"
+            "- A lista é a do início da sessão. O registro de presença do SAPL confirma 97% dos presentes nas atas "
+            "e inclui 6% dos ausentes, que chegaram depois.\n"
+            "- Presença não mede trabalho: o vereador pode estar em comissão, audiência ou missão oficial.")
+    k = st.columns(3)
+    with k[0]:
+        _cartao("Atas conferidas", _int(meta["atas_conferidas"]), f"de {_int(meta['atas_lidas'])} atas lidas desde 2021")
+    with k[1]:
+        _cartao("Presenças registradas", _int(meta["presencas"]["Presente"] + meta["presencas"]["Presente (virtual)"]),
+                f"{_int(meta['presencas']['Presente (virtual)'])} de forma virtual")
+    with k[2]:
+        _cartao("Ausências", _int(meta["presencas"]["Ausente com justificativa"] + meta["presencas"]["Ausente"]),
+                f"{_int(meta['presencas']['Ausente com justificativa'])} com justificativa")
+    f = st.columns([1.5, 1, 3])
+    with f[0]:
+        leg = _legislatura("pr_leg")
+    ini, fim = d.LEGISLATURAS[leg]
+    anos = [a for a in range(fim, ini - 1, -1) if a <= int(meta["gerado_em"][:4])]
+    ano = f[1].selectbox("Ano", [None] + anos, key="pr_ano", format_func=lambda a: "Todos" if a is None else str(a))
+    t = d.presenca_por_vereador(dados["presencas"], dados["vereadores"], leg, ano)
+    st.caption("Em ordem alfabética. Sessões: atas conferidas em que o vereador aparece (titular ou suplente em "
+               "exercício). % presente inclui a presença virtual.")
+    _tabela(t, {"nome_parlamentar": "Vereador", "sessoes": "Sessões", "Presente": "Presente",
+                "Presente (virtual)": "Presente (virtual)", "Ausente com justificativa": "Ausente com justificativa",
+                "Ausente": "Ausente", "pct_presente": "% presente"},
+            inteiros=["sessoes", "Presente", "Presente (virtual)", "Ausente com justificativa", "Ausente"],
+            pct={"pct_presente": 0})
+    atas = dados["atas"]
+    nao = atas[~atas["conferida"] & atas["legislatura"].eq(leg)]
+    with st.expander(f"Atas não conferidas nesta legislatura ({len(nao)})"):
+        st.caption("Ficam fora da contagem. Em geral, a própria ata lista um vereador a mais ou a menos que o número "
+                   "de cadeiras, ou não tem a lista no formato padrão (posse, eleição da Mesa).")
+        for _, r in nao.iterrows():
+            st.markdown(f"- {r['numero']}ª {r['tipo'].lower()}, {d.fmt_data(r['data'])}: {r['motivo']} · "
+                        f"[ata]({r['link_ata']})")
+
+
+def secao_votacoes(dados: dict) -> None:
+    st.caption("Votos nominais registrados no SAPL nas reuniões das comissões permanentes. O voto é sobre o parecer "
+               "do relator, que pode ser favorável ou contrário ao projeto; o resultado é o registrado no SAPL para o "
+               "item na reunião. O plenário vota de forma simbólica: o SAPL não guarda o voto de "
+               "cada vereador ali.")
+    vt = dados["votacoes"]
+    siglas = dict(zip(vt["sigla_comissao"], vt["comissao"]))
+    f = st.columns([3, 2, 1, 2])
+    texto = f[0].text_input("Buscar", key="vc_texto", placeholder="Buscar por matéria, ementa ou relator",
+                            label_visibility="collapsed")
+    com = f[1].selectbox("Comissão", [None] + sorted(siglas), key="vc_com", label_visibility="collapsed",
+                         format_func=lambda c: "Todas as comissões" if c is None else f"{c} – {siglas[c]}")
+    anos = sorted(vt["data"].str[:4].astype(int).unique(), reverse=True)
+    ano = f[2].selectbox("Ano", [None] + anos, key="vc_ano", label_visibility="collapsed",
+                         format_func=lambda a: "Todos os anos" if a is None else str(a))
+    ver = dados["vereadores"].drop_duplicates("id_parlamentar")
+    ids = set().union(*vt["ids"])
+    ver = ver[ver["id_parlamentar"].isin(ids)]
+    nomes = dict(zip(ver["id_parlamentar"], ver["nome_parlamentar"]))
+    pid = f[3].selectbox("Vereador", [None] + sorted(nomes, key=lambda i: d.normalizar(nomes[i])), key="vc_ver",
+                         label_visibility="collapsed", format_func=lambda i: "Todos os vereadores" if i is None else nomes[i])
+    so = st.checkbox("Só votações com voto contrário ou abstenção", key="vc_div")
+    achados = d.filtrar_votacoes(vt, texto, com, ano, pid, so)
+    pagina_atual = st.session_state.get("vc_pagina", 1)
+    pagina, paginas = d.paginar(achados, pagina_atual)
+    st.caption(f"{_int(len(achados))} votação(ões)" + (f" · página {min(pagina_atual, paginas)} de {paginas}"
+                                                       if paginas > 1 else ""))
+    for _, r in pagina.iterrows():
+        _item_votacao(r)
+    if paginas > 1:
+        st.number_input("Página", 1, paginas, key="vc_pagina", step=1)
+
+
 def secao_sessoes(dados: dict) -> None:
     st.caption("Sessões plenárias, audiências e reuniões de comissão cadastradas no SAPL, com a pauta e a ata "
                "oficial quando publicadas. As atas existem para praticamente todas as sessões; as pautas de "
                "2025 e 2026 quase nunca foram publicadas no SAPL.")
+    st.caption(f"As sessões são transmitidas no [canal oficial da Câmara no YouTube]({d.CANAL_CAMARA}). O link do "
+               "vídeo de cada sessão aparece quando está cadastrado no SAPL.")
+    videos = dict(zip(dados["video"]["id_sessao"], dados["video"]["url_video"]))
+    # a coleta das atas pode ser mais nova que sessoes.csv: usa o link da ata lida quando a lista não tem
+    atas = dict(zip(dados["atas"]["id_sessao"], dados["atas"]["link_ata"]))
     s = dados["sessoes"]
     f = st.columns([2, 1])
     tipos = sorted(s["tipo"].dropna().unique())
@@ -500,9 +655,14 @@ def secao_sessoes(dados: dict) -> None:
             cols = st.columns([4, 2])
             cols[0].markdown(f"**{r['numero']}ª {r['tipo']}** · {d.fmt_data(r['data'])}")
             links = [f"[Pauta]({r['link_pauta']})" if isinstance(r["link_pauta"], str) else "pauta não publicada",
-                     f"[Ata]({r['link_ata']})" if isinstance(r["link_ata"], str) else "ata não publicada",
-                     f"[SAPL]({r['link_sapl']})"]
+                     f"[Ata]({r['link_ata']})" if isinstance(r["link_ata"], str) else
+                     f"[Ata]({atas[r['id_sessao']]})" if r["id_sessao"] in atas else "ata não publicada",
+                     f"[SAPL]({r['link_sapl']})"] + ([f"[Vídeo]({videos[r['id_sessao']]})"]
+                                                     if r["id_sessao"] in videos else [])
             cols[1].markdown(" · ".join(links))
+            if pres := d.presenca_da_sessao(dados["presencas"], dados["vereadores"], r["id_sessao"]):
+                with st.expander("Presença na ata (abertura dos trabalhos)"):
+                    st.markdown("  \n".join(f"**{sit}** ({len(n)}): {', '.join(n)}" for sit, n in pres.items()))
     if paginas > 1:
         st.number_input("Página", 1, paginas, key="ss_pagina", step=1)
 
@@ -647,13 +807,16 @@ def secao_sobre(dados: dict) -> None:
         "última tramitação. *Encerrados* são os arquivados, vetados, rejeitados em plenário ou retirados.\n"
         "- **Subsídio:** valor bruto do mês na folha do TCE-PB (inclui 13º e meses proporcionais), ligado ao "
         "vereador do SAPL pelo nome completo, ou por uma tabela conferida pelo período de mandato.\n"
-        "- **Servidores:** pessoas e total bruto por cargo e mês, sem nomes."
+        "- **Servidores:** pessoas e total bruto por cargo e mês, sem nomes.\n"
+        "- **Presença:** lista de presentes e ausentes da ata de cada sessão ordinária e extraordinária, na "
+        "abertura dos trabalhos; só atas conferidas contra o número de cadeiras."
     )
     st.markdown("#### O que não está aqui, e por quê")
     st.markdown(
-        "- **Presença nas sessões.** O registro de presença do SAPL é incompleto: a ata da 7ª sessão "
-        "ordinária (06/03/2025), por exemplo, lista vereadores presentes que o registro não tem.\n"
-        "- **Voto de cada vereador no plenário.** O SAPL guarda só o placar das votações em plenário.\n"
+        "- **Voto de cada vereador no plenário.** O plenário vota de forma simbólica: o SAPL guarda só o "
+        "resultado. Os votos nominais que existem são os das comissões.\n"
+        "- **Presença nas atas não conferidas.** Atas que listam um vereador a mais ou a menos que o número de "
+        "cadeiras ficam fora da contagem.\n"
         "- **Custo do gabinete por vereador.** A folha não diz de qual gabinete é cada assessor.\n"
         "- **Licitações, contratos e orçamento da Câmara.** Dependem de fontes que ainda não foram integradas "
         "(issues #57 e #59 no repositório)."
@@ -708,6 +871,10 @@ def main() -> None:
                      "das contas do prefeito.")
     elif secao == "Pautas e atas":
         secao_sessoes(dados)
+    elif secao == "Presença":
+        secao_presenca(dados)
+    elif secao == "Votações nas comissões":
+        secao_votacoes(dados)
     elif secao == "Servidores":
         secao_servidores(dados)
     elif secao == "Despesas":

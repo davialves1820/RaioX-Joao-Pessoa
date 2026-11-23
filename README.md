@@ -85,10 +85,11 @@ próprio painel, ao lado dos números.
 ### Câmara Municipal
 
 - Um card por vereador (18ª e 19ª legislaturas), em ordem alfabética, e o perfil de cada um: subsídio,
-  projetos de lei (quantos viraram lei), indicações, requerimentos e votos, com link para o SAPL.
+  projetos de lei (quantos viraram lei), indicações, requerimentos, presença e votos nas comissões, com link para o SAPL.
 - Listas pesquisáveis de projetos de lei, indicações, requerimentos, votos de aplauso e pesar, leis,
   resoluções, decretos legislativos e sessões (com pauta e ata), filtráveis por ano e por vereador.
 - Emendas impositivas dos vereadores: valor, beneficiário e os empenhos que as executam.
+- Presença de cada vereador nas sessões, pela lista oficial das atas, e os votos nominais nas comissões.
 - Pedidos de obras dos vereadores no mapa, por bairro e tema, com renda e saneamento de cada bairro na tabela.
 - Servidores por cargo (sem nomes), despesas e maiores fornecedores, diárias e a despesa com pessoal
   frente ao limite da Lei de Responsabilidade Fiscal.

@@ -21,8 +21,10 @@ logo abaixo, em vez de uma página longa:
   `?vereador=ID`). As listas (projetos, indicações, requerimentos, votos, leis, resoluções, decretos
   legislativos) têm busca sem acento, filtro de ano e de vereador, e 20 itens por página. *Pedidos por
   bairro* mostra no mapa os requerimentos de obras por bairro, e *Emendas impositivas*, o valor de cada
-  emenda e os empenhos que a citam. *Pautas e atas*, *Servidores*, *Despesas*,
-  *Diárias* e *Prestação de contas* completam a página.
+  emenda e os empenhos que a citam. *Pautas e atas* traz a ata, o vídeo (quando cadastrado) e a presença
+  na ata de cada sessão; *Presença*, uma tabela por vereador em ordem alfabética; *Votações nas
+  comissões*, os votos nominais com filtro de comissão, vereador e votos contrários. *Servidores*,
+  *Despesas*, *Diárias* e *Prestação de contas* completam a página.
 - **Mapas:** a escala de cor mostra os números no padrão brasileiro (60.000, e não 60,000), com a unidade
   no topo e "≥" na última marca quando a cor satura; o zoom e a posição se mantêm ao trocar de indicador;
   um clique na legenda esconde ou mostra uma camada.

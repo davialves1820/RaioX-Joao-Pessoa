@@ -66,6 +66,10 @@ _CARGO = re.compile(r"\b(Presidente|Vice-Presidente|Primeir[oa]|Segund[oa]|Terce
                     r"oral|forma|virtual|remota|remotamente|presencial|em plen[áa]rio|os|as|N[ãa]o houve|"
                     r"C[óo]pia)\b|[-–]", re.I)
 _PARTICULAS = {"DE", "DA", "DO", "DOS", "DAS", "E"}
+# Votos registrados no SAPL num cadastro antigo do mesmo vereador. O id 45 ("Marcos Vinicius", MARCOS VINICIUS SALES
+# DA NÓBREGA) só tem mandato em 2001-2004, mas vota na CCJRLP em abril de 2025, quando o vereador em exercício com esse
+# nome é o id 382 (Marcos Vinícius Sales Nóbrega); o id 382 não vota nessas mesmas votações.
+CADASTRO_DUPLICADO = {45: 382}
 _COMISSAO = re.compile(r" em \d+ª Reunião (?:da |de )?(\w+) da ")
 
 
@@ -194,10 +198,11 @@ def votos_comissoes(materias: pd.DataFrame) -> pd.DataFrame:
         "id_votacao": v["votacao"].astype(int), "data": v["data_hora"].str[:10],
         "sigla_comissao": v["sigla_comissao"], "comissao": v["comissao"],
         "id_sessao": v["sessao_plenaria"].astype("Int64"), "id_materia": v["materia"].astype("Int64"),
-        "materia": v["descricao"], "sigla": v["sigla"], "numero": v["numero"].astype("Int64"),
+        "materia": v["descricao"], "sigla": v["sigla"], "tipo": v["tipo"], "numero": v["numero"].astype("Int64"),
         "ano": v["ano"].astype("Int64"), "ementa": v["ementa"],
         "observacao": v["observacao"].map(lambda t: " ".join(t.split()) if isinstance(t, str) and t.strip() else None),
-        "resultado": v["resultado"], "id_parlamentar": v["parlamentar"].astype(int), "voto": v["voto"],
+        "resultado": v["resultado"], "id_parlamentar": v["parlamentar"].replace(CADASTRO_DUPLICADO).astype(int),
+        "voto": v["voto"],
         "link_sapl": v["materia"].map(lambda m: f"{SAPL}/materia/{int(m)}" if pd.notna(m) else None),
     }).sort_values(["data", "id_votacao"], ascending=[False, True], ignore_index=True)
 
@@ -209,8 +214,11 @@ def main() -> None:
     pres.to_parquet(SAIDA / "presencas.parquet", index=False)
     atas.to_csv(SAIDA / "atas_presenca.csv", index=False)
 
-    colunas = ["id_materia", "sigla", "numero", "ano", "ementa"]
-    materias = pd.concat([pd.read_parquet(SAIDA / "projetos.parquet", columns=colunas),
+    colunas = ["id_materia", "sigla", "tipo", "numero", "ano", "ementa"]
+    # projetos.parquet não traz o nome do tipo; os nomes são os do SAPL ("Projeto de Lei Ordinária nº ...")
+    projetos = pd.read_parquet(SAIDA / "projetos.parquet", columns=[c for c in colunas if c != "tipo"])
+    projetos["tipo"] = projetos["sigla"].map({"PLO": "Projeto de Lei Ordinária", "PLC": "Projeto de Lei Complementar"})
+    materias = pd.concat([projetos[colunas],
                           pd.read_parquet(SAIDA / "materias.parquet", columns=colunas)]).drop_duplicates("id_materia")
     votos = votos_comissoes(materias)
     votos.to_parquet(SAIDA / "votos_comissoes.parquet", index=False)
@@ -231,6 +239,8 @@ def main() -> None:
         "votacoes_comissoes": int(votos["id_votacao"].nunique()),
         "votos": votos["voto"].value_counts().to_dict(),
         "votos_sem_materia": int(votos["id_materia"].isna().sum()),
+        "votos_de_parlamentar_sem_mandato": int((~votos["id_parlamentar"].isin(ver["id_parlamentar"])).sum()),
+        "cadastro_duplicado": {str(k): v for k, v in CADASTRO_DUPLICADO.items()},
         "sessoes_com_video": int(len(video)),
         "regras": {
             "presenca": ("lista de presentes e ausentes da ata, na abertura dos trabalhos; só atas em que cada "

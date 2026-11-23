@@ -32,7 +32,7 @@ def carregar(pasta: Path = PASTA) -> dict:
     normas = pd.read_parquet(pasta / "normas.parquet")
     for df, colunas in ((proj, ["ementa", "autores"]), (mat, ["ementa", "autores"]), (normas, ["ementa"])):
         df["busca"] = df[colunas].fillna("").agg(" ".join, axis=1).map(normalizar)
-    return {
+    dados = {
         "vereadores": pd.read_csv(pasta / "vereadores.csv"),
         "producao": pd.read_csv(pasta / "producao.csv"),
         "projetos": proj,
@@ -48,9 +48,16 @@ def carregar(pasta: Path = PASTA) -> dict:
         "emendas": _emendas(pasta),
         "emendas_empenhos": pd.read_parquet(pasta / "emendas_empenhos.parquet"),
         "meta_emendas": json.loads((pasta / "metadados_emendas.json").read_text(encoding="utf-8")),
+        "presencas": pd.read_parquet(pasta / "presencas.parquet"),
+        "atas": pd.read_csv(pasta / "atas_presenca.csv"),
+        "votos": pd.read_parquet(pasta / "votos_comissoes.parquet"),
+        "video": pd.read_csv(pasta / "sessoes_video.csv"),
+        "meta_sessoes": json.loads((pasta / "metadados_sessoes.json").read_text(encoding="utf-8")),
         "meta_pedidos": json.loads((pasta / "metadados_pedidos.json").read_text(encoding="utf-8")),
         "meta": json.loads((pasta / "metadados.json").read_text(encoding="utf-8")),
     }
+    dados["votacoes"] = votacoes(dados["votos"], dados["vereadores"])
+    return dados
 
 
 def _emendas(pasta: Path) -> pd.DataFrame:
@@ -274,6 +281,76 @@ def emendas_por_vereador(em: pd.DataFrame, ver: pd.DataFrame) -> pd.DataFrame:
     t = t.join(nomes).reset_index()
     t["ordem"] = t["nome_parlamentar"].map(normalizar)
     return t.sort_values("ordem").drop(columns="ordem")
+
+
+# --- Presença nas sessões (pelas atas) e votos nas comissões
+
+SITUACOES_PRESENCA = ["Presente", "Presente (virtual)", "Ausente com justificativa", "Ausente"]
+CANAL_CAMARA = "https://www.youtube.com/@TvCamaraJP"
+
+
+def presenca_por_vereador(pres: pd.DataFrame, ver: pd.DataFrame, leg: int, ano: int | None = None) -> pd.DataFrame:
+    """Uma linha por vereador listado nas atas conferidas, em ordem alfabética, com as sessões por situação."""
+    p = pres[pres["legislatura"] == leg]
+    if ano:
+        p = p[p["data"].str.startswith(str(ano))]
+    t = p.pivot_table(index="id_parlamentar", columns="situacao", values="id_sessao", aggfunc="count", fill_value=0)
+    t = t.reindex(columns=SITUACOES_PRESENCA, fill_value=0)
+    t["sessoes"] = t.sum(axis=1)
+    t["pct_presente"] = 100 * (t["Presente"] + t["Presente (virtual)"]) / t["sessoes"]
+    nomes = ver.drop_duplicates("id_parlamentar").set_index("id_parlamentar")["nome_parlamentar"]
+    t = t.reset_index().assign(nome_parlamentar=lambda x: x["id_parlamentar"].map(nomes))
+    return t.assign(o=t["nome_parlamentar"].map(normalizar)).sort_values("o").drop(columns="o").reset_index(drop=True)
+
+
+def presenca_do_vereador(pres: pd.DataFrame, id_parlamentar: int, leg: int) -> dict[str, int]:
+    p = pres[(pres["legislatura"] == leg) & (pres["id_parlamentar"] == id_parlamentar)]
+    return {s: int((p["situacao"] == s).sum()) for s in SITUACOES_PRESENCA}
+
+
+def presenca_da_sessao(pres: pd.DataFrame, ver: pd.DataFrame, id_sessao: int) -> dict[str, list[str]]:
+    """Nomes por situação numa sessão, em ordem alfabética (vazio se a ata não foi conferida)."""
+    nomes = ver.drop_duplicates("id_parlamentar").set_index("id_parlamentar")["nome_parlamentar"]
+    p = pres[pres["id_sessao"] == id_sessao]
+    return {s: sorted(p.loc[p["situacao"] == s, "id_parlamentar"].map(nomes), key=normalizar)
+            for s in SITUACOES_PRESENCA if (p["situacao"] == s).any()}
+
+
+def votacoes(votos: pd.DataFrame, ver: pd.DataFrame) -> pd.DataFrame:
+    """Uma linha por votação nas comissões, com os nomes por voto, da mais recente para a mais antiga."""
+    nomes = ver.drop_duplicates("id_parlamentar").set_index("id_parlamentar")["nome_parlamentar"]
+    v = votos.assign(nome=votos["id_parlamentar"].map(nomes))
+    g = v.groupby("id_votacao")
+    out = g.first()[["data", "sigla_comissao", "comissao", "id_materia", "materia", "sigla", "tipo", "numero", "ano",
+                     "ementa", "observacao", "resultado", "link_sapl"]]
+    for voto, col in (("Sim", "sim"), ("Não", "nao"), ("Abstenção", "abstencao"), ("Não Votou", "nao_votou")):
+        out[col] = g.apply(lambda x, vt=voto: sorted(x.loc[x["voto"] == vt, "nome"].dropna(), key=normalizar),
+                           include_groups=False)
+    out["ids"] = g["id_parlamentar"].apply(lambda x: set(x))
+    out["divergencia"] = out["nao"].map(len) + out["abstencao"].map(len) > 0
+    out["busca"] = out[["materia", "ementa", "observacao"]].fillna("").agg(" ".join, axis=1).map(normalizar)
+    return out.reset_index().sort_values(["data", "id_votacao"], ascending=[False, False], ignore_index=True)
+
+
+def filtrar_votacoes(vt: pd.DataFrame, texto: str = "", comissao: str | None = None, ano: int | None = None,
+                     id_parlamentar: int | None = None, so_divergencia: bool = False) -> pd.DataFrame:
+    if texto:
+        vt = vt[vt["busca"].str.contains(normalizar(texto), regex=False)]
+    if comissao:
+        vt = vt[vt["sigla_comissao"] == comissao]
+    if ano:
+        vt = vt[vt["data"].str.startswith(str(ano))]
+    if id_parlamentar:
+        vt = vt[vt["ids"].map(lambda ids: id_parlamentar in ids)]
+    if so_divergencia:
+        vt = vt[vt["divergencia"]]
+    return vt
+
+
+def votos_do_vereador(votos: pd.DataFrame, id_parlamentar: int, leg: int) -> pd.DataFrame:
+    ini, fim = LEGISLATURAS[leg]
+    v = votos[(votos["id_parlamentar"] == id_parlamentar) & votos["data"].str[:4].astype(int).between(ini, fim)]
+    return v.sort_values("data", ascending=False, ignore_index=True)
 
 
 # --- Formatos

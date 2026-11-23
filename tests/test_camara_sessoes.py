@@ -86,6 +86,11 @@ def test_votos_das_comissoes():
     assert votos["voto"].isin(["Sim", "Não", "Abstenção", "Não Votou"]).all()
     assert not votos.duplicated(["id_votacao", "id_parlamentar"]).any()
     assert votos["id_materia"].isna().sum() == meta["votos_sem_materia"] <= 0.01 * len(votos)
+    # todo voto é de um vereador com mandato na legislatura da votação
+    ver = pd.read_csv(P / "vereadores.csv")
+    leg = votos["data"].str[:4].astype(int).map(lambda a: 18 if a <= 2024 else 19)
+    mandatos = set(zip(ver["id_parlamentar"], ver["legislatura"]))
+    assert all(par in mandatos for par in zip(votos["id_parlamentar"], leg)) and meta["votos_de_parlamentar_sem_mandato"] == 0
 
 
 @pytest.mark.parametrize("arquivo", ["sessoes_video.csv"])
