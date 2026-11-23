@@ -12,6 +12,7 @@ sem Streamlit, estão em `src/app/dados_camara.py`.
 | Fonte | O que traz | Coleta |
 |---|---|---|
 | [SAPL da Câmara](https://sapl.joaopessoa.pb.leg.br/api/) (API aberta) | matérias, autoria, normas jurídicas, tramitações, parlamentares, mandatos, filiações, sessões e presença | `python -m src.collect.camara_sapl` |
+| SAPL: atas, ordem do dia, votos nominais e comissões | atas das sessões ordinárias e extraordinárias (PDF), lista de presentes e ausentes, votos nas comissões | `python -m src.collect.camara_sessoes` |
 | TCE-PB, dados abertos do SAGRES (`servidores-AAAA.zip`) | folha de pessoal mensal: cargo, vínculo e valor bruto; o CPF já vem mascarado | `python -m src.collect.tce_pb` |
 | TCE-PB, empenhos (`data/interim/empenhos.parquet`) | despesas e diárias da Câmara, por elemento de despesa | `python -m src.process.despesas` (antes do processamento da Câmara) |
 | Tesouro Nacional, SICONFI (RGF Anexo 01, Poder Legislativo) | despesa com pessoal da Câmara e limites da LRF, por quadrimestre | `python -m src.collect.siconfi` |
@@ -22,8 +23,8 @@ máximo 2 conexões simultâneas e tenta cada página até 8 vezes. A coleta com
 
 ## Recorte
 
-18ª e 19ª legislaturas (2021 em diante). Desde 2021, a autoria das matérias, a presença nas sessões
-ordinárias e as atas estão completas no SAPL; antes disso há lacunas (presença e atas não existem
+18ª e 19ª legislaturas (2021 em diante). Desde 2021, a autoria das matérias e as atas das sessões
+ordinárias estão completas no SAPL; antes disso há lacunas (presença e atas não existem
 antes de 2019).
 
 ## Arquivos gerados (`data/processed/camara/`)
@@ -142,19 +143,47 @@ CNPJ ou pelo nome, fica "a conferir".
 ou ainda não ter saído. Emenda não executada também não é irregularidade (a lei prevê impedimento
 técnico). Credor pessoa física aparece sem nome nem histórico, com o CPF mascarado.
 
+## Presença nas sessões e votos nas comissões
+
+`python -m src.collect.camara_sessoes` baixa as atas das sessões ordinárias e extraordinárias (2021 em
+diante), a ordem do dia, os votos nominais e as comissões. `python -m src.process.camara_sessoes` (depois
+de `src.process.camara`; requer o `pdftotext`) gera:
+
+- `presencas.parquet`: uma linha por sessão e vereador, com a situação na ata (presente, presente de forma
+  virtual, ausente com justificativa, ausente);
+- `atas_presenca.csv`: cada ata lida, quantos vereadores ela lista, as cadeiras e se foi conferida (com o motivo, se não);
+- `votos_comissoes.parquet`: os votos nominais nas reuniões de comissão, com matéria, comissão e resultado;
+- `sessoes_video.csv`: o link do vídeo da sessão, quando o SAPL tem;
+- `metadados_sessoes.json`.
+
+**Presença.** A ata de cada sessão traz, antes da abertura, a composição da mesa e as listas de
+presentes em plenário, presentes de forma virtual, ausentes com justificativa e ausentes, com nome
+completo e partido. Cada nome é ligado a um vereador do SAPL da mesma legislatura (nome completo, nome
+parlamentar ou a maior parte das palavras do nome). Uma ata só entra quando é **conferida**: todo nome
+foi ligado, cada vereador aparece numa só situação e o total listado é igual ao número de cadeiras
+(titulares que tomaram posse no primeiro dia da legislatura, no SAPL: 27 na 18ª e 29 na 19ª). As demais
+ficam em `atas_presenca.csv` com o motivo; em geral, a própria ata lista um vereador a menos ou a mais.
+
+A lista é a da **abertura dos trabalhos**: quem chega depois aparece como ausente. A ata é o documento
+oficial; o registro de presença do SAPL serviu de conferência (11/2026, sessões com registro): 97% dos
+presentes na ata estão no registro, e 6% dos ausentes também (chegaram depois da abertura). Resultado:
+403 das 442 atas de 2021 a 11/2026 conferidas; das 39 restantes, 7 não têm o bloco de presença no
+formato padrão (posse e eleição da mesa, por exemplo) e a maioria lista um vereador a mais ou a menos.
+
+**Votos nas comissões.** O SAPL registra o voto de cada membro nas reuniões de comissão (CCJRLP, CPP,
+CFOOAP e CCDHDC), quase sempre sobre o parecer do relator. São votos sobre pareceres, não a votação final
+em plenário.
+
+**Paginação da API.** Sem ordenação explícita, algumas listas do SAPL (a ordem do dia, por exemplo) mudam
+de ordem entre as páginas: registros vêm repetidos e outros somem, com o total certo. A coleta pede
+`o=id` em todas as consultas e para se algum id se repetir.
+
 ## Limitações
 
 - **Custo por vereador não é calculado.** A folha não informa de qual gabinete é cada assessor. Dividir
   o custo dos gabinetes entre os vereadores seria uma estimativa, então só o total da Câmara é mostrado.
-- **Presença nas sessões não é publicada.** O registro de presença do SAPL existe para quase todas as
-  sessões ordinárias desde 2021, mas é incompleto. A ata da 7ª sessão ordinária (06/03/2025), por
-  exemplo, lista entre os presentes vereadores que o registro do SAPL não tem. O presidente, que conduz
-  a sessão, também quase nunca aparece no registro. Além disso, o SAPL não registra afastamentos (licença para assumir secretaria, por
-  exemplo): há titulares com mandato "ativo" que não recebem subsídio por meses. Um número de presença
-  por vereador seria enganoso. A alternativa é extrair a lista de presentes das atas oficiais
-  (issue #51).
-- **Votos no plenário.** O SAPL guarda só o placar (sim, não e abstenções). Votos nominais existem
-  apenas nas comissões.
+- **Votos no plenário.** O plenário vota de forma simbólica: o SAPL guarda só o resultado. Votos nominais
+  existem apenas nas comissões.
 - **Pautas** estão incompletas no SAPL em 2025 e 2026.
 - **Quantidade não mede trabalho.** Em 2025–2026, os requerimentos de obras por vereador vão de cerca
   de 2.800 a zero, e os projetos de lei de 180 a zero. Os vereadores aparecem em ordem alfabética, sem ranking.
