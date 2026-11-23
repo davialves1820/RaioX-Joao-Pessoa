@@ -174,6 +174,15 @@ formato padrão (posse e eleição da mesa, por exemplo) e a maioria lista um ve
 CFOOAP e CCDHDC), quase sempre sobre o parecer do relator. São votos sobre pareceres, não a votação final
 em plenário.
 
+**No painel:** seção *Presença* (tabela por vereador em ordem alfabética, por legislatura e ano, com as
+atas não conferidas e o motivo), seção *Votações nas comissões* (cada votação com os nomes por voto,
+filtros de comissão, ano, vereador e "só com voto contrário ou abstenção"), a presença e o vídeo em cada
+sessão de *Pautas e atas*, e, no perfil do vereador, a presença e os votos contrários e abstenções.
+
+**Cadastro duplicado.** O SAPL tem um cadastro antigo de Marcos Vinícius (id 45, mandato de 2001–2004)
+em que foram registrados 34 votos na CCJRLP em abril de 2025; eles são atribuídos ao cadastro atual (id
+382), que não vota nessas mesmas votações (`CADASTRO_DUPLICADO`).
+
 **Paginação da API.** Sem ordenação explícita, algumas listas do SAPL (a ordem do dia, por exemplo) mudam
 de ordem entre as páginas: registros vêm repetidos e outros somem, com o total certo. A coleta pede
 `o=id` em todas as consultas e para se algum id se repetir.

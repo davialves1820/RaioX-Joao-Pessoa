@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-23T22:20:18Z",
+  "gerado_em": "2026-11-23T22:31:20Z",
   "atas_lidas": 442,
   "atas_conferidas": 403,
   "atas_nao_conferidas": [
@@ -218,6 +218,10 @@
     "Não Votou": 36
   },
   "votos_sem_materia": 8,
+  "votos_de_parlamentar_sem_mandato": 0,
+  "cadastro_duplicado": {
+    "45": 382
+  },
   "sessoes_com_video": 184,
   "regras": {
     "presenca": "lista de presentes e ausentes da ata, na abertura dos trabalhos; só atas em que cada vereador aparece uma vez, todos os nomes foram ligados ao SAPL e o total é igual ao número de cadeiras",

@@ -126,3 +126,24 @@ def test_emendas(dados):
     alvo = em.dropna(subset=["meta"]).iloc[0]
     palavra = [p for p in d.normalizar(alvo["meta"]).split() if len(p) > 5][0]
     assert alvo["id_materia"] in set(d.filtrar_emendas(em, palavra)["id_materia"])
+
+
+def test_presenca_e_votacoes(dados):
+    pres, ver = dados["presencas"], dados["vereadores"]
+    t = d.presenca_por_vereador(pres, ver, 19)
+    nomes = [d.normalizar(n) for n in t["nome_parlamentar"]]
+    assert nomes == sorted(nomes) and t["id_parlamentar"].is_unique
+    assert t["sessoes"].sum() == (pres["legislatura"] == 19).sum()
+    assert t["pct_presente"].between(0, 100).all()
+    pid = t["id_parlamentar"].iloc[0]
+    assert sum(d.presenca_do_vereador(pres, pid, 19).values()) == t.loc[0, "sessoes"]
+    sid = pres["id_sessao"].iloc[0]
+    sessao = d.presenca_da_sessao(pres, ver, sid)
+    assert sum(map(len, sessao.values())) == (pres["id_sessao"] == sid).sum()
+    vt = dados["votacoes"]
+    assert vt["id_votacao"].is_unique and len(vt) == dados["meta_sessoes"]["votacoes_comissoes"]
+    assert (vt[["sim", "nao", "abstencao", "nao_votou"]].map(len).sum(axis=1) == vt["ids"].map(len)).all()
+    assert d.filtrar_votacoes(vt, so_divergencia=True)["nao"].map(len).add(
+        d.filtrar_votacoes(vt, so_divergencia=True)["abstencao"].map(len)).gt(0).all()
+    pid = int(dados["votos"]["id_parlamentar"].iloc[0])
+    assert d.filtrar_votacoes(vt, id_parlamentar=pid)["ids"].map(lambda i: pid in i).all()
