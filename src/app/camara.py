@@ -17,7 +17,7 @@ from src.app import dados_despesas as dd
 from src.app import tema
 from src.process.camara_pedidos import TEMAS as TEMAS_PEDIDOS
 
-SECOES = ["Vereadores", "Projetos de lei", "Indicações", "Requerimentos", "Pedidos por bairro", "Votos e moções", "Leis",
+SECOES = ["Vereadores", "Projetos de lei", "Indicações", "Requerimentos", "Pedidos por bairro", "Emendas impositivas", "Votos e moções", "Leis",
           "Resoluções", "Decretos legislativos", "Pautas e atas", "Servidores", "Despesas", "Diárias",
           "Prestação de contas", "Sobre os dados"]
 
@@ -359,6 +359,120 @@ def secao_pedidos(dados: dict, bairros: pd.DataFrame, geo: dict) -> None:
     _lista(m[m["id_materia"].isin(ids)], _item_materia, "pb_lista", dados)
 
 
+COR_CONFERENCIA = {
+    "CNPJ confere": "green", "Mesma entidade (matriz/filial)": "green", "Nome confere": "blue",
+    "A conferir": "orange", "CNPJ diferente": "red",
+}
+
+
+def _valor_emenda(e) -> str:
+    if pd.notna(e["valor"]):
+        return _reais(e["valor"])
+    if isinstance(e.get("valor_no_texto"), str):
+        return f"valor ilegível no original ({e['valor_no_texto']})"
+    return "valor não lido"
+
+
+def _item_emenda(e: pd.Series, empenhos: pd.DataFrame) -> None:
+    with st.container(border=True):
+        topo = st.columns([5, 2])
+        cor = "green" if e["situacao"] == "Empenho encontrado" else "gray"
+        tipo = "Emenda impositiva corrigida" if e["sigla"] == "EI-CO" else "Emenda impositiva"
+        topo[0].markdown(f"**{tipo} nº {e['numero']}/{e['ano']}** :{cor}-badge[{e['situacao']}]")
+        topo[1].markdown(f"<div style='text-align:right'><b>{_valor_emenda(e)}</b></div>",
+                         unsafe_allow_html=True)
+        st.markdown(_md(e["meta"] if isinstance(e["meta"], str) else e["ementa"]))
+        dot = " · ".join(([e["unidade_orcamentaria"]] if isinstance(e["unidade_orcamentaria"], str) else [])
+                         + ([f"natureza {e['natureza_despesa']}"] if isinstance(e["natureza_despesa"], str) else []))
+        cnpj = e["cnpj_beneficiario"]
+        cnpj = f" · CNPJ {cnpj[:2]}.{cnpj[2:5]}.{cnpj[5:8]}/{cnpj[8:12]}-{cnpj[12:]}" if isinstance(cnpj, str) else ""
+        links = [f"[Ver no SAPL]({e['link_sapl']})"] + ([f"[Texto da emenda]({e['link_texto']})"] if isinstance(e["link_texto"], str) else [])
+        st.caption(_md(f"Autoria: {e['autores']} · {dot}{cnpj} · " + " · ".join(links)))
+        if e["empenhos"]:
+            conf = e["conferencia"]
+            st.markdown(_md(f"Empenhado: **{_reais(e['empenhado'])}** · pago: **{_reais(e['pago'])}** · "
+                            f"{e['empenhos']} empenho(s) · :{COR_CONFERENCIA.get(conf, 'gray')}-badge[{conf}]"))
+            with st.expander("Empenhos que citam esta emenda"):
+                emp = empenhos[empenhos["id_materia"] == e["id_materia"]]
+                for r in emp.itertuples():
+                    credor = r.nome_credor or "Pessoa física (nome não exibido)"
+                    st.markdown(_md(f"**{d.fmt_data(_iso(r.data_empenho))}** · {r.unidade_gestora} · empenho "
+                                    f"{r.numero_empenho} · {credor} · empenhado {_reais(r.empenhado)}, pago "
+                                    f"{_reais(r.pago)} · :{COR_CONFERENCIA.get(r.conferencia, 'gray')}-badge[{r.conferencia}]"))
+                    if isinstance(r.historico, str):
+                        st.caption(_md(r.historico[:400]))
+
+
+def _iso(data_br: str) -> str:
+    """'31/08/2026' -> '2026-08-31' (formato do TCE-PB para o formato das outras datas)."""
+    return f"{data_br[6:10]}-{data_br[3:5]}-{data_br[:2]}" if isinstance(data_br, str) and len(data_br) == 10 else ""
+
+
+def secao_emendas(dados: dict) -> None:
+    em, emp, meta = dados["emendas"], dados["emendas_empenhos"], dados["meta_emendas"]
+    ult = d.fmt_data(meta["ultima_data_de_empenho"]) if meta.get("ultima_data_de_empenho") else "—"
+    st.caption("Emendas impositivas são emendas dos vereadores ao orçamento que destinam recursos a entidades e "
+               "projetos; o Executivo é obrigado a executá-las, salvo impedimento técnico. O valor e o beneficiário "
+               "vêm do texto original de cada emenda; a execução, dos empenhos do TCE-PB que citam o número da emenda "
+               f"(empenhos até {ult}).")
+    with st.expander("Como ler a execução e a conferência"):
+        st.markdown(
+            "- **Empenho encontrado:** há empenho do TCE-PB citando o número da emenda.\n"
+            "- **Sem empenho encontrado** não quer dizer *não executada*: o empenho pode não citar o número, ou "
+            "ainda não ter saído. Emenda não executada também não é irregularidade.\n"
+            "- **Conferência** do beneficiário: *CNPJ confere* e *mesma entidade* comparam o CNPJ da emenda com o de "
+            "quem recebeu; *nome confere* compara os nomes quando a emenda não traz CNPJ; *a conferir* é quando não "
+            "há como comparar (por exemplo, um fornecedor comprando equipamento para a entidade); *CNPJ diferente* "
+            "pede atenção, e às vezes é erro de digitação na própria emenda.\n"
+            f"- {meta['emendas'] - meta['com_valor'] - meta['valor_mal_digitado']} emendas são documentos "
+            "digitalizados (imagem), sem texto, e "
+            f"{meta['valor_mal_digitado']} trazem o valor mal digitado no original (por exemplo, \"30.0000,00\", "
+            "que pode ser 30 mil ou 300 mil): nesses casos o valor fica em branco, sem estimativa."
+        )
+    r = d.resumo_emendas(em)
+    k = st.columns(4)
+    with k[0]:
+        _cartao("Emendas", _int(r["emendas"]), f"de {', '.join(map(str, sorted(em['ano'].unique())))} ao orçamento do ano seguinte")
+    with k[1]:
+        _cartao("Valor das emendas", _reais(r["valor"]), f"{r['sem_valor']} sem valor lido")
+    with k[2]:
+        _cartao("Com empenho encontrado", _int(r["com_empenho"]), f"de {_int(r['emendas'])}")
+    with k[3]:
+        _cartao("Empenhado / pago", _reais(r["empenhado"]), f"pago: {_reais(r['pago'])}")
+
+    st.markdown("#### Por vereador")
+    st.caption("Em ordem alfabética. Valor é a soma das emendas com valor lido. A emenda corrigida (EI-CO) entra "
+               "na soma; o SAPL não indica qual emenda ela corrige, então a soma pode passar da cota de R$ 1.635.759,34.")
+    _tabela(d.emendas_por_vereador(em, dados["vereadores"]),
+            {"nome_parlamentar": "Vereador", "emendas": "Emendas", "valor": "Valor das emendas",
+             "com_empenho": "Com empenho encontrado", "empenhado": "Empenhado", "pago": "Pago"},
+            inteiros=["emendas", "com_empenho"], reais=["valor", "empenhado", "pago"])
+
+    st.markdown("#### Emendas")
+    f = st.columns([3, 2, 2, 2])
+    texto = f[0].text_input("Buscar", key="em_texto", placeholder="Buscar por beneficiário, número ou texto",
+                            label_visibility="collapsed")
+    ver = dados["vereadores"].drop_duplicates("id_parlamentar")
+    ids = {int(i) for v in em["autores_ids"].dropna() for i in v.split(";") if i}
+    ver = ver[ver["id_parlamentar"].isin(ids)]
+    ver = ver.assign(o=ver["nome_parlamentar"].map(d.normalizar)).sort_values("o")
+    nomes = dict(zip(ver["id_parlamentar"], ver["nome_parlamentar"]))
+    pid = f[1].selectbox("Vereador", [None] + list(nomes), key="em_autor", label_visibility="collapsed",
+                         format_func=lambda i: "Todos os vereadores" if i is None else nomes[i])
+    sit = f[2].selectbox("Situação", [None] + d.SITUACOES_EMENDA, key="em_sit", label_visibility="collapsed",
+                         format_func=lambda x: "Toda situação" if x is None else x)
+    conf = f[3].selectbox("Conferência", [None] + list(COR_CONFERENCIA), key="em_conf", label_visibility="collapsed",
+                          format_func=lambda x: "Toda conferência" if x is None else x)
+    achados = d.filtrar_emendas(em, texto, pid, sit, conf)
+    pagina, paginas = d.paginar(achados, st.session_state.get("em_pagina", 1))
+    st.caption(f"{_int(len(achados))} emenda(s)" + (f" · página {min(st.session_state.get('em_pagina', 1), paginas)} de {paginas}"
+                                                    if paginas > 1 else ""))
+    for _, e in pagina.iterrows():
+        _item_emenda(e, emp)
+    if paginas > 1:
+        st.number_input("Página", 1, paginas, key="em_pagina", step=1)
+
+
 def secao_normas(dados: dict, tipo: str, chave: str, explicacao: str) -> None:
     st.caption(explicacao)
     n = dados["normas"]
@@ -577,6 +691,8 @@ def main() -> None:
                        "requerimentos de informação, de sessão especial, de urgência e outros.")
     elif secao == "Pedidos por bairro":
         secao_pedidos(dados, bairros, geo)
+    elif secao == "Emendas impositivas":
+        secao_emendas(dados)
     elif secao == "Votos e moções":
         secao_materias(dados, ["Votos de aplauso, pesar e similares"], "vot",
                        "Votos de aplauso, pesar, congratulação e similares. O SAPL de João Pessoa não tem o tipo "

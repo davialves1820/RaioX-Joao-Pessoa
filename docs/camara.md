@@ -117,8 +117,9 @@ requer o `pdftotext`, do pacote poppler-utils) gera:
 
 **Valor e beneficiário.** A ementa no SAPL é incompleta (um terço traz o valor ou o CNPJ). O texto
 original é um formulário padrão (PDF ou Word) com "Valor acrescido", dotação e meta, de onde saem os
-campos. Das 401 emendas de 2025 ao orçamento de 2026, 385 têm o valor lido (R$ 46,3 milhões); as 16
-restantes são PDFs digitalizados, sem texto, e ficam com o valor vazio.
+campos. Das 401 emendas de 2025 ao orçamento de 2026, 383 têm o valor lido; 16 são PDFs digitalizados,
+sem texto, e 2 trazem o valor mal digitado ("30.0000,00" e "70.0000,00", nº 261 e 262/2025: 30 ou 300
+mil?). Essas 18 ficam com o valor vazio; o texto mal digitado fica em `valor_no_texto`.
 
 **Execução.** O empenho cita a emenda no histórico ("EMENDA IMPOSITIVA Nº 393/2025"); a ligação é pelo
 número e ano (o mesmo número do SAPL), lendo todas as citações de cada histórico. Emendas federais
@@ -126,6 +127,16 @@ número e ano (o mesmo número do SAPL), lendo todas as citações de cada hist�
 CNPJ (matriz e filial); nome parecido, quando a emenda não traz CNPJ; "a conferir" (por exemplo, um
 fornecedor comprando equipamento para a entidade); ou CNPJ diferente. Nada é descartado: as
 divergências aparecem marcadas.
+
+**No painel** (seção *Emendas impositivas* da página da Câmara): totais, uma tabela por vereador em
+ordem alfabética (emendas, valor, empenhado e pago) e a lista de emendas com busca e filtros de
+vereador, situação e conferência; cada emenda mostra beneficiário, dotação, valor, links para o SAPL e
+para o texto original, e os empenhos que a citam.
+
+**Número repetido.** A emenda corrigida (EI-CO) tem numeração própria e pode repetir o número de uma
+ELO-I. O SAPL não indica qual emenda a corrigida substitui, então ela entra na soma por vereador (a de
+Tarcísio Jardim passa da cota em R$ 80 mil por isso). Com mais de uma candidata, a ligação fica com a de melhor conferência; se nenhuma confere pelo
+CNPJ ou pelo nome, fica "a conferir".
 
 **Avisos.** "Sem empenho encontrado" não quer dizer "não executada": o empenho pode não citar o número,
 ou ainda não ter saído. Emenda não executada também não é irregularidade (a lei prevê impedimento

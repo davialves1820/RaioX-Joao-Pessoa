@@ -1,8 +1,9 @@
 {
-  "gerado_em": "2026-11-23T21:12:47Z",
+  "gerado_em": "2026-11-23T21:28:56Z",
   "emendas": 401,
   "com_texto_lido": 401,
-  "com_valor": 385,
+  "com_valor": 383,
+  "valor_mal_digitado": 2,
   "com_cnpj": 161,
   "com_empenho": 139,
   "empenhado": 16981613.72,

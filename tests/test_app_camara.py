@@ -113,3 +113,16 @@ def test_filtrar_pedidos(dados):
     t = d.filtrar_pedidos(rb, ano=2025, tema="Iluminação")
     assert (t["ano"] == 2025).all() and t["temas"].str.contains("Iluminação").all()
     assert len(d.filtrar_pedidos(rb)) == len(rb)
+
+
+def test_emendas(dados):
+    em = dados["emendas"]
+    r = d.resumo_emendas(em)
+    assert r["emendas"] == dados["meta_emendas"]["emendas"] and r["com_empenho"] == dados["meta_emendas"]["com_empenho"]
+    pv = d.emendas_por_vereador(em, dados["vereadores"])
+    nomes = [d.normalizar(n) for n in pv["nome_parlamentar"]]
+    assert nomes == sorted(nomes) and pv["emendas"].sum() >= len(em)
+    assert (d.filtrar_emendas(em, situacao="Empenho encontrado")["empenhos"] > 0).all()
+    alvo = em.dropna(subset=["meta"]).iloc[0]
+    palavra = [p for p in d.normalizar(alvo["meta"]).split() if len(p) > 5][0]
+    assert alvo["id_materia"] in set(d.filtrar_emendas(em, palavra)["id_materia"])

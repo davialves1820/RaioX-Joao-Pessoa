@@ -103,3 +103,29 @@ def test_valores_lidos_sao_positivos():
     v = em["valor"].dropna()
     assert (v > 0).all() and len(v) / len(em) >= 0.7
     assert em["cnpj_beneficiario"].dropna().map(lambda c: bool(re.fullmatch(r"\d{14}", c))).all()
+
+
+def test_numero_repetido_fica_com_a_emenda_que_confere():
+    emendas = pd.DataFrame({
+        "id_materia": [1, 2], "numero": [1, 1], "ano": [2025, 2025], "sigla": ["ELO-I", "EI-CO"],
+        "cnpj_beneficiario": [None, "08715618000140"],
+        "meta": ["Eventos culturais", "Equipamentos para o Instituto Cândida Vargas"],
+    })
+    emp = pd.DataFrame({
+        "historico": ["REFERE-SE A EMENDA IMPOSITIVA Nº 1/2025 - EQUIPAMENTOS", "EMENDA Nº 001/2025 EVENTO"],
+        "cpf_cnpj": ["08.715.618/0001-40", "11.222.333/0001-81"],
+        "nome_credor": ["INSTITUTO CANDIDA VARGAS", "PRODUTORA DE EVENTOS LTDA"],
+        "descricao_unidade_gestora": ["FMS", "Funjope"], "numero_empenho": ["10", "11"],
+        "data_empenho": ["01/03/2026", "02/03/2026"], "valor_empenhado": ["100,00", "50,00"],
+        "valor_pago": ["0,00", "50,00"],
+    })
+    lig = ce.empenhos_das_emendas(emp, emendas)
+    assert lig.loc[0, "id_materia"] == 2 and lig.loc[0, "conferencia"] == "CNPJ confere"
+    assert lig.loc[1, "conferencia"] == "A conferir"  # duas candidatas e nenhuma confere
+
+
+def test_valor_mal_digitado_fica_vazio():
+    c = ce.extrair("Valor Acrescido (R$) 30.0000,00 Meta /Unidade de Medida Eventos")
+    assert c["valor"] is None and c["valor_no_texto"] == "30.0000,00"
+    assert ce.extrair("Valor Acrescido (R$) R$ 1.635.759,34 Meta")["valor"] == 1635759.34
+    assert ce.extrair("Valor Acrescido (R$) 50000,00 Meta")["valor"] == 50000.0
